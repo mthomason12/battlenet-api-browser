@@ -2,6 +2,7 @@
   "name": "battlenet-api-browser",
   "version": "0.0.0",
   "author": "Matt Thomason <matt@warpedcore.net>",
+  "description": "Browser for Battle.net API",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
