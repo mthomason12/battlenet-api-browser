@@ -1,13 +1,13 @@
-<mat-toolbar>
+<mat-toolbar #toolbar>
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Battle.net API Browser</span>
 </mat-toolbar>
-<mat-sidenav-container>
-  <app-apitree></app-apitree>
-  <mat-sidenav #sidenav [mode]="'side'">
-    <button mat-raised-button><mat-icon>settings</mat-icon>Settings</button>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav [mode]="'side'" fixedTopGap="56">
+    <app-apitree></app-apitree>    
+    <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
   </mat-sidenav>
   <mat-sidenav-content #content>
     <router-outlet />

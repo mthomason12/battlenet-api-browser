@@ -1,4 +1,14 @@
-mat-sidenav-container, mat-sidenav
+mat-sidenav-container
 {
     padding: 6pt;
+    margin-top:56px;
+}
+
+mat-sidenav
+{
+    padding: 6pt;
+}
+
+mat-toolbar {
+    position: sticky;
 }
