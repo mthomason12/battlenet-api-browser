@@ -28,17 +28,17 @@ export class UserdataModule {
 
   constructor()
   {
+    //attempt to load existing data from localstorage
     try
     {
       this.data = JSON.parse(localStorage.getItem(dataItem)!) as userDataStruct;
     }
     catch
     {
+      //initialize with blank data if corrupt or missing
       console.log("User data is corrupt or missing. Reinitializing with empty data.")
       this.data = {} as userDataStruct;
     }
-    
-    //attempt to load existing data from localstorage
   }
 
   save()
