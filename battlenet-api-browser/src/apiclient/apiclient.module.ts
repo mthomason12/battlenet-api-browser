@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 
 
 @NgModule({
@@ -11,14 +11,32 @@ import { CommonModule } from '@angular/common';
 })
 
 export class ApiclientModule { 
+  region?: RegionIdOrName;
+  clientID?: string;
+  clientSecret?: string;
+  blizzapi?: BlizzAPI;
+  connected: boolean = false;
 
-  clientID: String;
-  clientSecret: String;
-
-  constructor (clientID: String, clientSecret: String)
+  constructor ()
   {
+  }
+
+  connect(region: RegionIdOrName, clientID: string, clientSecret: string)
+  {
+    this.region = region;
     this.clientID = clientID;
     this.clientSecret = clientSecret;
+    this.blizzapi = new BlizzAPI({
+      region: region,
+      clientId: clientID,
+      clientSecret: clientSecret
+    });    
+    this.connected = true;
+  }
+
+  query(apiEndpoint: string, options: QueryOptions)
+  {
+    return this.blizzapi?.query(apiEndpoint, options);
   }
 
 }
