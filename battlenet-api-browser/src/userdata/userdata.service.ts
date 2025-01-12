@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 
 interface publicDataStruct
 {
+  [key: string]: any;
 }
 
 interface profileDataStruct
 {
+  [key: string]: any;  
 }
 
 interface apiDataStruct
 {
   public: publicDataStruct;
   profile: profileDataStruct;
+  [key: string]: any;  
 }
 
 interface userDataStruct
@@ -20,6 +23,7 @@ interface userDataStruct
   clientID: string;
   clientSecret: string;
   apiData: apiDataStruct;
+  [key: string]: any;  
 }
 
 const dataItem: string = 'battlenet-api-data';
@@ -35,13 +39,13 @@ export class UserdataService {
     //attempt to load existing data from localstorage
     try
     {
-      this.data = JSON.parse(localStorage.getItem(dataItem)!) as userDataStruct;     
+      this.data = <userDataStruct>JSON.parse(localStorage.getItem(dataItem)!);     
     }
     catch
     {
       //initialize with blank data if corrupt or missing
       console.log("User data is corrupt or missing. Reinitializing with empty data.")      
-      this.data = {} as userDataStruct;
+      this.data = <userDataStruct>{};
       this.data.clientID = "";
       this.data.clientSecret = "";
     }
