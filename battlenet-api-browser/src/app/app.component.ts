@@ -28,5 +28,8 @@ export class AppComponent {
   connect()
   {
     this.apiClient.connect("us", this.userdata.data.clientID, this.userdata.data.clientSecret);
+    /*this.apiClient.achievementIndex()?.then((data)=>{
+      console.log("Data returned: "+JSON.stringify(data))
+    });*/
   }
 }

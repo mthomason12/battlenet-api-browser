@@ -7,6 +7,10 @@ export class ApiclientService {
   clientID?: string;
   clientSecret?: string;
   blizzapi?: BlizzAPI;
+  accessToken: string = "";
+  staticNamespace: string = "static-us";
+  profileNamespace: string = "profile-us";
+  locale: string = "en_US";
   
   connected: boolean = false;
 
@@ -14,7 +18,7 @@ export class ApiclientService {
   {
   }
 
-  connect(region: RegionIdOrName, clientID: string, clientSecret: string)
+  async connect(region: RegionIdOrName, clientID: string, clientSecret: string)
   {  
     this.region = region;
     this.clientID = clientID;
@@ -24,11 +28,12 @@ export class ApiclientService {
       clientId: clientID,
       clientSecret: clientSecret
     });    
-   
+    //get an access token
+    this.accessToken = await this.blizzapi?.getAccessToken();
     this.connected = true;
   }
 
-  query(apiEndpoint: string, options: QueryOptions)
+  query(apiEndpoint: string, options: QueryOptions = {})
   {
     return this.blizzapi?.query(apiEndpoint, options);
   }
@@ -36,6 +41,11 @@ export class ApiclientService {
   isConnected(): boolean
   {
     return this.connected;
+  }
+
+  achievementIndex()
+  {
+    return this.query('/data/wow/achievement/index?namespace='+this.staticNamespace+'&locale='+this.locale);
   }
 
 }
