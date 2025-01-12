@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 interface APINode {
   name: string;
@@ -17,9 +18,9 @@ const TREE_DATA: APINode[] = [
     children: [
       {
         name: 'World of Warcraft',
-        path: 'wow',
+        path: 'public.wow',
         children: [
-          {name: 'Achievements', path: 'achievement', url:'/data/wow/achievement/index'}
+          {name: 'Achievements', path: 'public.wow.achievement', url:'/data/wow/achievement/index'}
         ]
       }
     ],
@@ -30,9 +31,9 @@ const TREE_DATA: APINode[] = [
     children: [
       {
         name: 'World of Warcraft',
-        path: 'wow',
+        path: 'profile.wow',
         children: [
-          {name: 'Profile Summary', path: 'profile', url:'/profile/user/wow'}
+          {name: 'Profile Summary', path: 'profile.wow.profilesummary', url:'/profile/user/wow'}
         ]        
       }
     ],
@@ -41,7 +42,7 @@ const TREE_DATA: APINode[] = [
 
 @Component({
   selector: 'app-apitree',
-  imports: [ MatTreeModule, MatButtonModule, MatIconModule ],
+  imports: [ MatTreeModule, MatButtonModule, MatIconModule, RouterLink],
   templateUrl: './apitree.component.html',
   styleUrl: './apitree.component.scss'
 })
