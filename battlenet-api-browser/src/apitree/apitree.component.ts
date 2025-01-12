@@ -5,22 +5,36 @@ import { MatIconModule } from '@angular/material/icon';
 
 interface APINode {
   name: string;
+  path?: string;
+  url?: string;
   children?: APINode[];
 }
 
 const TREE_DATA: APINode[] = [
   {
-    name: 'Public API',
+    name: 'Game Data API',
+    path: 'public',
     children: [
-      {name: 'Test1'},
-      {name: 'Test2'}
+      {
+        name: 'World of Warcraft',
+        path: 'wow',
+        children: [
+          {name: 'Achievements', path: 'achievement', url:'/data/wow/achievement/index'}
+        ]
+      }
     ],
   },
   {
     name: 'Profile API',
+    path: 'profile',
     children: [
-      {name: 'Test1'},
-      {name: 'Test2'}
+      {
+        name: 'World of Warcraft',
+        path: 'wow',
+        children: [
+          {name: 'Profile Summary', path: 'profile', url:'/profile/user/wow'}
+        ]        
+      }
     ],
   }
 ];

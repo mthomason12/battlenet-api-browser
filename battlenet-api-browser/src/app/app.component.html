@@ -7,6 +7,7 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav [mode]="'side'" fixedTopGap="56">
     <app-apitree></app-apitree>    
+    <button mat-raised-button [routerLink]="'/login'"><mat-icon>login</mat-icon>Battle.net Login</button>
     <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
   </mat-sidenav>
   <mat-sidenav-content #content>
