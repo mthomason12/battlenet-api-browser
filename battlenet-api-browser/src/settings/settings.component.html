@@ -3,11 +3,11 @@
 <div class="fields">
 <mat-form-field>
     <mat-label>Client ID</mat-label>
-    <input matInput type="text" [(ngModel)]="clientId" />
+    <input matInput type="text" title="Client ID" [(ngModel)]="clientId" />
 </mat-form-field>
 <mat-form-field>
     <mat-label>Client Secret</mat-label>
-    <input matInput type="text" [(ngModel)]="clientSecret" />
+    <input matInput type="text" title="Client Secret" [(ngModel)]="clientSecret" />
 </mat-form-field>
 </div>
 <button mat-raised-button (click)="reset()">Reset</button>
