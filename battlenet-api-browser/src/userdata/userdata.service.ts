@@ -6,12 +6,6 @@ type dataDoc = any;
 class dataStruct{
   [key: string]: any;
 }
-
-class achievementDataStruct extends dataStruct
-{
-
-}
-
 class publicDataStruct extends dataStruct
 {
   achievementData: dataDoc;
