@@ -3,6 +3,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { UserdataService, dataStruct } from '../userdata/userdata.service';
 
 interface APINode {
   name: string;
@@ -46,10 +47,17 @@ const TREE_DATA: APINode[] = [
   templateUrl: './apitree.component.html',
   styleUrl: './apitree.component.scss'
 })
+
 export class ApitreeComponent {
-  dataSource = TREE_DATA;
+  //dataSource = TREE_DATA;
+  dataSource: dataStruct[];
 
-  childrenAccessor = (node: APINode) => node.children ?? [];
+  childrenAccessor = (node: dataStruct) => node.children() ?? [];
 
-  hasChild = (_: number, node: APINode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: dataStruct) => !!node.children() && node.children().length > 0;
+
+  constructor(private dataService: UserdataService)
+  {
+    this.dataSource = dataService.data.apiData.children();
+  }
 }

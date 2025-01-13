@@ -1,29 +1,112 @@
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type dataDoc = any;
-
-class dataStruct{
+export class dataStruct {
+  _name: string = 'unnamed';
   [key: string]: any;
+
+  name(): string
+  {
+    return this._name;
+  }
+
+  children(): dataStruct[]
+  {
+    return [];
+  }
 }
+
+export class dataDoc extends dataStruct
+{
+  constructor(name: string)
+  {
+    super();
+    this._name = name;
+  }
+}
+
+
+class achievementsDataDoc extends dataDoc
+{
+  constructor()
+  {
+    super("Achievements");
+  }
+
+  override name(): string
+  {
+    return "Achievements";
+  }
+}
+
 class publicDataStruct extends dataStruct
 {
-  achievementData: dataDoc;
+  achievementData: achievementsDataDoc = new achievementsDataDoc();
+
+  override name(): string
+  {
+    return "Game Data";
+  }
+
+  override children(): dataStruct[]
+  {
+    return super.children().concat([this.achievementData]);
+  } 
 }
 
 class charDataStruct extends dataStruct
 {
 }
 
+class charsDataStruct extends dataStruct
+{
+  items: charDataStruct[] = [];
+
+  override name(): string
+  {
+    return "Characters";
+  }  
+
+  override children(): dataStruct[]
+  {
+    return this.items;
+  }    
+}
+
 class profileDataStruct extends dataStruct
 {
-  characters: charDataStruct[] = [];
+  characters: charsDataStruct = new charsDataStruct();
+
+  override name(): string
+  {
+    return "Profile";
+  }
+
+  override children(): dataStruct[]
+  {
+    return super.children().concat([this.characters]);
+  }  
 }
 
 class apiDataStruct extends dataStruct
 {
   public: publicDataStruct = new publicDataStruct();
   profile: profileDataStruct = new profileDataStruct();
+
+  constructor()
+  {
+    super();
+  }
+
+  override name(): string
+  {
+    return "Battle.net API";
+  }
+
+  override children(): dataStruct[]
+  {
+    return super.children().concat([this.public, this.profile]);
+  }
 }
 
 class userDataStruct

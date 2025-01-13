@@ -3,7 +3,7 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled></button>
-      <a routerLink="/browse" [queryParams]="{path: node.path, url: node.url}">{{node.name}}</a>
+      <a routerLink="/browse">{{node.name()}}</a>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle
@@ -14,7 +14,7 @@
           {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
       </button>
-      <a routerLink="/browse" [queryParams]="{path: node.path, url: node.url}">{{node.name}}</a>
+      <a routerLink="/browse">{{node.name()}}</a>
     </mat-tree-node>
   </mat-tree>
   
