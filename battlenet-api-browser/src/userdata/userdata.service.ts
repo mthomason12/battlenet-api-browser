@@ -1,29 +1,42 @@
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface publicDataStruct
-{
+type dataDoc = any;
+
+class dataStruct{
   [key: string]: any;
 }
 
-interface profileDataStruct
+class achievementDataStruct extends dataStruct
 {
-  [key: string]: any;  
+
 }
 
-interface apiDataStruct
+class publicDataStruct extends dataStruct
 {
-  public: publicDataStruct;
-  profile: profileDataStruct;
-  [key: string]: any;  
+  achievementData: dataDoc;
 }
 
-interface userDataStruct
+class charDataStruct extends dataStruct
 {
-  clientID: string;
-  clientSecret: string;
-  apiData: apiDataStruct;
-  [key: string]: any;  
+}
+
+class profileDataStruct extends dataStruct
+{
+  characters: charDataStruct = new charDataStruct();
+}
+
+class apiDataStruct extends dataStruct
+{
+  public: publicDataStruct = new publicDataStruct();
+  profile: profileDataStruct = new profileDataStruct();
+}
+
+class userDataStruct
+{
+  clientID: string = "";
+  clientSecret: string = "";
+  apiData: apiDataStruct = new apiDataStruct();
 }
 
 const dataItem: string = 'battlenet-api-data';
@@ -39,34 +52,28 @@ export class UserdataService {
     //attempt to load existing data from localstorage
     try
     {
-      this.data = <userDataStruct>JSON.parse(localStorage.getItem(dataItem)!);     
+      var json = JSON.parse(localStorage.getItem(dataItem)!);
+      if (json === null) 
+      {
+        throw new Error("No data");
+      }
+      //console.log("Incoming Data: "+JSON.stringify(json));    
+      this.data = Object.assign(new userDataStruct(), json);
     }
     catch
     {
       //initialize with blank data if corrupt or missing
-      console.log("User data is corrupt or missing. Reinitializing with empty data.")      
-      this.data = <userDataStruct>{};
+      console.log("User data is corrupt or missing. Reinitializing with empty data.")   
+      this.data = new userDataStruct();   
       this.data.clientID = "";
       this.data.clientSecret = "";
     }
-    if (this.data === null)
-    {
-      this.data = {
-        clientID: "",
-        clientSecret: "",
-        apiData: {
-          public: {},
-          profile: {}
-        }
-      }
-    }
-    console.log("Data: "+JSON.stringify(this.data));    
-    if (!Object.hasOwn(this.data, "clientID")) this.data.clientID = "";
-    if (!Object.hasOwn(this.data, "clientSecret")) this.data.clientSecret = "";
+    console.log("Data after loading: "+JSON.stringify(this.data));    
   }
 
   save()
   {
     localStorage.setItem(dataItem, JSON.stringify(this.data));
+    //console.log("Saving data: "+JSON.stringify(this.data));        
   }
 }
