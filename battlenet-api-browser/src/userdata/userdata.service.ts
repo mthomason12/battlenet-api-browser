@@ -17,7 +17,7 @@ class charDataStruct extends dataStruct
 
 class profileDataStruct extends dataStruct
 {
-  characters: charDataStruct = new charDataStruct();
+  characters: charDataStruct[] = [];
 }
 
 class apiDataStruct extends dataStruct
@@ -62,7 +62,8 @@ export class UserdataService {
       this.data.clientID = "";
       this.data.clientSecret = "";
     }
-    console.log("Data after loading: "+JSON.stringify(this.data));    
+    console.log("Data after loading: "+JSON.stringify(this.data));
+    console.dir(this.data);    
   }
 
   save()
