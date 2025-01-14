@@ -103,8 +103,8 @@ class profileDataStruct extends dataStruct
 
 class apiDataStruct extends dataStruct
 {
-  public: publicDataStruct = new publicDataStruct();
-  profile: profileDataStruct = new profileDataStruct();
+  wowpublic: publicDataStruct = new publicDataStruct();
+  wowprofile: profileDataStruct = new profileDataStruct();
 
   constructor()
   {
@@ -118,7 +118,7 @@ class apiDataStruct extends dataStruct
 
   override children(): dataStruct[]
   {
-    return super.children().concat([this.public, this.profile]);
+    return super.children().concat([this.wowpublic, this.wowprofile]);
   }
 }
 
@@ -172,14 +172,22 @@ export class UserdataService {
       }
     }).then (
       db => {
-        db.get('data','data').then (
+        db.get('data','wowpublic').then (
           res => {
             if (res != undefined)
             {
-              this.data.apiData = _.merge(this.data.apiData, JSON.parse(res));
+              this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res));
             }
           }
         );
+        db.get('data','wowprofile').then (
+          res => {
+            if (res != undefined)
+            {
+              this.data.apiData.wowprofile = _.merge(this.data.apiData.wowprofile, JSON.parse(res));
+            }
+          }
+        );        
       }
     );
     //console.log("Data after loading: "+JSON.stringify(this.data));
@@ -192,11 +200,12 @@ export class UserdataService {
     //save to indexedDB
     const db = openDB('data',1).then(
       db => {
-        db.put('data', JSON.stringify(this.data.apiData, jsonIgnore), 'data');
+        db.put('data', JSON.stringify(this.data.apiData.wowpublic, jsonIgnoreReplacer), 'wowpublic');
+        db.put('data', JSON.stringify(this.data.apiData.wowprofile, jsonIgnoreReplacer), 'wowprofile');        
       }
     );
     console.log("Saving data");
-    //console.log("Saving data: "+JSON.stringify(this.data.apiData));        
+    console.log("Saving data: "+JSON.stringify(this.data.apiData));        
   }
 };
 
