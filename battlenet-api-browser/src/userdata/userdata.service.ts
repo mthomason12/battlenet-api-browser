@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import _ from 'lodash';
 
 export class dataStruct {
   _name: string = 'unnamed';
@@ -133,16 +134,15 @@ export class UserdataService {
       {
         throw new Error("No data");
       }
-      //console.log("Incoming Data: "+JSON.stringify(json));    
-      this.data = Object.assign(new userDataStruct(), json);
+      //console.log("Incoming Data: "+JSON.stringify(json));  
+      this.data = _.merge(this.data, json)  
+      //this.data = Object.assign(new userDataStruct(), json);
     }
     catch
     {
       //initialize with blank data if corrupt or missing
       console.log("User data is corrupt or missing. Reinitializing with empty data.")   
       this.data = new userDataStruct();   
-      this.data.clientID = "";
-      this.data.clientSecret = "";
     }
     console.log("Data after loading: "+JSON.stringify(this.data));
     console.dir(this.data);    
