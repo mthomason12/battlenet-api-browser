@@ -1,9 +1,16 @@
+@if(data?.name()!='') {
 <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>{{data?.name()}}</mat-card-title>
       <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
     </mat-card-header>
     <mat-card-content>
-      <p>Lorum Ipsum Stuff</p>
+      <!--- present document data --->
     </mat-card-content>
+    <mat-card-actions>
+      @if(data?.hasData()) {
+        <button mat-raised-button (click)="reloadData()">Reload</button>
+      }
+    </mat-card-actions>
 </mat-card>
+}
