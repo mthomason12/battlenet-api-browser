@@ -18,20 +18,20 @@ export class SettingsComponent {
 
   constructor(private userdata: UserdataService)
   {
-    this.clientId = this.userdata.data.clientID;
-    this.clientSecret = this.userdata.data.clientSecret;
+    this.clientId = this.userdata.data.key.clientID;
+    this.clientSecret = this.userdata.data.key.clientSecret;
   }
 
   reset()
   {
-    this.clientId = this.userdata.data.clientID;
-    this.clientSecret = this.userdata.data.clientSecret;
+    this.clientId = this.userdata.data.key.clientID;
+    this.clientSecret = this.userdata.data.key.clientSecret;
   }
 
   save()
   {
-    this.userdata.data.clientID = this.clientId;
-    this.userdata.data.clientSecret = this.clientSecret;
+    this.userdata.data.key.clientID = this.clientId;
+    this.userdata.data.key.clientSecret = this.clientSecret;
     this.userdata.save();
   }
 }
