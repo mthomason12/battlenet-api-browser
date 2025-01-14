@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
+import { openDB, DBSchema } from 'idb';
 import _ from 'lodash';
 
 export class dataStruct {
-  _name: string = 'unnamed';
-  [key: string]: any;
-
   name(): string
   {
-    return this._name;
+    return "";
   }
 
   children(): dataStruct[]
@@ -18,24 +16,27 @@ export class dataStruct {
 
 export class dataDoc extends dataStruct
 {
+  _name: string = '';
+
   constructor(name: string)
   {
     super();
     this._name = name;
   }
+
+  override name(): string
+  {
+    return this._name;
+  }  
+
 }
 
 
 class achievementsDataDoc extends dataDoc
 {
-  constructor()
+  constructor ()
   {
     super("Achievements");
-  }
-
-  override name(): string
-  {
-    return "Achievements";
   }
 }
 
@@ -109,10 +110,15 @@ class apiDataStruct extends dataStruct
   }
 }
 
-class userDataStruct
+class appKeyStruct
 {
   clientID: string = "";
   clientSecret: string = "";
+}
+
+class userDataStruct
+{
+  key: appKeyStruct = new appKeyStruct();
   apiData: apiDataStruct = new apiDataStruct();
 }
 
@@ -125,8 +131,10 @@ export class UserdataService {
 
   constructor()
   {
-    console.log("Initializing Data Storage");
     //attempt to load existing data from localstorage
+    console.log("Initializing Data Storage");
+    console.log("Loading application key");
+    //load app keys first from LocalStorage
     try
     {
       var json = JSON.parse(localStorage.getItem(dataItem)!);
@@ -135,7 +143,7 @@ export class UserdataService {
         throw new Error("No data");
       }
       //console.log("Incoming Data: "+JSON.stringify(json));  
-      this.data = _.merge(this.data, json)  
+      this.data.key = _.merge(this.data.key, json)  
       //this.data = Object.assign(new userDataStruct(), json);
     }
     catch
@@ -144,13 +152,39 @@ export class UserdataService {
       console.log("User data is corrupt or missing. Reinitializing with empty data.")   
       this.data = new userDataStruct();   
     }
-    console.log("Data after loading: "+JSON.stringify(this.data));
+    //load saved api data from IndexedDB
+    console.log("Loading stored api data");
+    const db = openDB('data',1, {
+      upgrade(db) {
+        db.createObjectStore('data');
+      }
+    }).then (
+      db => {
+        db.get('data','data').then (
+          res => {
+            if (res != undefined)
+            {
+              this.data.apiData = _.merge(this.data.apiData, JSON.parse(res));
+            }
+          }
+        );
+      }
+    );
+    //console.log("Data after loading: "+JSON.stringify(this.data));
     console.dir(this.data);    
   }
 
   save()
   {
-    localStorage.setItem(dataItem, JSON.stringify(this.data));
-    //console.log("Saving data: "+JSON.stringify(this.data));        
+    localStorage.setItem(dataItem, JSON.stringify(this.data.key));
+    //save to indexedDB
+    const db = openDB('data',1).then(
+      db => {
+        db.put('data', JSON.stringify(this.data.apiData), 'data');
+      }
+    );
+    console.log("Saving data");
+    //console.log("Saving data: "+JSON.stringify(this.data.apiData));        
   }
-}
+};
+
