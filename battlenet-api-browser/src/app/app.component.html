@@ -6,7 +6,7 @@
 </mat-toolbar>
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav [mode]="'side'" fixedTopGap="56">
-    <app-apitree></app-apitree>    
+    <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
     <div class="buttons">
       <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
         <mat-icon>login</mat-icon>Connect
@@ -15,7 +15,8 @@
       <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content #content>
+  <mat-sidenav-content #content>  
     <router-outlet />
+    <app-browse #browse [data]="this.treedata"></app-browse>
   </mat-sidenav-content>
 </mat-sidenav-container>
