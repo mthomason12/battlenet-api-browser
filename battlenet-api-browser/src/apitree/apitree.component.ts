@@ -1,9 +1,9 @@
-import { Component, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { UserdataService, dataStruct } from '../userdata/userdata.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
@@ -16,8 +16,9 @@ import { UserdataService, dataStruct } from '../userdata/userdata.service';
 export class ApitreeComponent {
   //dataSource = TREE_DATA;
 
-  @Output()
-  selectedItem!: dataStruct;
+  @Output('valueChanged') changed = new EventEmitter<dataStruct>();
+
+  selectedItem: dataStruct | undefined;
 
   dataSource: dataStruct[];
 
@@ -32,7 +33,8 @@ export class ApitreeComponent {
 
   select(item: dataStruct)
   {
-    this.selectedItem = item;
-    console.log("Selected "+item.name());
+    //console.log("Selected "+item.name());     
+    this.selectedItem = item;   
+    this.changed.emit(this.selectedItem);
   }
 }
