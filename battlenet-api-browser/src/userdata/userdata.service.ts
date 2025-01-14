@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { openDB, DBSchema } from 'idb';
 import { jsonIgnoreReplacer, jsonIgnore } from 'json-ignore';
 import _ from 'lodash';
+import { ApiclientService } from '../apiclient/apiclient.service';
 
 export class dataStruct {
   name(): string
@@ -18,17 +19,28 @@ export class dataStruct {
   {
     return false;
   }
+
+  async reload(apiclient: ApiclientService)
+  {
+  }
+
+  setData(value: any)
+  {
+
+  }
 }
 
 export class dataDoc extends dataStruct
 {
   @jsonIgnore() 
-  _name: string = '';
+  _name: string;
+  data: any;
 
   constructor(name: string)
   {
     super();
     this._name = name;
+    this.data = {};
   }
 
   override name(): string
@@ -41,6 +53,11 @@ export class dataDoc extends dataStruct
     return true;
   }  
 
+  override setData(value: any)
+  {
+    this.data = value;
+  }
+
 }
 
 
@@ -49,6 +66,11 @@ class achievementsDataDoc extends dataDoc
   constructor ()
   {
     super("Achievements");
+  }
+
+  override async reload(apiclient: ApiclientService)
+  {
+    this.setData(await apiclient.achievementIndex());
   }
 }
 

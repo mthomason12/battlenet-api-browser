@@ -44,7 +44,7 @@ export class ApiclientService {
     return this.connected;
   }
 
-  achievementIndex()
+  achievementIndex(): Promise<any> | undefined
   {
     return this.query('/data/wow/achievement/index?namespace='+this.staticNamespace+'&locale='+this.locale);
   }

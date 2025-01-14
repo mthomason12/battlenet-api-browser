@@ -6,11 +6,28 @@
     </mat-card-header>
     <mat-card-content>
       <!--- present document data --->
+      <ul>
+        @if(data?.hasData() && $any(data).data  ) {
+          @for(item of $any(data).data | keyvalue; track item){
+            <li>
+              {{item.key}}:{{item.value}}
+            </li>
+          }
+        }
+      </ul>
     </mat-card-content>
     <mat-card-actions>
-      @if(data?.hasData()) {
-        <button mat-raised-button (click)="reloadData()">Reload</button>
+      @if(apiCli?.isConnected())
+      {
+        @if(data?.hasData()) {
+          <button mat-raised-button (click)="reload()">Reload</button>
+        }
+      }
+      @else 
+      {
+        <p>Connect to update data</p>
       }
     </mat-card-actions>
 </mat-card>
+} @else {
 }
