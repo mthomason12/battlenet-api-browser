@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { openDB, DBSchema } from 'idb';
+import { jsonIgnoreReplacer, jsonIgnore } from 'json-ignore';
 import _ from 'lodash';
 
 export class dataStruct {
@@ -21,6 +22,7 @@ export class dataStruct {
 
 export class dataDoc extends dataStruct
 {
+  @jsonIgnore() 
   _name: string = '';
 
   constructor(name: string)
@@ -190,7 +192,7 @@ export class UserdataService {
     //save to indexedDB
     const db = openDB('data',1).then(
       db => {
-        db.put('data', JSON.stringify(this.data.apiData), 'data');
+        db.put('data', JSON.stringify(this.data.apiData, jsonIgnore), 'data');
       }
     );
     console.log("Saving data");
