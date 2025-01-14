@@ -12,6 +12,11 @@ export class dataStruct {
   {
     return [];
   }
+
+  hasData(): boolean
+  {
+    return false;
+  }
 }
 
 export class dataDoc extends dataStruct
@@ -27,6 +32,11 @@ export class dataDoc extends dataStruct
   override name(): string
   {
     return this._name;
+  }  
+
+  override hasData(): boolean
+  {
+    return true;
   }  
 
 }
