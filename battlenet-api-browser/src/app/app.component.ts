@@ -20,7 +20,7 @@ import { BrowseComponent } from "../browse/browse.component";
 export class AppComponent {
   title = 'battlenet-api-browser';
   apiClient!: ApiclientService;
-  treedata: dataStruct = new dataStruct();
+  treedata: dataStruct | undefined = new dataStruct();
 
   constructor(private apiCli: ApiclientService, private userdata: UserdataService)
   {
@@ -38,5 +38,10 @@ export class AppComponent {
   treeChanged(item: dataStruct)
   {
     this.treedata = item;
+  }
+
+  hideData()
+  {
+    this.treedata = undefined;
   }
 }

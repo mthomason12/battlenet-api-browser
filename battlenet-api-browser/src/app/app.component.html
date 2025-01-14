@@ -11,8 +11,8 @@
       <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
         <mat-icon>login</mat-icon>Connect
       </button>    
-      <button mat-raised-button [routerLink]="'/login'"><mat-icon>login</mat-icon>Battle.net Login</button>
-      <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
+      <button mat-raised-button [routerLink]="'/login'" (click)="hideData()"><mat-icon>login</mat-icon>Battle.net Login</button>
+      <button mat-raised-button [routerLink]="'/settings'" (click)="hideData()"><mat-icon>settings</mat-icon>Settings</button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content #content>  
