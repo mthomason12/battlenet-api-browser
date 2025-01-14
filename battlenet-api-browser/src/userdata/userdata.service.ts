@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 export class dataStruct {
   _name: string = 'unnamed';
@@ -121,7 +120,7 @@ const dataItem: string = 'battlenet-api-data';
 @Injectable({  providedIn: 'root',})
 
 export class UserdataService {
-  public data: userDataStruct;
+  public data: userDataStruct = new userDataStruct();
 
   constructor()
   {
