@@ -30,6 +30,7 @@
     "blizzapi": "^2.6.5",
     "electron-squirrel-startup": "^1.0.1",
     "idb": "^8.0.1",
+    "json-ignore": "^0.4.0",
     "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
