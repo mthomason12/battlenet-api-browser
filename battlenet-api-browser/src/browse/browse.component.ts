@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { dataStruct } from '../userdata/userdata.service';
 
 @Component({
   selector: 'app-browse',
@@ -8,5 +9,5 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './browse.component.scss'
 })
 export class BrowseComponent {
-
+  @Input() data?: dataStruct;
 }
