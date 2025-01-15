@@ -49,4 +49,9 @@ export class ApiclientService {
     return this.query('/data/wow/achievement/index?namespace='+this.staticNamespace+'&locale='+this.locale);
   }
 
+  covenantIndex(): Promise<any> | undefined
+  {
+    return this.query('/data/wow/covenant/index?namespace='+this.staticNamespace+'&locale='+this.locale);
+  }  
+
 }

@@ -34,7 +34,7 @@ export class BrowseComponent {
   {
     if (this.data instanceof Object)
     {
-      console.log("Type is "+this.data.constructor.name);
+      //console.log("Type is "+this.data.constructor.name);
       if (this.data.constructor.name === type)
       {
         return true;

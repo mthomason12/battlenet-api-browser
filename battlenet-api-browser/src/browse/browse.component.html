@@ -41,7 +41,7 @@
   <ul>
   @for (item of subdata.achievements; track item)
   {
-    <li>{{item.id}}: {{item.name}}</li>
+    <li class="achievement"><button mat-raised-button>{{item.id}}: {{item.name}}</button></li>
   }
   </ul>
 </ng-template>

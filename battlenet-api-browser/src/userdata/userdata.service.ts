@@ -26,7 +26,10 @@ export class dataStruct {
 
   setData(value: any)
   {
+  }
 
+  postProcess()
+  {
   }
 }
 
@@ -59,10 +62,6 @@ export class dataDoc extends dataStruct
     this.postProcess();
   }
 
-  postProcess()
-  {
-  }
-
 }
 
 interface dataKey
@@ -70,11 +69,19 @@ interface dataKey
   href: string;
 }
 
-interface achievement
+interface dataItem
 {
   id: number;
   key: dataKey;
   name: string;
+}
+
+interface achievement extends dataItem
+{
+}
+
+interface covenant extends dataItem
+{
 }
 
 interface achievementsDataContainer
@@ -82,11 +89,17 @@ interface achievementsDataContainer
   achievements: achievement[];
 }
 
+interface covenantsDataContainer
+{
+  covenants: covenant[];
+}
+
 class achievementsDataDoc extends dataDoc
 {
   constructor ()
   {
     super("Achievements");
+    this.data.achievements = new Array();
   }
 
   override async reload(apiclient: ApiclientService)
@@ -96,13 +109,35 @@ class achievementsDataDoc extends dataDoc
 
   override postProcess()
   {
-    (this.data as achievementsDataContainer).achievements.sort(function(a:any, b:any){return a.year - b.year});
+    console.log("PostProcessing");
+    (this.data as achievementsDataContainer).achievements = (this.data as achievementsDataContainer).achievements.sort(function(a:any, b:any){return a.id - b.id});
+  }
+}
+
+class covenantsDataDoc extends dataDoc
+{
+  constructor ()
+  {
+    super("Covenants");
+    this.data.covenants = new Array();    
+  }
+
+  override async reload(apiclient: ApiclientService)
+  {
+    this.setData(await apiclient.covenantIndex());
+  }
+
+  override postProcess()
+  {
+    console.log("PostProcessing");
+    (this.data as covenantsDataContainer).covenants = (this.data as covenantsDataContainer).covenants.sort(function(a:any, b:any){return a.id - b.id});
   }
 }
 
 class publicDataStruct extends dataStruct
 {
   achievementData: achievementsDataDoc = new achievementsDataDoc();
+  covenantData: covenantsDataDoc = new covenantsDataDoc();
 
   override name(): string
   {
@@ -111,7 +146,7 @@ class publicDataStruct extends dataStruct
 
   override children(): dataStruct[]
   {
-    return super.children().concat([this.achievementData]);
+    return super.children().concat([this.achievementData, this.covenantData]);
   } 
 }
 

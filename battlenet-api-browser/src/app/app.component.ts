@@ -37,6 +37,7 @@ export class AppComponent {
 
   treeChanged(item: dataStruct)
   {
+    item.postProcess();
     this.treedata = item;
   }
 
