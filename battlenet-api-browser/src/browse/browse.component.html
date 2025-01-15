@@ -6,15 +6,11 @@
     </mat-card-header>
     <mat-card-content>
       <!--- present document data --->
-      <ul>
-        @if(data?.hasData() && $any(data).data  ) {
-          @for(item of $any(data).data | keyvalue; track item){
-            <li>
-              {{item.key}}:{{item.value}}
-            </li>
-          }
-        }
-      </ul>
+        <ng-container
+            [ngTemplateOutlet]="dataobject" 
+            [ngTemplateOutletContext]="{data:$any(data).data}">
+        >
+        </ng-container>
     </mat-card-content>
     <mat-card-actions>
       @if(apiCli?.isConnected())
@@ -31,3 +27,23 @@
 </mat-card>
 } @else {
 }
+
+<ng-template #dataobject>
+  <ul>
+    @for(item of data | keyvalue; track item){
+      @if (!item.key.startsWith('_')) {
+        <li>
+          <b>{{item.key}}</b>:
+          <ng-container
+            [ngTemplateOutlet]="(typeof item.value =='object') ? dataobject : dataitem"
+            [ngTemplateOutletContext]="{data:item.value}"
+          ></ng-container>
+        </li>
+      }
+    }
+  </ul>
+</ng-template>
+
+<ng-template #dataitem>
+  {{data}}
+</ng-template>
