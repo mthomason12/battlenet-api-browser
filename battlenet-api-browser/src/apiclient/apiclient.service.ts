@@ -39,6 +39,11 @@ export class ApiclientService {
     return this.blizzapi?.query(apiEndpoint, options);
   }
 
+  queryStatic(apiEndpoint: string, options: QueryOptions = {})
+  {
+    return this.blizzapi?.query(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, options);
+  }  
+
   isConnected(): boolean
   {
     return this.connected;
@@ -46,12 +51,12 @@ export class ApiclientService {
 
   achievementIndex(): Promise<any> | undefined
   {
-    return this.query('/data/wow/achievement/index?namespace='+this.staticNamespace+'&locale='+this.locale);
+    return this.queryStatic('/data/wow/achievement/index');
   }
 
   covenantIndex(): Promise<any> | undefined
   {
-    return this.query('/data/wow/covenant/index?namespace='+this.staticNamespace+'&locale='+this.locale);
+    return this.queryStatic('/data/wow/covenant/index');
   }  
 
 }
