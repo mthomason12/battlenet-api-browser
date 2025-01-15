@@ -8,7 +8,10 @@
         <!--- present document data --->
         @if(dataIs("achievementsDataDoc")) 
         {
-          <p>Achievements</p>
+          <ng-container
+              [ngTemplateOutlet]="achievementsobject" 
+              [ngTemplateOutletContext]="{$implicit: $any(data).data}">
+          </ng-container>
         }
         @else 
         {        
@@ -33,6 +36,15 @@
 </mat-card>
 } @else {
 }
+
+<ng-template #achievementsobject let-subdata>
+  <ul>
+  @for (item of subdata.achievements; track item)
+  {
+    <li>{{item.id}}: {{item.name}}</li>
+  }
+  </ul>
+</ng-template>
 
 <ng-template #dataobject let-subdata>
   <ul>
