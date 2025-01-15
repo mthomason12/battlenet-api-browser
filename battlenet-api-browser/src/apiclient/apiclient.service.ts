@@ -41,7 +41,7 @@ export class ApiclientService {
 
   queryStatic(apiEndpoint: string, options: QueryOptions = {})
   {
-    return this.blizzapi?.query(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, options);
+    return this.query(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, options);
   }  
 
   isConnected(): boolean
