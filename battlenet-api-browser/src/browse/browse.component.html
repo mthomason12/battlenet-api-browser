@@ -5,11 +5,10 @@
       <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
     </mat-card-header>
     <mat-card-content>
-      <!--- present document data --->
+        <!--- present document data --->
         <ng-container
             [ngTemplateOutlet]="dataobject" 
-            [ngTemplateOutletContext]="{data:$any(data).data}">
-        >
+            [ngTemplateOutletContext]="{$implicit: $any(data).data}">
         </ng-container>
     </mat-card-content>
     <mat-card-actions>
@@ -28,22 +27,22 @@
 } @else {
 }
 
-<ng-template #dataobject>
+<ng-template #dataobject let-subdata>
   <ul>
-    @for(item of data | keyvalue; track item){
-      @if (!item.key.startsWith('_')) {
+    @for(item of subdata | keyvalue; track item){
+      <!--@if (!item.key.startsWith('_')) {-->
         <li>
           <b>{{item.key}}</b>:
           <ng-container
             [ngTemplateOutlet]="(typeof item.value =='object') ? dataobject : dataitem"
-            [ngTemplateOutletContext]="{data:item.value}"
-          ></ng-container>
+            [ngTemplateOutletContext]="{$implicit: item.value}">
+          </ng-container>
         </li>
-      }
+      <!--}-->
     }
   </ul>
 </ng-template>
 
-<ng-template #dataitem>
-  {{data}}
+<ng-template #dataitem let-subdata>
+  {{subdata}}
 </ng-template>
