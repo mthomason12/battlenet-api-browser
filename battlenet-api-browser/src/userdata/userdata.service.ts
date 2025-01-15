@@ -56,10 +56,31 @@ export class dataDoc extends dataStruct
   override setData(value: any)
   {
     this.data = value;
+    this.postProcess();
+  }
+
+  postProcess()
+  {
   }
 
 }
 
+interface dataKey
+{
+  href: string;
+}
+
+interface achievement
+{
+  id: number;
+  key: dataKey;
+  name: string;
+}
+
+interface achievementsDataContainer
+{
+  achievements: achievement[];
+}
 
 class achievementsDataDoc extends dataDoc
 {
@@ -71,6 +92,11 @@ class achievementsDataDoc extends dataDoc
   override async reload(apiclient: ApiclientService)
   {
     this.setData(await apiclient.achievementIndex());
+  }
+
+  override postProcess()
+  {
+    (this.data as achievementsDataContainer).achievements.sort(function(a:any, b:any){return a.year - b.year});
   }
 }
 
