@@ -5,6 +5,14 @@ import _ from 'lodash';
 import { ApiclientService } from '../apiclient/apiclient.service';
 
 export class dataStruct {
+  @jsonIgnore()   
+  _path: string = "";
+
+  constructor (parentPath: string = "", ownPath: string = "")
+  {
+    this._path = parentPath+'/'+ownPath;
+  }
+
   name(): string
   {
     return "";
@@ -31,6 +39,11 @@ export class dataStruct {
   postProcess()
   {
   }
+
+  path(): string
+  {
+    return this._path;
+  }
 }
 
 export class dataDoc extends dataStruct
@@ -39,9 +52,9 @@ export class dataDoc extends dataStruct
   _name: string;
   data: any;
 
-  constructor(name: string)
+  constructor(parentPath: string, ownPath: string, name: string)
   {
-    super();
+    super(parentPath, ownPath);
     this._name = name;
     this.data = {};
   }
@@ -96,9 +109,9 @@ interface covenantsDataContainer
 
 class achievementsDataDoc extends dataDoc
 {
-  constructor ()
+  constructor (parentPath: string, ownPath: string)
   {
-    super("Achievements");
+    super(parentPath, ownPath, "Achievements");
     this.data.achievements = new Array();
   }
 
@@ -116,9 +129,9 @@ class achievementsDataDoc extends dataDoc
 
 class covenantsDataDoc extends dataDoc
 {
-  constructor ()
+  constructor (parentPath: string, ownPath: string)
   {
-    super("Covenants");
+    super(parentPath, ownPath,"Covenants");
     this.data.covenants = new Array();    
   }
 
@@ -136,8 +149,15 @@ class covenantsDataDoc extends dataDoc
 
 class publicDataStruct extends dataStruct
 {
-  achievementData: achievementsDataDoc = new achievementsDataDoc();
-  covenantData: covenantsDataDoc = new covenantsDataDoc();
+  achievementData: achievementsDataDoc;
+  covenantData: covenantsDataDoc;
+
+  constructor(parentPath: string, ownPath: string)
+  {
+    super(parentPath, ownPath);
+    this.achievementData = new achievementsDataDoc(this._path, "achievements");
+    this.covenantData = new covenantsDataDoc(this._path, "covenants");
+  }
 
   override name(): string
   {
@@ -158,6 +178,11 @@ class charsDataStruct extends dataStruct
 {
   items: charDataStruct[] = [];
 
+  constructor(parentPath: string, ownPath: string)
+  {
+    super(parentPath, ownPath);
+  }
+
   override name(): string
   {
     return "Characters";
@@ -171,7 +196,13 @@ class charsDataStruct extends dataStruct
 
 class profileDataStruct extends dataStruct
 {
-  characters: charsDataStruct = new charsDataStruct();
+  characters: charsDataStruct;
+
+  constructor(parentPath: string, ownPath: string)
+  {
+    super(parentPath, ownPath);
+    this.characters = new charsDataStruct(this._path, "characters");
+  }
 
   override name(): string
   {
@@ -186,12 +217,14 @@ class profileDataStruct extends dataStruct
 
 class apiDataStruct extends dataStruct
 {
-  wowpublic: publicDataStruct = new publicDataStruct();
-  wowprofile: profileDataStruct = new profileDataStruct();
+  wowpublic: publicDataStruct;
+  wowprofile: profileDataStruct;
 
   constructor()
   {
-    super();
+    super("","/");
+    this.wowpublic = new publicDataStruct(this._path,"public");
+    this.wowprofile = new profileDataStruct(this._path,"profile");
   }
 
   override name(): string
