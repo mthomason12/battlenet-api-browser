@@ -4,6 +4,7 @@ import { dataStruct } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
+import { isObject } from 'lodash';
 
 @Component({
   selector: 'app-browse',
@@ -27,5 +28,18 @@ export class BrowseComponent {
     {
       this.data.reload(this.apiClient);
     }
+  }
+
+  dataIs(type: string): boolean
+  {
+    if (this.data instanceof Object)
+    {
+      console.log("Type is "+this.data.constructor.name);
+      if (this.data.constructor.name === type)
+      {
+        return true;
+      }
+    }
+    return false;    
   }
 }

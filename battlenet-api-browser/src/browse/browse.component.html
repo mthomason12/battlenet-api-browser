@@ -1,4 +1,4 @@
-@if(data?.name()!='') {
+@if(data?.name()!='' && data !== undefined) {
 <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>{{data?.name()}}</mat-card-title>
@@ -6,10 +6,17 @@
     </mat-card-header>
     <mat-card-content>
         <!--- present document data --->
-        <ng-container
-            [ngTemplateOutlet]="dataobject" 
-            [ngTemplateOutletContext]="{$implicit: $any(data).data}">
-        </ng-container>
+        @if(dataIs("achievementsDataDoc")) 
+        {
+          <p>Achievements</p>
+        }
+        @else 
+        {        
+          <ng-container
+              [ngTemplateOutlet]="dataobject" 
+              [ngTemplateOutletContext]="{$implicit: $any(data).data}">
+          </ng-container>
+        }
     </mat-card-content>
     <mat-card-actions>
       @if(apiCli?.isConnected())
