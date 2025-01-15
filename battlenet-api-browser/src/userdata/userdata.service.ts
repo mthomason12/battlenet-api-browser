@@ -104,7 +104,7 @@ class achievementsDataDoc extends dataDoc
 
   override async reload(apiclient: ApiclientService)
   {
-    this.setData(await apiclient.achievementIndex());
+    this.setData(await apiclient.getAchievementIndex());
   }
 
   override postProcess()
@@ -124,7 +124,7 @@ class covenantsDataDoc extends dataDoc
 
   override async reload(apiclient: ApiclientService)
   {
-    this.setData(await apiclient.covenantIndex());
+    this.setData(await apiclient.getCovenantIndex());
   }
 
   override postProcess()

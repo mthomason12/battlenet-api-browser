@@ -49,12 +49,12 @@ export class ApiclientService {
     return this.connected;
   }
 
-  achievementIndex(): Promise<any> | undefined
+  getAchievementIndex(): Promise<any> | undefined
   {
     return this.queryStatic('/data/wow/achievement/index');
   }
 
-  covenantIndex(): Promise<any> | undefined
+  getCovenantIndex(): Promise<any> | undefined
   {
     return this.queryStatic('/data/wow/covenant/index');
   }  
