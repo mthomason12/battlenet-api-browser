@@ -6,8 +6,13 @@ import { AchievementsComponent } from '../browse/achievements/achievements.compo
 
 export const routes: Routes = [
     { path: 'browse', component: BrowseComponent, children: [
-        { path: 'achievements', component: AchievementsComponent},
-        { path: '**', component: undefined }
+        { path: 'public', children: [
+            { path: 'achievements', component: AchievementsComponent},
+            { path: '**', children: [] }
+        ]},
+        { path: 'profile', children: [
+            { path: '**', children: [] }
+        ]}        
     ]},     
     { path: 'settings', component: SettingsComponent },
     { path: 'auth', component: AuthComponent },
