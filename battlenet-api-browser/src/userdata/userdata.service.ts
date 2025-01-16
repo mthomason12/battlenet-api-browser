@@ -6,7 +6,7 @@ import { dataStruct } from './datastructs';
 import type { dataItem } from './datastructs';
 import { profileDataStruct } from './profile';
 import { publicDataStruct } from './gamedata';
-export { achievementsDataDoc } from './gamedata';
+export { achievementsDataDoc, covenantsDataDoc } from './gamedata';
 
 class apiDataStruct extends dataStruct
 {
