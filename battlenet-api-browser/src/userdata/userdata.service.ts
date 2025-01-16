@@ -4,7 +4,7 @@ import { jsonIgnoreReplacer, jsonIgnore } from 'json-ignore';
 import _, { now } from 'lodash';
 import { ApiclientService } from '../apiclient/apiclient.service';
 
-export class dataStruct {
+export abstract class dataStruct {
   @jsonIgnore()   
   _path: string = "";
 
@@ -31,13 +31,9 @@ export class dataStruct {
     return false;
   }
 
-  async reload(apiclient: ApiclientService)
+  async reload(_apiclient: ApiclientService)
   {
     this.postProcess();
-  }
-
-  setData(value: any)
-  {
   }
 
   postProcess()
@@ -50,7 +46,7 @@ export class dataStruct {
   }
 }
 
-export class dataDoc extends dataStruct
+abstract class dataDoc extends dataStruct
 {
   @jsonIgnore() 
   _name: string;
