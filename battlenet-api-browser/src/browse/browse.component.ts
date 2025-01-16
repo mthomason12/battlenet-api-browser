@@ -44,16 +44,4 @@ export class BrowseComponent {
     return this.data.getCurrent();
   }
 
-  dataIs(type: string): boolean
-  {
-    if (this.data.getCurrent() instanceof Object)
-    {
-      //console.log("Type is "+this.data.constructor.name);
-      if (this.data.getCurrent()!.constructor.name === type)
-      {
-        return true;
-      }
-    }
-    return false;    
-  }
 }
