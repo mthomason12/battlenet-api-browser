@@ -30,11 +30,10 @@ export class achievementsDataDoc extends dataDoc
     );
   }
 
-  override postProcess()
+  override doPostProcess()
   {
     console.log("PostProcessing");
     this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
-    super.postProcess();
   }
 }
 
@@ -57,11 +56,10 @@ export class covenantsDataDoc extends dataDoc
     );
   }
 
-  override postProcess()
+  override doPostProcess()
   {
     console.log("PostProcessing");
-    this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});
-    super.postProcess();    
+    this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});    
   }
 }
 

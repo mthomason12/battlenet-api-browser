@@ -36,6 +36,14 @@ export abstract class dataStruct {
 
   postProcess()
   {
+    this.doPostProcess();
+  }
+
+  /**
+   * Override in children with any post processing work that needs doing
+   */
+  doPostProcess()
+  {
   }
 
   path(): string
