@@ -101,7 +101,7 @@ export class UserdataService {
       }
     );
     //console.log("Data after loading: "+JSON.stringify(this.data));
-    console.dir(this.data);    
+    //console.dir(this.data);    
   }
 
   save()
@@ -114,7 +114,7 @@ export class UserdataService {
         db.put('data', JSON.stringify(this.data.apiData.wowprofile, jsonIgnoreReplacer), 'wowprofile');        
       }
     );
-    console.log("Saving data: "+JSON.stringify(this.data.apiData));        
+    //console.log("Saving data: "+JSON.stringify(this.data.apiData));        
   }
 
   setCurrent(data: dataStruct)
