@@ -34,9 +34,14 @@ export abstract class dataStruct {
     this.postProcess();
   }
 
+  checkLoaded(apiclient: ApiclientService)
+  {
+  }
+
   postProcess()
   {
     this.doPostProcess();
+    console.dir(this);    
   }
 
   /**
@@ -78,8 +83,26 @@ export abstract class dataDoc extends dataStruct
   override async reload(apiclient: ApiclientService)
   {
     super.reload(apiclient).then (
-      () => {this.lastupdate = now()}
+      () => {this.lastupdate = new Date().getTime()}
     )
+  }
+
+  override checkLoaded(apiclient: ApiclientService)
+  {
+    if (!this.isLoaded() && apiclient.isConnected())
+    {
+      this.reload(apiclient);
+    }
+  }
+
+  getLastUpdate(): Date
+  {
+    return new Date(this.lastupdate!);
+  }
+
+  isLoaded(): boolean
+  {
+    return (this.lastupdate !== undefined);
   }
 
 }
