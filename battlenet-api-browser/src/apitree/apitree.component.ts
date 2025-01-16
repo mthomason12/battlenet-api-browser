@@ -35,6 +35,7 @@ export class ApitreeComponent {
   {
     //console.log("Selected "+item.name());     
     this.selectedItem = item;   
+    this.dataService.setCurrent(item);
     this.changed.emit(this.selectedItem);
   }
 }
