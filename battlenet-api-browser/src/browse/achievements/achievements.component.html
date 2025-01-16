@@ -1,6 +1,6 @@
 <ul>
     @for (item of currentData().achievements ; track item)
     {
-      <li class="achievement"><button mat-raised-button>{{item.id}}: {{item.name}}</button></li>
+      <li class="achievement"><a mat-raised-button routerLink="/browse/public/achievement/{{item.id}}">{{item.id}}: {{item.name}}</a></li>
     }
 </ul>
