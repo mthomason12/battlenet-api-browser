@@ -9,17 +9,35 @@
         <router-outlet (activate)="activateEvent($event)"></router-outlet>
       </mat-card-content>
       <mat-card-actions>
-        @if(apiCli?.isConnected())
+        @if(currentData()?.hasData()) 
         {
-          @if(currentData()?.hasData()) {
-            <button mat-raised-button (click)="reload()">Reload</button>
+          @if(apiCli?.isConnected())
+          {
+              <button mat-raised-button (click)="reload()">Reload</button>
           }
-        }
+          @else 
+          {
+            <p>Connect to update data</p>
+          }          
+        }        
         @else 
         {
-          <p>Connect to update data</p>
+          <p>Browse to a node that has data</p>
         }
       </mat-card-actions>
+      <mat-card-footer>
+        @if(currentDataDoc()?.hasData())
+        {
+          @if (currentDataDoc()?.isLoaded())
+          {
+            <p>Data last updated: {{ currentDataDoc()?.getLastUpdate() }}</p>
+          }
+          @else
+          {
+            <p>Data not loaded</p>
+          }          
+        } 
+      </mat-card-footer>      
   </mat-card>
 
 

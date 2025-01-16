@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { UserdataService } from '../userdata/userdata.service';
-import { dataStruct } from '../userdata/datastructs';
+import { dataStruct, dataDoc } from '../userdata/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -36,12 +36,18 @@ export class BrowseComponent {
   activateEvent(child: AbstractBrowseChildComponent)
   {
     this.title = child.currentData()?.name() ?? "";
+    this.data.getCurrent()?.checkLoaded(this.apiCli!);    
     this.cdr.detectChanges();    
   }
 
   currentData(): dataStruct | undefined
   {
     return this.data.getCurrent();
+  }
+
+  currentDataDoc(): dataDoc | undefined
+  {
+    return this.data.getCurrent() as dataDoc;
   }
 
 }
