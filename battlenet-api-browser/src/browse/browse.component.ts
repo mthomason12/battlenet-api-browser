@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { dataStruct } from '../userdata/userdata.service';
+import { dataStruct, UserdataService } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -13,11 +13,10 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './browse.component.scss'
 })
 export class BrowseComponent {
-  @Input() data?: dataStruct;
 
   apiCli?: ApiclientService;
 
-  constructor(private apiClient: ApiclientService)
+  constructor(private apiClient: ApiclientService, protected data: UserdataService)
   {
     this.apiCli = apiClient;
   }
@@ -26,16 +25,21 @@ export class BrowseComponent {
   {
     if (this.data !== undefined)
     {
-      this.data.reload(this.apiClient);
+      this.data.getCurrent()?.reload(this.apiClient);
     }
+  }
+
+  currentData(): dataStruct | undefined
+  {
+    return this.data.getCurrent();
   }
 
   dataIs(type: string): boolean
   {
-    if (this.data instanceof Object)
+    if (this.data.getCurrent() instanceof Object)
     {
       //console.log("Type is "+this.data.constructor.name);
-      if (this.data.constructor.name === type)
+      if (this.data.getCurrent()!.constructor.name === type)
       {
         return true;
       }
