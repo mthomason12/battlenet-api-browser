@@ -24,7 +24,7 @@ export class achievementsDataDoc extends dataDoc
   {
     await apiclient.getAchievementIndex()?.then (
       (data: any) => {
-        this.achievements = data;
+        this.achievements = data.achievements;
         super.reload(apiclient);
       }
     );
@@ -32,7 +32,6 @@ export class achievementsDataDoc extends dataDoc
 
   override doPostProcess()
   {
-    console.log("PostProcessing");
     this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
   }
 }
@@ -50,7 +49,7 @@ export class covenantsDataDoc extends dataDoc
   {
     await apiclient.getCovenantIndex()?.then (
       (data: any) => {
-        this.covenants = data;
+        this.covenants = data.covenants;
         super.reload(apiclient);
       }
     );
@@ -58,7 +57,6 @@ export class covenantsDataDoc extends dataDoc
 
   override doPostProcess()
   {
-    console.log("PostProcessing");
     this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});    
   }
 }
