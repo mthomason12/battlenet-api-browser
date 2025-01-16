@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { dataStruct, UserdataService } from '../userdata/userdata.service';
+import { UserdataService } from '../userdata/userdata.service';
+import { dataStruct } from '../userdata/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';

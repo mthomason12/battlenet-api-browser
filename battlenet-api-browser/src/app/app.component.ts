@@ -7,7 +7,8 @@ import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ApitreeComponent } from "../apitree/apitree.component";
 import { ApiclientService } from '../apiclient/apiclient.service';
-import { dataStruct, UserdataService } from '../userdata/userdata.service';
+import { UserdataService } from '../userdata/userdata.service';
+import { dataStruct } from '../userdata/datastructs';
 
 @Component({
   selector: 'app-root',

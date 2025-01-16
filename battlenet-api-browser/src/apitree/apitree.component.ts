@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { UserdataService, dataStruct } from '../userdata/userdata.service';
+import { UserdataService } from '../userdata/userdata.service';
+import { dataStruct } from '../userdata/datastructs';
 import { RouterLink } from '@angular/router';
 
 
