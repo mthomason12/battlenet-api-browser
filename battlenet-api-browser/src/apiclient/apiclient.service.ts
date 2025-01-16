@@ -54,6 +54,11 @@ export class ApiclientService {
     return this.queryStatic('/data/wow/achievement/index');
   }
 
+  getAchievement(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/achievement/${id}`);
+  }
+
   getCovenantIndex(): Promise<any> | undefined
   {
     return this.queryStatic('/data/wow/covenant/index');
