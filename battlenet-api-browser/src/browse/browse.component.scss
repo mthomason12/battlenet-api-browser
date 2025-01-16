@@ -5,7 +5,12 @@ mat-card {
     overflow: hidden;
   }
   
-  mat-card-content {
-    max-height: 100%;
-    overflow: auto;
-  }
+mat-card-content {
+  max-height: 100%;
+  overflow: auto;
+}
+
+mat-card-footer {
+  padding-left: 8px;
+  padding-right: 8px;
+}
