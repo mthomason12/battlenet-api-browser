@@ -11,6 +11,7 @@ export class AbstractBrowseChildComponent {
 
   constructor(protected data: UserdataService)
   {
+    this.data.setCurrent(this.currentData()!);
   }
 
   currentData(): dataStruct | undefined

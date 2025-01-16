@@ -10,7 +10,10 @@ export class dataStruct {
 
   constructor (parentPath: string = "", ownPath: string = "")
   {
-    this._path = parentPath+'/'+ownPath;
+    this._path = parentPath;
+    if (!this._path.endsWith('/'))
+      this._path += '/';
+    this._path += ownPath;
   }
 
   name(): string
@@ -30,6 +33,7 @@ export class dataStruct {
 
   async reload(apiclient: ApiclientService)
   {
+    this.postProcess();
   }
 
   setData(value: any)
@@ -50,13 +54,11 @@ export class dataDoc extends dataStruct
 {
   @jsonIgnore() 
   _name: string;
-  data: any;
 
   constructor(parentPath: string, ownPath: string, name: string)
   {
     super(parentPath, ownPath);
     this._name = name;
-    this.data = {};
   }
 
   override name(): string
@@ -68,12 +70,6 @@ export class dataDoc extends dataStruct
   {
     return true;
   }  
-
-  override setData(value: any)
-  {
-    this.data = value;
-    this.postProcess();
-  }
 
 }
 
@@ -97,53 +93,48 @@ interface covenant extends dataItem
 {
 }
 
-interface achievementsDataContainer
-{
-  achievements: achievement[];
-}
-
-interface covenantsDataContainer
-{
-  covenants: covenant[];
-}
 
 export class achievementsDataDoc extends dataDoc
 {
+  achievements: achievement[] = new Array();
+
   constructor (parentPath: string, ownPath: string)
   {
     super(parentPath, ownPath, "Achievements");
-    this.data.achievements = new Array();
   }
 
   override async reload(apiclient: ApiclientService)
   {
-    this.setData(await apiclient.getAchievementIndex());
+    this.achievements =  (await apiclient.getAchievementIndex())?.achievements;
+    await super.reload(apiclient);
   }
 
   override postProcess()
   {
     console.log("PostProcessing");
-    (this.data as achievementsDataContainer).achievements = (this.data as achievementsDataContainer).achievements.sort(function(a:any, b:any){return a.id - b.id});
+    this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
   }
 }
 
 export class covenantsDataDoc extends dataDoc
 {
+  covenants: covenant[] = new Array();
+
   constructor (parentPath: string, ownPath: string)
   {
-    super(parentPath, ownPath,"Covenants");
-    this.data.covenants = new Array();    
+    super(parentPath, ownPath,"Covenants");   
   }
 
   override async reload(apiclient: ApiclientService)
   {
     this.setData(await apiclient.getCovenantIndex());
+    await super.reload(apiclient);
   }
 
   override postProcess()
   {
     console.log("PostProcessing");
-    (this.data as covenantsDataContainer).covenants = (this.data as covenantsDataContainer).covenants.sort(function(a:any, b:any){return a.id - b.id});
+    this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});
   }
 }
 
@@ -222,7 +213,7 @@ class apiDataStruct extends dataStruct
 
   constructor()
   {
-    super("","/");
+    super("","");
     this.wowpublic = new publicDataStruct(this._path,"public");
     this.wowprofile = new profileDataStruct(this._path,"profile");
   }

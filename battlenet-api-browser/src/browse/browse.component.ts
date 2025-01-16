@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { dataStruct, UserdataService } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { AbstractBrowseChildComponent } from './abstract-browse-child/abstract-browse-child.component';
 
 @Component({
   selector: 'app-browse',
@@ -15,8 +16,10 @@ import { RouterOutlet } from '@angular/router';
 export class BrowseComponent {
 
   apiCli?: ApiclientService;
+  currentChild?: AbstractBrowseChildComponent;
+  title: string="";
 
-  constructor(private apiClient: ApiclientService, protected data: UserdataService)
+  constructor(private apiClient: ApiclientService, protected data: UserdataService, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef)
   {
     this.apiCli = apiClient;
   }
@@ -27,6 +30,12 @@ export class BrowseComponent {
     {
       this.data.getCurrent()?.reload(this.apiClient);
     }
+  }
+
+  activateEvent(child: AbstractBrowseChildComponent)
+  {
+    this.title = child.currentData()?.name() ?? "";
+    this.cdr.detectChanges();    
   }
 
   currentData(): dataStruct | undefined

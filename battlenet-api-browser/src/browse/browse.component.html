@@ -1,27 +1,28 @@
-@if(currentData()?.name()!='' && data !== undefined) {
-<mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>{{currentData()?.name()}}</mat-card-title>
-      <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
-    </mat-card-header>
-    <mat-card-content>
-      <router-outlet></router-outlet>
-    </mat-card-content>
-    <mat-card-actions>
-      @if(apiCli?.isConnected())
-      {
-        @if(currentData()?.hasData()) {
-          <button mat-raised-button (click)="reload()">Reload</button>
+
+
+  <mat-card appearance="outlined">
+      <mat-card-header>
+          <mat-card-title>{{title}}</mat-card-title>
+        <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
+      </mat-card-header>
+      <mat-card-content>
+        <router-outlet (activate)="activateEvent($event)"></router-outlet>
+      </mat-card-content>
+      <mat-card-actions>
+        @if(apiCli?.isConnected())
+        {
+          @if(currentData()?.hasData()) {
+            <button mat-raised-button (click)="reload()">Reload</button>
+          }
         }
-      }
-      @else 
-      {
-        <p>Connect to update data</p>
-      }
-    </mat-card-actions>
-</mat-card>
-} @else {
-}
+        @else 
+        {
+          <p>Connect to update data</p>
+        }
+      </mat-card-actions>
+  </mat-card>
+
+
 
 
 <!--ng-template #dataobject let-subdata>

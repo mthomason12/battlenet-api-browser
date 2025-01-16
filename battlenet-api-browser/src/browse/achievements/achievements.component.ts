@@ -12,9 +12,9 @@ import { achievementsDataDoc } from '../../userdata/userdata.service';
 
 export class AchievementsComponent extends AbstractBrowseChildComponent {
 
-  override currentData(): achievementsDataDoc | undefined
+  override currentData(): achievementsDataDoc
   {
-    return this.data.getCurrent() as achievementsDataDoc;
+    return this.data.data.apiData.wowpublic.achievementData;
   }
 
 }
