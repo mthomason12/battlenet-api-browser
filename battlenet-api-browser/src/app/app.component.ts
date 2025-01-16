@@ -19,7 +19,7 @@ import { dataStruct, UserdataService } from '../userdata/userdata.service';
 export class AppComponent {
   title = 'battlenet-api-browser';
   apiClient!: ApiclientService;
-  treedata: dataStruct | undefined = new dataStruct();
+  treedata: dataStruct | undefined;
 
   constructor(private apiCli: ApiclientService, private userdata: UserdataService)
   {
