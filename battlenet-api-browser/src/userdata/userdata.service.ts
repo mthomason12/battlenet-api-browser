@@ -55,6 +55,8 @@ export class dataDoc extends dataStruct
   @jsonIgnore() 
   _name: string;
 
+  lastupdate: Date | undefined;
+
   constructor(parentPath: string, ownPath: string, name: string)
   {
     super(parentPath, ownPath);
