@@ -12,7 +12,8 @@ export const routes: Routes = [
         ]},
         { path: 'profile', children: [
             { path: '**', children: [] }
-        ]}        
+        ]},       
+        { path: '**', children: [] }
     ]},     
     { path: 'settings', component: SettingsComponent },
     { path: 'auth', component: AuthComponent },
