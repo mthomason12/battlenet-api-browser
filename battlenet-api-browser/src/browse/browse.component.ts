@@ -4,10 +4,11 @@ import { dataStruct } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-browse',
-  imports: [ MatCardModule, MatButtonModule, CommonModule ],
+  imports: [ MatCardModule, MatButtonModule, CommonModule, RouterOutlet ],
   templateUrl: './browse.component.html',
   styleUrl: './browse.component.scss'
 })
