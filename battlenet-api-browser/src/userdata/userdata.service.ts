@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { openDB, DBSchema } from 'idb';
 import { jsonIgnoreReplacer, jsonIgnore } from 'json-ignore';
-import _ from 'lodash';
+import _, { now } from 'lodash';
 import { ApiclientService } from '../apiclient/apiclient.service';
 
 export class dataStruct {
@@ -55,7 +55,7 @@ export class dataDoc extends dataStruct
   @jsonIgnore() 
   _name: string;
 
-  lastupdate: Date | undefined;
+  lastupdate: number | undefined;
 
   constructor(parentPath: string, ownPath: string, name: string)
   {
@@ -72,6 +72,13 @@ export class dataDoc extends dataStruct
   {
     return true;
   }  
+
+  override async reload(apiclient: ApiclientService)
+  {
+    super.reload(apiclient).then (
+      () => {this.lastupdate = now()}
+    )
+  }
 
 }
 
@@ -107,8 +114,12 @@ export class achievementsDataDoc extends dataDoc
 
   override async reload(apiclient: ApiclientService)
   {
-    this.achievements =  (await apiclient.getAchievementIndex())?.achievements;
-    await super.reload(apiclient);
+    await apiclient.getAchievementIndex()?.then (
+      (data: any) => {
+        this.achievements = data;
+        super.reload(apiclient);
+      }
+    );
   }
 
   override postProcess()
@@ -129,8 +140,12 @@ export class covenantsDataDoc extends dataDoc
 
   override async reload(apiclient: ApiclientService)
   {
-    this.setData(await apiclient.getCovenantIndex());
-    await super.reload(apiclient);
+    await apiclient.getCovenantIndex()?.then (
+      (data: any) => {
+        this.covenants = data;
+        super.reload(apiclient);
+      }
+    );
   }
 
   override postProcess()
@@ -314,7 +329,6 @@ export class UserdataService {
         db.put('data', JSON.stringify(this.data.apiData.wowprofile, jsonIgnoreReplacer), 'wowprofile');        
       }
     );
-    console.log("Saving data");
     console.log("Saving data: "+JSON.stringify(this.data.apiData));        
   }
 
