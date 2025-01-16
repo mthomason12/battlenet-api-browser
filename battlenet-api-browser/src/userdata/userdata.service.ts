@@ -6,6 +6,7 @@ import { dataStruct } from './datastructs';
 import type { dataItem } from './datastructs';
 import { profileDataStruct } from './profile';
 import { publicDataStruct } from './gamedata';
+export { achievementsDataDoc } from './gamedata';
 
 class apiDataStruct extends dataStruct
 {
@@ -126,4 +127,3 @@ export class UserdataService {
     return this.currentData;
   }
 };
-
