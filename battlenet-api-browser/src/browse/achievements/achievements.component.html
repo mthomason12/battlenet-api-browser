@@ -1,5 +1,5 @@
 <ul>
-    @for (item of data.achievements; track item)
+    @for (item of currentData()?.data.achievements; track item)
     {
       <li class="achievement"><button mat-raised-button>{{item.id}}: {{item.name}}</button></li>
     }
