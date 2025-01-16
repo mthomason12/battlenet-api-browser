@@ -8,12 +8,11 @@ import { MatListModule } from '@angular/material/list';
 import { ApitreeComponent } from "../apitree/apitree.component";
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { dataStruct, UserdataService } from '../userdata/userdata.service';
-import { BrowseComponent } from "../browse/browse.component";
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule,
-    ApitreeComponent, RouterLink, BrowseComponent],
+    ApitreeComponent, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
