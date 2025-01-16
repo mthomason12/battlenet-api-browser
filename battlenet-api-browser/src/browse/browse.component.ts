@@ -4,7 +4,6 @@ import { dataStruct } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
-import { isObject } from 'lodash';
 
 @Component({
   selector: 'app-browse',
