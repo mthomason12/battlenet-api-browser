@@ -107,7 +107,7 @@ interface covenantsDataContainer
   covenants: covenant[];
 }
 
-class achievementsDataDoc extends dataDoc
+export class achievementsDataDoc extends dataDoc
 {
   constructor (parentPath: string, ownPath: string)
   {
@@ -127,7 +127,7 @@ class achievementsDataDoc extends dataDoc
   }
 }
 
-class covenantsDataDoc extends dataDoc
+export class covenantsDataDoc extends dataDoc
 {
   constructor (parentPath: string, ownPath: string)
   {
@@ -256,6 +256,7 @@ const dataItem: string = 'battlenet-api-data';
 
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
+  currentData?: dataStruct;
 
   constructor()
   {
@@ -322,6 +323,16 @@ export class UserdataService {
     );
     console.log("Saving data");
     console.log("Saving data: "+JSON.stringify(this.data.apiData));        
+  }
+
+  setCurrent(data: dataStruct)
+  {
+    this.currentData = data;
+  }
+
+  getCurrent(): dataStruct | undefined
+  {
+    return this.currentData;
   }
 };
 
