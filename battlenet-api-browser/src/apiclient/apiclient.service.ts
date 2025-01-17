@@ -64,4 +64,9 @@ export class ApiclientService {
     return this.queryStatic('/data/wow/covenant/index');
   }  
 
+  getCovenant(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/covenant/${id}`);
+  }  
+
 }
