@@ -27,6 +27,7 @@
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@badcafe/jsonizer": "^9.0.3",
     "@oauth-everything/passport-battlenet": "^1.0.1",
     "blizzapi": "^2.6.5",
     "electron-squirrel-startup": "^1.0.1",
