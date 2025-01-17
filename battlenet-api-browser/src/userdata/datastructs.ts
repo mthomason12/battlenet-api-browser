@@ -3,8 +3,6 @@ import { jsonIgnore } from 'json-ignore';
 import _, { now } from 'lodash';
 
 export abstract class dataStruct {
-  @jsonIgnore()   
-  _path: string = "";
   @jsonIgnore()
   _parent?: dataStruct;
 
