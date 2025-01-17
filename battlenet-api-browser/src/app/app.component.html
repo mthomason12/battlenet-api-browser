@@ -5,7 +5,7 @@
   <span>Battle.net API Browser</span>
 </mat-toolbar>
 <mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav [mode]="'side'" fixedTopGap="56">
+  <mat-sidenav #sidenav [mode]="'side'" [opened]="true"  fixedTopGap="56">
     <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
     <div class="buttons">
       <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
