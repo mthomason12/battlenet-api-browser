@@ -57,7 +57,7 @@ export abstract class dataStruct {
 
   path(): string
   {
-    return this._parent?.path()+"/"+this.myPath();
+    return (this._parent?.path() ?? "")+"/"+this.myPath();
   }
 }
 
