@@ -57,6 +57,31 @@ export abstract class dataStruct {
   }
 }
 
+class KeyArray<T>
+{
+  [key: string]: T;
+}
+
+export abstract class dataDocArray<T>
+{
+  members: KeyArray<T> = {};
+
+  insert(key: string, data:T)
+  {
+    this.members[key] = data;
+  }
+
+  delete(key:string)
+  {
+    delete this.members[key];
+  }
+
+  get(key:string):T
+  {
+    return this.members[key];
+  }
+}
+
 export abstract class dataDoc extends dataStruct
 {
   @jsonIgnore() 
@@ -117,4 +142,5 @@ export interface dataItem
     id: number;
     key: dataKey;
     name: string;
+    data?: any;
 }
