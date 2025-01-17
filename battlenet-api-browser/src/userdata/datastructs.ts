@@ -5,13 +5,12 @@ import _, { now } from 'lodash';
 export abstract class dataStruct {
   @jsonIgnore()   
   _path: string = "";
+  @jsonIgnore()
+  _parent?: dataStruct;
 
-  constructor (parentPath: string = "", ownPath: string = "")
+  constructor (parent?: dataStruct)
   {
-    this._path = parentPath;
-    if (!this._path.endsWith('/'))
-      this._path += '/';
-    this._path += ownPath;
+    this._parent = parent;
   }
 
   name(): string
@@ -51,36 +50,17 @@ export abstract class dataStruct {
   {
   }
 
+  myPath(): string
+  {
+    return "";
+  }
+
   path(): string
   {
-    return this._path;
+    return this._parent?.path()+"/"+this.myPath();
   }
 }
 
-class KeyArray<T>
-{
-  [key: string]: T;
-}
-
-export abstract class dataDocArray<T>
-{
-  members: KeyArray<T> = {};
-
-  insert(key: string, data:T)
-  {
-    this.members[key] = data;
-  }
-
-  delete(key:string)
-  {
-    delete this.members[key];
-  }
-
-  get(key:string):T
-  {
-    return this.members[key];
-  }
-}
 
 export abstract class dataDoc extends dataStruct
 {
@@ -89,9 +69,9 @@ export abstract class dataDoc extends dataStruct
 
   lastupdate: number | undefined;
 
-  constructor(parentPath: string, ownPath: string, name: string)
+  constructor(parent: dataStruct, name: string)
   {
-    super(parentPath, ownPath);
+    super(parent);
     this._name = name;
   }
 

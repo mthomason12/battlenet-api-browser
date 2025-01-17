@@ -1,23 +1,36 @@
 import { dataDoc, dataStruct } from './datastructs';
 import type { dataItem } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
+import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
-interface achievement extends dataItem
+@Reviver<achievementDataDoc>({
+  '.': Jsonizer.Self.assign(achievementDataDoc)
+})
+class achievementDataDoc extends dataDoc
 {
-}
+  id: number;
+  title: string;
 
-interface covenant extends dataItem
-{
+  constructor (parent: dataStruct, id: number, title: string)
+  {
+    super(parent,"Achievement: "+title);   
+    this.id = id;
+    this.title = title;
+  }  
+
+  override myPath(): string {
+      return this.id.toString();
+  }
 }
 
 
 export class achievementsDataDoc extends dataDoc
 {
-  achievements: achievement[] = new Array();
+  achievements: achievementDataDoc[] = new Array();
 
-  constructor (parentPath: string, ownPath: string)
+  constructor (parent: dataStruct)
   {
-    super(parentPath, ownPath, "Achievements");
+    super(parent, "Achievements");
   }
 
   override async reload(apiclient: ApiclientService)
@@ -30,19 +43,50 @@ export class achievementsDataDoc extends dataDoc
     );
   }
 
+  override myPath(): string {
+      return "/achievements";
+  }
+
   override doPostProcess()
   {
     this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
   }
 }
 
+@Reviver<covenantDataDoc>({
+  '.': Jsonizer.Self.assign(covenantDataDoc)
+})
+class covenantDataDoc extends dataDoc
+{
+  id: number;
+  title: string;
+
+  constructor (parent: dataStruct, id: number, title: string)
+  {
+    super(parent,"Covenant: "+title);   
+    this.id = id;
+    this.title = title;
+  }  
+
+  override myPath(): string {
+      return this.id.toString();
+  }
+}
+
+
+@Reviver<covenantsDataDoc>({
+  '.': Jsonizer.Self.assign(covenantsDataDoc),
+  covenants: {
+    '*': covenantDataDoc
+  }
+})
 export class covenantsDataDoc extends dataDoc
 {
-  covenants: covenant[] = new Array();
+  covenants: covenantDataDoc[] = new Array();
 
-  constructor (parentPath: string, ownPath: string)
+  constructor (parent: dataStruct)
   {
-    super(parentPath, ownPath,"Covenants");   
+    super(parent,"Covenants");   
   }
 
   override async reload(apiclient: ApiclientService)
@@ -59,18 +103,27 @@ export class covenantsDataDoc extends dataDoc
   {
     this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});    
   }
+
+  override myPath(): string {
+      return "covenants";
+  }
 }
 
+@Reviver<publicDataStruct>({
+  '.': Jsonizer.Self.assign(publicDataStruct),
+  achievementData: achievementsDataDoc,
+  covenantData: covenantsDataDoc
+})
 export class publicDataStruct extends dataStruct
 {
   achievementData: achievementsDataDoc;
   covenantData: covenantsDataDoc;
 
-  constructor(parentPath: string, ownPath: string)
+  constructor(parent: dataStruct)
   {
-    super(parentPath, ownPath);
-    this.achievementData = new achievementsDataDoc(this._path, "achievements");
-    this.covenantData = new covenantsDataDoc(this._path, "covenants");
+    super(parent);
+    this.achievementData = new achievementsDataDoc(this);
+    this.covenantData = new covenantsDataDoc(this);
   }
 
   override name(): string
@@ -82,4 +135,8 @@ export class publicDataStruct extends dataStruct
   {
     return super.children().concat([this.achievementData, this.covenantData]);
   } 
+
+  override myPath(): string {
+      return "public";
+  }
 }

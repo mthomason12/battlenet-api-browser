@@ -8,9 +8,9 @@ export class charsDataStruct extends dataStruct
 {
   items: charDataStruct[] = [];
 
-  constructor(parentPath: string, ownPath: string)
+  constructor(parent: dataStruct)
   {
-    super(parentPath, ownPath);
+    super(parent);
   }
 
   override name(): string
@@ -22,16 +22,20 @@ export class charsDataStruct extends dataStruct
   {
     return this.items;
   }    
+
+  override myPath(): string {
+      return "characters";
+  }
 }
 
 export class profileDataStruct extends dataStruct
 {
   characters: charsDataStruct;
 
-  constructor(parentPath: string, ownPath: string)
+  constructor(parent: dataStruct)
   {
-    super(parentPath, ownPath);
-    this.characters = new charsDataStruct(this._path, "characters");
+    super(parent);
+    this.characters = new charsDataStruct(this);
   }
 
   override name(): string
@@ -43,4 +47,8 @@ export class profileDataStruct extends dataStruct
   {
     return super.children().concat([this.characters]);
   }  
+
+  override myPath(): string {
+      return "profile";
+  }
 }

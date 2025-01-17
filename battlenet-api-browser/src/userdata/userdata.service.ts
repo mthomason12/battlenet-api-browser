@@ -15,9 +15,9 @@ class apiDataStruct extends dataStruct
 
   constructor()
   {
-    super("","");
-    this.wowpublic = new publicDataStruct(this._path,"public");
-    this.wowprofile = new profileDataStruct(this._path,"profile");
+    super(undefined);
+    this.wowpublic = new publicDataStruct(this);
+    this.wowprofile = new profileDataStruct(this);
   }
 
   override name(): string
@@ -28,6 +28,10 @@ class apiDataStruct extends dataStruct
   override children(): dataStruct[]
   {
     return super.children().concat([this.wowpublic, this.wowprofile]);
+  }
+
+  override myPath(): string {
+      return "";
   }
 }
 
