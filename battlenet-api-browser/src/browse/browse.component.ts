@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { UserdataService } from '../userdata/userdata.service';
 import { dataStruct, dataDoc } from '../model/datastructs';
@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
-import { AbstractBrowseChildComponent } from './abstract-browse-child/abstract-browse-child.component';
 
 @Component({
   selector: 'app-browse',
@@ -14,31 +13,44 @@ import { AbstractBrowseChildComponent } from './abstract-browse-child/abstract-b
   templateUrl: './browse.component.html',
   styleUrl: './browse.component.scss'
 })
-export class BrowseComponent {
+export class BrowseComponent implements OnInit, OnDestroy {
 
   apiCli?: ApiclientService;
-  currentChild?: AbstractBrowseChildComponent;
+  
 
   constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   {
     this.apiCli = apiClient;
-    router.events.subscribe((event: Event) => {
+    
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event: Event) => {
       if (event.type == EventType.NavigationEnd)
       {   
         this.cdr.detectChanges();  
       }
     });
-    data.dataLoadedEmitter.subscribe(()=>{
-      console.log("Data Load Event");
-      console.log(router.url);
-      var currenturl = router.url;
-      router.navigateByUrl('/',{skipLocationChange: true}).then(()=>{
-        router.navigateByUrl(currenturl, {onSameUrlNavigation: 'reload'}).then (()=>{
-          console.dir(this.currentDataDoc());      
+
+    this.data.dataLoadedEmitter.subscribe(()=>{
+      //console.log("Data Load Event");
+      //console.log(this.router.url);
+      var currenturl = this.router.url;
+      this.router.navigateByUrl('/',{skipLocationChange: true}).then(()=>{
+        this.router.navigateByUrl(currenturl, {onSameUrlNavigation: 'reload'}).then (()=>{
+          //console.dir(this.currentDataDoc());      
           this.cdr.detectChanges();               
         });
       });
     });
+
+    this.data.dataChangedEmitter.subscribe(()=>{
+      //console.log("Data Changed Event");
+      this.cdr.detectChanges(); 
+    });
+  }
+  ngOnDestroy(): void {
+
   }
 
   reload()

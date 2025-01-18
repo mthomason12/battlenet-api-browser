@@ -62,7 +62,8 @@ const dataItem: string = 'battlenet-api-data';
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
   currentData?: dataStruct;
-  dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();
+  dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
+  dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public router: Router)
   {
@@ -100,8 +101,8 @@ export class UserdataService {
           res => {
             if (res != undefined)
             {
-              console.log("Public Data");
-              console.dir(JSON.parse(res));
+              //console.log("Public Data");
+              //console.dir(JSON.parse(res));
               this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res, Reviver.get(publicDataStruct)));
             }
           }
@@ -151,6 +152,7 @@ export class UserdataService {
   setCurrent(data: dataStruct)
   {
     this.currentData = data;
+    this.dataChangedEmitter.emit(true);
   }
 
   getCurrent(): dataStruct | undefined
