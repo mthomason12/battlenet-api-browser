@@ -7,6 +7,7 @@ import { dataStruct } from '../model/datastructs';
 import type { dataItem } from '../model/datastructs';
 import { profileDataStruct } from '../model/profile';
 import { publicDataStruct } from '../model/gamedata';
+import { Router } from '@angular/router';
 
 class apiDataStruct extends dataStruct
 {
@@ -61,9 +62,11 @@ const dataItem: string = 'battlenet-api-data';
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
   currentData?: dataStruct;
+  loaded: boolean = false;
 
-  constructor()
+  constructor(public router: Router)
   {
+    var x: any,y: any;
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
     console.log("Loading application key");
@@ -93,27 +96,37 @@ export class UserdataService {
       }
     }).then (
       db => {
-        db.get('data','wowpublic').then (
+        x = db.get('data','wowpublic').then (
           res => {
             if (res != undefined)
             {
+              console.log("Public Data");
+              console.dir(JSON.parse(res));
               this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res, Reviver.get(publicDataStruct)));
             }
           }
-        );
-        db.get('data','wowprofile').then (
+        )
+        y = db.get('data','wowprofile').then (
           res => {
             if (res != undefined)
             {
               this.data.apiData.wowprofile = _.merge(this.data.apiData.wowprofile, JSON.parse(res, Reviver.get(profileDataStruct)));
             }
           }
-        );        
+        );
+        //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
+        Promise.allSettled([x,y]).then
+        (_res => {
+          //console.log("Data after loading: ");
+          //console.dir(this.data);      
+          this.fixup();        
+          console.log("Data loaded");
+          router.navigateByUrl(router.url, {onSameUrlNavigation: 'reload'})
+          //console.log("Data after fixup: ");
+          //console.dir(this.data);            
+        });
       }
-    );
-    this.fixup();
-    console.log("Data after loading: "+JSON.stringify(this.data, jsonIgnoreReplacer));
-    console.dir(this.data);    
+    );  
   }
 
   save()
