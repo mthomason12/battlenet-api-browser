@@ -121,6 +121,10 @@ export class UserdataService {
           //console.dir(this.data);      
           this.fixup();        
           console.log("Data loaded");
+          if (this.getCurrent() != undefined)
+          {
+            this.setCurrent(this.getCurrent()!);
+          }
           router.navigateByUrl(router.url, {onSameUrlNavigation: 'reload'})
           this.dataLoadedEmitter.emit(true);
           //console.log("Data after fixup: ");
