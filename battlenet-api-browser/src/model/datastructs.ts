@@ -72,7 +72,6 @@ export abstract class dataStruct {
 
 export abstract class dataDoc extends dataStruct
 {
-  @jsonIgnore() 
   name: string;
 
   lastupdate: number | undefined;
