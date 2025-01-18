@@ -104,7 +104,11 @@ export class covenantsDataDoc extends dataDoc
   {
     await apiclient.getCovenantIndex()?.then (
       (data: any) => {
-        this.covenants = data.covenants;
+        var json: string = JSON.stringify(data.covenants);
+        const reviver = Reviver.get(covenantsDataDoc)
+        const covReciver = reviver['covenants'] as Reviver<covenantDataDoc[]>;
+        this.covenants = JSON.parse(json, covReciver);
+        this.postFixup();
         super.reload(apiclient);
       }
     );
