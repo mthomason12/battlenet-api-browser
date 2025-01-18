@@ -1,5 +1,3 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 
 export class ApiclientService { 
@@ -49,6 +47,8 @@ export class ApiclientService {
     return this.connected;
   }
 
+  //#region Achievements API
+
   getAchievementIndex(): Promise<any> | undefined
   {
     return this.queryStatic('/data/wow/achievement/index');
@@ -59,6 +59,58 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/achievement/${id}`);
   }
 
+  getAchievementMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/achievement/${id}`);
+  }
+
+  getAchievementCategoryIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic('/data/wow/achievement-category/index');
+  }
+
+  getAchievementCategory(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/achievement-category/${id}`);
+  }  
+
+  //#endregion
+
+  //#region Auctions API
+
+  getAuctions(connectedRealmID: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/connected-realm/auctions/${connectedRealmID}`);
+  } 
+
+  getCommodities(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/auctions/commodities`);
+  }   
+
+  //#endregion
+
+  //#region Azerite Essence API
+
+  getAzeriteEssenceIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic('/data/wow/azerite-essence/index');
+  }  
+
+  getAzeriteEssenceIndex(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/azerite-essence/${id}`);
+  }    
+
+  getAzeriteEssenceMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/azerite-essence/${id}`);
+  }      
+
+  //#endregion
+
+  //#region Covenants
+
   getCovenantIndex(): Promise<any> | undefined
   {
     return this.queryStatic('/data/wow/covenant/index');
@@ -68,5 +120,7 @@ export class ApiclientService {
   {
     return this.queryStatic(`/data/wow/covenant/${id}`);
   }  
+
+  //#endregion
 
 }
