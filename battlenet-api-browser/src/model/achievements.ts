@@ -5,7 +5,7 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 @Reviver<achievementDataDoc>({
   '.': Jsonizer.Self.assign(achievementDataDoc)
 })
-class achievementDataDoc extends dataDoc
+export class achievementDataDoc extends dataDoc
 {
   id: number;
 
