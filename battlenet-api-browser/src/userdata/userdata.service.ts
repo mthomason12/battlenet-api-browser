@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import { jsonIgnoreReplacer } from 'json-ignore';
+import { Reviver } from '@badcafe/jsonizer';
 import _ from 'lodash';
 import { dataStruct } from './datastructs';
 import type { dataItem } from './datastructs';
@@ -97,7 +98,7 @@ export class UserdataService {
           res => {
             if (res != undefined)
             {
-              this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res));
+              this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res, Reviver.get(publicDataStruct)));
             }
           }
         );
@@ -105,7 +106,7 @@ export class UserdataService {
           res => {
             if (res != undefined)
             {
-              this.data.apiData.wowprofile = _.merge(this.data.apiData.wowprofile, JSON.parse(res));
+              this.data.apiData.wowprofile = _.merge(this.data.apiData.wowprofile, JSON.parse(res, Reviver.get(profileDataStruct)));
             }
           }
         );        
