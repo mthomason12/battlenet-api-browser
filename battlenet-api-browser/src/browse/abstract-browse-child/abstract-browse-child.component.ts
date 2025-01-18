@@ -8,11 +8,20 @@ import { dataStruct } from '../../model/datastructs';
   templateUrl: './abstract-browse-child.component.html',
   styleUrl: './abstract-browse-child.component.scss'
 })
-export class AbstractBrowseChildComponent{
+export class AbstractBrowseChildComponent implements OnInit{
 
   constructor(protected data: UserdataService)
   {
+  }
+
+  ngOnInit(): void {
+    this.preinit();
     this.data.setCurrent(this.currentData()!);
+  }
+
+  //things to do just before oninit
+  preinit()
+  {
   }
 
   currentData(): dataStruct | undefined
