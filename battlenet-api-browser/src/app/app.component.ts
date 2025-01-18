@@ -42,9 +42,4 @@ export class AppComponent {
     //console.dir(item);
   }
 
-  hideData()
-  {
-    this.treedata = undefined;
-  }
-
 }
