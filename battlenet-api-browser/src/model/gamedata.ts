@@ -1,5 +1,4 @@
 import { dataDoc, dataStruct } from './datastructs';
-import type { dataItem } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
