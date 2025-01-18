@@ -59,6 +59,7 @@ export class achievementsDataDoc extends dataDoc
   }
 
   override postFixup(): void {
-    this.achievements.forEach((achievements)=>{achievements.fixup(this)});
+    var ref = this;
+    this.achievements.forEach((achievements)=>{achievements.fixup(ref)});
   }
 }
