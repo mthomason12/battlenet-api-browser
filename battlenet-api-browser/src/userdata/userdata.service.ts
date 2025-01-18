@@ -7,7 +7,6 @@ import { dataStruct } from '../model/datastructs';
 import type { dataItem } from '../model/datastructs';
 import { profileDataStruct } from '../model/profile';
 import { publicDataStruct } from '../model/gamedata';
-export { achievementsDataDoc, covenantsDataDoc } from '../model/gamedata';
 
 class apiDataStruct extends dataStruct
 {
