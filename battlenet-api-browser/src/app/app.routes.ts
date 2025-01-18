@@ -5,12 +5,14 @@ import { BrowseComponent } from '../browse/browse.component';
 import { AchievementsComponent } from '../browse/achievements/achievements.component';
 import { AchievementComponent } from '../browse/achievement/achievement.component';
 import { CovenantsComponent } from '../browse/covenants/covenants.component';
+import { CovenantComponent } from '../browse/covenant/covenant.component';
 
 export const routes: Routes = [
     { path: 'browse', component: BrowseComponent, children: [
         { path: 'public', children: [
             { path: 'achievements/:id', component: AchievementComponent},            
             { path: 'achievements', component: AchievementsComponent},
+            { path: 'covenants/:id', component: CovenantComponent},              
             { path: 'covenants', component: CovenantsComponent},            
             { path: '**', children: [] }
         ]},
