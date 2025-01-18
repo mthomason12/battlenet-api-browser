@@ -39,6 +39,7 @@ export class AppComponent {
   {
     //item.postProcess();
     this.treedata = item;
+    //console.dir(item);
   }
 
   hideData()
