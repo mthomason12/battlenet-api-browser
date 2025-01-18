@@ -5,7 +5,7 @@ import { dataStruct, dataDoc } from '../userdata/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { AbstractBrowseChildComponent } from './abstract-browse-child/abstract-browse-child.component';
 
 @Component({
@@ -20,9 +20,17 @@ export class BrowseComponent {
   currentChild?: AbstractBrowseChildComponent;
   title: string="";
 
-  constructor(private apiClient: ApiclientService, protected data: UserdataService, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef)
+  constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   {
     this.apiCli = apiClient;
+    router.events.subscribe((event: Event) => {
+      if (event.type == EventType.NavigationEnd)
+      {
+        this.title = this.data.getCurrent()?.getName() ?? "";
+        this.data.getCurrent()?.checkLoaded(this.apiCli!);    
+        this.cdr.detectChanges();  
+      }
+    });
   }
 
   reload()
@@ -31,18 +39,6 @@ export class BrowseComponent {
     {
       this.data.getCurrent()?.reload(this.apiClient);
     }
-  }
-
-  deactivateEvent()
-  {
-    this.title="";
-  }
-
-  activateEvent(child: AbstractBrowseChildComponent)
-  {
-    this.title = child?.currentData()?.getName() ?? "";
-    this.data.getCurrent()?.checkLoaded(this.apiCli!);    
-    this.cdr.detectChanges();    
   }
 
   currentData(): dataStruct | undefined
