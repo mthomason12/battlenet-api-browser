@@ -37,8 +37,7 @@ export abstract class dataStruct {
 
   postProcess()
   {
-    this.doPostProcess();
-    console.dir(this);    
+    this.doPostProcess();  
   }
 
   /**
