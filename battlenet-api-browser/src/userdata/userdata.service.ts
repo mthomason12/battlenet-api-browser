@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import { jsonIgnoreReplacer } from 'json-ignore';
 import { Reviver } from '@badcafe/jsonizer';
@@ -62,7 +62,7 @@ const dataItem: string = 'battlenet-api-data';
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
   currentData?: dataStruct;
-  loaded: boolean = false;
+  dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public router: Router)
   {
@@ -122,6 +122,7 @@ export class UserdataService {
           this.fixup();        
           console.log("Data loaded");
           router.navigateByUrl(router.url, {onSameUrlNavigation: 'reload'})
+          this.dataLoadedEmitter.emit(true);
           //console.log("Data after fixup: ");
           //console.dir(this.data);            
         });
