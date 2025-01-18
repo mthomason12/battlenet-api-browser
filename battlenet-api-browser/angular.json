@@ -56,10 +56,14 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": {              
+                "scripts": true,              
+                "styles": false,              
+                "hidden": true,              
+                "vendor": true            }
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
