@@ -51,7 +51,7 @@ export class achievementsDataDoc extends dataDoc
   }
 
   override myPath(): string {
-      return "/achievements";
+      return "achievements";
   }
 
   override doPostProcess()
