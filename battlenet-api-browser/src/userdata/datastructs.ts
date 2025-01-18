@@ -11,7 +11,7 @@ export abstract class dataStruct {
     this._parent = parent;
   }
 
-  name(): string
+  getName(): string
   {
     return "";
   }
@@ -74,19 +74,19 @@ export abstract class dataStruct {
 export abstract class dataDoc extends dataStruct
 {
   @jsonIgnore() 
-  _name: string;
+  name: string;
 
   lastupdate: number | undefined;
 
   constructor(parent: dataStruct, name: string)
   {
     super(parent);
-    this._name = name;
+    this.name = name;
   }
 
-  override name(): string
+  override getName(): string
   {
-    return this._name;
+    return this.name;
   }  
 
   override hasData(): boolean

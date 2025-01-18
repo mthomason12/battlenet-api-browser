@@ -20,7 +20,7 @@ class apiDataStruct extends dataStruct
     this.wowprofile = new profileDataStruct(this);
   }
 
-  override name(): string
+  override getName(): string
   {
     return "Battle.net API";
   }

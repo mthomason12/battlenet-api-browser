@@ -40,7 +40,7 @@ export class BrowseComponent {
 
   activateEvent(child: AbstractBrowseChildComponent)
   {
-    this.title = child?.currentData()?.name() ?? "";
+    this.title = child?.currentData()?.getName() ?? "";
     this.data.getCurrent()?.checkLoaded(this.apiCli!);    
     this.cdr.detectChanges();    
   }

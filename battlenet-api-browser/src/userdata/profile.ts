@@ -13,7 +13,7 @@ export class charsDataStruct extends dataStruct
     super(parent);
   }
 
-  override name(): string
+  override getName(): string
   {
     return "Characters";
   }  
@@ -38,7 +38,7 @@ export class profileDataStruct extends dataStruct
     this.characters = new charsDataStruct(this);
   }
 
-  override name(): string
+  override getName(): string
   {
     return "Profile";
   }

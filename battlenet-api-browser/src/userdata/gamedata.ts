@@ -9,13 +9,11 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 class achievementDataDoc extends dataDoc
 {
   id: number;
-  title: string;
 
-  constructor (parent: dataStruct, id: number, title: string)
+  constructor (parent: dataStruct, id: number, name: string)
   {
-    super(parent,"Achievement: "+title);   
+    super(parent, name);   
     this.id = id;
-    this.title = title;
   }  
 
   override myPath(): string {
@@ -134,7 +132,7 @@ export class publicDataStruct extends dataStruct
     this.covenantData = new covenantsDataDoc(this);
   }
 
-  override name(): string
+  override getName(): string
   {
     return "Game Data";
   }
