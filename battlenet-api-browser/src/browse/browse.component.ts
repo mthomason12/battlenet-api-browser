@@ -18,18 +18,26 @@ export class BrowseComponent {
 
   apiCli?: ApiclientService;
   currentChild?: AbstractBrowseChildComponent;
-  title: string="";
 
   constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   {
     this.apiCli = apiClient;
     router.events.subscribe((event: Event) => {
       if (event.type == EventType.NavigationEnd)
-      {
-        this.title = this.data.getCurrent()?.getName() ?? "";
-        this.data.getCurrent()?.checkLoaded(this.apiCli!);    
+      {   
         this.cdr.detectChanges();  
       }
+    });
+    data.dataLoadedEmitter.subscribe(()=>{
+      console.log("Data Load Event");
+      console.log(router.url);
+      var currenturl = router.url;
+      router.navigateByUrl('/',{skipLocationChange: true}).then(()=>{
+        router.navigateByUrl(currenturl, {onSameUrlNavigation: 'reload'}).then (()=>{
+          console.dir(this.currentDataDoc());      
+          this.cdr.detectChanges();               
+        });
+      });
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserdataService } from '../../userdata/userdata.service';
 import { dataStruct } from '../../model/datastructs';
 
@@ -8,7 +8,7 @@ import { dataStruct } from '../../model/datastructs';
   templateUrl: './abstract-browse-child.component.html',
   styleUrl: './abstract-browse-child.component.scss'
 })
-export class AbstractBrowseChildComponent {
+export class AbstractBrowseChildComponent{
 
   constructor(protected data: UserdataService)
   {
@@ -19,4 +19,6 @@ export class AbstractBrowseChildComponent {
   {
     return this.data.getCurrent();
   }
+
+  
 }
