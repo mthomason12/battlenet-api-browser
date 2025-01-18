@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct } from './datastructs';
+import { dataStruct } from './datastructs';
 
 export class charDataStruct extends dataStruct
 {
