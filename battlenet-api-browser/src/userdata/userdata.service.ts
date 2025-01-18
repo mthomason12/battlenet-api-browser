@@ -3,11 +3,11 @@ import { openDB } from 'idb';
 import { jsonIgnoreReplacer } from 'json-ignore';
 import { Reviver } from '@badcafe/jsonizer';
 import _ from 'lodash';
-import { dataStruct } from './datastructs';
-import type { dataItem } from './datastructs';
-import { profileDataStruct } from './profile';
-import { publicDataStruct } from './gamedata';
-export { achievementsDataDoc, covenantsDataDoc } from './gamedata';
+import { dataStruct } from '../model/datastructs';
+import type { dataItem } from '../model/datastructs';
+import { profileDataStruct } from '../model/profile';
+import { publicDataStruct } from '../model/gamedata';
+export { achievementsDataDoc, covenantsDataDoc } from '../model/gamedata';
 
 class apiDataStruct extends dataStruct
 {
@@ -113,8 +113,8 @@ export class UserdataService {
       }
     );
     this.fixup();
-    //console.log("Data after loading: "+JSON.stringify(this.data));
-    //console.dir(this.data);    
+    console.log("Data after loading: "+JSON.stringify(this.data, jsonIgnoreReplacer));
+    console.dir(this.data);    
   }
 
   save()

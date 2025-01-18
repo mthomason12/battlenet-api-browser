@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserdataService } from '../../userdata/userdata.service';
-import { dataStruct } from '../../userdata/datastructs';
+import { dataStruct } from '../../model/datastructs';
 
 @Component({
   selector: 'app-abstract-browse-child',

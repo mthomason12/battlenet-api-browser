@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { ApitreeComponent } from "../apitree/apitree.component";
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { UserdataService } from '../userdata/userdata.service';
-import { dataStruct } from '../userdata/datastructs';
+import { dataStruct } from '../model/datastructs';
 
 @Component({
   selector: 'app-root',
