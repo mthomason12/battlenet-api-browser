@@ -21,7 +21,12 @@ class achievementDataDoc extends dataDoc
   }
 }
 
-
+@Reviver<achievementsDataDoc>({
+  '.': Jsonizer.Self.assign(achievementsDataDoc),
+  achievements: {
+    '*': achievementDataDoc
+  }
+})
 export class achievementsDataDoc extends dataDoc
 {
   achievements: achievementDataDoc[] = new Array();
@@ -35,7 +40,11 @@ export class achievementsDataDoc extends dataDoc
   {
     await apiclient.getAchievementIndex()?.then (
       (data: any) => {
-        this.achievements = data.achievements;
+        var json: string = JSON.stringify(data.achievements);
+        const reviver = Reviver.get(achievementsDataDoc)
+        const achReciver = reviver['achievements'] as Reviver<achievementDataDoc[]>;
+        this.achievements = JSON.parse(json, achReciver);
+        this.postFixup();
         super.reload(apiclient);
       }
     );
