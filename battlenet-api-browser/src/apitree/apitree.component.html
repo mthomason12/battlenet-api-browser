@@ -7,9 +7,9 @@
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle
-                   [cdkTreeNodeTypeaheadLabel]="node.name">
+                   [cdkTreeNodeTypeaheadLabel]="node.getName()">
       <button mat-icon-button matTreeNodeToggle
-              [attr.aria-label]="'Toggle ' + node.name">
+              [attr.aria-label]="'Toggle ' + node.getName()">
         <mat-icon class="mat-icon-rtl-mirror">
           {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
