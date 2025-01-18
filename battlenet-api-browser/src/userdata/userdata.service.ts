@@ -33,6 +33,13 @@ class apiDataStruct extends dataStruct
   override myPath(): string {
       return "";
   }
+
+  //fix up any references after reloading from JSON
+  override postFixup()
+  {
+      this.wowpublic.fixup(this);
+      this.wowprofile.fixup(this);
+  }
 }
 
 class appKeyStruct
@@ -104,6 +111,7 @@ export class UserdataService {
         );        
       }
     );
+    this.fixup();
     //console.log("Data after loading: "+JSON.stringify(this.data));
     //console.dir(this.data);    
   }
@@ -119,6 +127,12 @@ export class UserdataService {
       }
     );
     //console.log("Saving data: "+JSON.stringify(this.data.apiData));        
+  }
+
+  //fix up any references after reloading from JSON
+  fixup()
+  {
+      this.data.apiData.fixup();
   }
 
   setCurrent(data: dataStruct)

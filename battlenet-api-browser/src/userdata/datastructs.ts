@@ -57,6 +57,17 @@ export abstract class dataStruct {
   {
     return (this._parent?.path() ?? "")+"/"+this.myPath();
   }
+
+  postFixup()
+  {
+  }
+
+  //do any necessary reinitialization after restore from saved data
+  fixup(parent: dataStruct | undefined = undefined)
+  {
+    this._parent = parent;
+    this.postFixup();
+  }
 }
 
 

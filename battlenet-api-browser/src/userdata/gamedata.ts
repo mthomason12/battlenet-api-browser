@@ -51,6 +51,10 @@ export class achievementsDataDoc extends dataDoc
   {
     this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
   }
+
+  override postFixup(): void {
+    this.achievements.forEach((achievements)=>{achievements.fixup(this)});
+  }
 }
 
 @Reviver<covenantDataDoc>({
@@ -107,6 +111,10 @@ export class covenantsDataDoc extends dataDoc
   override myPath(): string {
       return "covenants";
   }
+
+  override postFixup(): void {
+    this.covenants.forEach((covenant)=>{covenant.fixup(this)});
+  }
 }
 
 @Reviver<publicDataStruct>({
@@ -138,5 +146,10 @@ export class publicDataStruct extends dataStruct
 
   override myPath(): string {
       return "public";
+  }
+
+  override postFixup(): void {
+    this.achievementData.fixup(this);
+    this.covenantData.fixup(this);
   }
 }
