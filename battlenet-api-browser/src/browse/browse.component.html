@@ -6,7 +6,7 @@
         <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
       </mat-card-header>
       <mat-card-content>
-        <router-outlet (activate)="activateEvent($event)"></router-outlet>
+        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent()"></router-outlet>
       </mat-card-content>
       <mat-card-actions>
         @if(currentData()?.hasData()) 

@@ -33,9 +33,14 @@ export class BrowseComponent {
     }
   }
 
+  deactivateEvent()
+  {
+    this.title="";
+  }
+
   activateEvent(child: AbstractBrowseChildComponent)
   {
-    this.title = child.currentData()?.name() ?? "";
+    this.title = child?.currentData()?.name() ?? "";
     this.data.getCurrent()?.checkLoaded(this.apiCli!);    
     this.cdr.detectChanges();    
   }
