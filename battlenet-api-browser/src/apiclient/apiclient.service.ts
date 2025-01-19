@@ -32,6 +32,8 @@ export class ApiclientService {
     this.connected = true;
   }
 
+  
+
   query(apiEndpoint: string, options: QueryOptions = {})
   {
     return this.blizzapi?.query(apiEndpoint, options);
