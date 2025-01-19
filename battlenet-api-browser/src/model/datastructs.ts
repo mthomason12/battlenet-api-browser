@@ -119,15 +119,24 @@ export abstract class dataDoc extends dataStruct
 
 }
 
-export interface dataKey
+export interface keyStruct
 {
     href: string;   
 }
 
-export interface dataItem
+export interface hrefStruct
 {
-    id: number;
-    key: dataKey;
-    name: string;
-    data?: any;
+  href: string;
 }
+
+export interface linksStruct
+{
+  self: hrefStruct;
+}
+
+export interface mediaStruct
+{
+  key: keyStruct;
+  id: number;
+}
+

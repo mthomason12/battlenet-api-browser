@@ -1,6 +1,42 @@
-import { dataDoc, dataStruct } from './datastructs';
+import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+
+interface achievementCategory
+{
+  key: keyStruct;
+  name: string;
+  id: number;
+}
+
+interface achievementCriteria
+{
+  id: number;
+  description: string;
+  amount: 0;
+}
+
+interface achievementNextAchievement
+{
+  key: keyStruct;
+  name: string;
+  id: number;
+}
+
+interface achievementData
+{
+  _links: linksStruct;
+  id: number;
+  category: achievementCategory;
+  name: string;
+  description: string;
+  points: number;
+  is_account_wide: string;
+  criteria: achievementCriteria;
+  next_achievement: achievementNextAchievement;
+  media: mediaStruct;
+  display_order: number;
+}
 
 @Reviver<achievementDataDoc>({
   '.': Jsonizer.Self.assign(achievementDataDoc)
@@ -8,6 +44,7 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 export class achievementDataDoc extends dataDoc
 {
   id: number;
+  data?: achievementData;
 
   constructor (parent: dataStruct, id: number, name: string)
   {
