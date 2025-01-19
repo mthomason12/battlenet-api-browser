@@ -1,33 +1,8 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { AuthConfig } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
+import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
 
-const authCodeFlowConfig: AuthConfig = {
-  // Url of the Identity Provider
-  issuer: 'https://oauth.battle.net',
-
-  // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin,
-
-  // The SPA's id. The SPA is registerd with this id at the auth-server
-  // clientId: 'server.code',
-  clientId: 'spa',
-
-  // Just needed if your auth server demands a secret. In general, this
-  // is a sign that the auth server is not configured with SPAs in mind
-  // and it might not enforce further best practices vital for security
-  // such applications.
-  // dummyClientSecret: 'secret',
-
-  responseType: 'code',
-
-  // set the scope for the permissions the client should request
-  // The first four are defined by OIDC.
-  // Important: Request offline_access to get a refresh token
-  // The api scope is a usecase specific one
-  scope: 'openid wow.profile',
-
-  showDebugInformation: true,
-};
 
 export class ApiclientService { 
   region?: RegionIdOrName;
@@ -42,8 +17,28 @@ export class ApiclientService {
   
   connected: boolean = false;
 
-  constructor ()
+  private userManager?: UserManager;
+
+  constructor (private router: Router)
   {
+
+  }
+
+  getClientSettings(): UserManagerSettings
+  {
+    return {
+      authority: 'https://oauth.battle.net',
+      client_id: this.clientID!,
+      popup_redirect_uri: window.location.origin+'/auth-callback',
+      redirect_uri: window.location.origin+'/auth-callback',
+      post_logout_redirect_uri: window.location.origin+'/',
+      response_type:"code",
+      scope:"openid wow.profile",
+      filterProtocolClaims: true,
+      loadUserInfo: true,
+      automaticSilentRenew: true,
+      silent_redirect_uri: window.location.origin+'/silent-refresh.html'
+    };    
   }
 
   async connect(region: RegionIdOrName, clientID: string, clientSecret: string)
@@ -59,8 +54,28 @@ export class ApiclientService {
     //get an access token
     this.accessToken = await this.blizzapi?.getAccessToken();
     this.connected = true;
+    this.userManager = new UserManager(this.getClientSettings());    
   }
 
+  async authenticate(clientID: string, clientSecret: string)
+  {
+    sessionStorage.setItem('page_before_login', this.router.url);
+    //this.cookieService.set('page_before_login', this.router.url);
+    return this.signinRedirect();
+  }
+
+  async signinRedirect()
+  {
+    return this.userManager?.signinRedirect();
+  }
+
+  completeAuthentication()
+  {
+    const storedURL = sessionStorage.getItem('page_before_login') as string;
+    sessionStorage.removeItem('page_before_login');
+    //this.cookieService.delete('page_before_login')
+    this.router.navigateByUrl(storedURL);
+  }
 
 
   query(apiEndpoint: string, options: QueryOptions = {})
