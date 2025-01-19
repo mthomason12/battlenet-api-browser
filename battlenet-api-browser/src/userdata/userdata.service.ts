@@ -61,6 +61,7 @@ const dataItem: string = 'battlenet-api-data';
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
   currentData?: dataStruct;
+  loaded: boolean = false;
   dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
   dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
 
@@ -121,6 +122,7 @@ export class UserdataService {
           //console.dir(this.data);      
           this.fixup();        
           console.log("Data loaded");
+          this.loaded = true;
           this.dataLoadedEmitter.emit(true)
           //console.log("Data after fixup: ");
           //console.dir(this.data);            
