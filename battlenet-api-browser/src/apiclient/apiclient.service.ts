@@ -1,5 +1,4 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
-import { AuthConfig } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
 
@@ -19,7 +18,7 @@ export class ApiclientService {
 
   private userManager?: UserManager;
 
-  constructor (private router: Router)
+  constructor ()
   {
 
   }
@@ -57,10 +56,9 @@ export class ApiclientService {
     this.userManager = new UserManager(this.getClientSettings());    
   }
 
-  async authenticate(clientID: string, clientSecret: string)
+  async authenticate(clientID: string, clientSecret: string, router: Router)
   {
-    sessionStorage.setItem('page_before_login', this.router.url);
-    //this.cookieService.set('page_before_login', this.router.url);
+    sessionStorage.setItem('page_before_login', router.url);
     return this.signinRedirect();
   }
 
@@ -69,12 +67,11 @@ export class ApiclientService {
     return this.userManager?.signinRedirect();
   }
 
-  completeAuthentication()
+  completeAuthentication(router: Router)
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
     sessionStorage.removeItem('page_before_login');
-    //this.cookieService.delete('page_before_login')
-    this.router.navigateByUrl(storedURL);
+    router.navigateByUrl(storedURL);
   }
 
 
