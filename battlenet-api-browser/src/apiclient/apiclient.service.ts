@@ -97,7 +97,7 @@ export class ApiclientService {
     return this.queryStatic('/data/wow/azerite-essence/index');
   }  
 
-  getAzeriteEssenceIndex(id: number): Promise<any> | undefined
+  getAzeriteEssence(id: number): Promise<any> | undefined
   {
     return this.queryStatic(`/data/wow/azerite-essence/${id}`);
   }    
