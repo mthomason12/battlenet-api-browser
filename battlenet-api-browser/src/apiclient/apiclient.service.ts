@@ -109,7 +109,21 @@ export class ApiclientService {
 
   //#endregion
 
-  //#region Covenants
+  //#region Connectrd Realm API
+
+  getConnectedRealmsIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic('/data/wow/connected-realm/index');
+  }  
+
+  getConnectedRealm(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/connected-realm/${id}`);
+  }    
+
+  //#endregion
+
+  //#region Covenant API
 
   getCovenantIndex(): Promise<any> | undefined
   {
@@ -121,6 +135,43 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/covenant/${id}`);
   }  
 
+  getCovenantMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/covenant/${id}`);
+  }  
+
+  getSoulbindIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic('/data/wow/covenant/soulbind/index');
+  }
+
+  getSoulbind(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/covenant/soulbind/${id}`);
+  }  
+
+  getConduitIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic('/data/wow/covenant/conduit/index');
+  }
+
+  getConduit(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/covenant/conduit/${id}`);
+  }  
+
   //#endregion
+
+  //#region Creature API
+
+  getCreature(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/creature/${id}`);
+  }  
+
+  //#endregion
+
+
+
 
 }
