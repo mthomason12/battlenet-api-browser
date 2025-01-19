@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-browse',
@@ -16,6 +17,8 @@ import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 export class BrowseComponent implements OnInit, OnDestroy {
 
   apiCli?: ApiclientService;
+  navigationEndSubscription?: Subscription;
+  dataChangedSubscription?: Subscription;
   
 
   constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
@@ -25,32 +28,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((event: Event) => {
+    this.navigationEndSubscription = this.router.events.subscribe((event: Event) => {
       if (event.type == EventType.NavigationEnd)
       {   
         this.cdr.detectChanges();  
       }
     });
 
-    this.data.dataLoadedEmitter.subscribe(()=>{
-      //console.log("Data Load Event");
-      //console.log(this.router.url);
-      var currenturl = this.router.url;
-      this.router.navigateByUrl('/',{skipLocationChange: true}).then(()=>{
-        this.router.navigateByUrl(currenturl, {onSameUrlNavigation: 'reload'}).then (()=>{
-          //console.dir(this.currentDataDoc());      
-          this.cdr.detectChanges();               
-        });
-      });
-    });
-
-    this.data.dataChangedEmitter.subscribe(()=>{
-      //console.log("Data Changed Event");
+    this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(()=>{
       this.cdr.detectChanges(); 
     });
   }
-  ngOnDestroy(): void {
 
+  ngOnDestroy(): void {
+    this.navigationEndSubscription?.unsubscribe;
+    this.dataChangedSubscription?.unsubscribe;
   }
 
   reload()
