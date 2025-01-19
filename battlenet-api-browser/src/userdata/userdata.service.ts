@@ -4,7 +4,6 @@ import { jsonIgnoreReplacer } from 'json-ignore';
 import { Reviver } from '@badcafe/jsonizer';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
-import type { dataItem } from '../model/datastructs';
 import { profileDataStruct } from '../model/profile';
 import { publicDataStruct } from '../model/gamedata';
 import { Router } from '@angular/router';
