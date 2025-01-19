@@ -15,7 +15,15 @@
       <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content #content>  
-    <router-outlet />
+  <mat-sidenav-content #content> 
+    @if (data.loaded) {
+      <router-outlet />
+    }
+    @else
+    {
+      <div class="loadingspinner">
+        <mat-spinner ></mat-spinner>
+      </div>      
+    }
   </mat-sidenav-content>
 </mat-sidenav-container>
