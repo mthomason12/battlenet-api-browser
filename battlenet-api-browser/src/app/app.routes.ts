@@ -6,8 +6,10 @@ import { AchievementsComponent } from '../browse/achievements/achievements.compo
 import { AchievementComponent } from '../browse/achievement/achievement.component';
 import { CovenantsComponent } from '../browse/covenants/covenants.component';
 import { CovenantComponent } from '../browse/covenant/covenant.component';
+import { AuthCallbackComponent } from '../auth-callback/auth-callback.component';
 
 export const routes: Routes = [
+    { path: 'auth-callback', component: AuthCallbackComponent},
     { path: 'browse', component: BrowseComponent, children: [
         { path: 'public', children: [
             { path: 'achievements/:id', component: AchievementComponent},            
