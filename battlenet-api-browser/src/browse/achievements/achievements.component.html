@@ -1,5 +1,5 @@
 <ul>
-  @for (item of currentData().achievements ; track item)
+  @for (item of currentData().achievements ; track item.id)
   {
     <li><a mat-raised-button routerLink="{{item.path()}}">{{item.id}}: {{item.getName()}}</a></li>
   }
