@@ -101,8 +101,6 @@ export class UserdataService {
           res => {
             if (res != undefined)
             {
-              //console.log("Public Data");
-              //console.dir(JSON.parse(res));
               this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res, Reviver.get(publicDataStruct)));
             }
           }
@@ -117,15 +115,11 @@ export class UserdataService {
         );
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
         Promise.allSettled([x,y]).then
-        (_res => {
-          //console.log("Data after loading: ");
-          //console.dir(this.data);      
+        (_res => {   
           this.fixup();        
           console.log("Data loaded");
           this.loaded = true;
-          this.dataLoadedEmitter.emit(true)
-          //console.log("Data after fixup: ");
-          //console.dir(this.data);            
+          this.dataLoadedEmitter.emit(true)           
         });
       }
     );  
@@ -140,8 +134,7 @@ export class UserdataService {
         db.put('data', JSON.stringify(this.data.apiData.wowpublic, jsonIgnoreReplacer), 'wowpublic');
         db.put('data', JSON.stringify(this.data.apiData.wowprofile, jsonIgnoreReplacer), 'wowprofile');        
       }
-    );
-    //console.log("Saving data: "+JSON.stringify(this.data.apiData));        
+    );      
   }
 
   //fix up any references after reloading from JSON
