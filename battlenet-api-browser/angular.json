@@ -25,6 +25,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "lodash", "json-ignore", "blizzapi", "reflect-metadata"
+            ],
             "assets": [
               {
                 "glob": "**/*",
