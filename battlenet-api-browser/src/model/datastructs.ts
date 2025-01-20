@@ -140,3 +140,9 @@ export interface mediaStruct
   id: number;
 }
 
+export interface assetStruct
+{
+  key: string;
+  value: string;
+  file_data_id: number;
+}

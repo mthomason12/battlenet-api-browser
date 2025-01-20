@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct } from './datastructs';
+import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, assetStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -38,6 +38,13 @@ interface achievementData
   display_order: number;
 }
 
+interface achievementMedia
+{
+  _links: linksStruct;
+  assets: assetStruct[];
+  id: number;
+}
+
 @Reviver<achievementDataDoc>({
   '.': Jsonizer.Self.assign(achievementDataDoc)
 })
@@ -45,6 +52,7 @@ export class achievementDataDoc extends dataDoc
 {
   id: number;
   data?: achievementData;
+  media?: achievementMedia;
 
   constructor (parent: dataStruct, id: number, name: string)
   {
@@ -54,6 +62,22 @@ export class achievementDataDoc extends dataDoc
 
   override myPath(): string {
       return this.id.toString();
+  }
+
+  override async reload(apiclient: ApiclientService)
+  {
+    await apiclient.getAchievement(this.id)?.then (
+      async (data: any) => {
+        this.data = data;
+        await apiclient.getAchievementMedia(this.id)?.then(
+          (data: any) => {
+            this.media = data;
+            this.postFixup();
+            super.reload(apiclient);
+          }
+        )
+      }
+    );
   }
 }
 
