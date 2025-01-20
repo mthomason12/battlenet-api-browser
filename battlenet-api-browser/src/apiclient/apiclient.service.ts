@@ -212,6 +212,36 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/creature/${id}`);
   }  
 
+  getCreatureDisplayMedia(displayId: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/creature-display/${displayId}`);
+  }    
+
+  getCreatureFamilyIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/creature-family/index`);
+  }    
+
+  getCreatureFamily(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/creature-family/${id}`);
+  }      
+
+  getCreatureFamilyMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/creature-family/${id}`);
+  }      
+
+  getCreatureTypesIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/creature-type/index`);
+  }      
+
+  getCreatureType(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/creature-type/${id}`);
+  }    
+
   //#endregion
 
 
