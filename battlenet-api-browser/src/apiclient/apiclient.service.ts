@@ -7,10 +7,10 @@ import { inject } from '@angular/core';
 
 
 export class ApiclientService { 
-  region?: RegionIdOrName;
+  region: RegionIdOrName;
   clientID?: string;
   clientSecret?: string;
-  blizzapi?: BlizzAPI;
+  blizzapi: BlizzAPI;
   accessToken: string = "";
   staticNamespace: string = "static-us";
   dynamicNamespace: string = "dynamic=us";
@@ -27,6 +27,12 @@ export class ApiclientService {
     this.data = inject(UserdataService);
     this.clientID = this.data.data.key.clientID;
     this.clientSecret = this.data.data.key.clientSecret;
+    this.region = "us";
+    this.blizzapi = new BlizzAPI({
+      region: this.region!,
+      clientId: this.data.data.key.clientID,
+      clientSecret: this.data.data.key.clientSecret
+    });  
     this.userManager = new UserManager(this.getClientSettings()); 
   }
 
@@ -35,28 +41,23 @@ export class ApiclientService {
     return {
       authority: 'https://oauth.battle.net',
       client_id: this.clientID!,
-      popup_redirect_uri: window.location.origin+'/auth-callback',
+      //popup_redirect_uri: window.location.origin+'/auth-callback',
       redirect_uri: window.location.origin+'/auth-callback',
       post_logout_redirect_uri: window.location.origin+'/',
+      client_authentication: 'client_secret_basic',
       response_type:"code",
       scope:"openid wow.profile",
       filterProtocolClaims: true,
       loadUserInfo: true,
-      automaticSilentRenew: true,
-      silent_redirect_uri: window.location.origin+'/silent-refresh.html'
+      //automaticSilentRenew: true,
+      //silent_redirect_uri: window.location.origin+'/silent-callback.html'
     };    
   }
 
   async connect(region: RegionIdOrName)
-  {  
-    this.region = region;
-    this.blizzapi = new BlizzAPI({
-      region: region,
-      clientId: this.data.data.key.clientID,
-      clientSecret: this.data.data.key.clientSecret
-    });    
+  {    
     //get an access token
-    this.accessToken = await this.blizzapi?.getAccessToken();
+    this.accessToken = await this.blizzapi.getAccessToken();
     this.connected = true;   
   }
 
@@ -71,19 +72,32 @@ export class ApiclientService {
     return this.userManager?.signinRedirect();
   }
 
-  completeAuthentication(router: Router)
+  async completeAuthentication(router: Router)
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
-    sessionStorage.removeItem('page_before_login');
-    this.userManager?.getUser().then(
-      (user)=>{console.dir(user);}
-    );    
-    router.navigateByUrl(storedURL);
+    sessionStorage.removeItem('page_before_login');    
+    this.userManager?.signinCallback().finally(async () => {
+      //get an access token   
+      this.blizzapi.getAccessToken().then
+      (
+        (token)=>{      
+          this.accessToken = token;
+          this.userManager?.getUser().then(
+          (user)=>{console.dir(user);
+            router.navigate([storedURL]);
+          }
+        );   }
+      )
+    });
+
+    //router.navigateByUrl(storedURL);
   }
 
 
   query<T = any>(apiEndpoint: string, options: QueryOptions = {}): Promise<T> | undefined
   {
+    //unsure if this is how it works or not?
+    (options.headers as Headers).set("Authorization", "Bearer "+this.accessToken);
     var ret = this.blizzapi?.query(apiEndpoint, options) as Promise<T> | undefined;
     console.dir(Promise.resolve(ret));
     return ret;
