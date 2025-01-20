@@ -152,7 +152,7 @@ export class ApiclientService {
 
   //#endregion
 
-  //#region Connectrd Realm API
+  //#region Connected Realm API
 
   getConnectedRealmsIndex(): Promise<any> | undefined
   {
@@ -244,7 +244,24 @@ export class ApiclientService {
 
   //#endregion
 
+  //#region Guild Crest API
 
+  getGuildCrestComponentsIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/guild-crest/index`);
+  }  
+
+  getGuildCrestBorderMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/guild-crest/border/${id}`);
+  }      
+
+  getGuildCrestEmblemMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/guild-crest/emblem/${id}`);
+  }        
+
+  //#endregion
 
 
 }
