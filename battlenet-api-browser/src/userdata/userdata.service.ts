@@ -65,7 +65,7 @@ export class UserdataService {
   dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
   dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(public router: Router)
+  constructor()
   {
     var x: any,y: any;
     //attempt to load existing data from localstorage
