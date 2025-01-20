@@ -10,7 +10,7 @@
     <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
     <div class="buttons">
       @if (this.apiClient.isConnected()) {
-        <button mat-raised-button [routerLink]="'/login'"><mat-icon>login</mat-icon>Battle.net Login</button>        
+        <button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button>        
       }
       @else {
         <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">

@@ -2,6 +2,8 @@ import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
+import { UserdataService } from '../userdata/userdata.service';
+import { inject } from '@angular/core';
 
 
 export class ApiclientService { 
@@ -17,11 +19,15 @@ export class ApiclientService {
   
   connected: boolean = false;
 
-  private userManager?: UserManager;
+  public userManager?: UserManager;
+  private data: UserdataService;
 
   constructor ()
-  {
-
+  {   
+    this.data = inject(UserdataService);
+    this.clientID = this.data.data.key.clientID;
+    this.clientSecret = this.data.data.key.clientSecret;
+    this.userManager = new UserManager(this.getClientSettings()); 
   }
 
   getClientSettings(): UserManagerSettings
@@ -41,24 +47,21 @@ export class ApiclientService {
     };    
   }
 
-  async connect(region: RegionIdOrName, clientID: string, clientSecret: string)
+  async connect(region: RegionIdOrName)
   {  
     this.region = region;
-    this.clientID = clientID;
-    this.clientSecret = clientSecret;
     this.blizzapi = new BlizzAPI({
       region: region,
-      clientId: clientID,
-      clientSecret: clientSecret
+      clientId: this.data.data.key.clientID,
+      clientSecret: this.data.data.key.clientSecret
     });    
     //get an access token
     this.accessToken = await this.blizzapi?.getAccessToken();
-    this.connected = true;
-    this.userManager = new UserManager(this.getClientSettings());    
+    this.connected = true;   
   }
 
-  async authenticate(clientID: string, clientSecret: string, router: Router)
-  {
+  async authenticate(router: Router)
+  {   
     sessionStorage.setItem('page_before_login', router.url);
     return this.signinRedirect();
   }
@@ -72,6 +75,9 @@ export class ApiclientService {
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
     sessionStorage.removeItem('page_before_login');
+    this.userManager?.getUser().then(
+      (user)=>{console.dir(user);}
+    );    
     router.navigateByUrl(storedURL);
   }
 

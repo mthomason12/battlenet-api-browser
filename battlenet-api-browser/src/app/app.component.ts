@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
@@ -28,7 +28,7 @@ export class AppComponent implements OnDestroy {
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
 
-  constructor(private apiCli: ApiclientService, protected data: UserdataService)
+  constructor(private apiCli: ApiclientService, protected data: UserdataService, private router: Router)
   {
     this.apiClient = apiCli;
     const media = inject(MediaMatcher);
@@ -44,11 +44,16 @@ export class AppComponent implements OnDestroy {
   }  
 
   connect()
-  {
-    this.apiCli.connect("us", this.data.data.key.clientID, this.data.data.key.clientSecret);
+  { 
+    this.apiCli.connect("us");
     /*this.apiClient.achievementIndex()?.then((data)=>{
       console.log("Data returned: "+JSON.stringify(data))
     });*/
+  }
+
+  bnetLogin()
+  {  
+    this.apiCli.authenticate(this.router );
   }
 
   treeChanged(item: dataStruct)
