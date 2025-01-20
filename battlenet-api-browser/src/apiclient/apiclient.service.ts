@@ -284,6 +284,11 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
+  getItemSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item/search?${params}`);
+  }        
+
   getItemMedia(id: number): Promise<any> | undefined
   {
     return this.queryStatic(`/data/wow/media/item/${id}`);
