@@ -39,6 +39,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "./",
               "budgets": [
                 {
                   "type": "initial",
@@ -63,7 +64,7 @@
                 "vendor": true            }
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
