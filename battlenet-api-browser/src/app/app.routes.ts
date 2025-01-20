@@ -7,7 +7,6 @@ import { AchievementComponent } from '../browse/achievement/achievement.componen
 import { CovenantsComponent } from '../browse/covenants/covenants.component';
 import { CovenantComponent } from '../browse/covenant/covenant.component';
 import { AuthCallbackComponent } from '../auth-callback/auth-callback.component';
-import { LoginComponent } from '../login/login.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -23,8 +22,7 @@ export const routes: Routes = [
             { path: '**', children: [] }
         ]},       
         { path: '**', children: [] }
-    ]},     
-    { path: 'login', component: LoginComponent},    
+    ]},       
     { path: 'settings', component: SettingsComponent },
     { path: 'auth', component: AuthComponent },
 ];
