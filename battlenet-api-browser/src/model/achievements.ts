@@ -13,7 +13,7 @@ interface achievementCriteria
 {
   id: number;
   description: string;
-  amount: 0;
+  amount: number;
 }
 
 interface achievementNextAchievement
