@@ -56,6 +56,13 @@ export class AppComponent implements OnDestroy {
     this.apiCli.authenticate(this.router );
   }
 
+  debug()
+  {
+    this.apiCli.userManager.getUser().then(
+      (user)=>{
+        console.dir(user);
+      });
+  }
   treeChanged(item: dataStruct)
   {
     //item.postProcess();
