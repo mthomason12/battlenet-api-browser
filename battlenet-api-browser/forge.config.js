@@ -5,7 +5,8 @@ module.exports = {
   packagerConfig: {
     asar: true,
   },
-  rebuildConfig: {},
+  rebuildConfig: {
+  },
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
@@ -21,7 +22,8 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+      },
     },
   ],
   plugins: [
