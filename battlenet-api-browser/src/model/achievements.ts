@@ -23,7 +23,7 @@ interface achievementNextAchievement
   id: number;
 }
 
-interface achievementData
+export interface achievementData
 {
   _links: linksStruct;
   id: number;

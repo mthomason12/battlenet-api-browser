@@ -1,7 +1,7 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
-import { achievementsIndex } from '../model/achievements';
+import { achievementData, achievementsIndex } from '../model/achievements';
 
 
 export class ApiclientService { 
@@ -76,14 +76,21 @@ export class ApiclientService {
   }
 
 
-  query(apiEndpoint: string, options: QueryOptions = {})
+  query<T = any>(apiEndpoint: string, options: QueryOptions = {}): Promise<T> | undefined
   {
-    return this.blizzapi?.query(apiEndpoint, options);
+    var ret = this.blizzapi?.query(apiEndpoint, options) as Promise<T> | undefined;
+    console.dir(Promise.resolve(ret));
+    return ret;
   }
 
-  queryStatic(apiEndpoint: string, options: QueryOptions = {})
+  queryStatic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
   {
-    return this.query(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, options);
+    var extraparams: string = "";
+    if (params != "")
+    {
+      extraparams = "&"+params;
+    }
+    return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale+extraparams, options);
   }  
 
   isConnected(): boolean
@@ -95,12 +102,12 @@ export class ApiclientService {
 
   getAchievementIndex(): Promise<achievementsIndex> | undefined
   {
-    return this.queryStatic('/data/wow/achievement/index') as Promise<achievementsIndex> | undefined;
+    return this.queryStatic<achievementsIndex>('/data/wow/achievement/index');
   }
 
-  getAchievement(id: number): Promise<any> | undefined
+  getAchievement(id: number): Promise<achievementData> | undefined
   {
-    return this.queryStatic(`/data/wow/achievement/${id}`);
+    return this.queryStatic<achievementData>(`/data/wow/achievement/${id}`);
   }
 
   getAchievementMedia(id: number): Promise<any> | undefined
