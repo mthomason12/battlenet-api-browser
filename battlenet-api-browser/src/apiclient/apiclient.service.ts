@@ -1,6 +1,7 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
+import { achievementsIndex } from '../model/achievements';
 
 
 export class ApiclientService { 
@@ -92,9 +93,9 @@ export class ApiclientService {
 
   //#region Achievements API
 
-  getAchievementIndex(): Promise<any> | undefined
+  getAchievementIndex(): Promise<achievementsIndex> | undefined
   {
-    return this.queryStatic('/data/wow/achievement/index');
+    return this.queryStatic('/data/wow/achievement/index') as Promise<achievementsIndex> | undefined;
   }
 
   getAchievement(id: number): Promise<any> | undefined

@@ -45,6 +45,19 @@ interface achievementMedia
   id: number;
 }
 
+interface achievementIndexEntry
+{
+  key: keyStruct;
+  name: string;
+  id: number;
+}
+
+export interface achievementsIndex
+{
+  _links: linksStruct;
+  achievements: achievementIndexEntry;
+}
+
 @Reviver<achievementDataDoc>({
   '.': Jsonizer.Self.assign(achievementDataDoc)
 })
@@ -99,7 +112,7 @@ export class achievementsDataDoc extends dataDoc
   override async reload(apiclient: ApiclientService)
   {
     await apiclient.getAchievementIndex()?.then (
-      (data: any) => {
+      (data: achievementsIndex) => {
         var json: string = JSON.stringify(data.achievements);
         const reviver = Reviver.get(achievementsDataDoc)
         const achReciver = reviver['achievements'] as Reviver<achievementDataDoc[]>;
