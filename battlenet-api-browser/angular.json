@@ -29,9 +29,15 @@
               "lodash", "json-ignore", "blizzapi", "reflect-metadata"
             ],
             "assets": [
+              "src/auth-callback.html",
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "oidc-client-ts.js",
+                "input": "node_modules/oidc-client-ts/dist/browser",
+                "output": "/"
               }
             ],
             "styles": [
