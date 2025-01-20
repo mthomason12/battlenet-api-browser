@@ -19,7 +19,7 @@ export class ApiclientService {
   
   connected: boolean = false;
 
-  public userManager?: UserManager;
+  public userManager: UserManager;
   private data: UserdataService;
 
   constructor ()
@@ -33,7 +33,7 @@ export class ApiclientService {
       clientId: this.data.data.key.clientID,
       clientSecret: this.data.data.key.clientSecret
     });  
-    this.userManager = new UserManager(this.getClientSettings()); 
+    this.userManager = new UserManager(this.getClientSettings());
   }
 
   getClientSettings(): UserManagerSettings
@@ -41,16 +41,16 @@ export class ApiclientService {
     return {
       authority: 'https://oauth.battle.net',
       client_id: this.clientID!,
-      //popup_redirect_uri: window.location.origin+'/auth-callback',
       redirect_uri: window.location.origin+'/auth-callback',
       post_logout_redirect_uri: window.location.origin+'/',
-      client_authentication: 'client_secret_basic',
+      silent_redirect_uri: window.location.origin+'/silent-callback.html',
       response_type:"code",
       scope:"openid wow.profile",
-      filterProtocolClaims: true,
-      loadUserInfo: true,
+      client_authentication: 'client_secret_basic',
+      //filterProtocolClaims: true,
+      //loadUserInfo: true,
       //automaticSilentRenew: true,
-      //silent_redirect_uri: window.location.origin+'/silent-callback.html'
+      //popup_redirect_uri: window.location.origin+'/auth-callback',      
     };    
   }
 
@@ -69,25 +69,20 @@ export class ApiclientService {
 
   async signinRedirect()
   {
-    return this.userManager?.signinRedirect();
+    return this.userManager.signinRedirect();
   }
 
   async completeAuthentication(router: Router)
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
     sessionStorage.removeItem('page_before_login');    
-    this.userManager?.signinCallback().finally(async () => {
-      //get an access token   
-      this.blizzapi.getAccessToken().then
-      (
-        (token)=>{      
-          this.accessToken = token;
-          this.userManager?.getUser().then(
-          (user)=>{console.dir(user);
-            router.navigate([storedURL]);
-          }
-        );   }
-      )
+    this.userManager.signinCallback().finally(() => {
+      console.dir(this.userManager);      
+      this.userManager.getUser().then(
+        (user)=>{
+          console.dir(user);
+          router.navigate([storedURL]);
+        });
     });
 
     //router.navigateByUrl(storedURL);
@@ -98,7 +93,7 @@ export class ApiclientService {
   {
     //unsure if this is how it works or not?
     (options.headers as Headers).set("Authorization", "Bearer "+this.accessToken);
-    var ret = this.blizzapi?.query(apiEndpoint, options) as Promise<T> | undefined;
+    var ret = this.blizzapi.query(apiEndpoint, options) as Promise<T> | undefined;
     console.dir(Promise.resolve(ret));
     return ret;
   }
