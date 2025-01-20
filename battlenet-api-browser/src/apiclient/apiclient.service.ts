@@ -263,5 +263,17 @@ export class ApiclientService {
 
   //#endregion
 
+  //#region Heirloom API
 
+  getHeirloomIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/heirloom/index`);
+  }  
+
+  getHeirloom(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/heirloom/${id}`);
+  }      
+
+  //#endregion
 }
