@@ -276,4 +276,43 @@ export class ApiclientService {
   }      
 
   //#endregion
+
+  //#region Item API
+
+  getItem(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item/${id}`);
+  }      
+
+  getItemMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/item/${id}`);
+  }    
+
+  getItemClassesIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-class/index`);
+  }    
+
+  getItemClass(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-class/${id}`);
+  }       
+
+  getItemSetsIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-set/index`);
+  }    
+
+  getItemSet(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-set/${id}`);
+  }       
+  
+  getItemSubclass(id: number, subid: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-class/${id}/item-subclass/${subid}`);
+  }     
+
+  //#endregion  
 }
