@@ -38,6 +38,11 @@
                 "glob": "oidc-client-ts.js",
                 "input": "node_modules/oidc-client-ts/dist/browser",
                 "output": "/"
+              },
+              {
+                "glob": "oidc-client-ts.js.map",
+                "input": "node_modules/oidc-client-ts/dist/browser",
+                "output": "/"
               }
             ],
             "styles": [

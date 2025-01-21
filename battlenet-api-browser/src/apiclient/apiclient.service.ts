@@ -10,8 +10,8 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 export class ApiclientService { 
   region: RegionIdOrName;
-  clientID?: string;
-  clientSecret?: string;
+  clientID: string;
+  clientSecret: string;
   blizzapi: BlizzAPI;
   accessToken: string = "";
   userAccessTokenExpires: number = 0;
@@ -25,12 +25,12 @@ export class ApiclientService {
 
   public userManager: UserManager;
   private data: UserdataService;
-  private httpClient: HttpClient;
+  //private httpClient: HttpClient;
 
   constructor ()
   {   
     this.data = inject(UserdataService);
-    this.httpClient = inject(HttpClient);
+    //this.httpClient = inject(HttpClient);
     this.clientID = this.data.data.key.clientID;
     this.clientSecret = this.data.data.key.clientSecret;
     this.region = "us";
@@ -39,8 +39,8 @@ export class ApiclientService {
       clientId: this.data.data.key.clientID,
       clientSecret: this.data.data.key.clientSecret
     });  
-    Log.setLogger(console);
-    Log.setLevel(Log.DEBUG);
+    //Log.setLogger(console);
+    //Log.setLevel(Log.DEBUG);
     this.userManager = new UserManager(this.getClientSettings());
   }
 
@@ -48,7 +48,8 @@ export class ApiclientService {
   {
     return {
       authority: 'https://oauth.battle.net',
-      client_id: this.clientID!,
+      client_id: this.clientID,
+      client_secret: this.clientSecret,
       redirect_uri: window.location.origin+'/auth-callback',
       post_logout_redirect_uri: window.location.origin+'/',
       silent_redirect_uri: window.location.origin+'/silent-callback.html',
@@ -84,52 +85,28 @@ export class ApiclientService {
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
     sessionStorage.removeItem('page_before_login');  
-    //can't get usermanager working, lets do it ourselves for now
-    this.getAccessToken(authcode);
-    /*this.userManager.signinCallback().finally(() => { 
+    this.userManager.signinCallback().finally(() => { 
       this.userManager.getUser().then(
         (user)=>{
           console.dir(user);
+          this.userAccessToken = user!.access_token;
+          console.log("Access Token: "+this.userAccessToken);
+          //replace blizzapi with one using our new access token
+          this.blizzapi = new BlizzAPI({
+            region: this.region!,
+            clientId: this.data.data.key.clientID,
+            clientSecret: this.data.data.key.clientSecret,
+            accessToken: this.userAccessToken
+          });  
           router.navigate([storedURL]);
         });
-    });*/
-    //router.navigateByUrl(storedURL);
+    });
   }
 
-  async getAccessToken(authcode: string)
-  {
-    this.userAccessToken = authcode; 
-    const body={
-      redirect_uri: this.getClientSettings().redirect_uri,
-      grant_type: "authorization_code",
-      code: authcode
-    }
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa('username:password')
-      })
-    };
-    await firstValueFrom(this.httpClient.post('https://oauth.battle.net/token',body,httpOptions)).then(
-      (result: any)=>{
-        this.userAccessToken = result.access_token;
-        this.userAccessTokenExpires = result.expires_in;
-        console.log ("Got a user access token!");
-      }
-    );
-  }
 
   query<T = any>(apiEndpoint: string, options: QueryOptions = {}): Promise<T> | undefined
   {
-    //unsure if this is how it works or not?
-    if (this.userAccessToken != "")
-    {
-      options.headers = new Headers();
-      (options.headers as Headers).set("Authorization", "Bearer "+this.userAccessToken);
-    }
-    var ret = this.blizzapi.query(apiEndpoint, options) as Promise<T> | undefined;
-    console.dir(Promise.resolve(ret));
-    return ret;
+    return this.blizzapi.query(apiEndpoint, options) as Promise<T> | undefined;
   }
 
   queryStatic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
