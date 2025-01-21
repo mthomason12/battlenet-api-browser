@@ -9,9 +9,12 @@ import { Router } from '@angular/router';
   styleUrl: './auth-callback.component.scss'
 })
 export class AuthCallbackComponent {
-  constructor(private apiclient: ApiclientService, private router: Router) { }
+  constructor(private apiclient: ApiclientService, private router: Router)
+  {
+  }
 
   ngOnInit(): void {
-    this.apiclient.completeAuthentication(this.router);
+    let params = new URL(document.location.toString()).searchParams;
+    this.apiclient.completeAuthentication(params.get('code')!, this.router);
   }
 }

@@ -1,9 +1,11 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
-import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
+import { Log, UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { UserdataService } from '../userdata/userdata.service';
 import { inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 
 export class ApiclientService { 
@@ -12,6 +14,8 @@ export class ApiclientService {
   clientSecret?: string;
   blizzapi: BlizzAPI;
   accessToken: string = "";
+  userAccessTokenExpires: number = 0;
+  userAccessToken: string = "";
   staticNamespace: string = "static-us";
   dynamicNamespace: string = "dynamic=us";
   profileNamespace: string = "profile-us";
@@ -21,10 +25,12 @@ export class ApiclientService {
 
   public userManager: UserManager;
   private data: UserdataService;
+  private httpClient: HttpClient;
 
   constructor ()
   {   
     this.data = inject(UserdataService);
+    this.httpClient = inject(HttpClient);
     this.clientID = this.data.data.key.clientID;
     this.clientSecret = this.data.data.key.clientSecret;
     this.region = "us";
@@ -33,6 +39,8 @@ export class ApiclientService {
       clientId: this.data.data.key.clientID,
       clientSecret: this.data.data.key.clientSecret
     });  
+    Log.setLogger(console);
+    Log.setLevel(Log.DEBUG);
     this.userManager = new UserManager(this.getClientSettings());
   }
 
@@ -72,27 +80,53 @@ export class ApiclientService {
     return this.userManager.signinRedirect();
   }
 
-  async completeAuthentication(router: Router)
+  async completeAuthentication(authcode: string, router: Router)
   {
     const storedURL = sessionStorage.getItem('page_before_login') as string;
-    sessionStorage.removeItem('page_before_login');    
-    this.userManager.signinCallback().finally(() => {
-      console.dir(this.userManager);      
+    sessionStorage.removeItem('page_before_login');  
+    //can't get usermanager working, lets do it ourselves for now
+    this.getAccessToken(authcode);
+    /*this.userManager.signinCallback().finally(() => { 
       this.userManager.getUser().then(
         (user)=>{
           console.dir(user);
           router.navigate([storedURL]);
         });
-    });
-
+    });*/
     //router.navigateByUrl(storedURL);
   }
 
+  async getAccessToken(authcode: string)
+  {
+    this.userAccessToken = authcode; 
+    const body={
+      redirect_uri: this.getClientSettings().redirect_uri,
+      grant_type: "authorization_code",
+      code: authcode
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa('username:password')
+      })
+    };
+    await firstValueFrom(this.httpClient.post('https://oauth.battle.net/token',body,httpOptions)).then(
+      (result: any)=>{
+        this.userAccessToken = result.access_token;
+        this.userAccessTokenExpires = result.expires_in;
+        console.log ("Got a user access token!");
+      }
+    );
+  }
 
   query<T = any>(apiEndpoint: string, options: QueryOptions = {}): Promise<T> | undefined
   {
     //unsure if this is how it works or not?
-    (options.headers as Headers).set("Authorization", "Bearer "+this.accessToken);
+    if (this.userAccessToken != "")
+    {
+      options.headers = new Headers();
+      (options.headers as Headers).set("Authorization", "Bearer "+this.userAccessToken);
+    }
     var ret = this.blizzapi.query(apiEndpoint, options) as Promise<T> | undefined;
     console.dir(Promise.resolve(ret));
     return ret;
@@ -106,6 +140,16 @@ export class ApiclientService {
       extraparams = "&"+params;
     }
     return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale+extraparams, options);
+  }  
+
+  queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
+  {
+    var extraparams: string = "";
+    if (params != "")
+    {
+      extraparams = "&"+params;
+    }
+    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale+extraparams, options);
   }  
 
   isConnected(): boolean
@@ -343,4 +387,13 @@ export class ApiclientService {
   }     
 
   //#endregion  
+
+  //region Account Profile API
+
+  getAccountProfileSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow`);
+  }    
+
+  //#endregion
 }

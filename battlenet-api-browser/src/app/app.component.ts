@@ -58,10 +58,11 @@ export class AppComponent implements OnDestroy {
 
   debug()
   {
-    this.apiCli.userManager.getUser().then(
-      (user)=>{
-        console.dir(user);
-      });
+    this.apiCli.getAccountProfileSummary()?.then(
+      (res)=>{
+        console.dir(res);
+      }
+    )
   }
   treeChanged(item: dataStruct)
   {
