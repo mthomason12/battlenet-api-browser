@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { openDB } from 'idb';
+import { IDBPDatabase, openDB, OpenDBCallbacks } from 'idb';
 import { jsonIgnoreReplacer } from 'json-ignore';
 import { Reviver } from '@badcafe/jsonizer';
 import _ from 'lodash';
@@ -97,22 +97,8 @@ export class UserdataService {
       }
     }).then (
       (db) => {
-        x = db.get('data','wowpublic').then (
-          res => {
-            if (res != undefined)
-            {
-              this.data.apiData.wowpublic = _.merge(this.data.apiData.wowpublic, JSON.parse(res, Reviver.get(publicDataStruct)));
-            }
-          }
-        )
-        y = db.get('data','wowprofile').then (
-          res => {
-            if (res != undefined)
-            {
-              this.data.apiData.wowprofile = _.merge(this.data.apiData.wowprofile, JSON.parse(res, Reviver.get(profileDataStruct)));
-            }
-          }
-        );
+        x = this.load(db, 'wowpublic', this.data.apiData.wowpublic, publicDataStruct);
+        y = this.load(db, 'wowprofile', this.data.apiData.wowprofile, profileDataStruct);
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
         Promise.allSettled([x,y]).then
         (_res => {   
@@ -123,6 +109,22 @@ export class UserdataService {
         });
       }
     );  
+  }
+
+  load(db: IDBPDatabase<unknown>, query: string, target: any, classtype: any): Promise<any>
+  {
+    return db.get('data',query).then(
+      (value) =>
+        {
+          if (value != undefined)
+          {
+            var newobj = _.merge(target, JSON.parse(value, Reviver.get(classtype)));
+            Object.keys(newobj).forEach(key => {
+              target[key] = newobj[key];
+          });            
+          }
+        }
+    )
   }
 
   save()
