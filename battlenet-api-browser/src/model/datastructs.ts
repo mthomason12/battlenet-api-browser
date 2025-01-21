@@ -21,16 +21,27 @@ export abstract class dataStruct {
     return [];
   }
 
+  /**
+   * @returns true if this structure is supposed to contain data, otherwise false
+   */
   hasData(): boolean
   {
     return false;
   }
 
+  /**
+   * Reload data from API
+   * @param apiclient 
+   */
   async reload(_apiclient: ApiclientService)
   {
     this.postProcess();
   }
 
+  /**
+   * Checks if data is loaded, and attempts to load it if it isn't (and if we have an api connection)
+   * @param apiclient 
+   */
   checkLoaded(apiclient: ApiclientService)
   {
   }
@@ -109,11 +120,17 @@ export abstract class dataDoc extends dataStruct
     }
   }
 
+  /**
+   * @returns date of last update
+   */
   getLastUpdate(): Date
   {
     return new Date(this.lastupdate!);
   }
 
+  /**
+   * @returns true if data is loaded, otherwise false
+   */
   isLoaded(): boolean
   {
     return (this.lastupdate !== undefined);
