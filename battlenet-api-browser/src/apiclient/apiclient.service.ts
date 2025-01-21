@@ -403,8 +403,5 @@ export class ApiclientService {
     return this.queryProfile(`/profile/user/wow/collections/transmogs`);
   }   
 
-
-
-
   //#endregion
 }
