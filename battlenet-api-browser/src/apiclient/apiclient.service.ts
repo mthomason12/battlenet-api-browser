@@ -61,7 +61,7 @@ export class ApiclientService {
     };    
   }
 
-  async connect(region: RegionIdOrName)
+  async connect()
   {    
     //get an access token
     this.blizzapi.getAccessToken().then((token)=>{

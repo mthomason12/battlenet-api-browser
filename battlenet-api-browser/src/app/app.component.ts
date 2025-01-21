@@ -45,7 +45,7 @@ export class AppComponent implements OnDestroy {
 
   connect()
   { 
-    this.apiCli.connect("us");
+    this.apiCli.connect();
   }
 
   bnetLogin()
