@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { SettingsComponent } from '../settings/settings.component';
-import { AuthComponent } from '../auth/auth.component';
 import { BrowseComponent } from '../browse/browse.component';
 import { AchievementsComponent } from '../browse/achievements/achievements.component';
 import { AchievementComponent } from '../browse/achievement/achievement.component';
@@ -24,5 +23,4 @@ export const routes: Routes = [
         { path: '**', children: [] }
     ]},       
     { path: 'settings', component: SettingsComponent },
-    { path: 'auth', component: AuthComponent },
 ];
