@@ -14,8 +14,8 @@ import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 })
 
 export class SettingsComponent {
-  clientId?: string;
-  clientSecret?: string;
+  clientId: string;
+  clientSecret: string;
 
   constructor(private userdata: UserdataService)
   {
@@ -31,8 +31,8 @@ export class SettingsComponent {
 
   save()
   {
-    this.userdata.data.key.clientID = this.clientId ?? "";
-    this.userdata.data.key.clientSecret = this.clientSecret ?? "";
+    this.userdata.data.key.clientID = this.clientId;
+    this.userdata.data.key.clientSecret = this.clientSecret;
     this.userdata.save();
   }
 }
