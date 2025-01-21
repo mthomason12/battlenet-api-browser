@@ -6,7 +6,6 @@ import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { profileDataStruct } from '../model/profile';
 import { publicDataStruct } from '../model/gamedata';
-import { Router } from '@angular/router';
 
 class apiDataStruct extends dataStruct
 {
@@ -68,6 +67,7 @@ export class UserdataService {
   constructor()
   {
     var x: any,y: any;
+
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
     console.log("Loading application key");
