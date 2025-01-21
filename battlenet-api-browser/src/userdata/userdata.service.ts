@@ -15,6 +15,9 @@ class apiDataStruct extends dataStruct
   wowpublic: publicDataStruct;
   wowprofile: profileDataStruct;
 
+  /**
+   * Constructor
+   */
   constructor()
   {
     super(undefined);
@@ -22,16 +25,25 @@ class apiDataStruct extends dataStruct
     this.wowprofile = new profileDataStruct(this);
   }
 
+  /**
+   * @inheritdoc
+   */  
   override getName(): string
   {
     return "Battle.net API";
   }
 
+  /**
+   * @inheritdoc
+   */
   override children(): dataStruct[]
   {
     return super.children().concat([this.wowpublic, this.wowprofile]);
   }
 
+  /**
+   * @inheritdoc
+   */
   override myPath(): string {
       return "browse";
   }
