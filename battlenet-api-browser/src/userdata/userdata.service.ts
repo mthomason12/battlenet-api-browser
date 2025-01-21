@@ -7,6 +7,9 @@ import { dataStruct } from '../model/datastructs';
 import { profileDataStruct } from '../model/profile';
 import { publicDataStruct } from '../model/gamedata';
 
+/**
+ * All API data retrieved and stored in the application
+ */
 class apiDataStruct extends dataStruct
 {
   wowpublic: publicDataStruct;
@@ -41,12 +44,18 @@ class apiDataStruct extends dataStruct
   }
 }
 
+/**
+ * Data for application API access - Client ID and Secret 
+ */
 class appKeyStruct
 {
   clientID: string = "";
   clientSecret: string = "";
 }
 
+/**
+ * All data held by {@link UserdataService}
+ */
 class userDataStruct
 {
   key: appKeyStruct = new appKeyStruct();
@@ -57,6 +66,9 @@ const dataItem: string = 'battlenet-api-data';
 
 @Injectable({  providedIn: 'root',})
 
+/**
+ * Service to hold and maintain data in application
+ */
 export class UserdataService {
   public data: userDataStruct = new userDataStruct();
   currentData?: dataStruct;
