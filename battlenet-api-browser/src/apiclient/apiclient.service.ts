@@ -1,11 +1,9 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
-import { Log, UserManager, UserManagerSettings } from 'oidc-client-ts';
+import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { UserdataService } from '../userdata/userdata.service';
 import { inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 
 export class ApiclientService { 
