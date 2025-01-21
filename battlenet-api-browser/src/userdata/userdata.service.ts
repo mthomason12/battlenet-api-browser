@@ -111,6 +111,14 @@ export class UserdataService {
     );  
   }
 
+  /**
+   * Attempt to merge data from database into specified data structure
+   * @param db 
+   * @param query 
+   * @param target 
+   * @param classtype 
+   * @returns 
+   */
   load(db: IDBPDatabase<unknown>, query: string, target: any, classtype: any): Promise<any>
   {
     return db.get('data',query).then(
@@ -127,6 +135,9 @@ export class UserdataService {
     )
   }
 
+  /**
+   * Saves data structures to database
+   */
   save()
   {
     localStorage.setItem(dataItem, JSON.stringify(this.data.key));
@@ -139,18 +150,28 @@ export class UserdataService {
     );      
   }
 
-  //fix up any references after reloading from JSON
+  /**
+   * fix up any references after reloading from JSON
+   */
   fixup()
   {
       this.data.apiData.fixup();
   }
 
+  /**
+   * Set the current user-selected data struct
+   * @param data 
+   */
   setCurrent(data: dataStruct)
   {
     this.currentData = data;
     this.dataChangedEmitter.emit(true);
   }
 
+  /**
+   * Get the current user-selected data struct
+   * @returns 
+   */
   getCurrent(): dataStruct | undefined
   {
     return this.currentData;
