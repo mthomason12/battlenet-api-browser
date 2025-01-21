@@ -70,11 +70,16 @@ const dataItem: string = 'battlenet-api-data';
  * Service to hold and maintain data in application
  */
 export class UserdataService {
+  /** mutable data held that can be loaded/saved */
   public data: userDataStruct = new userDataStruct();
-  currentData?: dataStruct;
-  loaded: boolean = false;
-  dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
-  dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
+  /** reference to the current user-selected item */
+  private currentData?: dataStruct;
+  /** whether we've finished loading */
+  public loaded: boolean = false;
+  /** Event triggered when data has finished loading */
+  public dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
+  /** Event triggered when user selection is changed */
+  public dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
 
   constructor()
   {
@@ -117,6 +122,7 @@ export class UserdataService {
           this.fixup();        
           console.log("Data loaded");
           this.loaded = true;
+          //send a notification to any subscribers
           this.dataLoadedEmitter.emit(true)           
         });
       }
@@ -138,7 +144,9 @@ export class UserdataService {
         {
           if (value != undefined)
           {
+            //create a new object consisting of the revived data merged into the target
             var newobj = _.merge(target, JSON.parse(value, Reviver.get(classtype)));
+            //We can't replace an object reference by reference, so instead replace target keys with new object keys
             Object.keys(newobj).forEach(key => {
               target[key] = newobj[key];
           });            
