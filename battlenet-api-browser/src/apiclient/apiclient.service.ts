@@ -64,8 +64,10 @@ export class ApiclientService {
   async connect(region: RegionIdOrName)
   {    
     //get an access token
-    this.accessToken = await this.blizzapi.getAccessToken();
-    this.connected = true;   
+    this.blizzapi.getAccessToken().then((token)=>{
+      this.accessToken = token;
+      this.connected = true;         
+    });
   }
 
   async authenticate(router: Router)
