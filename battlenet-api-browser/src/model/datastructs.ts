@@ -74,6 +74,8 @@ export abstract class dataDoc extends dataStruct
 {
   name: string;
 
+  needsauth: boolean = false;
+
   lastupdate: number | undefined;
 
   constructor(parent: dataStruct, name: string)
@@ -115,6 +117,14 @@ export abstract class dataDoc extends dataStruct
   isLoaded(): boolean
   {
     return (this.lastupdate !== undefined);
+  }
+
+  /**
+   * @returns true if user authentication is required to call the api, otherwise false
+   */
+  isPrivate(): boolean
+  {
+    return this.needsauth;
   }
 
 }
