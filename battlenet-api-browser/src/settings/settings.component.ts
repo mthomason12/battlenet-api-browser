@@ -2,19 +2,20 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserdataService } from '../userdata/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-settings',
-  imports: [ FormsModule, MatButtonModule, MatInputModule, MatFormFieldModule ],
+  imports: [ FormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatExpansionModule, MatAccordion ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'
 })
 
 export class SettingsComponent {
-  clientId: string;
-  clientSecret: string;
+  clientId?: string;
+  clientSecret?: string;
 
   constructor(private userdata: UserdataService)
   {
