@@ -6,6 +6,10 @@ import { UserdataService } from '../userdata/userdata.service';
 import { inject } from '@angular/core';
 
 
+/**
+ * This is missing a *lot* of error handling.
+ * For example, it currently assumes every http call will return a successful result
+ */
 export class ApiclientService { 
   region: RegionIdOrName;
   clientID: string;
