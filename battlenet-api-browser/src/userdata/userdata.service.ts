@@ -77,7 +77,6 @@ class userDataStruct
 const dataItem: string = 'battlenet-api-data';
 
 @Injectable({  providedIn: 'root',})
-
 /**
  * Service to hold and maintain data in application
  */
@@ -120,7 +119,7 @@ export class UserdataService {
     }
     //load saved api data from IndexedDB
     console.log("Loading stored api data");
-    const db = openDB('data',1, {
+    openDB('data',1, {
       upgrade(db) {
         db.createObjectStore('data');
       }
