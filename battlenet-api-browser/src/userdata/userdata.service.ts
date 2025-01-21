@@ -96,7 +96,7 @@ export class UserdataService {
         db.createObjectStore('data');
       }
     }).then (
-      db => {
+      (db) => {
         x = db.get('data','wowpublic').then (
           res => {
             if (res != undefined)
