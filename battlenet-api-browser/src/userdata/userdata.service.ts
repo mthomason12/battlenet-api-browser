@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IDBPDatabase, openDB, OpenDBCallbacks } from 'idb';
+import { IDBPDatabase, openDB } from 'idb';
 import { jsonIgnoreReplacer } from 'json-ignore';
 import { Reviver } from '@badcafe/jsonizer';
 import _ from 'lodash';
