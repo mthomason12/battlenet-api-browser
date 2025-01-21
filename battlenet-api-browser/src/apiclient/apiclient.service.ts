@@ -88,9 +88,7 @@ export class ApiclientService {
     this.userManager.signinCallback().finally(() => { 
       this.userManager.getUser().then(
         (user)=>{
-          console.dir(user);
           this.userAccessToken = user!.access_token;
-          console.log("Access Token: "+this.userAccessToken);
           //replace blizzapi with one using our new access token
           this.blizzapi = new BlizzAPI({
             region: this.region!,

@@ -46,9 +46,6 @@ export class AppComponent implements OnDestroy {
   connect()
   { 
     this.apiCli.connect("us");
-    /*this.apiClient.achievementIndex()?.then((data)=>{
-      console.log("Data returned: "+JSON.stringify(data))
-    });*/
   }
 
   bnetLogin()
