@@ -31,8 +31,8 @@ export class SettingsComponent {
 
   save()
   {
-    this.userdata.data.key.clientID = this.clientId;
-    this.userdata.data.key.clientSecret = this.clientSecret;
+    this.userdata.data.key.clientID = this.clientId ?? "";
+    this.userdata.data.key.clientSecret = this.clientSecret ?? "";
     this.userdata.save();
   }
 }

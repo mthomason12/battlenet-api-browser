@@ -10,6 +10,9 @@
     <input matInput type="text" title="Client Secret" [(ngModel)]="clientSecret" />
 </mat-form-field>
 </div>
+<button mat-raised-button (click)="reset()">Reset</button>
+<button mat-raised-button (click)="save()">Save</button>
+<p></p>
 <mat-accordion>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -24,5 +27,4 @@
     </mat-expansion-panel>
   </mat-accordion>
   
-<button mat-raised-button (click)="reset()">Reset</button>
-<button mat-raised-button (click)="save()">Save</button>
+
