@@ -368,5 +368,43 @@ export class ApiclientService {
     return this.queryProfile(`/profile/user/wow`);
   }    
 
+  getProtectedCharacterProfileSummary(characterId: number, realmId: number): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/protected-character/${realmId}-${characterId}`);
+  }
+
+  getAccountCollectionsIndex(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections`);
+  }   
+
+  getAccountHeirloomsCollectionsSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections/heirlooms`);
+  }   
+
+  getAccountMountsCollectionsSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections/mounts`);
+  }   
+
+  getAccountPetsCollectionsSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections/pets`);
+  }   
+
+  getAccountToysCollectionsSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections/toys`);
+  }   
+
+  getAccountTransmogCollectionsSummary(): Promise<any> | undefined
+  {
+    return this.queryProfile(`/profile/user/wow/collections/transmogs`);
+  }   
+
+
+
+
   //#endregion
 }
