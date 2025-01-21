@@ -106,29 +106,24 @@ export class ApiclientService {
   }
 
 
-  query<T = any>(apiEndpoint: string, options: QueryOptions = {}): Promise<T> | undefined
+  query<T = any>(apiEndpoint: string, params: string, options: QueryOptions = {}): Promise<T> | undefined
   {
+    var extraparams: string = "";
+    if (params != "")
+    {
+      extraparams = "&"+params;
+    }    
     return this.blizzapi.query(apiEndpoint, options) as Promise<T> | undefined;
   }
 
   queryStatic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
   {
-    var extraparams: string = "";
-    if (params != "")
-    {
-      extraparams = "&"+params;
-    }
-    return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale+extraparams, options);
+    return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params, options);
   }  
 
   queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
   {
-    var extraparams: string = "";
-    if (params != "")
-    {
-      extraparams = "&"+params;
-    }
-    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale+extraparams, options);
+    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
   }  
 
   isConnected(): boolean
