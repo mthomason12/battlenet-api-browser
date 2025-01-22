@@ -1,7 +1,12 @@
+import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { jsonIgnore } from 'json-ignore';
 import _, { now } from 'lodash';
+import { Reviver } from '@badcafe/jsonizer';
 
+/**
+ * A generic data structure
+ */
 export abstract class dataStruct {
   @jsonIgnore()
   _parent?: dataStruct;
@@ -83,11 +88,46 @@ export abstract class dataStruct {
   }
 }
 
+/**
+ * a datastruct at the top level, responsible for loading and saving its contents
+ */
+export abstract class topDataStruct extends dataStruct
+{
 
+  abstract loadAll(db: IDBPDatabase<unknown>): Promise<any>[];
+
+  /**
+   * Attempt to merge data from database into specified data structure
+   * @param db 
+   * @param query 
+   * @param target 
+   * @param classtype 
+   * @returns 
+   */
+  async load(db: IDBPDatabase<unknown>, query: string, target: any, classtype: any): Promise<any>
+  {
+    const value = await db.get('data', query);
+    if (value != undefined) {
+      //create a new object consisting of the revived data merged into the target
+      var newobj = _.merge(target, JSON.parse(value, Reviver.get(classtype)));
+      //We can't replace an object reference by reference, so instead replace target keys with new object keys
+      Object.keys(newobj).forEach(key => {
+        target[key] = newobj[key];
+      });
+    }
+  }
+
+  abstract save(db: IDBPDatabase<unknown>): void;
+}
+
+/**
+ * A datastruct that contains actual data
+ */
 export abstract class dataDoc extends dataStruct
 {
   name: string;
 
+  @jsonIgnore()
   needsauth: boolean = false;
 
   lastupdate: number | undefined;

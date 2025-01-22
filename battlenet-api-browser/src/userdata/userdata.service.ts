@@ -60,8 +60,8 @@ export class UserdataService {
       }
     }).then (
       (db) => {
-        loadList.push(this.load(db, 'wowpublic', this.data.apiData.wowpublic, publicDataStruct));
-        loadList.push(this.load(db, 'wowprofile', this.data.apiData.wowprofile, profileDataStruct));
+        loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db));
+        loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db));
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
         Promise.allSettled(loadList).then
         (_res => {   
@@ -75,45 +75,16 @@ export class UserdataService {
     );  
   }
 
-  /**
-   * Attempt to merge data from database into specified data structure
-   * @param db 
-   * @param query 
-   * @param target 
-   * @param classtype 
-   * @returns 
-   */
-  load(db: IDBPDatabase<unknown>, query: string, target: any, classtype: any): Promise<any>
-  {
-    return db.get('data',query).then(
-      (value) =>
-        {
-          if (value != undefined)
-          {
-            //create a new object consisting of the revived data merged into the target
-            var newobj = _.merge(target, JSON.parse(value, Reviver.get(classtype)));
-            //We can't replace an object reference by reference, so instead replace target keys with new object keys
-            Object.keys(newobj).forEach(key => {
-              target[key] = newobj[key];
-          });            
-          }
-        }
-    )
-  }
 
-  /**
-   * Saves data structures to database
-   */
   save()
   {
     localStorage.setItem(dataItem, JSON.stringify(this.data.key));
     //save to indexedDB
     const db = openDB('data',1).then(
       db => {
-        db.put('data', JSON.stringify(this.data.apiData.wowpublic, jsonIgnoreReplacer), 'wowpublic');
-        db.put('data', JSON.stringify(this.data.apiData.wowprofile, jsonIgnoreReplacer), 'wowprofile');        
-      }
-    );      
+        this.data.apiData.wowpublic.save(db);
+        this.data.apiData.wowprofile.save(db);
+      });
   }
 
   /**
