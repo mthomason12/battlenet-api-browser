@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './covenants.component.html',
   styleUrl: './covenants.component.scss'
 })
-export class CovenantsComponent extends AbstractBrowseChildComponent{
+export class CovenantsComponent extends AbstractBrowseChildComponent<covenantsDataDoc>{
 
   override currentData(): covenantsDataDoc
   {
