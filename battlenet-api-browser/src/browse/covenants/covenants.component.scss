@@ -1,8 +1,1 @@
-li {
-    padding-bottom: 2pt;
-    list-style-type: none;
-}
-
-li a {
-    height: 30px;
-}
+@use '../abstract-browse-child/abstract-browse-child.component.scss';
