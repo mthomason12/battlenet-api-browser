@@ -22,8 +22,10 @@ export class ApiclientService {
   dynamicNamespace: string = "dynamic=us";
   profileNamespace: string = "profile-us";
   locale: string = "en_US";
+
+  private _loggedIn = false;
   
-  connected: boolean = false;
+  private _connected: boolean = false;
 
   public userManager: UserManager;
   private data: UserdataService;
@@ -70,7 +72,7 @@ export class ApiclientService {
     //get an access token
     this.blizzapi.getAccessToken().then((token)=>{
       this.accessToken = token;
-      this.connected = true;         
+      this._connected = true;         
     });
   }
 
@@ -100,11 +102,25 @@ export class ApiclientService {
             clientSecret: this.data.data.key.clientSecret,
             accessToken: this.userAccessToken
           });  
+          this._loggedIn = true;
+          this._connected = true;
           router.navigate([storedURL]);
         });
     });
   }
 
+  
+  isConnected(): boolean
+  {
+    return this._connected;
+  }
+
+  isLoggedIn(): boolean
+  {
+    return this._loggedIn;
+  }
+
+  //#region Base queries
 
   query<T = any>(apiEndpoint: string, params: string, options: QueryOptions = {}): Promise<T> | undefined
   {
@@ -126,10 +142,7 @@ export class ApiclientService {
     return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
   }  
 
-  isConnected(): boolean
-  {
-    return this.connected;
-  }
+  //#region
 
   //#region Achievements API
 
