@@ -1,11 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IDBPDatabase, openDB } from 'idb';
-import { jsonIgnoreReplacer } from 'json-ignore';
-import { Reviver } from '@badcafe/jsonizer';
+import { openDB } from 'idb';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
-import { profileDataStruct } from '../model/profile';
-import { publicDataStruct } from '../model/gamedata';
 import { userDataStruct } from '../model/userdata';
 
 
