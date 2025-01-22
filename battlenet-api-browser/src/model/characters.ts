@@ -1,17 +1,18 @@
-import { dataStruct } from './datastructs';
+import { dataDoc, dataStruct } from './datastructs';
 
 export class charDataStruct extends dataStruct
 {
 }
 
-export class charsDataStruct extends dataStruct
+export class charsDataStruct extends dataDoc
 {
   items: charDataStruct[] = [];
 
   constructor(parent: dataStruct)
   {
-    super(parent);
+    super(parent, "Characters");
     this.icon = "group";
+    this.needsauth = true;
   }
 
   override getName(): string
