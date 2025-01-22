@@ -106,6 +106,7 @@ export class achievementsDataDoc extends dataDocCollection<achievementDataDoc>
   {
     super(parent, "Achievements");
     this.icon = "emoji_events";
+    this.dbkey = "wow-p-achievements";
   }
 
   override async reload(apiclient: ApiclientService)

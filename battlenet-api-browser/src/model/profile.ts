@@ -30,12 +30,12 @@ export class profileDataStruct extends topDataStruct
 
   override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
     var entries: Promise<any>[] = new Array();
-    entries.push(this.load(db, 'wowprofile-characters', this.characters, charsDataStruct));
+    entries.push(this.load(db, this.characters, charsDataStruct));
     return entries;
   }
 
   override save(db: IDBPDatabase<unknown>)
   {
-    db.put('data', JSON.stringify(this.characters, jsonIgnoreReplacer), 'wowprofile-characters');
+    this.saveObject(db, this.characters);
   }
 }

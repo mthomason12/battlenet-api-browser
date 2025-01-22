@@ -1,7 +1,7 @@
 import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../apiclient/apiclient.service';
-import { jsonIgnore } from 'json-ignore';
-import _, { now } from 'lodash';
+import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
+import _ from 'lodash';
 import { Reviver } from '@badcafe/jsonizer';
 
 /**
@@ -99,25 +99,51 @@ export abstract class topDataStruct extends dataStruct
   /**
    * Attempt to merge data from database into specified data structure
    * @param db 
-   * @param query 
    * @param target 
    * @param classtype 
    * @returns 
    */
-  async load(db: IDBPDatabase<unknown>, query: string, target: any, classtype: any): Promise<any>
+  async load(db: IDBPDatabase<unknown>, target: dataDoc, classtype: any): Promise<any>
   {
-    const value = await db.get('data', query);
-    if (value != undefined) {
-      //create a new object consisting of the revived data merged into the target
-      var newobj = _.merge(target, JSON.parse(value, Reviver.get(classtype)));
-      //We can't replace an object reference by reference, so instead replace target keys with new object keys
-      Object.keys(newobj).forEach(key => {
-        target[key] = newobj[key];
-      });
+    var doc: any = target as any;
+    if (doc.dbkey == undefined)
+    {
+      throw new Error("Attempted to load into an object with no dbkey");
+    }
+    else
+    {
+      const value = await db.get('data', target.dbkey!);
+      if (value != undefined) {
+        //create a new object consisting of the revived data merged into the target
+        //as we receive an object from indexedDB we stringify it and then parse it again with the reviver
+        var newobj = _.merge(target, JSON.parse(JSON.stringify(value), Reviver.get(classtype)));
+        //We can't replace an object reference by reference, so instead replace target keys with new object keys
+        Object.keys(newobj).forEach(key => {
+          doc[key] = newobj[key];
+        });
+      }
     }
   }
 
+  /**
+   * Override in descendant classes to save this object's contents (usually by calling saveObject on each item)
+   * @param db 
+   */
   abstract save(db: IDBPDatabase<unknown>): void;
+
+  /**
+   * Save a dataDoc object to indexedDB
+   * @param db 
+   * @param object 
+   * @returns 
+   */
+  saveObject(db: IDBPDatabase<unknown>, object: dataDoc): Promise<IDBValidKey>
+  {
+    //We need to ignore certain fields and strip class information so first we're JSONizing the dataDoc and then parsing it to 
+    //get an instance of plain old Object
+    var json = JSON.stringify(object, jsonIgnoreReplacer);
+    return db.put('data', JSON.parse(json), object.dbkey);
+  }
 }
 
 /**
@@ -126,6 +152,9 @@ export abstract class topDataStruct extends dataStruct
 export abstract class dataDoc extends dataStruct
 {
   name: string;
+
+  @jsonIgnore()
+  dbkey?: string;
 
   @jsonIgnore()
   needsauth: boolean = false;

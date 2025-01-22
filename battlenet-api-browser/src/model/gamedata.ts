@@ -46,14 +46,14 @@ export class publicDataStruct extends topDataStruct
 
   override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
     var entries: Promise<any>[] = new Array();
-    entries.push(this.load(db, 'wowdata-achievements', this.achievementData, achievementsDataDoc));
-    entries.push(this.load(db, 'wowdata-covenants', this.covenantData, covenantsDataDoc));
+    entries.push(this.load(db, this.achievementData, achievementsDataDoc));
+    entries.push(this.load(db, this.covenantData, covenantsDataDoc));
     return entries;
   }
 
   override save(db: IDBPDatabase<unknown>)
   {
-    db.put('data', JSON.stringify(this.achievementData, jsonIgnoreReplacer), 'wowdata-achievements');
-    db.put('data', JSON.stringify(this.covenantData, jsonIgnoreReplacer), 'wowdata-covenants');
+    this.saveObject(db, this.achievementData);
+    this.saveObject(db, this.covenantData);
   }
 }
