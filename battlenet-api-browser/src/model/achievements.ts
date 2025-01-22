@@ -113,7 +113,7 @@ export class achievementsDataDoc extends dataDocCollection<achievementDataDoc>
       (data: achievementsIndex) => {
         var json: string = JSON.stringify(data.achievements);
         const reviver = Reviver.get(achievementsDataDoc)
-        const achReviver = reviver['achievements'] as Reviver<achievementDataDoc[]>;
+        const achReviver = reviver['items'] as Reviver<achievementDataDoc[]>;
         this.items = JSON.parse(json, achReviver);
         this.postFixup();
         super.reload(apiclient);

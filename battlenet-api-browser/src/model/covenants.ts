@@ -42,7 +42,7 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
         (data: any) => {
           var json: string = JSON.stringify(data.covenants);
           const reviver = Reviver.get(covenantsDataDoc)
-          const covReviver = reviver['covenants'] as Reviver<covenantDataDoc[]>;
+          const covReviver = reviver['items'] as Reviver<covenantDataDoc[]>;
           this.items = JSON.parse(json, covReviver);
           this.postFixup();
           super.reload(apiclient);
