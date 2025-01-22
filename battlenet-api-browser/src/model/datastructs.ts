@@ -5,6 +5,7 @@ import _, { now } from 'lodash';
 export abstract class dataStruct {
   @jsonIgnore()
   _parent?: dataStruct;
+  @jsonIgnore()
   icon: string = "";
 
   constructor (parent?: dataStruct)
