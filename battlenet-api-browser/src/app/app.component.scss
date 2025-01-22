@@ -17,11 +17,13 @@ mat-toolbar {
     position: sticky;
 }
 
-div.buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+ul.buttons {
+  li {
+    margin-top:4px;
+    margin-bottom:4px;
+    list-style: none;
   }
+}
 
 div.loadingspinner
 {

@@ -8,18 +8,18 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" [opened]="true"  fixedTopGap="56">
     <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
-    <div class="buttons">
+    <ul class="buttons">
       @if (this.apiClient.isConnected()) {
-        <button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button>        
+        <li><button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button></li>   
       }
       @else {
-        <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
+        <li><button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
           <mat-icon>login</mat-icon>Connect
-        </button>            
+        </button></li>
       }
-      <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
-      <button mat-raised-button (click)="debug()"><mat-icon>medication</mat-icon>Debug</button>
-    </div>
+      <li><button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button></li>
+      <li><button mat-raised-button (click)="debug()"><mat-icon>medication</mat-icon>Debug</button></li>
+    </ul>
   </mat-sidenav>
   <mat-sidenav-content #content> 
     @if (data.loaded) {
