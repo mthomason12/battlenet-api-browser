@@ -1,4 +1,4 @@
-import { dataStruct, topDataStruct } from './datastructs';
+import { dataStruct, topDataStruct, dataFolder } from './datastructs';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc } from './covenants';
