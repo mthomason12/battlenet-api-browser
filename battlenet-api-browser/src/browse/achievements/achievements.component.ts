@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './achievements.component.scss'
 })
 
-export class AchievementsComponent extends AbstractBrowseChildComponent {
+export class AchievementsComponent extends AbstractBrowseChildComponent<achievementsDataDoc> {
 
   override currentData(): achievementsDataDoc
   {

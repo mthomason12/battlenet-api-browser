@@ -12,7 +12,7 @@ import { UserdataService } from '../../userdata/userdata.service';
   styleUrl: './achievement.component.scss'
 })
 
-export class AchievementComponent extends AbstractBrowseChildComponent{
+export class AchievementComponent extends AbstractBrowseChildComponent<achievementDataDoc>{
 
   datadoc?: achievementDataDoc;
   id?: string;
