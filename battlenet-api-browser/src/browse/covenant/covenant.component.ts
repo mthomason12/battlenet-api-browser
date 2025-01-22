@@ -23,7 +23,7 @@ export class CovenantComponent  extends AbstractBrowseChildComponent{
   override preinit()
   {
     this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.data.data.apiData.wowpublic.covenantData.covenants.find(
+    this.datadoc = this.data.data.apiData.wowpublic.covenantData.items.find(
       (data, index, array)=>{
         return Number.parseInt(this.id!) == data.id;
       }

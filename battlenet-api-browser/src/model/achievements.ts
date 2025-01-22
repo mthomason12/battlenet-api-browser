@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, assetStruct } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection, keyStruct, linksStruct, mediaStruct, assetStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -96,14 +96,12 @@ export class achievementDataDoc extends dataDoc
 
 @Reviver<achievementsDataDoc>({
   '.': Jsonizer.Self.assign(achievementsDataDoc),
-  achievements: {
+  items: {
     '*': achievementDataDoc
   }
 })
-export class achievementsDataDoc extends dataDoc
+export class achievementsDataDoc extends dataDocCollection<achievementDataDoc>
 {
-  achievements: achievementDataDoc[] = new Array();
-
   constructor (parent: dataStruct)
   {
     super(parent, "Achievements");
@@ -115,8 +113,8 @@ export class achievementsDataDoc extends dataDoc
       (data: achievementsIndex) => {
         var json: string = JSON.stringify(data.achievements);
         const reviver = Reviver.get(achievementsDataDoc)
-        const achReciver = reviver['achievements'] as Reviver<achievementDataDoc[]>;
-        this.achievements = JSON.parse(json, achReciver);
+        const achReviver = reviver['achievements'] as Reviver<achievementDataDoc[]>;
+        this.items = JSON.parse(json, achReviver);
         this.postFixup();
         super.reload(apiclient);
       }
@@ -125,15 +123,5 @@ export class achievementsDataDoc extends dataDoc
 
   override myPath(): string {
       return "achievements";
-  }
-
-  override doPostProcess()
-  {
-    this.achievements = this.achievements.sort(function(a:any, b:any){return a.id - b.id});
-  }
-
-  override postFixup(): void {
-    var ref = this;
-    this.achievements.forEach((achievements)=>{achievements.fixup(ref)});
   }
 }

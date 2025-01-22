@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -25,14 +25,12 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
   
   @Reviver<covenantsDataDoc>({
     '.': Jsonizer.Self.assign(covenantsDataDoc),
-    covenants: {
+    items: {
       '*': covenantDataDoc
     }
   })
-  export class covenantsDataDoc extends dataDoc
+  export class covenantsDataDoc extends dataDocCollection<covenantDataDoc>
   {
-    covenants: covenantDataDoc[] = new Array();
-  
     constructor (parent: dataStruct)
     {
       super(parent,"Covenants");   
@@ -44,24 +42,16 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
         (data: any) => {
           var json: string = JSON.stringify(data.covenants);
           const reviver = Reviver.get(covenantsDataDoc)
-          const covReciver = reviver['covenants'] as Reviver<covenantDataDoc[]>;
-          this.covenants = JSON.parse(json, covReciver);
+          const covReviver = reviver['covenants'] as Reviver<covenantDataDoc[]>;
+          this.items = JSON.parse(json, covReviver);
           this.postFixup();
           super.reload(apiclient);
         }
       );
     }
   
-    override doPostProcess()
-    {
-      this.covenants = this.covenants.sort(function(a:any, b:any){return a.id - b.id});    
-    }
-  
     override myPath(): string {
         return "covenants";
     }
-  
-    override postFixup(): void {
-      this.covenants.forEach((covenant)=>{covenant.fixup(this)});
-    }
+
   }

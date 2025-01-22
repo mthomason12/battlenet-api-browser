@@ -148,6 +148,25 @@ export abstract class dataDoc extends dataStruct
 
 }
 
+export class dataDocCollection<T extends dataDoc> extends dataDoc
+{
+  items: T[] = new Array();
+
+  constructor (parent: dataStruct, name: string)
+  {
+    super(parent,name);   
+  }
+
+  override doPostProcess()
+  {
+    this.items = this.items.sort(function(a:any, b:any){return a.id - b.id});    
+  }
+
+  override postFixup(): void {
+    this.items.forEach((item)=>{item.fixup(this)});
+  }
+}
+
 export interface keyStruct
 {
     href: string;   
