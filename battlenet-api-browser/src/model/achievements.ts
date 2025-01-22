@@ -105,6 +105,7 @@ export class achievementsDataDoc extends dataDocCollection<achievementDataDoc>
   constructor (parent: dataStruct)
   {
     super(parent, "Achievements");
+    this.icon = "emoji_events";
   }
 
   override async reload(apiclient: ApiclientService)
