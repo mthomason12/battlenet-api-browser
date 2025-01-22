@@ -22,7 +22,7 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
     }
   }
   
-  
+ 
   @Reviver<covenantsDataDoc>({
     '.': Jsonizer.Self.assign(covenantsDataDoc),
     covenants: {
@@ -58,8 +58,8 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
     }
   
     override myPath(): string {
-        return "covenants";
-    }
+      return "covenants";
+  }
   
     override postFixup(): void {
       this.covenants.forEach((covenant)=>{covenant.fixup(this)});

@@ -82,6 +82,48 @@ export abstract class dataStruct {
   }
 }
 
+/**
+ * A folder just for visual organization
+ */
+export class dataFolder extends dataStruct
+{
+  contents: dataStruct[] = Array();
+  name: string;
+
+  constructor(parent: dataStruct, name: string)
+  {
+    super(parent);
+    this.name = name;
+  }
+
+  /**
+   * Skip directly to parent path
+   * @returns 
+   */
+  override path(): string {
+    return this._parent!.path();
+  }
+
+  override getName(): string
+  {
+    return this.name;
+  }  
+
+  override children(): dataStruct[]
+  {
+    return this.contents;
+  }
+
+  /**
+   * add an item to this folder
+   * @param struct 
+   */
+  add(struct: dataStruct)
+  {
+    this.contents.push(struct);
+  }
+}
+
 
 export abstract class dataDoc extends dataStruct
 {
