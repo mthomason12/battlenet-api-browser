@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { covenantDataDoc } from '../../model/covenants';
+import { covenantDataDoc, covenantsDataDoc } from '../../model/covenants';
 import { ActivatedRoute } from '@angular/router';
 import { UserdataService } from '../../userdata/userdata.service';
 
@@ -10,7 +10,7 @@ import { UserdataService } from '../../userdata/userdata.service';
   templateUrl: './covenant.component.html',
   styleUrl: './covenant.component.scss'
 })
-export class CovenantComponent  extends AbstractBrowseChildComponent{
+export class CovenantComponent  extends AbstractBrowseChildComponent<covenantDataDoc>{
 
   datadoc?: covenantDataDoc;
   id?: string;
@@ -23,7 +23,7 @@ export class CovenantComponent  extends AbstractBrowseChildComponent{
   override preinit()
   {
     this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.data.data.apiData.wowpublic.covenantData.covenants.find(
+    this.datadoc = this.data.data.apiData.wowpublic.covenantData.items.find(
       (data, index, array)=>{
         return Number.parseInt(this.id!) == data.id;
       }

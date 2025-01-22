@@ -1,7 +1,9 @@
-import { dataFolder, dataStruct } from './datastructs';
+import { dataStruct, topDataStruct } from './datastructs';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc } from './covenants';
+import { jsonIgnoreReplacer } from 'json-ignore';
+import { IDBPDatabase } from 'idb';
 export * from './achievements';
 export * from './covenants';
 
@@ -10,7 +12,7 @@ export * from './covenants';
   achievementData: achievementsDataDoc,
   covenantData: covenantsDataDoc
 })
-export class publicDataStruct extends dataStruct
+export class publicDataStruct extends topDataStruct
 {
   achievementData: achievementsDataDoc;
   covenantData: covenantsDataDoc;
@@ -43,5 +45,18 @@ export class publicDataStruct extends dataStruct
   override postFixup(): void {
     this.achievementData.fixup(this);
     this.covenantData.fixup(this);
+  }
+
+  override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
+    var entries: Promise<any>[] = new Array();
+    entries.push(this.load(db, this.achievementData, achievementsDataDoc));
+    entries.push(this.load(db, this.covenantData, covenantsDataDoc));
+    return entries;
+  }
+
+  override save(db: IDBPDatabase<unknown>)
+  {
+    this.saveObject(db, this.achievementData);
+    this.saveObject(db, this.covenantData);
   }
 }

@@ -1,7 +1,9 @@
-import { dataStruct } from './datastructs';
+import { dataStruct, topDataStruct } from './datastructs';
 import { charsDataStruct } from './characters';
+import { IDBPDatabase } from 'idb';
+import { jsonIgnoreReplacer } from 'json-ignore';
 
-export class profileDataStruct extends dataStruct
+export class profileDataStruct extends topDataStruct
 {
   characters: charsDataStruct;
 
@@ -24,5 +26,16 @@ export class profileDataStruct extends dataStruct
 
   override myPath(): string {
       return "profile";
+  }
+
+  override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
+    var entries: Promise<any>[] = new Array();
+    entries.push(this.load(db, this.characters, charsDataStruct));
+    return entries;
+  }
+
+  override save(db: IDBPDatabase<unknown>)
+  {
+    this.saveObject(db, this.characters);
   }
 }

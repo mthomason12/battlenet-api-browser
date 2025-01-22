@@ -12,7 +12,7 @@ import { UserdataService } from '../../userdata/userdata.service';
   styleUrl: './achievement.component.scss'
 })
 
-export class AchievementComponent extends AbstractBrowseChildComponent{
+export class AchievementComponent extends AbstractBrowseChildComponent<achievementDataDoc>{
 
   datadoc?: achievementDataDoc;
   id?: string;
@@ -25,7 +25,7 @@ export class AchievementComponent extends AbstractBrowseChildComponent{
   override preinit()
   {
     this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.data.data.apiData.wowpublic.achievementData.achievements.find(
+    this.datadoc = this.data.data.apiData.wowpublic.achievementData.items.find(
       (data, index, array)=>{
         return Number.parseInt(this.id!) == data.id;
       }

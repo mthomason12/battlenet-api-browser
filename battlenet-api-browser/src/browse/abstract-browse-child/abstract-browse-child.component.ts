@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UserdataService } from '../../userdata/userdata.service';
+import { ApiclientService } from '../../apiclient/apiclient.service';
 import { dataStruct } from '../../model/datastructs';
 
 @Component({
@@ -8,7 +9,9 @@ import { dataStruct } from '../../model/datastructs';
   templateUrl: './abstract-browse-child.component.html',
   styleUrl: './abstract-browse-child.component.scss'
 })
-export class AbstractBrowseChildComponent implements OnInit{
+export class AbstractBrowseChildComponent<T extends dataStruct> implements OnInit{
+
+  protected apiClient: ApiclientService = inject(ApiclientService);
 
   constructor(protected data: UserdataService)
   {
@@ -16,7 +19,8 @@ export class AbstractBrowseChildComponent implements OnInit{
 
   ngOnInit(): void {
     this.preinit();
-    this.data.setCurrent(this.currentData()!);
+    this.currentData().checkLoaded(this.apiClient);
+    this.data.setCurrent(this.currentData());
   }
 
   //things to do just before oninit
@@ -24,9 +28,9 @@ export class AbstractBrowseChildComponent implements OnInit{
   {
   }
 
-  currentData(): dataStruct | undefined
+  currentData(): T
   {
-    return this.data.getCurrent();
+    return this.data.getCurrent() as T;
   }
 
   

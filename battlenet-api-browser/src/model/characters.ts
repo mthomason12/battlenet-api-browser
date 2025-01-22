@@ -13,6 +13,7 @@ export class charsDataStruct extends dataDoc
     super(parent, "Characters");
     this.icon = "group";
     this.needsauth = true;
+    this.dbkey="wow-u-characters";
   }
 
   override getName(): string
