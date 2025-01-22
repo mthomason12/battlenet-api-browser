@@ -29,7 +29,7 @@ export class UserdataService {
 
   constructor()
   {
-    var x: any,y: any;
+    var loadList: Promise<any>[] = new Array();
 
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
@@ -60,10 +60,10 @@ export class UserdataService {
       }
     }).then (
       (db) => {
-        x = this.load(db, 'wowpublic', this.data.apiData.wowpublic, publicDataStruct);
-        y = this.load(db, 'wowprofile', this.data.apiData.wowprofile, profileDataStruct);
+        loadList.push(this.load(db, 'wowpublic', this.data.apiData.wowpublic, publicDataStruct));
+        loadList.push(this.load(db, 'wowprofile', this.data.apiData.wowprofile, profileDataStruct));
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
-        Promise.allSettled([x,y]).then
+        Promise.allSettled(loadList).then
         (_res => {   
           this.fixup();        
           console.log("Data loaded");
