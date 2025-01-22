@@ -39,24 +39,3 @@
         } 
       </mat-card-footer>      
   </mat-card>
-
-
-
-
-<!--ng-template #dataobject let-subdata>
-  <ul>
-    @for(item of subdata | keyvalue; track item){
-        <li>
-          <b>{{item.key}}</b>:
-          <ng-container
-            [ngTemplateOutlet]="(typeof item.value =='object') ? dataobject : dataitem"
-            [ngTemplateOutletContext]="{$implicit: item.value}">
-          </ng-container>
-        </li>
-    }
-  </ul>
-</ng-template-->
-
-<!--ng-template #dataitem let-subdata>
-  {{subdata}}
-</ng-template-->
