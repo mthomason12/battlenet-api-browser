@@ -20,6 +20,7 @@ export class publicDataStruct extends dataStruct
     super(parent);
     this.achievementData = new achievementsDataDoc(this);
     this.covenantData = new covenantsDataDoc(this);
+    this.icon = "folder";
   }
 
   override getName(): string

@@ -9,6 +9,7 @@ export class profileDataStruct extends dataStruct
   {
     super(parent);
     this.characters = new charsDataStruct(this);
+    this.icon = "folder";
   }
 
   override getName(): string

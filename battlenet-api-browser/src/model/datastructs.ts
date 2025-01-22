@@ -5,10 +5,12 @@ import _, { now } from 'lodash';
 export abstract class dataStruct {
   @jsonIgnore()
   _parent?: dataStruct;
+  icon: string = "";
 
   constructor (parent?: dataStruct)
   {
     this._parent = parent;
+    this.icon = "article";
   }
 
   getName(): string

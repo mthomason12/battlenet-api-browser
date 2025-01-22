@@ -11,6 +11,7 @@ export class charsDataStruct extends dataStruct
   constructor(parent: dataStruct)
   {
     super(parent);
+    this.icon = "group";
   }
 
   override getName(): string
