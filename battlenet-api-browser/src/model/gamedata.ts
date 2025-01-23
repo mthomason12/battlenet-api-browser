@@ -27,7 +27,7 @@ export class publicDataStruct extends topDataStruct
     this.covenantData = new covenantsDataDoc(this);
     this.covenantsFolder = new dataFolder(this, "Covenants");
     this.covenantsFolder.add(this.covenantData);
-    this.creaturesFolder = new dataFolder(this, "Creatures", "cruelty_free");
+    this.creaturesFolder = new dataFolder(this, "Creatures");
     this.icon = "folder";
   }
 
