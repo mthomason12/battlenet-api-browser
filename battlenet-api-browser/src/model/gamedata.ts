@@ -18,6 +18,7 @@ export class publicDataStruct extends topDataStruct
   covenantData: covenantsDataDoc;
 
   covenantsFolder: dataFolder;
+  creaturesFolder: dataFolder;
 
   constructor(parent: dataStruct)
   {
@@ -25,6 +26,8 @@ export class publicDataStruct extends topDataStruct
     this.achievementData = new achievementsDataDoc(this);
     this.covenantData = new covenantsDataDoc(this);
     this.covenantsFolder = new dataFolder(this, "Covenants");
+    this.covenantsFolder.add(this.covenantData);
+    this.creaturesFolder = new dataFolder(this, "Creatures", "cruelty_free");
     this.icon = "folder";
   }
 
@@ -35,7 +38,7 @@ export class publicDataStruct extends topDataStruct
 
   override children(): dataStruct[]
   {
-    return super.children().concat([this.achievementData, this.covenantData]);
+    return super.children().concat([this.achievementData, this.covenantsFolder, this.creaturesFolder]);
   } 
 
   override myPath(): string {

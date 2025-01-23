@@ -96,10 +96,11 @@ export class dataFolder extends dataStruct
   contents: dataStruct[] = Array();
   name: string;
 
-  constructor(parent: dataStruct, name: string)
+  constructor(parent: dataStruct, name: string, folder: string = "folder")
   {
     super(parent);
     this.name = name;
+    this.icon = folder;
   }
 
   /**
