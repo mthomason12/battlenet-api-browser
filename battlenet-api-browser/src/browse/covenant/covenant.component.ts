@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { covenantDataDoc, covenantsDataDoc } from '../../model/covenants';
+import { covenantDataDoc } from '../../model/covenants';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { UserdataService } from '../../userdata/userdata.service';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-covenant',
-  imports: [],
+  imports: [ MatTabsModule, MatListModule, MatTableModule ],
   templateUrl: './covenant.component.html',
   styleUrl: './covenant.component.scss'
 })
