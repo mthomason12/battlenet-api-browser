@@ -12,7 +12,16 @@
         <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
       </mat-card-header>
       <mat-card-content>
-        <router-outlet></router-outlet>
+        
+        @if(currentData()?.hasData()) 
+        {          
+          <mat-card appearance="outlined" class="innerCard">
+            <mat-card-content>
+              <router-outlet></router-outlet>
+            </mat-card-content>
+          </mat-card>
+        }
+        
       </mat-card-content>
       <mat-card-actions>
         @if(currentData()?.hasData()) 

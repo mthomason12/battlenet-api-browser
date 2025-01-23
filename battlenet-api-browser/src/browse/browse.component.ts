@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../userdata/userdata.service';
@@ -14,7 +14,7 @@ import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.compone
 @Component({
   selector: 'app-browse',
   imports: [ 
-    MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, 
+    MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, MatCardFooter,
     CommonModule, RouterOutlet, BreadcrumbComponent 
   ],
   templateUrl: './browse.component.html',
@@ -76,7 +76,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   currentDataDoc(): dataDoc | undefined
   {
-    return this.data.getCurrent() as dataDoc;
+    return this.currentData() as dataDoc;
   }
 
 }
