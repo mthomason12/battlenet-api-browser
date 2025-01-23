@@ -273,6 +273,16 @@ export abstract class dataDoc extends dataStruct
     return this.needsauth;
   }
 
+  /**
+   * Return an object containing the sanitized contents of this object 
+   * Fields that might create circular references (for example, _parent) are removed.
+   */
+  debugFields(): object
+  {
+    var json = JSON.stringify(this, jsonIgnoreReplacer);
+    return JSON.parse(json);
+  }
+
 }
 
 //#endregion

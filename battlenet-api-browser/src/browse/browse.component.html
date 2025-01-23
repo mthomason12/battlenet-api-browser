@@ -2,7 +2,13 @@
 
   <mat-card appearance="outlined">
       <mat-card-header>
-          <mat-card-title>{{currentData()?.getName()}}</mat-card-title>
+          <mat-card-title>
+            @if (currentData()?._parent!.hasData())
+            {
+            <div class="breadcrumbs" role="navigation"><app-breadcrumb [location]="currentData()?._parent!"></app-breadcrumb></div>
+            }
+            {{currentData()?.getName()}}
+          </mat-card-title>
         <!---mat-card-subtitle>Battle.net API Browser</mat-card-subtitle--->
       </mat-card-header>
       <mat-card-content>
@@ -17,8 +23,9 @@
           }
           @else 
           {
-            <p>Connect to update data</p>
+            <button mat-raised-button disabled>Connect to update data</button>
           }          
+          <button mat-raised-button (click)="debug()"><mat-icon>bug_report</mat-icon>Debug</button>
         }        
         @else 
         {

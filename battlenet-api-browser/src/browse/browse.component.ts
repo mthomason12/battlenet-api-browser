@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../userdata/userdata.service';
 import { dataStruct, dataDoc } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,10 +9,14 @@ import { ApiclientService } from '../apiclient/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-browse',
-  imports: [ MatCardModule, MatButtonModule, CommonModule, RouterOutlet ],
+  imports: [ 
+    MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, 
+    CommonModule, RouterOutlet, BreadcrumbComponent 
+  ],
   templateUrl: './browse.component.html',
   styleUrl: './browse.component.scss'
 })
@@ -19,12 +25,14 @@ export class BrowseComponent implements OnInit, OnDestroy {
   apiCli?: ApiclientService;
   navigationEndSubscription?: Subscription;
   dataChangedSubscription?: Subscription;
-  
+  private ref: ChangeDetectorRef;
+
+  readonly dialog = inject(MatDialog);
 
   constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   {
     this.apiCli = apiClient;
-    
+    this.ref = inject(ChangeDetectorRef);    
   }
 
   ngOnInit(): void {
@@ -53,6 +61,14 @@ export class BrowseComponent implements OnInit, OnDestroy {
     }
   }
 
+  debug()
+  {
+    this.dialog.open(BrowseDebugDialog, {
+      width: "90%",
+      data: { current: this.data.getCurrent() }
+    });
+  }
+
   currentData(): dataStruct | undefined
   {
     return this.data.getCurrent();
@@ -63,4 +79,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
     return this.data.getCurrent() as dataDoc;
   }
 
+}
+
+@Component({
+  selector: 'browse-debug-dialog',
+  templateUrl: 'browse-debug-dialog.html',
+  imports: [MatButtonModule, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogTitle, CommonModule],
+})
+export class BrowseDebugDialog {
+  data = inject(MAT_DIALOG_DATA);
 }
