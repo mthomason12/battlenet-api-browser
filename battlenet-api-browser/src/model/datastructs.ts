@@ -4,6 +4,8 @@ import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Reviver } from '@badcafe/jsonizer';
 
+//#region dataStruct
+
 /**
  * A generic data structure
  */
@@ -88,6 +90,10 @@ export abstract class dataStruct {
   }
 }
 
+//#endregion
+
+//#region dataFolder
+
 /**
  * A folder just for visual organization
  */
@@ -130,6 +136,10 @@ export class dataFolder extends dataStruct
     this.contents.push(struct);
   }
 }
+
+//#endregion
+
+//#region topDataStruct
 
 /**
  * a datastruct at the top level, responsible for loading and saving its contents
@@ -188,6 +198,10 @@ export abstract class topDataStruct extends dataStruct
     return db.put('data', JSON.parse(json), object.dbkey);
   }
 }
+
+//#endregion
+
+//#region dataDoc
 
 /**
  * A datastruct that contains actual data
@@ -261,6 +275,10 @@ export abstract class dataDoc extends dataStruct
 
 }
 
+//#endregion
+
+//#region dataDocCollection
+
 export class dataDocCollection<T extends dataDoc> extends dataDoc
 {
   items: T[] = new Array();
@@ -279,6 +297,8 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
     this.items.forEach((item)=>{item.fixup(this)});
   }
 }
+
+//#endregion
 
 export interface keyStruct
 {
@@ -306,4 +326,11 @@ export interface assetStruct
   key: string;
   value: string;
   file_data_id: number;
+}
+
+export interface refStruct
+{
+  id: number;
+  name: string;
+  key: keyStruct;
 }
