@@ -5,24 +5,23 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 //#region Creature Family
 
 @Reviver<creatureFamilyDataDoc>({
-    '.': Jsonizer.Self.assign(creatureFamilyDataDoc)
-  })
+  '.': Jsonizer.Self.assign(creatureFamilyDataDoc)
+})
   export class creatureFamilyDataDoc extends dataDoc
   {
     id: number;
-    title: string;
   
-    constructor (parent: dataStruct, id: number, title: string)
+    constructor (parent: dataStruct, id: number, name: string)
     {
-      super(parent,"Creature Family: "+title);   
+      super(parent,name);   
       this.id = id;
-      this.title = title;
     }  
   
     override myPath(): string {
         return this.id.toString();
     }
   }
+
   
   
   @Reviver<creatureFamiliesDataDoc>({
@@ -44,7 +43,7 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
       await apiclient.getCreatureFamilyIndex()?.then (
         (data: any) => {
           var json: string = JSON.stringify(data.creature_families);
-          const reviver = Reviver.get(creatureFamilyDataDoc)
+          const reviver = Reviver.get(creatureFamiliesDataDoc);;
           const covReviver = reviver['items'] as Reviver<creatureFamilyDataDoc[]>;
           this.items = JSON.parse(json, covReviver);
           this.postFixup();
@@ -64,26 +63,24 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 //#region Creature Type
 
 @Reviver<creatureTypeDataDoc>({
-    '.': Jsonizer.Self.assign(creatureTypeDataDoc)
-  })
+  '.': Jsonizer.Self.assign(creatureTypeDataDoc)
+})
   export class creatureTypeDataDoc extends dataDoc
   {
     id: number;
-    title: string;
   
-    constructor (parent: dataStruct, id: number, title: string)
+    constructor (parent: dataStruct, id: number, name: string)
     {
-      super(parent,"Creature Type: "+title);   
+      super(parent,name);   
       this.id = id;
-      this.title = title;
     }  
   
     override myPath(): string {
         return this.id.toString();
     }
   }
-  
-  
+
+
   @Reviver<creatureTypesDataDoc>({
     '.': Jsonizer.Self.assign(creatureTypesDataDoc),
     items: {
@@ -103,9 +100,12 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
       await apiclient.getCreatureTypesIndex()?.then (
         (data: any) => {
           var json: string = JSON.stringify(data.creature_types);
-          const reviver = Reviver.get(creatureTypeDataDoc)
+          const reviver = Reviver.get(creatureTypesDataDoc);
+          console.dir(reviver);
           const covReviver = reviver['items'] as Reviver<creatureTypeDataDoc[]>;
+          console.dir(covReviver);
           this.items = JSON.parse(json, covReviver);
+          console.dir(this.items);
           this.postFixup();
           super.reload(apiclient);
         }
