@@ -1,16 +1,27 @@
-import { dataStruct, topDataStruct } from './datastructs';
+import { dataFolder, dataStruct, topDataStruct } from './datastructs';
 import { charsDataStruct } from './characters';
 import { IDBPDatabase } from 'idb';
-import { jsonIgnoreReplacer } from 'json-ignore';
 
 export class profileDataStruct extends topDataStruct
 {
+  accountFolder: dataFolder;
   characters: charsDataStruct;
+
+  charactersFolder: dataFolder;
+
+  guildsFolder: dataFolder;
 
   constructor(parent: dataStruct)
   {
     super(parent);
+    this.accountFolder = new dataFolder(this, "Account");
     this.characters = new charsDataStruct(this);
+    this.accountFolder.add(this.characters);
+
+    this.charactersFolder = new dataFolder(this, "Characters");
+
+    this.guildsFolder = new dataFolder(this, "Guilds");
+
     this.icon = "folder";
   }
 
@@ -21,7 +32,11 @@ export class profileDataStruct extends topDataStruct
 
   override children(): dataStruct[]
   {
-    return super.children().concat([this.characters]);
+    return super.children().concat([
+      this.accountFolder,
+      this.charactersFolder, 
+      this.guildsFolder
+    ]);
   }  
 
   override myPath(): string {
