@@ -302,7 +302,7 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 
 export interface keyStruct
 {
-    href: string;   
+  href: string;   
 }
 
 export interface hrefStruct
