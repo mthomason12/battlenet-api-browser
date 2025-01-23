@@ -27,7 +27,7 @@ export class profileDataStruct extends topDataStruct
 
   override getName(): string
   {
-    return "Profile";
+    return "Profile Data";
   }
 
   override children(): dataStruct[]
