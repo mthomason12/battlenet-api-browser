@@ -70,6 +70,7 @@ interface creatureFamilyData
     {
       super(parent,"Creature Families");
       this.dbkey = "wow-p-creature_families";
+      this.icon = "pets";      
     }
   
     override async reload(apiclient: ApiclientService)
@@ -147,6 +148,7 @@ interface creatureTypeData
     {
       super(parent,"Creature Types");
       this.dbkey = "wow-p-creature_types";
+      this.icon = "cruelty_free";
     }
   
     override async reload(apiclient: ApiclientService)
