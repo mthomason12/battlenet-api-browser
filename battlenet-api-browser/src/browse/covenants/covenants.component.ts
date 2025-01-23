@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { MatButtonModule } from '@angular/material/button';
-import { covenantsDataDoc } from '../../model/gamedata';
+import { covenantsDataDoc } from '../../model/covenants';
 import { RouterLink } from '@angular/router';
 
 
