@@ -199,6 +199,7 @@ export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
   {
     super(parent,"Soulbinds");
     this.dbkey = "wow-p-soulbinds";
+    this.icon = "people";    
   }
 
   override async reload(apiclient: ApiclientService)
