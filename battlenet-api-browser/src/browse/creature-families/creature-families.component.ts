@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { MatButtonModule } from '@angular/material/button';
-import { creatureFamiliesDataDoc } from '../../model/gamedata';
+import { creatureFamiliesDataDoc } from '../../model/creature';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -14,7 +14,6 @@ export class CreatureFamiliesComponent extends AbstractBrowseChildComponent<crea
 
   override currentData(): creatureFamiliesDataDoc
   {
-    console.dir();
     return this.data.data.apiData.wowpublic.creatureFamiliesData;
   }
 
