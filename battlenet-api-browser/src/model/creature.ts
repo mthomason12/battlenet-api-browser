@@ -1,8 +1,23 @@
-import { dataDoc, dataStruct, dataDocCollection } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, keyStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 //#region Creature Family
+
+interface creatureFamilyMedia
+{
+  _links: linksStruct;
+  assets: assetStruct;
+  id: number;
+}
+
+interface creatureFamilyData
+{
+  _links: linksStruct;
+  id: number;
+  name: string;
+  specialization: refStruct;
+}
 
 @Reviver<creatureFamilyDataDoc>({
   '.': Jsonizer.Self.assign(creatureFamilyDataDoc)
@@ -10,6 +25,8 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
   export class creatureFamilyDataDoc extends dataDoc
   {
     id: number;
+    data?: creatureFamilyData;
+    media?: creatureFamilyMedia;
   
     constructor (parent: dataStruct, id: number, name: string)
     {
@@ -20,6 +37,23 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
     override myPath(): string {
         return this.id.toString();
     }
+
+    override async reload(apiclient: ApiclientService)
+    {
+      await apiclient.getCreatureFamily(this.id)?.then (
+        async (data: any) => {
+          this.data = data;
+          await apiclient.getCreatureFamilyMedia(this.id)?.then(
+            (data: any) => {
+              this.media = data;
+              this.postFixup();
+              super.reload(apiclient);
+            }
+          )
+        }
+      );
+    }
+
   }
 
   
@@ -62,12 +96,20 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 //#region Creature Type
 
+interface creatureTypeData
+{
+  _links: linksStruct;
+  id: number;
+  name: string;
+}
+
 @Reviver<creatureTypeDataDoc>({
   '.': Jsonizer.Self.assign(creatureTypeDataDoc)
 })
   export class creatureTypeDataDoc extends dataDoc
   {
     id: number;
+    data?: creatureTypeData;   
   
     constructor (parent: dataStruct, id: number, name: string)
     {
@@ -78,6 +120,18 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
     override myPath(): string {
         return this.id.toString();
     }
+
+    override async reload(apiclient: ApiclientService)
+    {
+      await apiclient.getCreatureType(this.id)?.then (
+        async (data: any) => {
+          this.data = data;
+          this.postFixup();
+          super.reload(apiclient);
+        }
+      );
+    }
+
   }
 
 
