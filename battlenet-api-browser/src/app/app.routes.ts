@@ -10,6 +10,8 @@ import { CreatureFamiliesComponent } from '../browse/creature-families/creature-
 import { CreatureTypesComponent } from '../browse/creature-types/creature-types.component';
 import { CreatureFamilyComponent } from '../browse/creature-family/creature-family.component';
 import { CreatureTypeComponent } from '../browse/creature-type/creature-type.component';
+import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
+import { SoulbindsComponent } from '../browse/soulbinds/soulbinds.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -23,6 +25,8 @@ export const routes: Routes = [
             { path: 'creature-families', component: CreatureFamiliesComponent},    
             { path: 'creature-types/:id', component: CreatureTypeComponent},           
             { path: 'creature-types', component: CreatureTypesComponent},             
+            { path: 'soulbinds/:id', component: SoulbindComponent},              
+            { path: 'soulbinds', component: SoulbindsComponent},               
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [

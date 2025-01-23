@@ -1,7 +1,7 @@
 import { dataStruct, topDataStruct, dataFolder } from './datastructs';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
-import { covenantsDataDoc } from './covenants';
+import { covenantsDataDoc, soulbindsDataDoc } from './covenants';
 import { IDBPDatabase } from 'idb';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
 
@@ -19,6 +19,7 @@ export class publicDataStruct extends topDataStruct
 
   covenantsFolder: dataFolder;
   covenantData: covenantsDataDoc;
+  soulbindsData: soulbindsDataDoc;
 
   creaturesFolder: dataFolder;
   creatureFamiliesData: creatureFamiliesDataDoc;
@@ -52,8 +53,10 @@ export class publicDataStruct extends topDataStruct
     this.achievementFolder.add(this.achievementData)
 
     this.covenantData = new covenantsDataDoc(this);
+    this.soulbindsData = new soulbindsDataDoc(this);
     this.covenantsFolder = new dataFolder(this, "Covenants");
     this.covenantsFolder.add(this.covenantData);
+    this.covenantsFolder.add(this.soulbindsData);
 
     this.creatureFamiliesData = new creatureFamiliesDataDoc(this);
     this.creatureTypesData = new creatureTypesDataDoc(this);
@@ -115,6 +118,7 @@ export class publicDataStruct extends topDataStruct
   override postFixup(): void {
     this.achievementData.fixup(this);
     this.covenantData.fixup(this);
+    this.soulbindsData.fixup(this);
     this.creatureFamiliesData.fixup(this);
     this.creatureTypesData.fixup(this);
   }
@@ -123,6 +127,7 @@ export class publicDataStruct extends topDataStruct
     var entries: Promise<any>[] = new Array();
     entries.push(this.load(db, this.achievementData, achievementsDataDoc));
     entries.push(this.load(db, this.covenantData, covenantsDataDoc));
+    entries.push(this.load(db, this.soulbindsData, soulbindsDataDoc));
     entries.push(this.load(db, this.creatureFamiliesData, creatureFamiliesDataDoc));
     entries.push(this.load(db, this.creatureTypesData, creatureTypesDataDoc))
     return entries;
@@ -132,6 +137,7 @@ export class publicDataStruct extends topDataStruct
   {
     this.saveObject(db, this.achievementData);
     this.saveObject(db, this.covenantData);
+    this.saveObject(db, this.soulbindsData);    
     this.saveObject(db, this.creatureFamiliesData);
     this.saveObject(db, this.creatureTypesData);
   }
