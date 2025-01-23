@@ -4,9 +4,6 @@ import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc } from './covenants';
 import { IDBPDatabase } from 'idb';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
-export * from './achievements';
-export * from './covenants';
-export * from './creature';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
