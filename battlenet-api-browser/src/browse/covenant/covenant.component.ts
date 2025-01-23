@@ -27,8 +27,7 @@ export class CovenantComponent  extends AbstractBrowseChildComponent<covenantDat
       (data, index, array)=>{
         return Number.parseInt(this.id!) == data.id;
       }
-    )!;
-    console.dir(this.datadoc);   
+    )!; 
   }
 
   override currentData(): covenantDataDoc
