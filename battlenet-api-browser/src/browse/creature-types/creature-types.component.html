@@ -1,0 +1,6 @@
+<ul>
+    @for (item of currentData().items ; track item.id)
+    {
+      <li><a mat-raised-button routerLink="{{item.path()}}">{{item.id}}: {{item.name}}</a></li>
+    }
+</ul>

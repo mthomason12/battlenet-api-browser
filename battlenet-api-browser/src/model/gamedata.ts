@@ -3,13 +3,17 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc } from './covenants';
 import { IDBPDatabase } from 'idb';
+import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
 export * from './achievements';
 export * from './covenants';
+export * from './creature';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
   achievementData: achievementsDataDoc,
-  covenantData: covenantsDataDoc
+  covenantData: covenantsDataDoc,
+  creatureFamiliesData: creatureFamiliesDataDoc,
+  creatureTypesData: creatureTypesDataDoc
 })
 export class publicDataStruct extends topDataStruct
 {
@@ -20,6 +24,8 @@ export class publicDataStruct extends topDataStruct
   covenantData: covenantsDataDoc;
 
   creaturesFolder: dataFolder;
+  creatureFamiliesData: creatureFamiliesDataDoc;
+  creatureTypesData: creatureTypesDataDoc;
 
   itemsFolder: dataFolder;
 
@@ -52,7 +58,11 @@ export class publicDataStruct extends topDataStruct
     this.covenantsFolder = new dataFolder(this, "Covenants");
     this.covenantsFolder.add(this.covenantData);
 
+    this.creatureFamiliesData = new creatureFamiliesDataDoc(this);
+    this.creatureTypesData = new creatureTypesDataDoc(this);
     this.creaturesFolder = new dataFolder(this, "Creatures");
+    this.creaturesFolder.add(this.creatureFamiliesData);
+    this.creaturesFolder.add(this.creatureTypesData);
 
     this.itemsFolder = new dataFolder(this, "Items");
 
@@ -108,12 +118,16 @@ export class publicDataStruct extends topDataStruct
   override postFixup(): void {
     this.achievementData.fixup(this);
     this.covenantData.fixup(this);
+    this.creatureFamiliesData.fixup(this);
+    this.creatureTypesData.fixup(this);
   }
 
   override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
     var entries: Promise<any>[] = new Array();
     entries.push(this.load(db, this.achievementData, achievementsDataDoc));
     entries.push(this.load(db, this.covenantData, covenantsDataDoc));
+    entries.push(this.load(db, this.creatureFamiliesData, creatureFamiliesDataDoc));
+    entries.push(this.load(db, this.creatureTypesData, creatureTypesDataDoc))
     return entries;
   }
 
@@ -121,5 +135,7 @@ export class publicDataStruct extends topDataStruct
   {
     this.saveObject(db, this.achievementData);
     this.saveObject(db, this.covenantData);
+    this.saveObject(db, this.creatureFamiliesData);
+    this.saveObject(db, this.creatureTypesData);
   }
 }
