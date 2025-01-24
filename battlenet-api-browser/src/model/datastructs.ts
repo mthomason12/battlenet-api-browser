@@ -219,10 +219,11 @@ export abstract class dataDoc extends dataStruct
 
   lastupdate: number | undefined;
 
-  constructor(parent: dataStruct, name: string)
+  constructor(parent: dataStruct, id: number, name: string)
   {
     super(parent);
     this.name = name;
+    this.id = id;
   }
 
   override getName(): string
@@ -274,6 +275,11 @@ export abstract class dataDoc extends dataStruct
     return this.needsauth;
   }
 
+  /** Path segment defaults to the ID */
+  override myPath(): string {
+    return this.id.toString();
+}  
+
   /**
    * Return an object containing the sanitized contents of this object 
    * Fields that might create circular references (for example, _parent) are removed.
@@ -294,12 +300,12 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 {
   items: T[] = new Array();
   getItems?: Function;
-  itemsName: string = "";
+  itemsName: string = "unknown";
   thisType?: Class;
 
   constructor (parent: dataStruct, name: string)
   {
-    super(parent,name);   
+    super(parent,0,name);   
   }
 
   override doPostProcess()
@@ -324,6 +330,10 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   override postFixup(): void {
     this.items.forEach((item)=>{item.fixup(this)});
   }
+
+  override myPath(): string {
+    return this.itemsName;
+}
 }
 
 //#endregion
@@ -362,6 +372,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> ext
   {
     this.details = this.details.sort(function(a:any, b:any){return a.id - b.id});    
   }
+
 }
 
 //#endregion
