@@ -395,12 +395,10 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   addDetailEntryFromJson(json: string, apiclient: ApiclientService): T2
   {
-    console.dir(this.detailsType);
     const reviver = Reviver.get(this.detailsType);
     var item: T2 = JSON.parse(json, reviver);
     this.addDetailEntry(item);
     item.getExtraDetails(apiclient);
-    console.dir(item);
     return item;
   }
 
@@ -409,9 +407,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     var entry = this.getDetailEntry(id)
     if ( entry == undefined)
     {
-      var json = JSON.stringify({id:id});  
-      console.dir("Data created");
-      console.dir(json);       
+      var json = JSON.stringify({id:id});       
       entry = this.addDetailEntryFromJson(json, apiClient);
     }
     return entry;
