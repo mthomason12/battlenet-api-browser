@@ -43,7 +43,7 @@ export abstract class dataStruct {
    * Reload data from API
    * @param apiclient 
    */
-  async reload(_apiclient: ApiclientService)
+  async reload(_apiclient: ApiclientService): void
   {
     this.postProcess();
   }
@@ -52,11 +52,11 @@ export abstract class dataStruct {
    * Checks if data is loaded, and attempts to load it if it isn't (and if we have an api connection)
    * @param apiclient 
    */
-  checkLoaded(apiclient: ApiclientService)
+  checkLoaded(apiclient: ApiclientService): void
   {
   }
 
-  postProcess()
+  postProcess(): void
   {
     this.doPostProcess();  
   }
@@ -78,7 +78,7 @@ export abstract class dataStruct {
     return (this._parent?.path() ?? "")+"/"+this.myPath();
   }
 
-  postFixup()
+  postFixup(): void
   {
   }
 
@@ -131,7 +131,7 @@ export class dataFolder extends dataStruct
    * add an item to this folder
    * @param struct 
    */
-  add(struct: dataStruct)
+  add(struct: dataStruct): void
   {
     this.contents.push(struct);
   }
@@ -236,14 +236,14 @@ export abstract class dataDoc extends dataStruct
     return true;
   }  
 
-  override async reload(apiclient: ApiclientService)
+  override async reload(apiclient: ApiclientService): Promise<void>
   {
     super.reload(apiclient).then (
       () => {this.lastupdate = new Date().getTime()}
     )
   }
 
-  override checkLoaded(apiclient: ApiclientService)
+  override checkLoaded(apiclient: ApiclientService): void
   {
     if (!this.isLoaded() && apiclient.isConnected())
     {
@@ -296,6 +296,9 @@ export abstract class dataDoc extends dataStruct
 
 //#region dataDocCollection
 
+/**
+ * Class for an object containing an array of dataDocs that are updated as a single group
+ */
 export class dataDocCollection<T extends dataDoc> extends dataDoc
 {
   items: T[] = new Array();
@@ -308,7 +311,7 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
     super(parent,0,name);   
   }
 
-  override doPostProcess()
+  override doPostProcess(): void
   {
     this.items = this.items.sort(function(a:any, b:any){return a.id - b.id});    
   }
@@ -340,6 +343,9 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 
 //#region dataDocDetailsCollection
 
+/**
+ * Class for a dataDocCollection that also maintains a set of individual details records
+ */
 export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> extends dataDocCollection<T1>
 {
   details: T2[] = new Array();
@@ -354,21 +360,22 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> ext
     )
   }
 
-  removeDetailEntry(id: number)
+  removeDetailEntry(id: number): void
   {
     this.details.forEach( (item, index) => {
       if (item.id === id) this.details.splice(index,1);
     });
   }
 
-  addDetailEntry(entry: T2)
+  addDetailEntry(entry: T2): T2
   {
     this.removeDetailEntry(entry.id);
     this.details.push(entry);
     this.sortDetails();
+    return entry;
   }
 
-  sortDetails()
+  sortDetails(): void
   {
     this.details = this.details.sort(function(a:any, b:any){return a.id - b.id});    
   }
