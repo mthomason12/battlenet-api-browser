@@ -381,18 +381,25 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     this.getDetails!(apiclient, id).then (
       (data: any) => {
         var json: string = JSON.stringify(data);
-        const reviver = Reviver.get(this.detailsType);
         this.removeDetailEntry(id);
-        var item: T2 = JSON.parse(json, reviver);
-        item.getExtraDetails(apiclient).then(
-          () => {
-          this.addDetailEntry(item);
-          this.postFixup();
-          super.reload(apiclient);
-          }
-        );
+        this.addDetailEntryFromJson(json, apiclient);
       }
     );
+  }
+
+  addDetailEntryFromJson(json: string, apiclient: ApiclientService): T2
+  {
+    const reviver = Reviver.get(this.detailsType);
+    var item: T2 = JSON.parse(json, reviver);
+    this.addDetailEntry(item);
+    item.getExtraDetails(apiclient);
+    return item;
+  }
+
+  ensureDetailEntry(apiClient: ApiclientService, id: number): T2 
+  {
+    var json = JSON.stringify({id:id});
+    return this.addDetailEntryFromJson(json, apiClient);
   }
 
   getDetailEntry(id: number): T2 | undefined
@@ -414,6 +421,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   addDetailEntry(entry: T2): T2
   {
     this.removeDetailEntry(entry.id);
+    entry.fixup(this);
     this.details.push(entry);
     this.sortDetails();
     return entry;
