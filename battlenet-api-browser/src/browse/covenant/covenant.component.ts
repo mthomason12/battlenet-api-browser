@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { covenantDataDetailDoc, covenantDataDoc, covenantsDataDoc } from '../../model/covenants';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
 
 @Component({
   selector: 'app-covenant',
-  imports: [ MatTabsModule, MatListModule, MatTableModule ],
+  imports: [ MatTabsModule, MatListModule, MatTableModule, MatButtonModule, RouterLink ],
   templateUrl: './covenant.component.html',
   styleUrl: './covenant.component.scss'
 })
