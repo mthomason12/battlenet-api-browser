@@ -22,6 +22,7 @@ export abstract class abstractBrowseDetailComponent <T1 extends dataDocDetailsCo
   //things to do just before oninit
   override preinit()
   {
+    super.preinit();
     this.id = this.route.snapshot.paramMap.get('id') ?? "";    
     this.datadoc = this.currentMaster().details.find(
       (data, index, array)=>{

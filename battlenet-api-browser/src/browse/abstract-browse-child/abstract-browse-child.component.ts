@@ -26,19 +26,25 @@ export class AbstractBrowseChildComponent<T extends dataStruct> implements OnIni
   }
 
   ngOnInit(): void {
+    this.preinit();
     this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(
       ()=>{
         this.ref.detectChanges();
       }
     );
-    this.preinit();
-    this.currentData().checkLoaded(this.apiClient);
-    this.data.setCurrent(this.currentData());
+    this.postinit();
   }
 
   //things to do just before oninit
   preinit()
   {
+  }
+
+  //things to do just after init
+  postinit()
+  {
+    this.currentData().checkLoaded(this.apiClient);
+    this.data.setCurrent(this.currentData());
   }
 
   currentData(): T
