@@ -3,6 +3,7 @@ import { UserdataService } from '../../userdata/userdata.service';
 import { dataDetailDoc, dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { ActivatedRoute } from '@angular/router';
+import { ApiclientService } from '../../apiclient/apiclient.service';
 
 @Component({
   selector: 'app-abstract-browse-detail',
@@ -14,7 +15,7 @@ export abstract class AbstractBrowseDetailComponent <T1 extends dataDocDetailsCo
   datadoc?: T3;
   id?: string;
 
-  constructor(private route: ActivatedRoute, protected override data: UserdataService)
+  constructor(private route: ActivatedRoute, protected override data: UserdataService, protected override apiClient: ApiclientService)
   {
     super(data);
   }
@@ -24,11 +25,7 @@ export abstract class AbstractBrowseDetailComponent <T1 extends dataDocDetailsCo
   {
     super.preinit();
     this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.currentMaster().details.find(
-      (data, index, array)=>{
-        return Number.parseInt(this.id!) == data.id;
-      }
-    )!; 
+    this.datadoc = this.currentMaster().ensureDetailEntry(this.apiClient, Number.parseInt(this.id));
   }
 
   /**
