@@ -1,11 +1,11 @@
 import { dataFolder, dataStruct, topDataStruct } from './datastructs';
-import { charsDataStruct } from './characters';
+import { charsDataDoc } from './characters';
 import { IDBPDatabase } from 'idb';
 
 export class profileDataStruct extends topDataStruct
 {
   accountFolder: dataFolder;
-  characters: charsDataStruct;
+  characters: charsDataDoc;
 
   charactersFolder: dataFolder;
 
@@ -15,7 +15,7 @@ export class profileDataStruct extends topDataStruct
   {
     super(parent);
     this.accountFolder = new dataFolder(this, "Account");
-    this.characters = new charsDataStruct(this);
+    this.characters = new charsDataDoc(this);
     this.accountFolder.add(this.characters);
 
     this.charactersFolder = new dataFolder(this, "Characters");
@@ -45,7 +45,7 @@ export class profileDataStruct extends topDataStruct
 
   override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
     var entries: Promise<any>[] = new Array();
-    entries.push(this.load(db, this.characters, charsDataStruct));
+    entries.push(this.load(db, this.characters, charsDataDoc));
     return entries;
   }
 
