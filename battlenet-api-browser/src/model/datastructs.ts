@@ -297,7 +297,7 @@ export abstract class dataDoc extends dataStruct
 //#region dataDetailDoc
 
 //a numerically-indexed dataDoc designed for use in an array
-export class dataDetailDoc extends dataDoc
+export abstract class dataDetailDoc extends dataDoc
 {
 
   override myPath(): string {
