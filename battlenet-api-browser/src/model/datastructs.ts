@@ -350,6 +350,22 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> ext
 {
   details: T2[] = new Array();
   getDetails?: Function;
+  detailsType?: Class;
+
+  async reloadItem(apiclient: ApiclientService, id: number)
+  {
+    await this.getDetails!(apiclient, id).then (
+      (data: any) => {
+        var json: string = JSON.stringify(data);
+        const reviver = Reviver.get(this.detailsType);
+        this.removeDetailEntry(id);
+        var item: T2 = JSON.parse(json, reviver);
+        this.addDetailEntry(item);
+        this.postFixup();
+        super.reload(apiclient);
+      }
+    );
+  }
 
   getDetailEntry(id: number): T2 | undefined
   {
