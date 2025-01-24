@@ -337,7 +337,7 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 
   override async reload(apiclient: ApiclientService)
   {
-    await this.getItems!(apiclient).then (
+    this.getItems!(apiclient).then (
       (data: any) => {
         var json: string = JSON.stringify(data[this.itemsName]);
         const reviver = Reviver.get(this.thisType);
