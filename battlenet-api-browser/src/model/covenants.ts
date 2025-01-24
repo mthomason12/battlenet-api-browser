@@ -149,39 +149,33 @@ interface soulbindIndexData
   soulbinds: refStruct[];
 }
 
+@Reviver<soulbindDataDetailDoc>({
+  '.': Jsonizer.Self.endorse(soulbindDataDetailDoc),
+})
+export class soulbindDataDetailDoc extends dataDetailDoc
+{
+  _links?: linksStruct;
+  covenant?: refStruct;
+  creature?: refStruct;
+  follower?: soulbindFollowerData;
+  talent_tree?: refStruct;
+}
 
 @Reviver<soulbindDataDoc>({
   '.': Jsonizer.Self.endorse(soulbindDataDoc),
 })
 export class soulbindDataDoc extends dataDoc
 {
-  data?: soulbindData;
-
-  override async reload(apiclient: ApiclientService)
-  {
-    await apiclient.getSoulbind(this.id)?.then (
-      async (data: soulbindData) => {
-        this.data = data;
-        this.postFixup();
-        super.reload(apiclient);
-      }
-    );
-  }
 }
-
-@Reviver<soulbindDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(soulbindDataDetailDoc),
-})
-export class soulbindDataDetailDoc extends dataDetailDoc
-{
-}
-
 
 @Reviver<soulbindsDataDoc>({
   '.': Jsonizer.Self.assign(soulbindsDataDoc),
   items: {
     '*': soulbindDataDoc
   },
+  details: {
+    '*': soulbindDataDetailDoc
+  }  
 })
 export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, soulbindDataDetailDoc>
 {
