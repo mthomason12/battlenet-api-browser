@@ -309,6 +309,13 @@ export abstract class dataDetailDoc extends dataDoc
   {  
   }
 
+  override async reload(apiClient: ApiclientService)
+  {
+    (this._parent as any).reloadItem(apiClient, this.id).then(()=>{
+      super.reload(apiClient);
+    })
+  }
+
 }
 
 //#endregion
@@ -381,7 +388,6 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     this.getDetails!(apiclient, id).then (
       (data: any) => {
         var json: string = JSON.stringify(data);
-        this.removeDetailEntry(id);
         this.addDetailEntryFromJson(json, apiclient);
       }
     );
@@ -389,17 +395,26 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   addDetailEntryFromJson(json: string, apiclient: ApiclientService): T2
   {
+    console.dir(this.detailsType);
     const reviver = Reviver.get(this.detailsType);
     var item: T2 = JSON.parse(json, reviver);
     this.addDetailEntry(item);
     item.getExtraDetails(apiclient);
+    console.dir(item);
     return item;
   }
 
   ensureDetailEntry(apiClient: ApiclientService, id: number): T2 
   {
-    var json = JSON.stringify({id:id});
-    return this.addDetailEntryFromJson(json, apiClient);
+    var entry = this.getDetailEntry(id)
+    if ( entry == undefined)
+    {
+      var json = JSON.stringify({id:id});  
+      console.dir("Data created");
+      console.dir(json);       
+      entry = this.addDetailEntryFromJson(json, apiClient);
+    }
+    return entry;
   }
 
   getDetailEntry(id: number): T2 | undefined
@@ -420,11 +435,21 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   addDetailEntry(entry: T2): T2
   {
-    this.removeDetailEntry(entry.id);
-    entry.fixup(this);
-    this.details.push(entry);
-    this.sortDetails();
-    return entry;
+    var oldEntry = this.getDetailEntry(entry.id);
+    if (oldEntry === undefined)
+    {
+      this.details.push(entry);
+      entry.fixup(this);
+      oldEntry = entry;
+      this.sortDetails();
+    }
+    else
+    {
+      Object.keys(entry).forEach(key => {
+        (oldEntry as any)[key] = (entry as any)[key];
+      });
+    }
+    return oldEntry;
   }
 
   sortDetails(): void
