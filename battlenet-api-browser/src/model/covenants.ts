@@ -152,7 +152,6 @@ interface soulbindIndexData
 
 @Reviver<soulbindDataDoc>({
   '.': Jsonizer.Self.endorse(soulbindDataDoc),
-  name: 'title'
 })
 export class soulbindDataDoc extends dataDoc
 {
@@ -172,9 +171,8 @@ export class soulbindDataDoc extends dataDoc
 
 @Reviver<soulbindDataDetailDoc>({
   '.': Jsonizer.Self.endorse(soulbindDataDetailDoc),
-  name: 'title'
 })
-export class soulbindDataDetailDoc extends dataDoc
+export class soulbindDataDetailDoc extends dataDetailDoc
 {
 }
 
@@ -185,7 +183,7 @@ export class soulbindDataDetailDoc extends dataDoc
     '*': soulbindDataDoc
   },
 })
-export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
+export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, soulbindDataDetailDoc>
 {
   constructor (parent: dataStruct)
   {
@@ -193,6 +191,7 @@ export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
     this.dbkey = "wow-p-soulbinds";
     this.icon = "people"; 
     this.thisType = soulbindsDataDoc;
+    this.detailsType = soulbindDataDetailDoc;
     this.itemsName = "soulbinds";
   }
 
@@ -201,9 +200,10 @@ export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
     return apiClient.getSoulbindIndex() as Promise<soulbindIndexData>;
   }
 
-  override myPath(): string {
-      return "soulbinds";
-  }   
+  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<soulbindData>
+  {
+    return apiClient.getSoulbind(id) as Promise<soulbindData>;
+  }
 }
 
 
