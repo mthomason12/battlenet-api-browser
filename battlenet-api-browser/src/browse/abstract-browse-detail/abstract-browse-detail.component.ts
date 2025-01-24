@@ -10,8 +10,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './abstract-browse-detail.component.html',
   styleUrl: './abstract-browse-detail.component.scss'
 })
-export abstract class abstractBrowseDetailComponent <T1 extends dataDocDetailsCollection<T1,T2>, T2 extends dataDoc> extends AbstractBrowseChildComponent<T2>{
-  datadoc?: T2;
+export abstract class AbstractBrowseDetailComponent <T1 extends dataDocDetailsCollection<T2,T3>, T2 extends dataDoc, T3 extends dataDoc> extends AbstractBrowseChildComponent<T3>{
+  datadoc?: T3;
   id?: string;
 
   constructor(private route: ActivatedRoute, protected override data: UserdataService)
@@ -37,7 +37,7 @@ export abstract class abstractBrowseDetailComponent <T1 extends dataDocDetailsCo
    */
   abstract currentMaster(): T1
 
-  override currentData(): T2
+  override currentData(): T3
   {
     return this.datadoc!;
   }
