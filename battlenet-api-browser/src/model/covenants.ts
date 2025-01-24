@@ -1,7 +1,6 @@
-import { dataDoc, dataStruct, dataDocCollection, linksStruct, refStruct, mediaStruct, assetStruct } from './datastructs';
+import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
-import { apiDataStruct } from './userdata';
 
 //#region Covenants
 
@@ -42,15 +41,51 @@ interface covenantSignatureAbility
 
 interface covenantData
 {
+  _links?: linksStruct;
+  id?: number;
+  name?: string;
+  description?: string;
+  signature_ability?: covenantSignatureAbility;
+  class_abilities?: covenantClassAbility[];
+  soulbinds?: refStruct[];
+  renown_rewards?: covenantRenownReward[];
+  media?: mediaStruct;
+}
+
+export interface covenantIndexData
+{
   _links: linksStruct;
-  id: number;
-  name: string;
-  description: string;
-  signature_ability: covenantSignatureAbility;
-  class_abilities: covenantClassAbility[];
-  soulbinds: refStruct[];
-  renown_rewards: covenantRenownReward[];
-  media: mediaStruct;
+  covenants: refStruct[];
+}
+
+@Reviver<covenantDataDetailDoc>({
+  '.': Jsonizer.Self.endorse(covenantDataDetailDoc)
+})
+
+export class covenantDataDetailDoc extends dataDoc
+{
+  data?: covenantData;
+  media?: covenantMedia;
+  override myPath(): string {
+    return this.id.toString();
+}
+
+override async reload(apiclient: ApiclientService)
+{
+  await apiclient.getCovenant(this.id)?.then (
+    async (data: any) => {
+      this.data = data;
+      await apiclient.getCovenantMedia(this.id)?.then(
+        (data: any) => {
+          this.media = data;
+          this.postFixup();
+          super.reload(apiclient);
+        }
+      )
+    }
+  );
+}
+
 }
 
 @Reviver<covenantDataDoc>({
@@ -58,36 +93,6 @@ interface covenantData
 })
 export class covenantDataDoc extends dataDoc
 {
-  title: string;
-  data?: covenantData;
-  media?: covenantMedia;
-
-  constructor (parent: dataStruct, id: number, title: string)
-  {
-    super(parent,"Covenant: "+title);   
-    this.id = id;
-    this.title = title;
-  }  
-
-  override myPath(): string {
-      return this.id.toString();
-  }
-
-  override async reload(apiclient: ApiclientService)
-  {
-    await apiclient.getCovenant(this.id)?.then (
-      async (data: any) => {
-        this.data = data;
-        await apiclient.getCovenantMedia(this.id)?.then(
-          (data: any) => {
-            this.media = data;
-            this.postFixup();
-            super.reload(apiclient);
-          }
-        )
-      }
-    );
-  }
 }
 
 
@@ -95,9 +100,12 @@ export class covenantDataDoc extends dataDoc
   '.': Jsonizer.Self.assign(covenantsDataDoc),
   items: {
     '*': covenantDataDoc
+  },
+  details: {
+    '*': covenantDataDetailDoc
   }
 })
-export class covenantsDataDoc extends dataDocCollection<covenantDataDoc>
+export class covenantsDataDoc extends dataDocDetailsCollection<covenantDataDoc, covenantDataDetailDoc>
 {
   constructor (parent: dataStruct)
   {
@@ -107,9 +115,9 @@ export class covenantsDataDoc extends dataDocCollection<covenantDataDoc>
     this.itemsName = "covenants";
   }
 
-  override getItems = function(apiClient: ApiclientService): Promise<any>
+  override getItems = function(apiClient: ApiclientService): Promise<covenantIndexData>
   {
-    return apiClient.getCovenantIndex() as Promise<covenantData>;
+    return apiClient.getCovenantIndex() as Promise<covenantIndexData>;
   }
 
   override myPath(): string {
@@ -147,23 +155,12 @@ interface soulbindIndexData
 
 
 @Reviver<soulbindDataDoc>({
-  '.': Jsonizer.Self.endorse(soulbindDataDoc)
+  '.': Jsonizer.Self.endorse(soulbindDataDoc),
+  name: 'title'
 })
 export class soulbindDataDoc extends dataDoc
 {
-  title: string;
   data?: soulbindData;
-
-  constructor (parent: dataStruct, id: number, title: string)
-  {
-    super(parent,"Covenant: "+title);   
-    this.id = id;
-    this.title = title;
-  }  
-
-  override myPath(): string {
-      return this.id.toString();
-  }
 
   override async reload(apiclient: ApiclientService)
   {
@@ -177,14 +174,25 @@ export class soulbindDataDoc extends dataDoc
   }
 }
 
+@Reviver<soulbindDataDetailDoc>({
+  '.': Jsonizer.Self.endorse(soulbindDataDetailDoc),
+  name: 'title'
+})
+export class soulbindDataDetailDoc extends dataDoc
+{
+}
+
 
 @Reviver<soulbindsDataDoc>({
   '.': Jsonizer.Self.assign(soulbindsDataDoc),
   items: {
     '*': soulbindDataDoc
+  },
+  details: {
+    '*': soulbindDataDetailDoc
   }
 })
-export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
+export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, soulbindDataDetailDoc>
 {
   constructor (parent: dataStruct)
   {
