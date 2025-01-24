@@ -146,6 +146,13 @@ export class dataFolder extends dataStruct
  */
 export abstract class topDataStruct extends dataStruct
 {
+  data: dataStruct[] = Array();
+
+  register(struct: dataStruct): dataStruct
+  {
+    this.data.push(struct);
+    return struct;
+  }
 
   abstract loadAll(db: IDBPDatabase<unknown>): Promise<any>[];
 
