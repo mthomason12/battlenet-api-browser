@@ -1,6 +1,7 @@
 import { dataDoc, dataStruct, dataDocCollection, linksStruct, refStruct, mediaStruct, assetStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { apiDataStruct } from './userdata';
 
 //#region Covenants
 
@@ -103,21 +104,13 @@ export class covenantsDataDoc extends dataDocCollection<covenantDataDoc>
   {
     super(parent,"Covenants");
     this.dbkey = "wow-p-covenants";
+    this.thisType = covenantsDataDoc;
+    this.itemsName = "covenants";
   }
 
-  override async reload(apiclient: ApiclientService)
+  override getItems = function(apiClient: ApiclientService): Promise<any>
   {
-    await apiclient.getCovenantIndex()?.then (
-      (data: any) => {
-        var json: string = JSON.stringify(data.covenants);
-        const reviver = Reviver.get(covenantsDataDoc);
-        console.dir(reviver);
-        const covReviver = reviver['items'] as Reviver<covenantDataDoc[]>;
-        this.items = JSON.parse(json, covReviver);
-        this.postFixup();
-        super.reload(apiclient);
-      }
-    );
+    return apiClient.getCovenantIndex() as Promise<covenantData>;
   }
 
   override myPath(): string {
@@ -199,28 +192,21 @@ export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
   {
     super(parent,"Soulbinds");
     this.dbkey = "wow-p-soulbinds";
-    this.icon = "people";    
+    this.icon = "people"; 
+    this.thisType = soulbindsDataDoc;
+    this.itemsName = "soulbinds";
   }
 
-  override async reload(apiclient: ApiclientService)
+  override getItems = function(apiClient: ApiclientService): Promise<soulbindIndexData>
   {
-    await apiclient.getSoulbindIndex()?.then (
-      (data: soulbindIndexData) => {
-        var json: string = JSON.stringify(data.soulbinds);
-        const reviver = Reviver.get(soulbindsDataDoc);
-        console.dir(reviver);
-        const covReviver = reviver['items'] as Reviver<soulbindDataDoc[]>;
-        this.items = JSON.parse(json, covReviver);
-        this.postFixup();
-        super.reload(apiclient);
-      }
-    );
+    return apiClient.getSoulbindIndex() as Promise<soulbindIndexData>;
   }
 
   override myPath(): string {
       return "soulbinds";
-  }
-
+  }   
 }
+
+
 
 //#endregion

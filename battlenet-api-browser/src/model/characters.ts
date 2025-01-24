@@ -4,6 +4,7 @@ export class charDataStruct extends dataStruct
 {
 }
 
+
 export class charsDataStruct extends dataDoc
 {
   items: charDataStruct[] = [];

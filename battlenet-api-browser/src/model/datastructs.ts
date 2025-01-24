@@ -2,7 +2,7 @@ import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
-import { Reviver } from '@badcafe/jsonizer';
+import { Class, Reviver } from '@badcafe/jsonizer';
 
 //#region dataStruct
 
@@ -292,6 +292,9 @@ export abstract class dataDoc extends dataStruct
 export class dataDocCollection<T extends dataDoc> extends dataDoc
 {
   items: T[] = new Array();
+  getItems?: Function;
+  itemsName: string = "";
+  thisType?: Class;
 
   constructor (parent: dataStruct, name: string)
   {
@@ -302,6 +305,22 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   {
     this.items = this.items.sort(function(a:any, b:any){return a.id - b.id});    
   }
+
+  override async reload(apiclient: ApiclientService)
+  {
+    await this.getItems!(apiclient).then (
+      (data: any) => {
+        var json: string = JSON.stringify(data[this.itemsName]);
+        const reviver = Reviver.get(this.thisType);
+        const thisReviver = reviver['items'] as Reviver<T[]>;
+        this.items = JSON.parse(json, thisReviver);
+        this.postFixup();
+        super.reload(apiclient);
+      }
+    );
+  }
+
+
 
   override postFixup(): void {
     this.items.forEach((item)=>{item.fixup(this)});

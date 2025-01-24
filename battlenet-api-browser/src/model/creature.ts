@@ -71,27 +71,20 @@ interface creatureFamilyData
       super(parent,"Creature Families");
       this.dbkey = "wow-p-creature_families";
       this.icon = "pets";      
+      this.thisType = creatureFamiliesDataDoc;
+      this.itemsName = "creature_families";
     }
   
-    override async reload(apiclient: ApiclientService)
+    override getItems = function(apiClient: ApiclientService): Promise<any>
     {
-      await apiclient.getCreatureFamilyIndex()?.then (
-        (data: any) => {
-          var json: string = JSON.stringify(data.creature_families);
-          const reviver = Reviver.get(creatureFamiliesDataDoc);;
-          const covReviver = reviver['items'] as Reviver<creatureFamilyDataDoc[]>;
-          this.items = JSON.parse(json, covReviver);
-          this.postFixup();
-          super.reload(apiclient);
-        }
-      );
+      return apiClient.getCreatureFamilyIndex() as Promise<any>;
     }
-  
+    
     override myPath(): string {
         return "creature-families";
     }
-
   }
+  
 
 //#endregion
 
@@ -149,29 +142,18 @@ interface creatureTypeData
       super(parent,"Creature Types");
       this.dbkey = "wow-p-creature_types";
       this.icon = "cruelty_free";
+      this.thisType = creatureTypesDataDoc;
+      this.itemsName = "creature_types";
     }
-  
-    override async reload(apiclient: ApiclientService)
+    
+    override getItems = function(apiClient: ApiclientService): Promise<any>
     {
-      await apiclient.getCreatureTypesIndex()?.then (
-        (data: any) => {
-          var json: string = JSON.stringify(data.creature_types);
-          const reviver = Reviver.get(creatureTypesDataDoc);
-          console.dir(reviver);
-          const covReviver = reviver['items'] as Reviver<creatureTypeDataDoc[]>;
-          console.dir(covReviver);
-          this.items = JSON.parse(json, covReviver);
-          console.dir(this.items);
-          this.postFixup();
-          super.reload(apiclient);
-        }
-      );
+      return apiClient.getCreatureTypesIndex() as Promise<any>;
     }
-  
+    
     override myPath(): string {
-        return "creature-types";
+        return "creature-type";
     }
-
   }
 
   //#endregion

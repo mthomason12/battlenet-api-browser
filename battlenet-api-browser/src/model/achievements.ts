@@ -107,20 +107,13 @@ export class achievementsDataDoc extends dataDocCollection<achievementDataDoc>
     super(parent, "Achievements");
     this.icon = "emoji_events";
     this.dbkey = "wow-p-achievements";
-  }
+    this.thisType = achievementsDataDoc;
+    this.itemsName = "achievements";
+}
 
-  override async reload(apiclient: ApiclientService)
+  override getItems = function(apiClient: ApiclientService): Promise<achievementsIndex>
   {
-    await apiclient.getAchievementIndex()?.then (
-      (data: achievementsIndex) => {
-        var json: string = JSON.stringify(data.achievements);
-        const reviver = Reviver.get(achievementsDataDoc)
-        const achReviver = reviver['items'] as Reviver<achievementDataDoc[]>;
-        this.items = JSON.parse(json, achReviver);
-        this.postFixup();
-        super.reload(apiclient);
-      }
-    );
+    return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
   }
 
   override myPath(): string {
