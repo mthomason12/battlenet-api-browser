@@ -209,7 +209,7 @@ export abstract class topDataStruct extends dataStruct
 export abstract class dataDoc extends dataStruct
 {
   name: string;
-  id: number = 0;
+  id: number;
 
   @jsonIgnore()
   dbkey?: string;
@@ -294,6 +294,25 @@ export abstract class dataDoc extends dataStruct
 
 //#endregion
 
+//#region dataDetailDoc
+
+//a numerically-indexed dataDoc designed for use in an array
+export class dataDetailDoc extends dataDoc
+{
+
+  override myPath(): string {
+    return this.id.toString();
+  }
+
+  //override in descendants if there's any additional data to retrieve
+  async getExtraDetails(apiClient: ApiclientService): Promise<void>
+  {  
+  }
+
+}
+
+//#endregion
+
 //#region dataDocCollection
 
 /**
@@ -346,11 +365,16 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 /**
  * Class for a dataDocCollection that also maintains a set of individual details records
  */
-export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> extends dataDocCollection<T1>
+export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDoc> extends dataDocCollection<T1>
 {
   details: T2[] = new Array();
   getDetails?: Function;
   detailsType?: Class;
+
+  override postFixup(): void {
+    super.postFixup();
+    this.details.forEach((item)=>{item.fixup(this)});
+  }
 
   async reloadItem(apiclient: ApiclientService, id: number)
   {
@@ -360,9 +384,13 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> ext
         const reviver = Reviver.get(this.detailsType);
         this.removeDetailEntry(id);
         var item: T2 = JSON.parse(json, reviver);
-        this.addDetailEntry(item);
-        this.postFixup();
-        super.reload(apiclient);
+        await item.getExtraDetails(apiclient).then(
+          () => {
+          this.addDetailEntry(item);
+          this.postFixup();
+          super.reload(apiclient);
+          }
+        );
       }
     );
   }

@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection } from './datastructs';
+import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc, dataDocCollection } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -59,37 +59,23 @@ export interface covenantIndexData
 }
 
 @Reviver<covenantDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(covenantDataDetailDoc)
+  '.': Jsonizer.Self.assign(covenantDataDetailDoc)
 })
-
-export class covenantDataDetailDoc extends dataDoc
+export class covenantDataDetailDoc extends dataDetailDoc
 {
-  data?: covenantData;
   media?: covenantMedia;
-  override myPath(): string {
-    return this.id.toString();
-}
 
-override async reload(apiclient: ApiclientService)
-{
-  await apiclient.getCovenant(this.id)?.then (
-    async (data: any) => {
-      this.data = data;
-      await apiclient.getCovenantMedia(this.id)?.then(
-        (data: any) => {
-          this.media = data;
-          this.postFixup();
-          super.reload(apiclient);
-        }
-      )
-    }
-  );
-}
-
+  override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
+  {
+    await apiClient.getCovenantMedia(this.id)?.then(
+      (data: any) => {
+        this.media = data;
+      });
+  }
 }
 
 @Reviver<covenantDataDoc>({
-  '.': Jsonizer.Self.endorse(covenantDataDoc)
+  '.': Jsonizer.Self.assign(covenantDataDoc)
 })
 export class covenantDataDoc extends dataDoc
 {
@@ -120,9 +106,11 @@ export class covenantsDataDoc extends dataDocDetailsCollection<covenantDataDoc, 
     return apiClient.getCovenantIndex() as Promise<covenantIndexData>;
   }
 
-  override myPath(): string {
-      return "covenants";
+  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<covenantData>
+  {
+    return apiClient.getCovenant(id) as Promise<covenantData>;
   }
+
 
 }
 
@@ -188,11 +176,8 @@ export class soulbindDataDetailDoc extends dataDoc
   items: {
     '*': soulbindDataDoc
   },
-  details: {
-    '*': soulbindDataDetailDoc
-  }
 })
-export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, soulbindDataDetailDoc>
+export class soulbindsDataDoc extends dataDocCollection<soulbindDataDoc>
 {
   constructor (parent: dataStruct)
   {
