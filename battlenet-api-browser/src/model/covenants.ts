@@ -59,23 +59,30 @@ export interface covenantIndexData
 }
 
 @Reviver<covenantDataDetailDoc>({
-  '.': Jsonizer.Self.assign(covenantDataDetailDoc)
+  '.': Jsonizer.Self.endorse(covenantDataDetailDoc)
 })
 export class covenantDataDetailDoc extends dataDetailDoc
-{
-  media?: covenantMedia;
+{  
+  _links?: linksStruct;
+  description?: string;
+  signature_ability?: covenantSignatureAbility;
+  class_abilities?: covenantClassAbility[] = new Array();
+  soulbinds?: refStruct[] = new Array();
+  renown_rewards?: covenantRenownReward[] = new Array();
+  media?: mediaStruct;
+  mediadata?: covenantMedia;
 
   override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
   {
     await apiClient.getCovenantMedia(this.id)?.then(
       (data: any) => {
-        this.media = data;
+        this.mediadata = data;
       });
   }
 }
 
 @Reviver<covenantDataDoc>({
-  '.': Jsonizer.Self.assign(covenantDataDoc)
+  '.': Jsonizer.Self.endorse(covenantDataDoc)
 })
 export class covenantDataDoc extends dataDoc
 {
@@ -98,6 +105,7 @@ export class covenantsDataDoc extends dataDocDetailsCollection<covenantDataDoc, 
     super(parent,"Covenants");
     this.dbkey = "wow-p-covenants";
     this.thisType = covenantsDataDoc;
+    this.detailsType = covenantDataDetailDoc;
     this.itemsName = "covenants";
   }
 
