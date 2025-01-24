@@ -66,12 +66,6 @@ export class achievementDataDoc extends dataDoc
   data?: achievementData;
   media?: achievementMedia;
 
-  constructor (parent: dataStruct, id: number, name: string)
-  {
-    super(parent, name);   
-    this.id = id;
-  }  
-
   override myPath(): string {
       return this.id.toString();
   }

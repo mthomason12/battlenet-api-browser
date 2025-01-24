@@ -26,13 +26,7 @@ interface creatureFamilyData
   {
     data?: creatureFamilyData;
     media?: creatureFamilyMedia;
-  
-    constructor (parent: dataStruct, id: number, name: string)
-    {
-      super(parent,name);   
-      this.id = id;
-    }  
-  
+
     override myPath(): string {
         return this.id.toString();
     }
@@ -102,13 +96,7 @@ interface creatureTypeData
   export class creatureTypeDataDoc extends dataDoc
   {
     data?: creatureTypeData;   
-  
-    constructor (parent: dataStruct, id: number, name: string)
-    {
-      super(parent,name);   
-      this.id = id;
-    }  
-  
+   
     override myPath(): string {
         return this.id.toString();
     }
