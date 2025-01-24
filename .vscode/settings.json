@@ -1,4 +1,14 @@
 {
     "npm.enableRunFromFolder": true,
-    "npm.packageManager": "npm"
+    "npm.packageManager": "npm",
+    "cSpell.words": [
+        "apitree",
+        "bnet",
+        "datastructs",
+        "gamedata",
+        "Jsonizer",
+        "soulbinds",
+        "wowprofile",
+        "wowpublic"
+    ]
 }
