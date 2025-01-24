@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserdataService } from '../../userdata/userdata.service';
-import { dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
+import { dataDetailDoc, dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './abstract-browse-detail.component.html',
   styleUrl: './abstract-browse-detail.component.scss'
 })
-export abstract class AbstractBrowseDetailComponent <T1 extends dataDocDetailsCollection<T2,T3>, T2 extends dataDoc, T3 extends dataDoc> extends AbstractBrowseChildComponent<T3>{
+export abstract class AbstractBrowseDetailComponent <T1 extends dataDocDetailsCollection<T2,T3>, T2 extends dataDoc, T3 extends dataDetailDoc> extends AbstractBrowseChildComponent<T3>{
   datadoc?: T3;
   id?: string;
 
