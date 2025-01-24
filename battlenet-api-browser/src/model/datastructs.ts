@@ -43,7 +43,7 @@ export abstract class dataStruct {
    * Reload data from API
    * @param apiclient 
    */
-  async reload(_apiclient: ApiclientService): void
+  async reload(_apiclient: ApiclientService): Promise<void>
   {
     this.postProcess();
   }
