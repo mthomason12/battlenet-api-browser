@@ -209,6 +209,7 @@ export abstract class topDataStruct extends dataStruct
 export abstract class dataDoc extends dataStruct
 {
   name: string;
+  id: number = 0;
 
   @jsonIgnore()
   dbkey?: string;

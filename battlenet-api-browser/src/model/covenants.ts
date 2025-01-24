@@ -58,7 +58,6 @@ interface covenantData
 })
 export class covenantDataDoc extends dataDoc
 {
-  id: number;
   title: string;
   data?: covenantData;
   media?: covenantMedia;
@@ -152,7 +151,6 @@ interface soulbindIndexData
 })
 export class soulbindDataDoc extends dataDoc
 {
-  id: number;
   title: string;
   data?: soulbindData;
 

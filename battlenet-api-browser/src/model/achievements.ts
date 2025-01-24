@@ -63,7 +63,6 @@ export interface achievementsIndex
 })
 export class achievementDataDoc extends dataDoc
 {
-  id: number;
   data?: achievementData;
   media?: achievementMedia;
 

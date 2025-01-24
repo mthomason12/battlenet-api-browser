@@ -24,7 +24,6 @@ interface creatureFamilyData
 })
   export class creatureFamilyDataDoc extends dataDoc
   {
-    id: number;
     data?: creatureFamilyData;
     media?: creatureFamilyMedia;
   
@@ -102,7 +101,6 @@ interface creatureTypeData
 })
   export class creatureTypeDataDoc extends dataDoc
   {
-    id: number;
     data?: creatureTypeData;   
   
     constructor (parent: dataStruct, id: number, name: string)
