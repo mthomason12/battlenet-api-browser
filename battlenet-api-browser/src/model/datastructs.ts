@@ -378,13 +378,13 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   async reloadItem(apiclient: ApiclientService, id: number)
   {
-    await this.getDetails!(apiclient, id).then (
+    this.getDetails!(apiclient, id).then (
       (data: any) => {
         var json: string = JSON.stringify(data);
         const reviver = Reviver.get(this.detailsType);
         this.removeDetailEntry(id);
         var item: T2 = JSON.parse(json, reviver);
-        await item.getExtraDetails(apiclient).then(
+        item.getExtraDetails(apiclient).then(
           () => {
           this.addDetailEntry(item);
           this.postFixup();
