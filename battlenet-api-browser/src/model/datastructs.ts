@@ -146,9 +146,9 @@ export class dataFolder extends dataStruct
  */
 export abstract class topDataStruct extends dataStruct
 {
-  data: dataStruct[] = Array();
+  data: dataDoc[] = Array();
 
-  register(struct: dataStruct): dataStruct
+  register<T extends dataDoc>(struct: T): T
   {
     this.data.push(struct);
     return struct;
