@@ -328,6 +328,64 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 
 //#endregion
 
+//#region dataDocDetailsCollection
+
+export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDoc> extends dataDocCollection<T1>
+{
+  details: T2[] = new Array();
+  getDetails?: Function;
+
+  getDetailEntry(id: number): T2 | undefined
+  {
+    return this.details.find(
+      (data, index, array)=>{
+        return id == data.id;
+      }
+    )
+  }
+
+  removeDetailEntry(id: number)
+  {
+    this.details.forEach( (item, index) => {
+      if (item.id === id) this.details.splice(index,1);
+    });
+  }
+
+  addDetailEntry(entry: T2)
+  {
+    this.removeDetailEntry(entry.id);
+    this.details.push(entry);
+    this.sortDetails();
+  }
+
+  sortDetails()
+  {
+    this.details = this.details.sort(function(a:any, b:any){return a.id - b.id});    
+  }
+}
+
+//#endregion
+
+export interface genderStruct
+{
+  type: string;
+  name: string;
+}
+
+export interface factionStruct
+{
+  type: string;
+  name: string;
+}
+
+export interface realmStruct
+{
+  id: number;
+  name: string;
+  key: keyStruct;
+  slug: string;
+}
+
 export interface keyStruct
 {
   href: string;   
