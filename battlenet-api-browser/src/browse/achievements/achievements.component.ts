@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { MatButtonModule } from '@angular/material/button';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { achievementsDataDoc } from '../../model/achievements';
-import { RouterLink } from '@angular/router';
+import { ListDataItemComponent } from "../../components/list-data-item/list-data-item.component";
 
 @Component({
   selector: 'app-achievements',
-  imports: [MatButtonModule, ScrollingModule, RouterLink],
+  imports: [ScrollingModule, ListDataItemComponent],
   templateUrl: './achievements.component.html',
   styleUrl: './achievements.component.scss'
 })

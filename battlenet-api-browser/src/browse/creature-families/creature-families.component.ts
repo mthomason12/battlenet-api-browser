@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { MatButtonModule } from '@angular/material/button';
 import { creatureFamiliesDataDoc } from '../../model/creature';
-import { RouterLink } from '@angular/router';
+import { ListDataItemComponent } from "../../components/list-data-item/list-data-item.component";
 
 @Component({
   selector: 'app-creature-families',
-  imports: [MatButtonModule, RouterLink],
+  imports: [ListDataItemComponent],
   templateUrl: './creature-families.component.html',
   styleUrl: './creature-families.component.scss'
 })

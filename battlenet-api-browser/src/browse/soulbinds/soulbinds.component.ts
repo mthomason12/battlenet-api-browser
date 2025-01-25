@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { MatButtonModule } from '@angular/material/button';
 import { soulbindsDataDoc } from '../../model/covenants';
-import { RouterLink } from '@angular/router';
+import { ListDataItemComponent } from "../../components/list-data-item/list-data-item.component";
 
 
 @Component({
   selector: 'app-soulbinds',
-  imports: [MatButtonModule, RouterLink],
+  imports: [ListDataItemComponent],
   templateUrl: './soulbinds.component.html',
   styleUrl: './soulbinds.component.scss'
 })
