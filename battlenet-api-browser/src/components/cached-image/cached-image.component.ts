@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { CachedFileService } from './cached-file.service';
 
 /**
  * A simple <img> replacement.
@@ -15,4 +16,10 @@ import { Component, input } from '@angular/core';
 export class CachedImageComponent {
   title = input<string>();
   src = input.required<string>();
+
+  constructor(private cacheSvc: CachedFileService)
+  {
+
+  }
+
 }
