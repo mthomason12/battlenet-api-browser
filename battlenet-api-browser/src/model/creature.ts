@@ -138,7 +138,7 @@ interface creatureTypeData
     }
     
     override myPath(): string {
-        return "creature-type";
+        return "creature-types";
     }
   }
 
