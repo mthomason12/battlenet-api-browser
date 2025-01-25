@@ -14,9 +14,11 @@ export class profileDataStruct extends topDataStruct
   constructor(parent: dataStruct)
   {
     super(parent);
-    this.accountFolder = new dataFolder(this, "Account");
-    this.characters = this.register(charsDataDoc);
-    this.accountFolder.add(this.characters);
+  
+    this.accountFolder = new dataFolder(this, "Account", 
+    [
+      this.characters = this.register(charsDataDoc)
+    ]);
 
     this.charactersFolder = new dataFolder(this, "Characters");
 

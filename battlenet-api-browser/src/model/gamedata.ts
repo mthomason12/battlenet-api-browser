@@ -49,20 +49,21 @@ export class publicDataStruct extends topDataStruct
   {
     super(parent);
     this.achievementData = this.register(achievementsDataDoc);
-    this.achievementFolder = new dataFolder(this, "Achievements");
-    this.achievementFolder.add(this.achievementData)
+    this.achievementFolder = new dataFolder(this, "Achievements",[
+      this.achievementData
+    ]);
 
     this.covenantData = this.register(covenantsDataDoc);
     this.soulbindsData = this.register(soulbindsDataDoc);
-    this.covenantsFolder = new dataFolder(this, "Covenants");
-    this.covenantsFolder.add(this.covenantData);
-    this.covenantsFolder.add(this.soulbindsData);
+    this.covenantsFolder = new dataFolder(this, "Covenants", [
+      this.covenantData,
+      this.soulbindsData
+    ]);
 
-    this.creatureFamiliesData = this.register(creatureFamiliesDataDoc);
-    this.creatureTypesData = this.register(creatureTypesDataDoc);
-    this.creaturesFolder = new dataFolder(this, "Creatures");
-    this.creaturesFolder.add(this.creatureFamiliesData);
-    this.creaturesFolder.add(this.creatureTypesData);
+    this.creaturesFolder = new dataFolder(this, "Creatures",[
+      this.creatureFamiliesData = this.register(creatureFamiliesDataDoc),
+      this.creatureTypesData = this.register(creatureTypesDataDoc)
+    ] );
 
     this.itemsFolder = new dataFolder(this, "Items");
 
