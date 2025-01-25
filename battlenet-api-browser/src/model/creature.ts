@@ -1,15 +1,9 @@
-import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection, keyStruct } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection, keyStruct, mediaDataStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 //#region Creature Family
 
-interface creatureFamilyMedia
-{
-  _links: linksStruct;
-  assets: assetStruct;
-  id: number;
-}
 
 interface creatureFamilyData
 {
@@ -27,7 +21,7 @@ interface creatureFamilyData
   {
     _links?: linksStruct;
     specialization?: refStruct;
-    mediaData?: creatureFamilyMedia;
+    mediaData?: mediaDataStruct;
 
     override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
     {

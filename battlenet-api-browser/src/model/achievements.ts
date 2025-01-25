@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, dataDocCollection, keyStruct, linksStruct, mediaStruct, assetStruct, dataDetailDoc, dataDocDetailsCollection } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection, keyStruct, linksStruct, mediaStruct, assetStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -38,13 +38,6 @@ export interface achievementData
   display_order: number;
 }
 
-interface achievementMedia
-{
-  _links: linksStruct;
-  assets: assetStruct[];
-  id: number;
-}
-
 interface achievementIndexEntry
 {
   key: keyStruct;
@@ -72,7 +65,7 @@ export class achievementDataDetailDoc extends dataDetailDoc
   next_achievement?: achievementNextAchievement;
   media?: mediaStruct;
   display_order?: number;
-  mediaData?: achievementMedia;
+  mediaData?: mediaDataStruct;
 
   override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
   {

@@ -482,6 +482,13 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
 //#endregion
 
+export interface mediaDataStruct
+{
+  _links: linksStruct;
+  assets: assetStruct[];
+  id: number;
+}
+
 export interface genderStruct
 {
   type: string;

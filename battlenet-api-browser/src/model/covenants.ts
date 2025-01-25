@@ -1,15 +1,8 @@
-import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc } from './datastructs';
+import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc, mediaDataStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 //#region Covenants
-
-interface covenantMedia
-{
-  _links: linksStruct;
-  assets: assetStruct[];
-  id: number;
-}
 
 interface covenantSpellTooltip
 {
@@ -70,7 +63,7 @@ export class covenantDataDetailDoc extends dataDetailDoc
   soulbinds?: refStruct[] = new Array();
   renown_rewards?: covenantRenownReward[] = new Array();
   media?: mediaStruct;
-  mediadata?: covenantMedia;
+  mediadata?: mediaDataStruct;
 
   override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
   {
