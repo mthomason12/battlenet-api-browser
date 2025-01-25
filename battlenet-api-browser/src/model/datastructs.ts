@@ -386,7 +386,7 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   }
 
   override myPath(): string {
-    return this.itemsName;
+    return this.itemsName.replaceAll('_','-');
 }
 }
 
