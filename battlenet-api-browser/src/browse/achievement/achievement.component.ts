@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { achievementDataDoc } from '../../model/achievements';
-import { ActivatedRoute } from '@angular/router';
-import { UserdataService } from '../../userdata/userdata.service';
+import { achievementDataDetailDoc, achievementDataDoc, achievementsDataDoc } from '../../model/achievements';
+import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
 
 
 @Component({
@@ -11,30 +9,11 @@ import { UserdataService } from '../../userdata/userdata.service';
   templateUrl: './achievement.component.html',
   styleUrl: './achievement.component.scss'
 })
+export class AchievementComponent extends AbstractBrowseDetailComponent<achievementsDataDoc, achievementDataDoc, achievementDataDetailDoc> {
 
-export class AchievementComponent extends AbstractBrowseChildComponent<achievementDataDoc>{
-
-  datadoc?: achievementDataDoc;
-  id?: string;
-
-  constructor(private route: ActivatedRoute, protected override data: UserdataService)
+  override currentMaster(): achievementsDataDoc
   {
-    super(data);
+    return this.data.data.apiData.wowpublic.achievementData;
   }
 
-  override preinit()
-  {
-    this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.data.data.apiData.wowpublic.achievementData.items.find(
-      (data, index, array)=>{
-        return Number.parseInt(this.id!) == data.id;
-      }
-    )!;
-    console.dir(this.datadoc);   
-  }
-
-  override currentData(): achievementDataDoc
-  {
-    return this.datadoc!;
-  }
 }
