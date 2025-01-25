@@ -57,6 +57,7 @@ export class UserdataService {
     }).then (
       (db) => {
         loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db));
+        loadList = loadList.concat(this.data.apiData.wowaccount.loadAll(db));        
         loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db));
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
         Promise.allSettled(loadList).then
@@ -79,6 +80,7 @@ export class UserdataService {
     const db = openDB('data',1).then(
       db => {
         this.data.apiData.wowpublic.save(db);
+        this.data.apiData.wowaccount.save(db);        
         this.data.apiData.wowprofile.save(db);
       });
   }
