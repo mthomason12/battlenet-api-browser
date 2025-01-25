@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserdataService } from '../../userdata/userdata.service';
+import { UserdataService } from '../../services/userdata.service';
 import { dataDetailDoc, dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { ActivatedRoute } from '@angular/router';

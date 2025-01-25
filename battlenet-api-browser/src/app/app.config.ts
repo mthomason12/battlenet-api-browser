@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { UserdataService } from '../userdata/userdata.service';
+import { UserdataService } from '../services/userdata.service';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideOAuthClient } from 'angular-oauth2-oidc';

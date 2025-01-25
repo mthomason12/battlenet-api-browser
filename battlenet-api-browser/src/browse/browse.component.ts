@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angula
 import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { UserdataService } from '../userdata/userdata.service';
+import { UserdataService } from '../services/userdata.service';
 import { dataStruct, dataDoc } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../apiclient/apiclient.service';
