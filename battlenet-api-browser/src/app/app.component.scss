@@ -8,13 +8,21 @@ mat-sidenav-container
     margin-top:56px;
 }
 
-mat-sidenav
-{
+div.sidenav-content {
+    height: 100%;
     padding: 6pt;
+    display: flex;
+    flex-direction: column;
+    app-apitree {
+        flex: 1;
+    }
 }
 
 mat-toolbar {
     position: sticky;
+    .spacer {
+        flex: 1 1 auto;
+    }
 }
 
 ul.buttons {

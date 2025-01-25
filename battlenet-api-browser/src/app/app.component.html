@@ -3,26 +3,35 @@
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Battle.net API Browser</span>
+  @if (!isMobile()) {
+    <span>Battle.net API Browser</span>
+  }
+  @else {
+    <span>Bnet API Browser</span>    
+  }
+  <span class="spacer"></span>
+    @if (this.apiClient.isConnected()) {
+      @if (!this.apiClient.isLoggedIn())
+      {
+        <button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button>
+      }
+    }
+    @else {
+      <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
+        <mat-icon>login</mat-icon>Connect
+      </button>
+    }
+    @if (!isMobile()) {
+      <button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
+    }
+    @else
+    {
+      <button mat-icon-button (click)="sidenav.opened=false;" [routerLink]="'/settings'"><mat-icon>settings</mat-icon></button>
+    }
 </mat-toolbar>
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" [opened]="true"  fixedTopGap="56">
     <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
-    <ul class="buttons">
-      @if (this.apiClient.isConnected()) {
-        @if (!this.apiClient.isLoggedIn())
-        {
-          <li><button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button></li>   
-        }
-      }
-      @else {
-        <li><button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
-          <mat-icon>login</mat-icon>Connect
-        </button></li>
-      }
-      <li><button mat-raised-button [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button></li>
-      <!--- li><button mat-raised-button (click)="debug()"><mat-icon>medication</mat-icon>Debug</button></li --->
-    </ul>
   </mat-sidenav>
   <mat-sidenav-content #content> 
     @if (data.loaded) {
