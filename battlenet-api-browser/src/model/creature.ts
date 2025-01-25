@@ -84,6 +84,20 @@ interface creatureFamilyData
     name: string;
   }
 
+  
+  interface creatureTypeIndexEntry
+  {
+    key: keyStruct;
+    name: string;
+    id: number;
+  }
+
+  export interface creatureTypeIndex
+  {
+    _links: linksStruct;
+    achievements: creatureTypeIndexEntry;
+  }
+
   @Reviver<creatureTypeDetailsDoc>({
     '.': Jsonizer.Self.endorse(creatureTypeDetailsDoc)
   })
@@ -121,7 +135,7 @@ interface creatureFamilyData
       this.itemsName = "creature_types";
     }
     
-    override getItems = function(apiClient: ApiclientService): Promise<any>
+    override getItems = function(apiClient: ApiclientService): Promise<creatureTypeIndex>
     {
       return apiClient.getCreatureTypesIndex() as Promise<any>;
     }

@@ -2,7 +2,7 @@ import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
 import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
-import { creatureTypeData } from '../model/creature';
+import { creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { UserdataService } from '../userdata/userdata.service';
 import { inject } from '@angular/core';
 
@@ -287,7 +287,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/media/creature-family/${id}`);
   }      
 
-  getCreatureTypesIndex(): Promise<any> | undefined
+  getCreatureTypesIndex(): Promise<creatureTypeIndex> | undefined
   {
     return this.queryStatic(`/data/wow/creature-type/index`);
   }      
