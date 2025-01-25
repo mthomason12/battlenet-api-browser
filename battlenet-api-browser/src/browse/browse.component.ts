@@ -25,7 +25,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
   apiCli?: ApiclientService;
   navigationEndSubscription?: Subscription;
   dataChangedSubscription?: Subscription;
-  private ref: ChangeDetectorRef;
 
   readonly dialog = inject(MatDialog);
 
