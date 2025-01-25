@@ -36,7 +36,10 @@ export class CachedFileService {
     return result;
   }
 
-  /** Get a file.  From database if possible, but if it's not there fetch and retrieve it*/
+  /** 
+   * Get a file. From database if possible, but if it's not there fetch and retrieve it.
+   * This could also be used for pre- or background caching, but more than four concurrent calls should be run in a queue to ensure there's no timeouts.
+   */
   get(url: string): Promise<CachedFile>
   {
     var result = new Promise<CachedFile>((resolve, reject)=>{
