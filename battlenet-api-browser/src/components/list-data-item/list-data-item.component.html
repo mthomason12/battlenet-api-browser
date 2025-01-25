@@ -1,1 +1,5 @@
 <a mat-raised-button routerLink="{{item().path()}}">{{item().id}}: {{item().name}}</a>
+@if(itemIsLoaded())
+{
+    <mat-icon class="isLoaded">article</mat-icon>
+}
