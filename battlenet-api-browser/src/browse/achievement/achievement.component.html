@@ -4,3 +4,4 @@
 <p>Criteria: {{currentData().criteria?.description}}</p>
 <p>Points: {{currentData().points}}</p>
 <p>Is Account Wide: {{currentData().is_account_wide?.toString()}}</p>
+<app-media-table [dataSource]="currentData().mediaData!"/>
