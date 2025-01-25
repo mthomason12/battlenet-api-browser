@@ -447,6 +447,11 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     )
   }
 
+  hasDetailEntry(id: number): boolean
+  {
+    return this.getDetailEntry(id) !== undefined;
+  }
+
   removeDetailEntry(id: number): void
   {
     this.details.forEach( (item, index) => {
