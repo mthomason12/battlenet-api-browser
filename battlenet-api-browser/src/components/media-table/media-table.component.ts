@@ -10,5 +10,5 @@ import { CachedImageComponent } from '../cached-image/cached-image.component';
   styleUrl: './media-table.component.scss'
 })
 export class MediaTableComponent {
-  mediaData = input<mediaDataStruct>();
+  dataSource = input.required<mediaDataStruct>();
 }
