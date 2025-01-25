@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CachedImageService } from './cached-image.service';
+import { CachedFileService } from './cached-file.service';
 
 describe('CachedImageService', () => {
-  let service: CachedImageService;
+  let service: CachedFileService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CachedImageService);
+    service = TestBed.inject(CachedFileService);
   });
 
   it('should be created', () => {
