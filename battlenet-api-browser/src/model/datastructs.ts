@@ -146,15 +146,14 @@ export class dataFolder extends dataStruct
  */
 export abstract class topDataStruct extends dataStruct
 {
-  data: dataDoc[] = Array();
+  data: {ref: dataDoc, type: any}[] = Array();
 
-  register<T extends dataDoc>(struct: T): T
+  register<T extends dataDoc>(typeref: { new(...args : any[]):T}): T
   {
+    var struct = {ref: new typeref(this), type:typeref};
     this.data.push(struct);
-    return struct;
+    return struct.ref;
   }
-
-  abstract loadAll(db: IDBPDatabase<unknown>): Promise<any>[];
 
   /**
    * Attempt to merge data from database into specified data structure
@@ -185,11 +184,25 @@ export abstract class topDataStruct extends dataStruct
     }
   }
 
-  /**
-   * Override in descendant classes to save this object's contents (usually by calling saveObject on each item)
-   * @param db 
-   */
-  abstract save(db: IDBPDatabase<unknown>): void;
+  override postFixup(): void {
+    this.data.forEach((item)=>{item.ref.fixup(this)});
+  }
+
+  loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
+    var entries: Promise<any>[] = new Array();
+    this.data.forEach((item)=>{
+      entries.push(this.load(db, item.ref, item.type))
+    });
+    return entries;
+  }
+
+  save(db: IDBPDatabase<unknown>)
+  {
+    this.data.forEach((item)=>{
+      this.saveObject(db, item.ref);
+    });
+  }
+
 
   /**
    * Save a dataDoc object to indexedDB
