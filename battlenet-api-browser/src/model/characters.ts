@@ -63,7 +63,7 @@ export class charsDataDoc extends dataDocCollection<charDataDoc>
     super(parent, "Characters");
     this.icon = "group";
     this.needsauth = true;
-    this.dbkey="wow-u-characters";
+    this.dbkey="wow-a-characters";
   }
 
   /**

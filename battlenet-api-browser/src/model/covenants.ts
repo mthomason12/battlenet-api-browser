@@ -96,7 +96,7 @@ export class covenantsDataDoc extends dataDocDetailsCollection<covenantDataDoc, 
   constructor (parent: dataStruct)
   {
     super(parent,"Covenants");
-    this.dbkey = "wow-p-covenants";
+    this.dbkey = "wow-g-covenants";
     this.thisType = covenantsDataDoc;
     this.detailsType = covenantDataDetailDoc;
     this.itemsName = "covenants";
@@ -175,7 +175,7 @@ export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, 
   constructor (parent: dataStruct)
   {
     super(parent,"Soulbinds");
-    this.dbkey = "wow-p-soulbinds";
+    this.dbkey = "wow-g-soulbinds";
     this.icon = "people"; 
     this.thisType = soulbindsDataDoc;
     this.detailsType = soulbindDataDetailDoc;

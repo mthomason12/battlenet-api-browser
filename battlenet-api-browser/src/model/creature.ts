@@ -54,7 +54,7 @@ interface creatureFamilyData
     constructor (parent: dataStruct)
     {
       super(parent,"Creature Families");
-      this.dbkey = "wow-p-creature_families";
+      this.dbkey = "wow-g-creature_families";
       this.icon = "pets";      
       this.thisType = creatureFamiliesDataDoc;
       this.detailsType = creatureFamilyDetailsDoc;
@@ -128,7 +128,7 @@ interface creatureFamilyData
     constructor (parent: dataStruct)
     {
       super(parent,"Creature Types");
-      this.dbkey = "wow-p-creature_types";
+      this.dbkey = "wow-g-creature_types";
       this.icon = "cruelty_free";
       this.thisType = creatureTypesDataDoc;
       this.detailsType = creatureTypeDetailsDoc;

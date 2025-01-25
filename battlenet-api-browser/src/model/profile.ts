@@ -1,10 +1,7 @@
 import { dataFolder, dataStruct, topDataStruct } from './datastructs';
-import { charsDataDoc } from './characters';
 
 export class profileDataStruct extends topDataStruct
 {
-  accountFolder: dataFolder;
-  characters: charsDataDoc;
 
   charactersFolder: dataFolder;
 
@@ -14,11 +11,6 @@ export class profileDataStruct extends topDataStruct
   {
     super(parent);
   
-    this.accountFolder = new dataFolder(this, "Account", 
-    [
-      this.characters = this.register(charsDataDoc)
-    ]);
-
     this.charactersFolder = new dataFolder(this, "Characters");
 
     this.guildsFolder = new dataFolder(this, "Guilds");
@@ -34,7 +26,6 @@ export class profileDataStruct extends topDataStruct
   override children(): dataStruct[]
   {
     return super.children().concat([
-      this.accountFolder,
       this.charactersFolder, 
       this.guildsFolder
     ]);

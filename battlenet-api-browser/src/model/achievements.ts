@@ -99,7 +99,7 @@ export class achievementsDataDoc extends dataDocDetailsCollection<achievementDat
   {
     super(parent, "Achievements");
     this.icon = "emoji_events";
-    this.dbkey = "wow-p-achievements";
+    this.dbkey = "wow-g-achievements";
     this.thisType = achievementsDataDoc;
     this.detailsType = achievementDataDetailDoc;
     this.itemsName = "achievements";

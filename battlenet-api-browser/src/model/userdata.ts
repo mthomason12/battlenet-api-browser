@@ -1,6 +1,7 @@
 import { dataStruct } from './datastructs';
 import { profileDataStruct } from './profile';
 import { publicDataStruct } from './gamedata';
+import { accountDataStruct } from './account';
 
 /**
  * All API data retrieved and stored in the application
@@ -8,6 +9,7 @@ import { publicDataStruct } from './gamedata';
 export class apiDataStruct extends dataStruct
 {
   wowpublic: publicDataStruct;
+  wowaccount: accountDataStruct;
   wowprofile: profileDataStruct;
 
   /**
@@ -17,6 +19,7 @@ export class apiDataStruct extends dataStruct
   {
     super(undefined);
     this.wowpublic = new publicDataStruct(this);
+    this.wowaccount = new accountDataStruct(this);
     this.wowprofile = new profileDataStruct(this);
   }
 
@@ -33,7 +36,11 @@ export class apiDataStruct extends dataStruct
    */
   override children(): dataStruct[]
   {
-    return super.children().concat([this.wowpublic, this.wowprofile]);
+    return super.children().concat([
+      this.wowpublic, 
+      this.wowaccount,
+      this.wowprofile
+    ]);
   }
 
   /**
@@ -47,6 +54,7 @@ export class apiDataStruct extends dataStruct
   override postFixup()
   {
       this.wowpublic.fixup(this);
+      this.wowaccount.fixup(this);
       this.wowprofile.fixup(this);
   }
 }
