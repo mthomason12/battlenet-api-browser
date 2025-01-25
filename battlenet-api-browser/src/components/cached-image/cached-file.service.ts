@@ -52,7 +52,7 @@ export class CachedFileService {
           //data was not found in database, grab it from the internet and store then return it
           this.httpClient.get(url, {responseType: 'arraybuffer', observe: 'response'}).subscribe(
             response => {
-              var mimetype: string = response.headers.get('mimetype')!
+              var mimetype: string = response.headers.get('Content-Type')!
               var data = btoa(String.fromCharCode(...new Uint8Array(response.body!)));
               this.store(url, mimetype, data);
               resolve({
