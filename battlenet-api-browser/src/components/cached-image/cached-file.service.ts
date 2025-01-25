@@ -1,27 +1,60 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+
+interface CachedFile{
+  mimetype: string;
+  data: string; //base64-encoded data
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CachedFileService {
 
+  httpClient: HttpClient = inject(HttpClient);
+
   constructor() { }
 
-  /** Store image in database */
-  store(url: string, data: any)
+  /** Store file in database */
+  store(url: string, mimetype: string, data: string)
   {
 
   }
 
-  /** Retrieve image from database */
-  retrieve(url: string, data: any)
+  /** Retrieve file from database */
+  retrieve(url: string): Promise<CachedFile>
   {
-
+    var result = new Promise<CachedFile>((resolve,reject)=>{
+      //for now, just return a pre-encoded red dot
+      resolve({
+        mimetype: 'image/jpeg',
+        data: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
+      });
+    });
+    return result;
   }
 
-  /** Get an image.  From database if possible, but if it's not there fetch and retrieve it*/
-  get(url: string, data: any)
+  /** Get a file.  From database if possible, but if it's not there fetch and retrieve it*/
+  get(url: string): Promise<CachedFile>
   {
-
+    var result = new Promise<CachedFile>((resolve, reject)=>{
+      this.retrieve(url).then(
+        (data)=>{
+          //data was found in database, return it
+          resolve(data);
+        },
+        (rejectReason)=>{
+          //data was not found in database, grab it from the internet and store then return it
+          this.httpClient.get(url, {responseType: 'arraybuffer', observe: 'response'}).subscribe(
+            response => {
+              this.store(url, response.headers.get('mimetype')!, btoa(String.fromCharCode(...new Uint8Array(response.body!))))
+            }
+          );
+          reject(rejectReason);
+        }
+      );
+      
+    });
+    return result;
   }
 }
