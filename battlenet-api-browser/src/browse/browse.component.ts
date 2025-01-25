@@ -30,8 +30,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   {
-    this.apiCli = apiClient;
-    this.ref = inject(ChangeDetectorRef);    
+    this.apiCli = apiClient;  
   }
 
   ngOnInit(): void {
