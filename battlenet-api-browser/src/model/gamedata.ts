@@ -43,6 +43,8 @@ export class publicDataStruct extends topDataStruct
 
   reputationsFolder: dataFolder;
 
+  realmsFolder: dataFolder;
+
   talentsFolder: dataFolder;
 
   constructor(parent: dataStruct)
@@ -81,6 +83,8 @@ export class publicDataStruct extends topDataStruct
 
     this.questsFolder = new dataFolder(this, "Quests");
 
+    this.realmsFolder = new dataFolder(this, "Realms");
+
     this.reputationsFolder = new dataFolder(this, "Reputations");
 
     this.talentsFolder = new dataFolder(this, "Talents");
@@ -108,6 +112,7 @@ export class publicDataStruct extends topDataStruct
       this.pvpFolder,
       this.questsFolder,
       this.reputationsFolder,
+      this.realmsFolder,
       this.talentsFolder
     ]);
   } 
