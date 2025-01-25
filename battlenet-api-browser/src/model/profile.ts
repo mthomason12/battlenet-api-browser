@@ -15,7 +15,7 @@ export class profileDataStruct extends topDataStruct
   {
     super(parent);
     this.accountFolder = new dataFolder(this, "Account");
-    this.characters = new charsDataDoc(this);
+    this.characters = this.register(charsDataDoc);
     this.accountFolder.add(this.characters);
 
     this.charactersFolder = new dataFolder(this, "Characters");
@@ -43,14 +43,4 @@ export class profileDataStruct extends topDataStruct
       return "profile";
   }
 
-  override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
-    var entries: Promise<any>[] = new Array();
-    entries.push(this.load(db, this.characters, charsDataDoc));
-    return entries;
-  }
-
-  override save(db: IDBPDatabase<unknown>)
-  {
-    this.saveObject(db, this.characters);
-  }
 }

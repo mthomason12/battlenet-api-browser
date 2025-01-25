@@ -48,18 +48,18 @@ export class publicDataStruct extends topDataStruct
   constructor(parent: dataStruct)
   {
     super(parent);
-    this.achievementData = new achievementsDataDoc(this);
+    this.achievementData = this.register(achievementsDataDoc);
     this.achievementFolder = new dataFolder(this, "Achievements");
     this.achievementFolder.add(this.achievementData)
 
-    this.covenantData = new covenantsDataDoc(this);
-    this.soulbindsData = new soulbindsDataDoc(this);
+    this.covenantData = this.register(covenantsDataDoc);
+    this.soulbindsData = this.register(soulbindsDataDoc);
     this.covenantsFolder = new dataFolder(this, "Covenants");
     this.covenantsFolder.add(this.covenantData);
     this.covenantsFolder.add(this.soulbindsData);
 
-    this.creatureFamiliesData = new creatureFamiliesDataDoc(this);
-    this.creatureTypesData = new creatureTypesDataDoc(this);
+    this.creatureFamiliesData = this.register(creatureFamiliesDataDoc);
+    this.creatureTypesData = this.register(creatureTypesDataDoc);
     this.creaturesFolder = new dataFolder(this, "Creatures");
     this.creaturesFolder.add(this.creatureFamiliesData);
     this.creaturesFolder.add(this.creatureTypesData);
@@ -115,30 +115,4 @@ export class publicDataStruct extends topDataStruct
       return "public";
   }
 
-  override postFixup(): void {
-    this.achievementData.fixup(this);
-    this.covenantData.fixup(this);
-    this.soulbindsData.fixup(this);
-    this.creatureFamiliesData.fixup(this);
-    this.creatureTypesData.fixup(this);
-  }
-
-  override loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
-    var entries: Promise<any>[] = new Array();
-    entries.push(this.load(db, this.achievementData, achievementsDataDoc));
-    entries.push(this.load(db, this.covenantData, covenantsDataDoc));
-    entries.push(this.load(db, this.soulbindsData, soulbindsDataDoc));
-    entries.push(this.load(db, this.creatureFamiliesData, creatureFamiliesDataDoc));
-    entries.push(this.load(db, this.creatureTypesData, creatureTypesDataDoc))
-    return entries;
-  }
-
-  override save(db: IDBPDatabase<unknown>)
-  {
-    this.saveObject(db, this.achievementData);
-    this.saveObject(db, this.covenantData);
-    this.saveObject(db, this.soulbindsData);    
-    this.saveObject(db, this.creatureFamiliesData);
-    this.saveObject(db, this.creatureTypesData);
-  }
 }
