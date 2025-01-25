@@ -23,8 +23,8 @@ export const routes: Routes = [
             { path: 'covenants', component: CovenantsComponent},         
             { path: 'creature-families/:id', component: CreatureFamilyComponent}, 
             { path: 'creature-families', component: CreatureFamiliesComponent},    
-            { path: 'creature-types/:id', component: CreatureTypeComponent},           
-            { path: 'creature-types', component: CreatureTypesComponent},             
+            { path: 'creature-type/:id', component: CreatureTypeComponent},           
+            { path: 'creature-type', component: CreatureTypesComponent},             
             { path: 'soulbinds/:id', component: SoulbindComponent},              
             { path: 'soulbinds', component: SoulbindsComponent},               
             { path: '**', children: [] }
