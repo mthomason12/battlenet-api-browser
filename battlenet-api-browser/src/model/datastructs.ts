@@ -490,6 +490,8 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
 //#endregion
 
+//#region Common Interfaces
+
 export interface mediaDataStruct
 {
   _links: linksStruct;
@@ -551,3 +553,5 @@ export interface refStruct
   name: string;
   key: keyStruct;
 }
+
+//#endregion
