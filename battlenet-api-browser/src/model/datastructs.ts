@@ -423,7 +423,10 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     const reviver = Reviver.get(this.detailsType);
     var item: T2 = JSON.parse(json, reviver);
     this.addDetailEntry(item);
-    item.getExtraDetails(apiclient);
+    if (apiclient.isConnected())
+    {
+      item.getExtraDetails(apiclient);
+    }
     return item;
   }
 
