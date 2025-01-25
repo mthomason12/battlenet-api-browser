@@ -1,6 +1,5 @@
 import { dataFolder, dataStruct, topDataStruct } from './datastructs';
 import { charsDataDoc } from './characters';
-import { IDBPDatabase } from 'idb';
 
 export class profileDataStruct extends topDataStruct
 {
