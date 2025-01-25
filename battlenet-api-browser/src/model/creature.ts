@@ -90,7 +90,7 @@ interface creatureFamilyData
   }
 
   @Reviver<creatureTypeDetailsDoc>({
-    '.': Jsonizer.Self.assign(creatureTypeDetailsDoc)
+    '.': Jsonizer.Self.endorse(creatureTypeDetailsDoc)
   })
   export class creatureTypeDetailsDoc extends dataDetailDoc
   {
