@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
-import { creatureTypeDataDoc } from '../../model/creature';
-import { ActivatedRoute } from '@angular/router';
-import { UserdataService } from '../../userdata/userdata.service';
+import { creatureTypeDataDoc, creatureTypeDetailsDoc, creatureTypesDataDoc } from '../../model/creature';
+import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
 
 @Component({
   selector: 'app-creature-type',
@@ -11,28 +9,10 @@ import { UserdataService } from '../../userdata/userdata.service';
   styleUrl: './creature-type.component.scss'
 })
 
-export class CreatureTypeComponent extends AbstractBrowseChildComponent<creatureTypeDataDoc>{
+export class CreatureTypeComponent extends AbstractBrowseDetailComponent<creatureTypesDataDoc, creatureTypeDataDoc, creatureTypeDetailsDoc>{
 
-  datadoc?: creatureTypeDataDoc;
-  id?: string;
-
-  constructor(private route: ActivatedRoute, protected override data: UserdataService)
-  {
-    super(data);
+  override currentMaster(): creatureTypesDataDoc {
+    return this.data.data.apiData.wowpublic.creatureTypesData;
   }
 
-  override preinit()
-  {
-    this.id = this.route.snapshot.paramMap.get('id') ?? "";    
-    this.datadoc = this.data.data.apiData.wowpublic.creatureTypesData.items.find(
-      (data, index, array)=>{
-        return Number.parseInt(this.id!) == data.id;
-      }
-    )!;   
-  }
-
-  override currentData(): creatureTypeDataDoc
-  {
-    return this.datadoc!;
-  }
 }
