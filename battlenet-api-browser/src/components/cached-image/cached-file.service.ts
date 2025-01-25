@@ -22,14 +22,16 @@ export class CachedFileService {
   }
 
   /** Retrieve file from database */
-  retrieve(url: string): Promise<CachedFile>
+  retrieve(url: string): Promise<CachedFile | undefined>
   {
-    var result = new Promise<CachedFile>((resolve,reject)=>{
-      //for now, just return a pre-encoded red dot
-      resolve({
+    var result = new Promise<CachedFile | undefined>((resolve,reject)=>{
+      //for now, just say no
+      resolve(undefined);
+      // a pre-encoded red dot
+      /*resolve({
         mimetype: 'image/jpeg',
         data: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
-      });
+      });*/
     });
     return result;
   }
@@ -41,16 +43,25 @@ export class CachedFileService {
       this.retrieve(url).then(
         (data)=>{
           //data was found in database, return it
-          resolve(data);
-        },
-        (rejectReason)=>{
+          if (data !== undefined)
+          {
+            resolve(data);
+          }
+          else
+          {
           //data was not found in database, grab it from the internet and store then return it
           this.httpClient.get(url, {responseType: 'arraybuffer', observe: 'response'}).subscribe(
             response => {
-              this.store(url, response.headers.get('mimetype')!, btoa(String.fromCharCode(...new Uint8Array(response.body!))))
+              var mimetype: string = response.headers.get('mimetype')!
+              var data = btoa(String.fromCharCode(...new Uint8Array(response.body!)));
+              this.store(url, mimetype, data);
+              resolve({
+                mimetype: mimetype,
+                data: data
+              })
             }
           );
-          reject(rejectReason);
+          }
         }
       );
       
