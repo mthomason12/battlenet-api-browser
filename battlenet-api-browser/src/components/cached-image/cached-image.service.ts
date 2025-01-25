@@ -6,4 +6,14 @@ import { Injectable } from '@angular/core';
 export class CachedImageService {
 
   constructor() { }
+
+  store(url: string, data: any)
+  {
+
+  }
+
+  get(url: string, data: any)
+  {
+
+  }
 }
