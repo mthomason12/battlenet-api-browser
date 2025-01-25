@@ -7,10 +7,11 @@ import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
 import { CachedImageComponent } from "../../components/cached-image/cached-image.component";
+import { MediaTableComponent } from '../../components/media-table/media-table.component';
 
 @Component({
   selector: 'app-covenant',
-  imports: [MatTabsModule, MatListModule, MatTableModule, MatButtonModule, RouterLink, CachedImageComponent],
+  imports: [MatTabsModule, MatListModule, MatTableModule, MatButtonModule, RouterLink, MediaTableComponent, CachedImageComponent],
   templateUrl: './covenant.component.html',
   styleUrl: './covenant.component.scss'
 })
