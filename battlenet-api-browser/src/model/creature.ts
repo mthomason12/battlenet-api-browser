@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection } from './datastructs';
+import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection, keyStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -17,6 +17,7 @@ interface creatureFamilyData
   id: number;
   name: string;
   specialization: refStruct;
+  media: keyStruct;
 }
 
   @Reviver<creatureFamilyDetailsDoc>({
@@ -26,13 +27,13 @@ interface creatureFamilyData
   {
     _links?: linksStruct;
     specialization?: refStruct;
-    media?: creatureFamilyMedia;
+    mediaData?: creatureFamilyMedia;
 
     override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
     {
       await apiClient.getCreatureFamilyMedia(this.id)?.then(
         (data: any) => {
-          this.media = data;
+          this.mediaData = data;
         });
     }
   }
