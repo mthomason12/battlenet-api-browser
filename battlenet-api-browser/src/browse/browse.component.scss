@@ -22,6 +22,13 @@ mat-card.innerCard {
   }
 }
 
+mat-card.outerCard {
+  height: 100%;
+  mat-card-content {
+    flex: 1;
+  }
+}
+
 div.breadcrumbs {
   margin-bottom: 8px;
 }
