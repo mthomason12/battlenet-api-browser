@@ -17,9 +17,15 @@ export class CachedImageComponent {
   title = input<string>();
   src = input.required<string>();
 
+  imageData?: string;
+
   constructor(private cacheSvc: CachedFileService)
   {
-
+    cacheSvc.get(this.src()).then(
+      (data)=>{
+        this.imageData = "data:"+data.mimetype+";base64,"+data.data;
+      }
+    );
   }
 
 }
