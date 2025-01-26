@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, Type } from '@angular/core';
 import { ApiclientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -6,7 +6,8 @@ import { UserdataService } from '../../services/userdata.service';
 import { dataDoc, dataDocCollection, dataDocDetailsCollection } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { ListDataItemComponent } from '../../components/list-data-item/list-data-item.component';
-import { Class } from '@badcafe/jsonizer';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 enum ListDetailHostComponentMode
 {
@@ -16,15 +17,17 @@ enum ListDetailHostComponentMode
 interface ListDetailHostComponentData
 {
   list: string[], 
-  listComponent?: Class, 
-  detailComponent?: Class
+  listComponent?: Type<any>, 
+  detailComponent?: Type<any>
 }
 
 @Component({
   selector: 'app-list-detail-host',
   imports: [
     ScrollingModule,
-    ListDataItemComponent
+    ListDataItemComponent,
+    CommonModule,
+    MatButtonModule
   ],
   templateUrl: './list-detail-host.component.html',
   styleUrl: './list-detail-host.component.scss'
@@ -42,8 +45,14 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
   protected mode: ListDetailHostComponentMode = ListDetailHostComponentMode.Master;
   protected data?: ListDetailHostComponentData;
 
+  //references to current master/detail data
   protected masterList?: dataDocCollection<any>;
-  protected dataItem?: dataDoc;
+  protected detailItem?: dataDoc;
+
+  //inputs and outputs to pass to override components
+  protected masterInputs: Record<string, unknown> | undefined
+  protected masterOutputs: Record<string, unknown> | undefined  
+  protected detailInputs: Record<string, unknown> | undefined
 
   constructor(protected userData: UserdataService, protected route: ActivatedRoute)
   {
@@ -76,33 +85,54 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
 
   //things to do just before oninit
   preinit()
-  {    this.id = undefined;
+  {    
+    this.id = undefined;
     var idstr = this.route.snapshot.paramMap.get('id');
     if (idstr !== null)
     {
       this.id = Number.parseInt(this.route.snapshot.paramMap.get('id')!);  
     }
-    console.log("ID: "+this.id);
+
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
-    //var dataRef: string[] = this.data.list;
-    //console.log("Data: ("+dataRef[0]+"."+dataRef[1]+")");   
-    //this.masterList = (this.userData.data.apiData as any)[dataRef[0]][dataRef[1]];
     this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
-    console.dir(this.masterList);  
+
     if (this.id === undefined)
     {
       this.mode = ListDetailHostComponentMode.Master;
     }        
     else
     {
-      this.dataItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);
-      console.dir(this.dataItem);       
+      this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
       this.mode = ListDetailHostComponentMode.Detail;
     }
+    this.masterInputs = { 'data': this.masterList! };
+    this.masterOutputs = { 'clicked' : this.itemClicked }
     this.userData.setCurrent(this.masterList!);
-    this.masterList!.checkLoaded(this.apiClient);    
+    this.masterList!.checkLoaded(this.apiClient); 
+    if (this.id !== undefined)   
+    {
+      this.detailInputs = { 'data': this.detailItem! };
+      this.detailItem!.checkLoaded(this.apiClient);
+    }
     this.ref.detectChanges();    
+  }
+
+  itemClicked(id: number)
+  {
+    this.id = id;
+    console.log(this.id);    
+    this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
+    this.mode = ListDetailHostComponentMode.Detail;    
+    this.detailInputs = { 'data': this.detailItem! };
+    this.detailItem!.checkLoaded(this.apiClient); 
+    window.history.pushState({}, '', this.detailItem!.path()); 
+    this.ref.detectChanges();  
+  }
+
+  returnToMaster() {
+    this.mode = this.Mode.Master;
+    window.history.pushState({}, '', this.masterList!.path());
   }
 
   //things to do just after init

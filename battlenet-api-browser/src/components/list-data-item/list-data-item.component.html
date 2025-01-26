@@ -1,4 +1,4 @@
-<a mat-raised-button [routerLink]="getPath()">{{item().id}}: {{item().name}}</a>
+<a mat-raised-button [routerLink]="skipChange() ? null : item().path()" (click)="clicked.emit(item().id)">{{item().id}}: {{item().name}}</a>
 @if(itemIsLoaded())
 {
     <mat-icon class="isLoaded">article</mat-icon>

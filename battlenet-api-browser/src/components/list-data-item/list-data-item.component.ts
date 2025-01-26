@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
 import { MatIcon } from '@angular/material/icon';
@@ -11,8 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './list-data-item.component.scss'
 })
 export class ListDataItemComponent {
+
+  //the item to display
   item = input.required<dataDoc>();
-  relative = input<boolean>(false);
+
+  //Whether to add a skipLocationChange directive
+  skipChange = input<boolean>(false);
+
+  //Function to call on click
+  clicked = output<number>();
 
   itemIsLoaded(): boolean
   {
@@ -23,12 +30,4 @@ export class ListDataItemComponent {
     return false;
   }
 
-  getPath()
-  {
-    if (this.relative()) 
-    {
-      return "./"+this.item().id;
-    }
-    return this.item().path();
-  }
 }
