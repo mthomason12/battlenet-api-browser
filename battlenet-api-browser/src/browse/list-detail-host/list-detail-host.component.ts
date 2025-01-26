@@ -70,6 +70,10 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     this.ref.detectChanges();
   }
 
+  getValueByKey(key: any, obj: Object) {
+    return [].concat(key).reduce((o, k) => o[k], obj);
+  }
+
   //things to do just before oninit
   preinit()
   {    this.id = undefined;
@@ -82,7 +86,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
     var dataRef: string[] = this.data.list;
-    console.log("Data: ("+dataRef[0]+"."+dataRef[1]+")");    
+    console.log("Data: ("+dataRef[0]+"."+dataRef[1]+")");   
+    //todo - use getValueByKey here instead 
     this.masterList = (this.userData.data.apiData as any)[dataRef[0]][dataRef[1]];
     console.dir(this.masterList);  
     if (this.id === undefined)
