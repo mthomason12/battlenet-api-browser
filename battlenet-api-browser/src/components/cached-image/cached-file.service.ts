@@ -12,15 +12,28 @@ interface CachedFile{
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * A service for requesting file URLs from.  If the file has been requested before, it is served from the database.
+ * Otherwise, it is retrieved and stored for later use.  Entries are timestamped.
+ * 
+ * Todo - add a "remove stale entries" function
+ */
 export class CachedFileService {
 
   httpClient: HttpClient = inject(HttpClient);
   db?: IDBPDatabase<unknown>;
 
   constructor() { 
-    openDB('imgcache',1, {
-      upgrade(db) {
-        db.createObjectStore('img');
+    openDB('imgcache',2, {
+      upgrade(db, oldVersion, newVersion, tx) {
+        if (!db.objectStoreNames.contains('img'))
+        {
+          db.createObjectStore('img');
+        }
+        if (oldVersion < 2)
+        {
+          tx.objectStore('img').createIndex('timestamp', 'timestamp');
+        }
       }
     }).then (
       (db) => {this.db = db}
