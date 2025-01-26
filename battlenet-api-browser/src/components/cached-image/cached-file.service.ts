@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { IDBPDatabase, openDB } from 'idb';
 
 interface CachedFile{
   mimetype: string;
@@ -12,21 +13,40 @@ interface CachedFile{
 export class CachedFileService {
 
   httpClient: HttpClient = inject(HttpClient);
+  db?: IDBPDatabase<unknown>;
 
-  constructor() { }
+  constructor() { 
+    openDB('imgcache',1, {
+      upgrade(db) {
+        db.createObjectStore('img');
+      }
+    }).then (
+      (db) => {this.db = db}
+    );
+  }
 
   /** Store file in database */
   store(url: string, mimetype: string, data: string)
   {
-
+    this.db?.put('img', {mimetype: mimetype, data: data}, url);
   }
 
   /** Retrieve file from database */
   retrieve(url: string): Promise<CachedFile | undefined>
   {
     var result = new Promise<CachedFile | undefined>((resolve,reject)=>{
-      //for now, just say no
-      resolve(undefined);
+      this.db?.get('img', url).then(
+        (value)=>{
+          if (value !== undefined)
+          {
+            resolve (value);
+          }
+          else
+          {
+            resolve (undefined);
+          }
+        }
+      );
       // a pre-encoded red dot
       /*resolve({
         mimetype: 'image/jpeg',
