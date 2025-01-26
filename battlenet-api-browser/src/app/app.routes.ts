@@ -12,15 +12,13 @@ import { CreatureFamilyComponent } from '../browse/creature-family/creature-fami
 import { CreatureTypeComponent } from '../browse/creature-type/creature-type.component';
 import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
 import { SoulbindsComponent } from '../browse/soulbinds/soulbinds.component';
-import { UserdataService } from '../services/userdata.service';
-
-var data = inject(UserdataService);
+import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
     { path: 'browse', component: BrowseComponent, children: [
         { path: 'public', children: [
-            { path: 'achievements/:id', component: AchievementComponent},            
+            { path: 'achievements/:id', component: AchievementComponent,},            
             { path: 'achievements', component: AchievementsComponent},
             { path: 'covenants/:id', component: CovenantComponent},              
             { path: 'covenants', component: CovenantsComponent},         
@@ -29,7 +27,8 @@ export const routes: Routes = [
             { path: 'creature-types/:id', component: CreatureTypeComponent},           
             { path: 'creature-types', component: CreatureTypesComponent},
             { path: 'soulbinds/:id', component: SoulbindComponent},              
-            { path: 'soulbinds', component: SoulbindsComponent},               
+            { path: 'soulbinds', component: SoulbindsComponent},    
+            { path: 'test', component: ListDetailHostComponent, data:{list: "wowpublic.achievementData"}},
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [
