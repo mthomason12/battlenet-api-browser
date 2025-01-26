@@ -18,8 +18,9 @@ export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
     { path: 'browse', component: BrowseComponent, children: [
         { path: 'public', children: [
-            { path: 'achievements/:id', component: AchievementComponent,},            
-            { path: 'achievements', component: AchievementsComponent},
+            { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
+            { path: 'achievements/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","achievementData"]} },            
             { path: 'covenants/:id', component: CovenantComponent},              
             { path: 'covenants', component: CovenantsComponent},         
             { path: 'creature-families/:id', component: CreatureFamilyComponent}, 
@@ -27,9 +28,7 @@ export const routes: Routes = [
             { path: 'creature-types/:id', component: CreatureTypeComponent},           
             { path: 'creature-types', component: CreatureTypesComponent},
             { path: 'soulbinds/:id', component: SoulbindComponent},              
-            { path: 'soulbinds', component: SoulbindsComponent},    
-            { path: 'test', component: ListDetailHostComponent, data:{list: ["wowpublic","achievementData"]}},
-            { path: 'test/:id', component: ListDetailHostComponent, data:{list: ["wowpublic","achievementData"]}},            
+            { path: 'soulbinds', component: SoulbindsComponent},               
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [
