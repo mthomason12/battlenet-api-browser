@@ -12,6 +12,9 @@ import { CreatureFamilyComponent } from '../browse/creature-family/creature-fami
 import { CreatureTypeComponent } from '../browse/creature-type/creature-type.component';
 import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
 import { SoulbindsComponent } from '../browse/soulbinds/soulbinds.component';
+import { UserdataService } from '../services/userdata.service';
+
+var data = inject(UserdataService);
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
