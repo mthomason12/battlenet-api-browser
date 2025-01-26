@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ApiclientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
