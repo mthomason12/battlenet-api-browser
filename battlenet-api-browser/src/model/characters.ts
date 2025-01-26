@@ -2,18 +2,6 @@ import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { dataDoc, dataDocCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../apiclient/apiclient.service';
 
-export class charDataDoc extends dataDoc
-{
-  level?: number;
-  character?: hrefStruct;
-  protected_character?: hrefStruct;
-  account?: number;
-  realm?: realmStruct;
-  playable_class?: refStruct;
-  playable_race?: refStruct;
-  gender?: genderStruct;
-  faction?: factionStruct;
-}
 
 interface accountProfileSummaryLinks extends linksStruct
 {
@@ -47,6 +35,22 @@ interface accountProfileSummaryData
   _links: accountProfileSummaryLinks;
   id: number;
   wow_accounts: accountProfileWoWAccountData[];
+}
+
+@Reviver<charDataDoc>({
+  '.': Jsonizer.Self.endorse(charDataDoc),
+})
+export class charDataDoc extends dataDoc
+{
+  level?: number;
+  character?: hrefStruct;
+  protected_character?: hrefStruct;
+  account?: number;
+  realm?: realmStruct;
+  playable_class?: refStruct;
+  playable_race?: refStruct;
+  gender?: genderStruct;
+  faction?: factionStruct;
 }
 
 @Reviver<charsDataDoc>({
