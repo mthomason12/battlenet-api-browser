@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IDBPDatabase, openDB } from 'idb';
+import { now } from 'lodash';
 
 interface CachedFile{
   mimetype: string;
   data: string; //base64-encoded data
+  timestamp: number;
 }
 
 @Injectable({
@@ -28,7 +30,7 @@ export class CachedFileService {
   /** Store file in database */
   store(url: string, mimetype: string, data: string)
   {
-    this.db?.put('img', {mimetype: mimetype, data: data}, url);
+    this.db?.put('img', {mimetype: mimetype, data: data, timestamp: now()}, url);
   }
 
   /** Retrieve file from database */
@@ -80,7 +82,8 @@ export class CachedFileService {
               this.store(url, mimetype, data);
               resolve({
                 mimetype: mimetype,
-                data: data
+                data: data,
+                timestamp: now()
               })
             }
           );
