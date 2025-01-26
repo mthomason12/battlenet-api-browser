@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { UserdataService } from '../services/userdata.service';
-import { dataStruct } from '../model/datastructs';
+import { UserdataService } from '../../services/userdata.service';
+import { dataStruct } from '../../model/datastructs';
 import { RouterLink } from '@angular/router';
 
 
