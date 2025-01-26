@@ -28,7 +28,8 @@ export const routes: Routes = [
             { path: 'creature-types', component: CreatureTypesComponent},
             { path: 'soulbinds/:id', component: SoulbindComponent},              
             { path: 'soulbinds', component: SoulbindsComponent},    
-            { path: 'test', component: ListDetailHostComponent, data:{list: "wowpublic.achievementData"}},
+            { path: 'test', component: ListDetailHostComponent, data:{list: ["wowpublic","achievementData"]}},
+            { path: 'test/:id', component: ListDetailHostComponent, data:{list: ["wowpublic","achievementData"]}},            
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [

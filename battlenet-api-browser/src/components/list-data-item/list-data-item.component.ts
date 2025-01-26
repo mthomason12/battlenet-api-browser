@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ListDataItemComponent {
   item = input.required<dataDoc>();
+  relative = input<boolean>(false);
 
   itemIsLoaded(): boolean
   {
@@ -20,5 +21,14 @@ export class ListDataItemComponent {
       return (this.item()._parent as dataDocDetailsCollection<any,any>).hasDetailEntry(this.item().id);
     }
     return false;
+  }
+
+  getPath()
+  {
+    if (this.relative()) 
+    {
+      return "./"+this.item().id;
+    }
+    return this.item().path();
   }
 }
