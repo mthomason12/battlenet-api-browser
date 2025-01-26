@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, input, OnInit } from '@angular/core';
 import { CachedFileService } from './cached-file.service';
 
 /**
@@ -19,7 +19,7 @@ export class CachedImageComponent implements OnInit{
 
   imageData?: string;
 
-  constructor(private cacheSvc: CachedFileService) 
+  constructor(private cacheSvc: CachedFileService, private changeRef: ChangeDetectorRef) 
   {
   }
   
@@ -27,6 +27,7 @@ export class CachedImageComponent implements OnInit{
     this.cacheSvc.get(this.src()).then(
       (data)=>{
         this.imageData = "data:"+data.mimetype+";base64,"+data.data;
+        this.changeRef.detectChanges();
       }
     );
   }
