@@ -1,6 +1,6 @@
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { dataDoc, dataDocCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 
 
 interface accountProfileSummaryLinks extends linksStruct

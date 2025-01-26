@@ -1,5 +1,5 @@
 import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection, keyStruct, mediaDataStruct } from './datastructs';
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 //#region Creature Family

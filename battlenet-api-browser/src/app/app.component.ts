@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ApitreeComponent } from "../apitree/apitree.component";
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 import { UserdataService } from '../services/userdata.service';
 import { dataStruct } from '../model/datastructs';
 

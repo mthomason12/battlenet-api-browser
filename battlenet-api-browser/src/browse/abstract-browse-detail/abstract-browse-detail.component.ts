@@ -3,7 +3,7 @@ import { UserdataService } from '../../services/userdata.service';
 import { dataDetailDoc, dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
 import { AbstractBrowseChildComponent } from '../abstract-browse-child/abstract-browse-child.component';
 import { ActivatedRoute } from '@angular/router';
-import { ApiclientService } from '../../apiclient/apiclient.service';
+import { ApiclientService } from '../../services/apiclient.service';
 
 @Component({
   selector: 'app-abstract-browse-detail',

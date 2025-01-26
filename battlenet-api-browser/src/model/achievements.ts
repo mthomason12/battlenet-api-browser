@@ -1,5 +1,5 @@
 import { dataDoc, dataStruct, dataDocCollection, keyStruct, linksStruct, mediaStruct, assetStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
 interface achievementCategory

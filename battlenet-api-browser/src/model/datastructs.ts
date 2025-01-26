@@ -1,5 +1,5 @@
 import { IDBPDatabase } from 'idb';
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';

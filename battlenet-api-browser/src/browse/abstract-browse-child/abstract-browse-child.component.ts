@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { UserdataService } from '../../services/userdata.service';
-import { ApiclientService } from '../../apiclient/apiclient.service';
+import { ApiclientService } from '../../services/apiclient.service';
 import { dataStruct } from '../../model/datastructs';
 import { Subscription } from 'rxjs';
 

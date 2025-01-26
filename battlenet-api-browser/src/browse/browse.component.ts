@@ -5,7 +5,7 @@ import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialog
 import { UserdataService } from '../services/userdata.service';
 import { dataStruct, dataDoc } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
-import { ApiclientService } from '../apiclient/apiclient.service';
+import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { Subscription } from 'rxjs';
