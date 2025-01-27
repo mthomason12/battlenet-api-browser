@@ -37,6 +37,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
 
   protected apiClient: ApiclientService = inject(ApiclientService);
   protected dataChangedSubscription?: Subscription;
+  protected refreshSubscription?: Subscription;
 
   private ref: ChangeDetectorRef
 
@@ -63,13 +64,29 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.dataChangedSubscription?.unsubscribe();
+    this.refreshSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
     this.preinit();
     //catch data reloads
     this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(this.reload());
+    //catch refresh button
+    this.refreshSubscription = this.userData.refreshRequestEmitter.subscribe(this.refresh());
     this.postinit();
+  }
+
+  //called when refresh button is pressed
+  refresh()
+  {
+    if (this.mode == this.Mode.Master)
+    {
+      this.masterList?.reload(this.apiClient);
+    }
+    else
+    {
+      this.detailItem?.reload(this.apiClient);
+    }
   }
 
   reload()
