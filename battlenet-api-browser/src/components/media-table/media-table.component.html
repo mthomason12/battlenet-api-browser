@@ -1,4 +1,4 @@
-@if (dataSource() !== undefined && dataSource().assets !== undefined)
+@if (dataSource() !== undefined && dataSource() !== null && dataSource().assets !== undefined)
 {
 <table mat-table [dataSource]="dataSource().assets!" class="mat-elevation-z8">
     <ng-container matColumnDef="key">
