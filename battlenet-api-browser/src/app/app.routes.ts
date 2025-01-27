@@ -30,6 +30,10 @@ export const routes: Routes = [
             { path: 'creature-types/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","creatureTypesData"], detailComponent: CreatureTypeComponent} },  
 
+            { path: 'mounts', redirectTo: 'mounts/', pathMatch: 'full'}, 
+            { path: 'mounts/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","mountData"]} },                      
+
             { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
             { path: 'realms/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","realmData"], detailComponent: RealmComponent, hideKey: true} },  

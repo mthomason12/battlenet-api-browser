@@ -4,6 +4,7 @@ import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc, soulbindsDataDoc } from './covenants';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
 import { realmsDataDoc } from './realm';
+import { mountsDataDoc } from './mounts';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
@@ -11,6 +12,7 @@ import { realmsDataDoc } from './realm';
   covenantData: covenantsDataDoc,
   creatureFamiliesData: creatureFamiliesDataDoc,
   creatureTypesData: creatureTypesDataDoc,
+  mountData: mountsDataDoc,  
   realmData: realmsDataDoc
 })
 export class publicDataStruct extends topDataStruct
@@ -20,6 +22,7 @@ export class publicDataStruct extends topDataStruct
   soulbindsData: soulbindsDataDoc;
   creatureFamiliesData: creatureFamiliesDataDoc;
   creatureTypesData: creatureTypesDataDoc;
+  mountData: mountsDataDoc;
   realmData: realmsDataDoc;
 
   constructor(parent: dataStruct)
@@ -46,7 +49,9 @@ export class publicDataStruct extends topDataStruct
 
     this.addFolder("Mythic Keystones");
 
-    this.addFolder("Mounts");
+    this.addFolder("Mounts",[
+      this.mountData = this.register(mountsDataDoc)
+    ]);
 
     this.addFolder("Pets");
 
