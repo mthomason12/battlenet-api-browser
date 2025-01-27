@@ -45,7 +45,7 @@ export interface realmIndex
 }
 
 @Reviver<realmDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(realmDataDetailDoc)
+  '.': Jsonizer.Self.assign(realmDataDetailDoc)
 })
 export class realmDataDetailDoc extends dataDetailDoc
 {
@@ -59,9 +59,15 @@ export class realmDataDetailDoc extends dataDetailDoc
   is_tournament?: boolean;
   slug?: string;
 
+  constructor (parent: dataStruct, id: number, name: string)
+  {
+    super(parent, id, name);
+    this.key = 'slug';
+  }
+
   override myPath(): string {
     return this.slug!;
-}  
+  }  
 }
 
 @Reviver<realmDataDoc>({
