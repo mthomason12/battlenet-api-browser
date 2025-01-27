@@ -353,9 +353,16 @@ export abstract class dataDetailDoc extends dataDoc
 export class dataDocCollection<T extends dataDoc> extends dataDoc
 {
   items: T[] = new Array();
+  @jsonIgnore()
   getItems?: Function;
+  @jsonIgnore()
   itemsName: string = "unknown";
+  @jsonIgnore()
   thisType?: Class;
+  @jsonIgnore()
+  key: string = "id"; //set to key to sort by
+  @jsonIgnore()
+  stringKey: boolean = false; //set to true if key is a string 
 
   constructor (parent: dataStruct, name: string)
   {
