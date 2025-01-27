@@ -434,7 +434,7 @@ export class ApiclientService {
 
   getJournalEncounterSearch(params: string): Promise<any> | undefined
   {
-    return this.queryStatic(`/data/wow/search/ournal-encounter?params=${params}`);
+    return this.queryStatic(`/data/wow/search/journal-encounter?params=${params}`);
   }
 
   getJournalInstancesIndex(): Promise<any> | undefined
@@ -453,6 +453,17 @@ export class ApiclientService {
   }
 
   //endregion
+
+
+  //region Media Search API
+
+  getMediaSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/search/media?params=${params}`);
+  } 
+
+  //endregion
+
 
   //#region Account Profile API
 
