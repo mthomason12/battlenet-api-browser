@@ -70,6 +70,7 @@ export class realmDataDetailDoc extends dataDetailDoc
 export class realmDataDoc extends dataDoc
 {
   key?: keyStruct;
+  slug?: string;
 }
 
 @Reviver<realmsDataDoc>({
@@ -88,7 +89,7 @@ export class realmsDataDoc extends dataDocDetailsCollection<realmDataDoc, realmD
     super(parent, "Realms");
     this.icon = "emoji_events";
     this.dbkey = "wow-g-realms";
-    this.thisType = realmDataDoc;
+    this.thisType = realmsDataDoc;
     this.detailsType = realmDataDetailDoc;
     this.itemsName = "realms";
     this.key = "slug";
