@@ -49,7 +49,6 @@ export interface realmIndex
 })
 export class realmDataDetailDoc extends dataDetailDoc
 {
-
   _links?: linksStruct;
   region?: realmRegion;
   connected_realm?: keyStruct;
@@ -59,6 +58,10 @@ export class realmDataDetailDoc extends dataDetailDoc
   type?: realmType;
   is_tournament?: boolean;
   slug?: string;
+
+  override myPath(): string {
+    return this.slug!;
+}  
 }
 
 @Reviver<realmDataDoc>({
@@ -69,8 +72,8 @@ export class realmDataDoc extends dataDoc
   key?: keyStruct;
 }
 
-@Reviver<achievementsDataDoc>({
-  '.': Jsonizer.Self.assign(achievementsDataDoc),
+@Reviver<realmsDataDoc>({
+  '.': Jsonizer.Self.assign(realmsDataDoc),
   items: {
     '*': realmDataDoc
   },
@@ -78,7 +81,7 @@ export class realmDataDoc extends dataDoc
     '*': realmDataDetailDoc
   }
 })
-export class achievementsDataDoc extends dataDocDetailsCollection<realmDataDoc, realmDataDetailDoc>
+export class realmsDataDoc extends dataDocDetailsCollection<realmDataDoc, realmDataDetailDoc>
 {
   constructor (parent: dataStruct)
   {
@@ -88,6 +91,8 @@ export class achievementsDataDoc extends dataDocDetailsCollection<realmDataDoc, 
     this.thisType = realmDataDoc;
     this.detailsType = realmDataDetailDoc;
     this.itemsName = "realms";
+    this.key = "slug";
+    this.stringKey = true;
 }
 
   override getItems = function(apiClient: ApiclientService): Promise<realmIndex>
