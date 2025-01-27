@@ -325,7 +325,13 @@ export abstract class dataDoc extends dataStruct
 export abstract class dataDetailDoc extends dataDoc
 {
   @jsonIgnore()
-  key: string = 'id';
+  key: string;
+
+  constructor (parent: dataStruct, id: number, name: string)
+  {
+    super(parent, id, name);
+    this.key = 'id';
+  }
 
   override myPath(): string {
     return (this as any)[this.key].toString();
@@ -487,7 +493,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   addDetailEntry(entry: T2): T2
   {
-    var oldEntry = this.getDetailEntry(entry.id);
+    var oldEntry = this.getDetailEntry((entry as any)[this.key]);
     if (oldEntry === undefined)
     {
       this.details.push(entry);
