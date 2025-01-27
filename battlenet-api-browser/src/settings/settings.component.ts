@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { settingsStruct } from '../model/userdata';
 
 @Component({
   selector: 'app-settings',
@@ -17,27 +18,27 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class SettingsComponent {
   clientId: string;
   clientSecret: string;
-  autoConnect: boolean;
+  settings: settingsStruct = new settingsStruct()
 
   constructor(private userdata: UserdataService)
   {
     this.clientId = this.userdata.data.key.clientID;
     this.clientSecret = this.userdata.data.key.clientSecret;
-    this.autoConnect = this.userdata.data.settings.autoConnect;
+    this.settings = this.userdata.data.settings;
   }
 
   reset()
   {
     this.clientId = this.userdata.data.key.clientID;
     this.clientSecret = this.userdata.data.key.clientSecret;
-    this.autoConnect = this.userdata.data.settings.autoConnect;
+    this.settings = this.userdata.data.settings;
   }
 
   save()
   {
     this.userdata.data.key.clientID = this.clientId;
     this.userdata.data.key.clientSecret = this.clientSecret;
-    this.userdata.data.settings.autoConnect = this.autoConnect;
+    this.userdata.data.settings = this.settings;
     this.userdata.save();
   }
 }

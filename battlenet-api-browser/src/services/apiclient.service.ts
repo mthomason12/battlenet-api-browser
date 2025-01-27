@@ -4,7 +4,7 @@ import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { UserdataService } from './userdata.service';
-import { inject } from '@angular/core';
+import { EventEmitter, inject } from '@angular/core';
 import { realmData, realmIndex } from '../model/realm';
 
 
@@ -26,16 +26,21 @@ export class ApiclientService {
   locale: string = "en_US";
 
   private _loggedIn = false;
+  private _loggingIn = false;
   
   private _connected: boolean = false;
 
   public userManager: UserManager;
   private data: UserdataService;
+  private router: Router;
+
+  public connectedEvent = new EventEmitter<void>();
   //private httpClient: HttpClient;
 
   constructor ()
   {   
     this.data = inject(UserdataService);
+    this.router = inject(Router);
     //this.httpClient = inject(HttpClient);
     this.clientID = this.data.data.key.clientID;
     this.clientSecret = this.data.data.key.clientSecret;
@@ -49,11 +54,13 @@ export class ApiclientService {
     //Log.setLevel(Log.DEBUG);
     this.userManager = new UserManager(this.getClientSettings());
 
+    this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
+
     //auto-connect if appropriate
-    if (this.data.data.settings.autoConnect) 
+    if (!this._loggingIn && this.data.data.settings.autoConnect) 
     {
       this.connect();
-    }
+    }    
   }
 
   getClientSettings(): UserManagerSettings
@@ -80,13 +87,15 @@ export class ApiclientService {
     //get an access token
     this.blizzapi.getAccessToken().then((token)=>{
       this.accessToken = token;
-      this._connected = true;         
+      this._connected = true;  
+      this.connectedEvent.emit();       
     });
   }
 
-  async authenticate(router: Router)
+  async authenticate()
   {   
-    sessionStorage.setItem('page_before_login', router.url);
+    sessionStorage.setItem('page_before_login', this.router.url);
+    sessionStorage.setItem('is_logging_in', "1");
     return this.signinRedirect();
   }
 
@@ -111,6 +120,8 @@ export class ApiclientService {
             accessToken: this.userAccessToken
           });  
           this._loggedIn = true;
+          this._loggingIn = false;
+          sessionStorage.removeItem('is_logging_in');
           this._connected = true;
           router.navigate([storedURL]);
         });
@@ -126,6 +137,11 @@ export class ApiclientService {
   isLoggedIn(): boolean
   {
     return this._loggedIn;
+  }
+
+  isLoggingIn(): boolean
+  {
+    return this._loggingIn;
   }
 
   //#region Base queries

@@ -71,6 +71,7 @@ export class appKeyStruct
 export class settingsStruct
 {
   autoConnect: boolean = false;
+  autoLogin: boolean = false;
 }
 
 /**

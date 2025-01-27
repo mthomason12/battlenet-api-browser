@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { ApitreeComponent } from "../components/apitree/apitree.component";
 import { ApiclientService } from '../services/apiclient.service';
 import { UserdataService } from '../services/userdata.service';
 import { dataStruct } from '../model/datastructs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ import { dataStruct } from '../model/datastructs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   title = 'battlenet-api-browser';
   apiClient!: ApiclientService;
   treedata: dataStruct | undefined;
@@ -27,6 +28,8 @@ export class AppComponent implements OnDestroy {
   protected readonly isMobile = signal(true);
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
+
+  private connectSubscription?: Subscription;
 
   constructor(private apiCli: ApiclientService, protected data: UserdataService, private router: Router)
   {
@@ -41,7 +44,20 @@ export class AppComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
+    this.connectSubscription?.unsubscribe();
   }  
+
+  ngOnInit(): void {
+    this.connectSubscription = this.apiCli.connectedEvent.subscribe(()=>{
+      if (this.data.data.settings.autoLogin)
+      {
+        if (!this.apiCli.isLoggingIn())
+        {
+          this.apiCli.authenticate();
+        }
+      }
+    }); 
+  }
 
   connect()
   { 
@@ -50,7 +66,7 @@ export class AppComponent implements OnDestroy {
 
   bnetLogin()
   {  
-    this.apiCli.authenticate(this.router );
+    this.apiCli.authenticate();
   }
 
   debug()
