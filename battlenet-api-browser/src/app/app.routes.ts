@@ -32,7 +32,7 @@ export const routes: Routes = [
 
             { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
             { path: 'realms/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","realmData"], detailComponent: RealmComponent} },  
+                data:{list: ["wowpublic","realmData"], detailComponent: RealmComponent, hideKey: true} },  
 
             { path: 'soulbinds', redirectTo: 'soulbinds/', pathMatch: 'full'},   
             { path: 'soulbinds/:id', component: ListDetailHostComponent, 

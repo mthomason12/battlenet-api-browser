@@ -16,9 +16,10 @@ enum ListDetailHostComponentMode
 
 interface ListDetailHostComponentData
 {
-  list: string[], 
-  listComponent?: Type<any>, 
-  detailComponent?: Type<any>
+  list: string[], //path to the list under userData.data.apiData
+  listComponent?: Type<any>, //optional component to use in place of list
+  detailComponent?: Type<any> //optional component to use in place of detail
+  hideKey?: Boolean //option to hide key value from list
 }
 
 @Component({
