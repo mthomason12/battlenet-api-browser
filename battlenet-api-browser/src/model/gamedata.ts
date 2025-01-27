@@ -30,6 +30,8 @@ export class publicDataStruct extends topDataStruct
 
   journalFolder: dataFolder;
 
+  mountsFolder: dataFolder;
+
   mythicKeystoneFolder: dataFolder;
 
   petFolder: dataFolder;
@@ -74,6 +76,8 @@ export class publicDataStruct extends topDataStruct
     this.journalFolder = new dataFolder(this, "Journal");
 
     this.mythicKeystoneFolder = new dataFolder(this, "Mythic Keystones");
+
+    this.mountsFolder = new dataFolder(this, "Mounts");
 
     this.petFolder = new dataFolder(this, "Pets");
 
