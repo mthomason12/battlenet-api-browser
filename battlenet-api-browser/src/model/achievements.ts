@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, dataDocCollection, keyStruct, linksStruct, mediaStruct, assetStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
+import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
