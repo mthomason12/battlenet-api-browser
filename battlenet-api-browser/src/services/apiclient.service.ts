@@ -410,7 +410,51 @@ export class ApiclientService {
 
   //#endregion
 
-  //region Account Profile API
+  //region Journal API
+
+  getJournalExpansionsIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-expansion/index`);
+  }
+
+  getJournalExpansion(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-expansion/${id}`);
+  }
+
+  getJournalEncountersIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-encounter/index`);
+  }
+
+  getJournalEncounter(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-encounter/${id}`);
+  }
+
+  getJournalEncounterSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/search/ournal-encounter?params=${params}`);
+  }
+
+  getJournalInstancesIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-instance/index`);
+  }
+
+  getJournalInstance(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/journal-instance/${id}`);
+  }
+
+  getJournalInstanceMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/journal-instance/${id}`);
+  }
+
+  //endregion
+
+  //#region Account Profile API
 
   getAccountProfileSummary(): Promise<any> | undefined
   {
