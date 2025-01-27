@@ -1,4 +1,4 @@
-import { dataFolder, dataStruct, topDataStruct } from './datastructs';
+import { dataStruct, topDataStruct } from './datastructs';
 import { charsDataDoc } from './characters';
 
 export class accountDataStruct extends topDataStruct
@@ -9,7 +9,7 @@ export class accountDataStruct extends topDataStruct
   {
     super(parent);
   
-    this.characters = this.register(charsDataDoc)
+    this.characters = this.register(charsDataDoc);
 
     this.icon = "folder";
   }
