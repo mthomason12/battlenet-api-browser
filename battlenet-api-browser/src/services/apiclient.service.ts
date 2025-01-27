@@ -500,9 +500,9 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/realm/index`);
   }
 
-  getRealm(id: number): Promise<any> | undefined
+  getRealm(slug: string): Promise<any> | undefined
   {
-    return this.queryStatic(`/data/wow/realm/${id}`);
+    return this.queryStatic(`/data/wow/realm/${slug}`);
   }
 
   getRealmSearch(params: string): Promise<any> | undefined
