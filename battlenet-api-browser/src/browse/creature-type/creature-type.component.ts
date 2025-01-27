@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { creatureTypeDataDoc, creatureTypeDetailsDoc, creatureTypesDataDoc } from '../../model/creature';
-import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
+import { creatureTypeDetailsDoc } from '../../model/creature';
+import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
 
 @Component({
   selector: 'app-creature-type',
@@ -9,10 +9,5 @@ import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstrac
   styleUrl: './creature-type.component.scss'
 })
 
-export class CreatureTypeComponent extends AbstractBrowseDetailComponent<creatureTypesDataDoc, creatureTypeDataDoc, creatureTypeDetailsDoc>{
-
-  override currentMaster(): creatureTypesDataDoc {
-    return this.data.data.apiData.wowpublic.creatureTypesData;
-  }
-
+export class CreatureTypeComponent extends AbstractDetailComponent<creatureTypeDetailsDoc>{
 }

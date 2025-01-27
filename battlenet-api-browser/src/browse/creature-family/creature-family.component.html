@@ -1,3 +1,3 @@
-<p>Name: {{currentData().name}}</p>
-<p>Specialization: {{currentData().specialization?.name}}</p>
-<app-media-table [dataSource]="currentData().mediaData!" />
+<p>Name: {{data?.name}}</p>
+<p>Specialization: {{data?.specialization?.name}}</p>
+<app-media-table [dataSource]="data?.mediaData!" />
