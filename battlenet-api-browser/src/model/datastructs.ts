@@ -447,12 +447,21 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     this.details.forEach((item)=>{item.fixup(this)});
   }
 
+  checkItemLoaded(apiclient: ApiclientService, key: any)
+  {
+    if (!this.getDetailEntry(key)?.isLoaded() && apiclient.isConnected())
+    {
+      this.reloadItem(apiclient,key);
+    }
+  }
+
   async reloadItem(apiclient: ApiclientService, key: any)
   {
     this.getDetails!(apiclient, key).then (
       (data: any) => {
         var json: string = JSON.stringify(data);
-        this.addDetailEntryFromJson(json, apiclient);
+        var entry = this.addDetailEntryFromJson(json, apiclient);
+        entry.lastupdate = new Date().getTime();
       }
     );
   }

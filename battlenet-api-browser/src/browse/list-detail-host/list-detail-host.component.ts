@@ -85,7 +85,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     }
     else
     {
-      this.detailItem?.reload(this.apiClient);
+      (this.masterList as dataDocDetailsCollection<any,any>).reloadItem(this.apiClient, this.id)
     }
   }
 
@@ -140,7 +140,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     if (this.id !== undefined)   
     {
       this.detailInputs = { 'data': this.detailItem! };
-      this.detailItem!.checkLoaded(this.apiClient);
+      (this.masterList as dataDocDetailsCollection<any,any>).checkItemLoaded(this.apiClient, this.id);
     }
     this.ref.detectChanges();    
   }
