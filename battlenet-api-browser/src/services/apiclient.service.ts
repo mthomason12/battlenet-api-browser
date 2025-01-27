@@ -491,6 +491,27 @@ export class ApiclientService {
 
   //endregion
 
+  //todo - lots missing here
+
+  //region Realm API
+
+  getRealmIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/realm/index`);
+  }
+
+  getRealm(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/realm/${id}`);
+  }
+
+  getRealmSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/search/realm?params=${params}`);
+  }
+
+  //endregion
+
   //#region Account Profile API
 
   getAccountProfileSummary(): Promise<any> | undefined
