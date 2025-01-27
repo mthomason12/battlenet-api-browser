@@ -21,7 +21,7 @@ export class ApiclientService {
   userAccessTokenExpires: number = 0;
   userAccessToken: string = "";
   staticNamespace: string = "static-us";
-  dynamicNamespace: string = "dynamic=us";
+  dynamicNamespace: string = "dynamic-us";
   profileNamespace: string = "profile-us";
   locale: string = "en_US";
 
