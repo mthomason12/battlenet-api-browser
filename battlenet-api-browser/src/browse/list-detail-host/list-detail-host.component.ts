@@ -153,7 +153,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     this.mode = ListDetailHostComponentMode.Detail;    
     this.detailInputs = { 'data': this.detailItem! };
     this.detailItem!.checkLoaded(this.apiClient); 
-    window.history.pushState({}, '', this.detailItem!.path()); 
+    window.history.pushState({}, '', this.detailItem?.path()); 
     this.ref.detectChanges();  
   }
 

@@ -336,17 +336,15 @@ export abstract class dataDoc extends dataStruct
 //a numerically-indexed dataDoc designed for use in an array
 export abstract class dataDetailDoc extends dataDoc
 {
-  @jsonIgnore()
-  key: string;
 
   constructor (parent: dataStruct, id: number, name: string)
   {
     super(parent, id, name);
-    this.key = 'id';
   }
 
   override myPath(): string {
-    return (this as any)[this.key].toString();
+    console.dir(this);
+    return (this as any)[(this._parent as any).key];
   }
 
   //override in descendants if there's any additional data to retrieve
@@ -356,7 +354,7 @@ export abstract class dataDetailDoc extends dataDoc
 
   override async reload(apiClient: ApiclientService)
   {
-    (this._parent as any).reloadItem(apiClient, (this as any)[this.key]).then(()=>{
+    (this._parent as any).reloadItem(apiClient, (this as any)[(this._parent as any).key]).then(()=>{
       super.reload(apiClient);
     })
   }

@@ -52,7 +52,7 @@ export interface covenantIndexData
 }
 
 @Reviver<covenantDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(covenantDataDetailDoc)
+  '.': Jsonizer.Self.assign(covenantDataDetailDoc)
 })
 export class covenantDataDetailDoc extends dataDetailDoc
 {  

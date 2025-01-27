@@ -62,7 +62,6 @@ export class realmDataDetailDoc extends dataDetailDoc
   constructor (parent: dataStruct, id: number, name: string)
   {
     super(parent, id, name);
-    this.key = 'slug';
   }
 
   override myPath(): string {
