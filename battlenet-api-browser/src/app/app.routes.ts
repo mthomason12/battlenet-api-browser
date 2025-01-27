@@ -29,10 +29,14 @@ export const routes: Routes = [
             { path: 'creature-types/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","creatureTypesData"], detailComponent: CreatureTypeComponent} },  
 
+            { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
+            { path: 'realms/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","realmData"]} },  
+
             { path: 'soulbinds', redirectTo: 'soulbinds/', pathMatch: 'full'},   
             { path: 'soulbinds/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","soulbindsData"], detailComponent: SoulbindComponent} },  
-                                        
+
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [
