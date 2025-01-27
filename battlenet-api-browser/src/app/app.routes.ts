@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { SettingsComponent } from '../settings/settings.component';
 import { AuthCallbackComponent } from '..//components/auth-callback/auth-callback.component';
 import { BrowseComponent } from '../browse/browse.component';
-import { AchievementsComponent } from '../browse/achievements/achievements.component';
 import { AchievementComponent } from '../browse/achievement/achievement.component';
 import { CovenantsComponent } from '../browse/covenants/covenants.component';
 import { CovenantComponent } from '../browse/covenant/covenant.component';
@@ -20,7 +19,7 @@ export const routes: Routes = [
         { path: 'public', children: [
             { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
             { path: 'achievements/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","achievementData"]} },            
+                data:{list: ["wowpublic","achievementData"], detailComponent: AchievementComponent} },            
             { path: 'covenants/:id', component: CovenantComponent},              
             { path: 'covenants', component: CovenantsComponent},         
             { path: 'creature-families/:id', component: CreatureFamilyComponent}, 
