@@ -376,6 +376,40 @@ export class ApiclientService {
 
   //#endregion  
 
+  //region Item Appearance API
+
+  getItemAppearance(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-appearance/${id}`);
+  }
+
+  getItemAppearanceSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/search/item-appearance?${params}`);
+  }
+
+  getItemAppearanceSetIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-appearance/set/index`);
+  }
+
+  getItemAppearanceSet(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-appearance/set/${id}`);
+  }
+
+  getItemAppearanceSlotIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-appearance/slot/index`);
+  }
+
+  getItemAppearanceSlot(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/item-appearance/slot/${id}`);
+  }
+
+  //#endregion
+
   //region Account Profile API
 
   getAccountProfileSummary(): Promise<any> | undefined
