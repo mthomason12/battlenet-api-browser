@@ -39,7 +39,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
 
   private ref: ChangeDetectorRef
 
-  private id?: number;
+  private id?: number | string;
 
   Mode = ListDetailHostComponentMode;
   protected mode: ListDetailHostComponentMode = ListDetailHostComponentMode.Master;
@@ -88,16 +88,26 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
   {    
     this.id = undefined;
     var idstr = this.route.snapshot.paramMap.get('id');
-    if (idstr !== null)
-    {
-      this.id = Number.parseInt(this.route.snapshot.paramMap.get('id')!); 
-      if (isNaN(this.id)) this.id = undefined;
-    }
-
 
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
     this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
+
+    if (this.masterList!.stringKey)
+    {
+      if (idstr!.length > 0)
+      {
+        this.id = idstr!;
+      }
+    }
+    else
+    {
+      if (idstr !== null)
+      {
+        this.id = Number.parseInt(this.route.snapshot.paramMap.get('id')!); 
+        if (isNaN(this.id)) this.id = undefined;
+      }
+    }
 
     if (this.id === undefined)
     {
@@ -120,7 +130,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     this.ref.detectChanges();    
   }
 
-  itemClicked(id: number)
+  itemClicked(id: any)
   {
     this.id = id;
     console.log(this.id);    

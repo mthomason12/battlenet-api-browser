@@ -15,19 +15,27 @@ export class ListDataItemComponent {
   //the item to display
   item = input.required<dataDoc>();
 
+  //the item key
+  key = input<string>('id');
+
   //Whether to add a skipLocationChange directive
   skipChange = input<boolean>(false);
 
   //Function to call on click
-  clicked = output<number>();
+  clicked = output<string>();
 
   itemIsLoaded(): boolean
   {
     if (this.item()._parent instanceof dataDocDetailsCollection)
     {
-      return (this.item()._parent as dataDocDetailsCollection<any,any>).hasDetailEntry(this.item().id);
+      return (this.item()._parent as dataDocDetailsCollection<any,any>).hasDetailEntry(this.itemKey());
     }
     return false;
+  }
+
+  itemKey(): string
+  {
+    return (this.item() as any)[this.key()];
   }
 
 }
