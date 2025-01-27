@@ -90,8 +90,10 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     var idstr = this.route.snapshot.paramMap.get('id');
     if (idstr !== null)
     {
-      this.id = Number.parseInt(this.route.snapshot.paramMap.get('id')!);  
+      this.id = Number.parseInt(this.route.snapshot.paramMap.get('id')!); 
+      if (isNaN(this.id)) this.id = undefined;
     }
+
 
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
