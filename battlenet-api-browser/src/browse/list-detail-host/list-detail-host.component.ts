@@ -67,11 +67,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.preinit();
-    this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(
-      ()=>{
-        this.reload();
-      }
-    );
+    //catch data reloads
+    this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(this.reload());
     this.postinit();
   }
 
