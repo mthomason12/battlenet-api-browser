@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component} from '@angular/core';
 import { achievementDataDetailDoc } from '../../model/achievements';
 import { MediaTableComponent } from "../../components/media-table/media-table.component";
 import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';

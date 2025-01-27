@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { soulbindDataDetailDoc } from '../../model/covenants';
 import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
 
