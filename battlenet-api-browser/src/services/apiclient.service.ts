@@ -472,6 +472,25 @@ export class ApiclientService {
   //endregion
 
 
+  //region Mount API
+
+  getMountIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/mount/index`);
+  }
+
+  getMount(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/mount/${id}`);
+  }
+
+  getMountSearch(params: string): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/search/mount?params=${params}`);
+  }
+
+  //endregion
+
   //#region Account Profile API
 
   getAccountProfileSummary(): Promise<any> | undefined
