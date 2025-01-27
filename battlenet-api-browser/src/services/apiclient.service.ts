@@ -89,6 +89,7 @@ export class ApiclientService {
     this.blizzapi.getAccessToken().then((token)=>{
       this.accessToken = token;
       this._connected = true;  
+      sessionStorage.removeItem('is_logging_in');
       this.connectedEvent.emit();       
     });
   }
