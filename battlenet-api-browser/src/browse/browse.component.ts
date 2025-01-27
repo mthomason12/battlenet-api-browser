@@ -55,7 +55,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   {
     if (this.data !== undefined)
     {
-      this.data.getCurrent()?.reload(this.apiClient);
+      this.data.refreshRequestEmitter.emit();
     }
   }
 
