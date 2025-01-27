@@ -8,6 +8,7 @@ import { CreatureFamilyComponent } from '../browse/creature-family/creature-fami
 import { CreatureTypeComponent } from '../browse/creature-type/creature-type.component';
 import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
 import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
+import { RealmComponent } from '../browse/realm/realm.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -31,7 +32,7 @@ export const routes: Routes = [
 
             { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
             { path: 'realms/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","realmData"]} },  
+                data:{list: ["wowpublic","realmData"], detailComponent: RealmComponent} },  
 
             { path: 'soulbinds', redirectTo: 'soulbinds/', pathMatch: 'full'},   
             { path: 'soulbinds/:id', component: ListDetailHostComponent, 
