@@ -2,8 +2,8 @@ import { dataStruct, topDataStruct, dataFolder } from './datastructs';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc, soulbindsDataDoc } from './covenants';
-import { IDBPDatabase } from 'idb';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
+import { realmDataDoc } from './realm';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
@@ -44,6 +44,7 @@ export class publicDataStruct extends topDataStruct
   reputationsFolder: dataFolder;
 
   realmsFolder: dataFolder;
+  realmData: realmDataDoc;
 
   talentsFolder: dataFolder;
 
@@ -83,7 +84,9 @@ export class publicDataStruct extends topDataStruct
 
     this.questsFolder = new dataFolder(this, "Quests");
 
-    this.realmsFolder = new dataFolder(this, "Realms");
+    this.realmsFolder = new dataFolder(this, "Realms",[
+      this.realmData = this.register(realmDataDoc)
+    ]);
 
     this.reputationsFolder = new dataFolder(this, "Reputations");
 
