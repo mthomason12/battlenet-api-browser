@@ -5,6 +5,7 @@ import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { UserdataService } from './userdata.service';
 import { inject } from '@angular/core';
+import { realmData, realmIndex } from '../model/realm';
 
 
 /**
@@ -495,12 +496,12 @@ export class ApiclientService {
 
   //region Realm API
 
-  getRealmIndex(): Promise<any> | undefined
+  getRealmIndex(): Promise<realmIndex> | undefined
   {
     return this.queryStatic(`/data/wow/realm/index`);
   }
 
-  getRealm(slug: string): Promise<any> | undefined
+  getRealm(slug: string): Promise<realmData> | undefined
   {
     return this.queryStatic(`/data/wow/realm/${slug}`);
   }
