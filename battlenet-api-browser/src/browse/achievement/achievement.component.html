@@ -1,7 +1,7 @@
-<p>Name: {{data().name}}</p>
-<p>Category: {{data().category?.name}}</p>
-<p>Description: {{data().description}}</p>
-<p>Criteria: {{data().criteria?.description}}</p>
-<p>Points: {{data().points}}</p>
-<p>Is Account Wide: {{data().is_account_wide?.toString()}}</p>
-<app-media-table [dataSource]="data().mediaData!"/>
+<p>Name: {{data?.name}}</p>
+<p>Category: {{data?.category?.name}}</p>
+<p>Description: {{data?.description}}</p>
+<p>Criteria: {{data?.criteria?.description}}</p>
+<p>Points: {{data?.points}}</p>
+<p>Is Account Wide: {{data?.is_account_wide?.toString()}}</p>
+<app-media-table [dataSource]="data?.mediaData!"/>
