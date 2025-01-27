@@ -19,9 +19,12 @@ export class UserdataService {
   /** whether we've finished loading */
   public loaded: boolean = false;
   /** Event triggered when data has finished loading */
-  public dataLoadedEmitter: EventEmitter<boolean> = new EventEmitter();  
+  public dataLoadedEmitter: EventEmitter<void> = new EventEmitter();  
   /** Event triggered when user selection is changed */
-  public dataChangedEmitter: EventEmitter<boolean> = new EventEmitter();
+  public dataChangedEmitter: EventEmitter<void> = new EventEmitter();
+
+  /** Event triggered when refresh button is pressed */
+  public refreshRequestEmitter: EventEmitter<void> = new EventEmitter();
 
   constructor()
   {
@@ -66,7 +69,7 @@ export class UserdataService {
           console.log("Data loaded");
           this.loaded = true;
           //send a notification to any subscribers
-          this.dataLoadedEmitter.emit(true)           
+          this.dataLoadedEmitter.emit()           
         });
       }
     );  
@@ -100,7 +103,7 @@ export class UserdataService {
   setCurrent(data: dataStruct)
   {
     this.currentData = data;
-    this.dataChangedEmitter.emit(true);
+    this.dataChangedEmitter.emit();
   }
 
   /**
