@@ -402,15 +402,16 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   details: T2[] = new Array();
   getDetails?: Function;
   detailsType?: Class;
+  key: string = "id";
 
   override postFixup(): void {
     super.postFixup();
     this.details.forEach((item)=>{item.fixup(this)});
   }
 
-  async reloadItem(apiclient: ApiclientService, id: number)
+  async reloadItem(apiclient: ApiclientService, key: any)
   {
-    this.getDetails!(apiclient, id).then (
+    this.getDetails!(apiclient, key).then (
       (data: any) => {
         var json: string = JSON.stringify(data);
         this.addDetailEntryFromJson(json, apiclient);
@@ -430,35 +431,35 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     return item;
   }
 
-  ensureDetailEntry(apiClient: ApiclientService, id: number): T2 
+  ensureDetailEntry(apiClient: ApiclientService, key: any): T2 
   {
-    var entry = this.getDetailEntry(id)
+    var entry = this.getDetailEntry(key)
     if ( entry == undefined)
     {
-      var json = JSON.stringify({id:id});       
+      var json = JSON.stringify({id:key});       
       entry = this.addDetailEntryFromJson(json, apiClient);
     }
     return entry;
   }
 
-  getDetailEntry(id: number): T2 | undefined
+  getDetailEntry(key: any): T2 | undefined
   {
     return this.details.find(
       (data, index, array)=>{
-        return id == data.id;
+        return key == (data as any)[this.key];
       }
     )
   }
 
-  hasDetailEntry(id: number): boolean
+  hasDetailEntry(key: any): boolean
   {
-    return this.getDetailEntry(id) !== undefined;
+    return this.getDetailEntry(key) !== undefined;
   }
 
-  removeDetailEntry(id: number): void
+  removeDetailEntry(key: any): void
   {
     this.details.forEach( (item, index) => {
-      if (item.id === id) this.details.splice(index,1);
+      if ((item as any)[this.key] === key) this.details.splice(index,1);
     });
   }
 
@@ -483,7 +484,8 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 
   sortDetails(): void
   {
-    this.details = this.details.sort(function(a:any, b:any){return a.id - b.id});    
+    var key = this.key;
+    this.details = this.details.sort(function(a:any, b:any){return a[key] - b[key]});    
   }
 
 }
