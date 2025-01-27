@@ -93,7 +93,7 @@ export class realmsDataDoc extends dataDocDetailsCollection<realmDataDoc, realmD
   constructor (parent: dataStruct)
   {
     super(parent, "Realms");
-    this.icon = "emoji_events";
+    this.icon = "language";
     this.dbkey = "wow-g-realms";
     this.thisType = realmsDataDoc;
     this.detailsType = realmDataDetailDoc;
