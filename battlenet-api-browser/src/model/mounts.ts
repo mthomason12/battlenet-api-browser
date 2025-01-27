@@ -82,7 +82,7 @@ export class mountsDataDoc extends dataDocDetailsCollection<mountDataDoc, mountD
   constructor (parent: dataStruct)
   {
     super(parent, "Mounts");
-    this.icon = "emoji_events";
+    this.icon = "bedroom_baby";
     this.dbkey = "wow-g-mounts";
     this.thisType = mountsDataDoc;
     this.detailsType = mountDataDetailDoc;
