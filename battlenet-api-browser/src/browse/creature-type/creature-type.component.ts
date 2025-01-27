@@ -6,7 +6,8 @@ import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abs
   selector: 'app-creature-type',
   imports: [],
   templateUrl: './creature-type.component.html',
-  styleUrl: './creature-type.component.scss'
+  styleUrl: './creature-type.component.scss',
+  inputs: ['data']
 })
 
 export class CreatureTypeComponent extends AbstractDetailComponent<creatureTypeDetailsDoc>{
