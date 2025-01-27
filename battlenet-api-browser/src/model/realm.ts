@@ -41,7 +41,7 @@ interface realmIndexEntry
 export interface realmIndex
 {
   _links: linksStruct;
-  realms: realmIndexEntry;
+  realms: realmIndexEntry[];
 }
 
 @Reviver<realmDataDetailDoc>({

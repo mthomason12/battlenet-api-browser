@@ -5,6 +5,7 @@ import { covenantsDataDoc, soulbindsDataDoc } from './covenants';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
 import { realmsDataDoc } from './realm';
 import { mountsDataDoc } from './mounts';
+import { connectedRealmsDataDoc } from './connectedrealm';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
@@ -24,6 +25,7 @@ export class publicDataStruct extends topDataStruct
   creatureTypesData: creatureTypesDataDoc;
   mountData: mountsDataDoc;
   realmData: realmsDataDoc;
+  connectedRealmData: connectedRealmsDataDoc;
 
   constructor(parent: dataStruct)
   {
@@ -64,7 +66,8 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Quests");
 
     this.addFolder("Realms",[
-      this.realmData = this.register(realmsDataDoc)
+      this.realmData = this.register(realmsDataDoc),
+      this.connectedRealmData = this.register(connectedRealmsDataDoc)
     ]);
 
     this.addFolder("Reputations");
