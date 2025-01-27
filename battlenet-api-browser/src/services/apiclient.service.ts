@@ -139,6 +139,11 @@ export class ApiclientService {
     return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params, options);
   }  
 
+  queryDynamic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
+  {
+    return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params, options);
+  }  
+
   queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T> | undefined
   {
     return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
@@ -498,17 +503,17 @@ export class ApiclientService {
 
   getRealmIndex(): Promise<realmIndex> | undefined
   {
-    return this.queryStatic(`/data/wow/realm/index`);
+    return this.queryDynamic(`/data/wow/realm/index`);
   }
 
   getRealm(slug: string): Promise<realmData> | undefined
   {
-    return this.queryStatic(`/data/wow/realm/${slug}`);
+    return this.queryDynamic(`/data/wow/realm/${slug}`);
   }
 
   getRealmSearch(params: string): Promise<any> | undefined
   {
-    return this.queryStatic(`/data/wow/search/realm?params=${params}`);
+    return this.queryDynamic(`/data/wow/search/realm?params=${params}`);
   }
 
   //endregion
