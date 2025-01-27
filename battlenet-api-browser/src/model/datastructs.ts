@@ -371,7 +371,17 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 
   override doPostProcess(): void
   {
-    this.items = this.items.sort(function(a:any, b:any){return a.id - b.id});    
+    var key = this.key;
+    if (this.stringKey) 
+    {
+      this.items = this.items.sort(function(a:any, b:any){
+        return ('' + a[key]).localeCompare(b[key]);
+      });  
+    }
+    else
+    {
+      this.items = this.items.sort(function(a:any, b:any){return a[key] - b[key]});  
+    }      
   }
 
   override async reload(apiclient: ApiclientService)
@@ -389,12 +399,13 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   }
 
   override postFixup(): void {
+    console.dir(this.items);
     this.items.forEach((item)=>{item.fixup(this)});
   }
 
   override myPath(): string {
     return this.itemsName.replaceAll('_','-');
-}
+  }
 }
 
 //#endregion
@@ -409,8 +420,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   details: T2[] = new Array();
   getDetails?: Function;
   detailsType?: Class;
-  key: string = "id"; //set to key to sort by
-  stringKey: boolean = false; //set to true if key is a string 
+
 
   override postFixup(): void {
     super.postFixup();
