@@ -152,15 +152,6 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
   {
   }
 
-  getMasterComponent()
-  {
-    //todo
-  }
-
-  getDetailComponent()
-  {
-    //todo
-  }
 
 
 }
