@@ -153,12 +153,24 @@ export abstract class topDataStruct extends dataStruct
 {
   data: {ref: dataDoc, type: any}[] = Array();
 
+  folders: dataFolder[] = Array();
+
   register<T extends dataDoc>(typeref: { new(...args : any[]):T}): T
   {
     var struct = {ref: new typeref(this), type:typeref};
     this.data.push(struct);
     return struct.ref;
   }
+
+  addFolder(name: string, members: dataStruct[] = [], icon: string = 'folder')
+  {
+    this.folders.push(new dataFolder(this, name, members, icon));
+  }
+
+  override children(): dataStruct[]
+  {
+    return super.children().concat(this.folders);
+  }   
 
   /**
    * Attempt to merge data from database into specified data structure

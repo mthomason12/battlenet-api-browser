@@ -15,87 +15,56 @@ import { realmsDataDoc } from './realm';
 })
 export class publicDataStruct extends topDataStruct
 {
-  achievementFolder: dataFolder;
   achievementData: achievementsDataDoc;
-
-  covenantsFolder: dataFolder;
   covenantData: covenantsDataDoc;
   soulbindsData: soulbindsDataDoc;
-
-  creaturesFolder: dataFolder;
   creatureFamiliesData: creatureFamiliesDataDoc;
   creatureTypesData: creatureTypesDataDoc;
-
-  itemsFolder: dataFolder;
-
-  journalFolder: dataFolder;
-
-  mountsFolder: dataFolder;
-
-  mythicKeystoneFolder: dataFolder;
-
-  petFolder: dataFolder;
-
-  playableClassFolder: dataFolder;
-
-  pvpFolder: dataFolder;
-
-  professionsFolder: dataFolder;
-
-  questsFolder: dataFolder;
-
-  reputationsFolder: dataFolder;
-
-  realmsFolder: dataFolder;
   realmData: realmsDataDoc;
-
-  talentsFolder: dataFolder;
 
   constructor(parent: dataStruct)
   {
     super(parent);
-    this.achievementData = this.register(achievementsDataDoc);
-    this.achievementFolder = new dataFolder(this, "Achievements",[
-      this.achievementData
+ 
+    this.addFolder("Achievements",[
+      this.achievementData = this.register(achievementsDataDoc)
     ]);
 
-    this.covenantData = this.register(covenantsDataDoc);
-    this.soulbindsData = this.register(soulbindsDataDoc);
-    this.covenantsFolder = new dataFolder(this, "Covenants", [
-      this.covenantData,
-      this.soulbindsData
+    this.addFolder("Covenants", [
+      this.covenantData = this.register(covenantsDataDoc),
+      this.soulbindsData = this.register(soulbindsDataDoc)
     ]);
 
-    this.creaturesFolder = new dataFolder(this, "Creatures",[
+    this.addFolder("Creatures",[
       this.creatureFamiliesData = this.register(creatureFamiliesDataDoc),
       this.creatureTypesData = this.register(creatureTypesDataDoc)
     ] );
 
-    this.itemsFolder = new dataFolder(this, "Items");
+    this.addFolder("Items");
 
-    this.journalFolder = new dataFolder(this, "Journal");
+    this.addFolder("Journal");
 
-    this.mythicKeystoneFolder = new dataFolder(this, "Mythic Keystones");
+    this.addFolder("Mythic Keystones");
 
-    this.mountsFolder = new dataFolder(this, "Mounts");
+    this.addFolder("Mounts");
 
-    this.petFolder = new dataFolder(this, "Pets");
+    this.addFolder("Pets");
 
-    this.playableClassFolder = new dataFolder(this, "Playable Classes");
+    this.addFolder("Playable Classes");
 
-    this.professionsFolder = new dataFolder(this, "Professions");
+    this.addFolder("Professions");
 
-    this.pvpFolder = new dataFolder(this, "PvP");
+    this.addFolder("PvP");
 
-    this.questsFolder = new dataFolder(this, "Quests");
+    this.addFolder("Quests");
 
-    this.realmsFolder = new dataFolder(this, "Realms",[
+    this.addFolder("Realms",[
       this.realmData = this.register(realmsDataDoc)
     ]);
 
-    this.reputationsFolder = new dataFolder(this, "Reputations");
+    this.addFolder("Reputations");
 
-    this.talentsFolder = new dataFolder(this, "Talents");
+    this.addFolder("Talents");
 
     this.icon = "folder";
   }
@@ -104,26 +73,6 @@ export class publicDataStruct extends topDataStruct
   {
     return "Game Data";
   }
-
-  override children(): dataStruct[]
-  {
-    return super.children().concat([
-      this.achievementFolder, 
-      this.covenantsFolder, 
-      this.creaturesFolder,
-      this.itemsFolder,
-      this.journalFolder,
-      this.mythicKeystoneFolder, 
-      this.petFolder,
-      this.playableClassFolder,
-      this.professionsFolder,
-      this.pvpFolder,
-      this.questsFolder,
-      this.reputationsFolder,
-      this.realmsFolder,
-      this.talentsFolder
-    ]);
-  } 
 
   override myPath(): string {
       return "public";
