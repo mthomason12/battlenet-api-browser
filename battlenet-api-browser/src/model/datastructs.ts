@@ -402,7 +402,8 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   details: T2[] = new Array();
   getDetails?: Function;
   detailsType?: Class;
-  key: string = "id";
+  key: string = "id"; //set to key to sort by
+  stringKey: boolean = false; //set to true if key is a string 
 
   override postFixup(): void {
     super.postFixup();
@@ -436,7 +437,9 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     var entry = this.getDetailEntry(key)
     if ( entry == undefined)
     {
-      var json = JSON.stringify({id:key});       
+      var json = JSON.stringify(
+        {[this.key]:key}
+      );       
       entry = this.addDetailEntryFromJson(json, apiClient);
     }
     return entry;
@@ -485,7 +488,16 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   sortDetails(): void
   {
     var key = this.key;
-    this.details = this.details.sort(function(a:any, b:any){return a[key] - b[key]});    
+    if (this.stringKey) 
+    {
+      this.details = this.details.sort(function(a:any, b:any){
+        return ('' + a[key]).localeCompare(b[key]);
+      });  
+    }
+    else
+    {
+      this.details = this.details.sort(function(a:any, b:any){return a[key] - b[key]});  
+    }  
   }
 
 }
