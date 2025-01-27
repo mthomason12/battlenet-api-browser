@@ -6,6 +6,7 @@ import { creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { UserdataService } from './userdata.service';
 import { EventEmitter, inject } from '@angular/core';
 import { realmData, realmIndex } from '../model/realm';
+import { mountData, mountsIndex } from '../model/mounts';
 
 
 /**
@@ -502,12 +503,12 @@ export class ApiclientService {
 
   //region Mount API
 
-  getMountIndex(): Promise<any> | undefined
+  getMountIndex(): Promise<mountsIndex> | undefined
   {
     return this.queryStatic(`/data/wow/mount/index`);
   }
 
-  getMount(id: number): Promise<any> | undefined
+  getMount(id: number): Promise<mountData> | undefined
   {
     return this.queryStatic(`/data/wow/mount/${id}`);
   }
