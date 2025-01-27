@@ -1,12 +1,12 @@
-<p>Name: {{currentData().name}}</p>
-<p>Description: {{currentData().description}}</p>
+<p>Name: {{data().name}}</p>
+<p>Description: {{data().description}}</p>
 <mat-tab-group>
     <mat-tab label="Signature Ability">  
-        <p>{{currentData().signature_ability?.spell_tooltip?.spell?.name}}</p>
-        <p>{{currentData().signature_ability?.spell_tooltip?.description}}</p>
+        <p>{{data().signature_ability?.spell_tooltip?.spell?.name}}</p>
+        <p>{{data().signature_ability?.spell_tooltip?.description}}</p>
     </mat-tab>
     <mat-tab label="Class Abilities"> 
-        <table mat-table [dataSource]="currentData().class_abilities!" class="mat-elevation-z8">
+        <table mat-table [dataSource]="data().class_abilities!" class="mat-elevation-z8">
             <ng-container matColumnDef="class">
                 <th mat-header-cell *matHeaderCellDef> Class </th>
                 <td mat-cell *matCellDef="let item"> {{item.playable_class.name}} </td>
@@ -21,13 +21,13 @@
     </mat-tab>
     <mat-tab label="Soulbinds">
         <mat-list role="list">
-            @for (item of currentData().soulbinds; track $index) {
+            @for (item of data().soulbinds; track $index) {
                 <mat-list-item role="listitem"><a mat-button [routerLink]="'../../soulbinds/'+item.id">{{item.name}}</a></mat-list-item>
             }
         </mat-list>
     </mat-tab>
     <mat-tab label="Renown Rewards">
-        <table mat-table [dataSource]="currentData().renown_rewards!" class="mat-elevation-z8">
+        <table mat-table [dataSource]="data().renown_rewards!" class="mat-elevation-z8">
             <ng-container matColumnDef="level">
                 <th mat-header-cell *matHeaderCellDef> Level </th>
                 <td mat-cell *matCellDef="let item"> {{item.level}} </td>
@@ -41,6 +41,6 @@
         </table>
     </mat-tab>
     <mat-tab label="Media">
-        <app-media-table [dataSource]="currentData().mediadata!"/>
+        <app-media-table [dataSource]="data().mediadata!"/>
     </mat-tab>
 </mat-tab-group>

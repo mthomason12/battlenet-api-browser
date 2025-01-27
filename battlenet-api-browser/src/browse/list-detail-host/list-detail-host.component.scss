@@ -9,3 +9,12 @@ div.hidden{
 cdk-virtual-scroll-viewport {
     height:100%;
 }
+
+li {
+    padding-bottom: 2pt;
+    list-style-type: none;
+}
+
+li a {
+    height: 36px;
+}

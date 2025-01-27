@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { soulbindDataDetailDoc, soulbindDataDoc, soulbindsDataDoc } from '../../model/covenants';
-import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstract-browse-detail.component';
+import { Component, input } from '@angular/core';
+import { soulbindDataDetailDoc } from '../../model/covenants';
 
 @Component({
   selector: 'app-soulbind',
@@ -10,9 +9,6 @@ import { AbstractBrowseDetailComponent } from '../abstract-browse-detail/abstrac
 })
 
 
-export class SoulbindComponent  extends AbstractBrowseDetailComponent<soulbindsDataDoc, soulbindDataDoc, soulbindDataDetailDoc>{
-
-  override currentMaster(): soulbindsDataDoc {
-    return this.data.data.apiData.wowpublic.soulbindsData;
-  }
+export class SoulbindComponent {
+  data = input.required<soulbindDataDetailDoc>()
 }
