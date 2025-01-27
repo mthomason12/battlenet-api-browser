@@ -22,15 +22,13 @@ import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.compone
 })
 export class BrowseComponent implements OnInit, OnDestroy {
 
-  apiCli?: ApiclientService;
   navigationEndSubscription?: Subscription;
   dataChangedSubscription?: Subscription;
 
   readonly dialog = inject(MatDialog);
 
-  constructor(private apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
-  {
-    this.apiCli = apiClient;  
+  constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
+  { 
   }
 
   ngOnInit(): void {

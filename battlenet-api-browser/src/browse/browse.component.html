@@ -24,7 +24,7 @@
       <mat-card-actions>
         @if(currentData()?.hasData()) 
         {
-          @if(apiCli?.isConnected())
+          @if(apiClient.isConnected())
           {
               <button mat-raised-button (click)="reload()">Reload</button>
           }
