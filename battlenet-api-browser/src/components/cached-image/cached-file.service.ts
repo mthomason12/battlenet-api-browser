@@ -22,9 +22,10 @@ export class CachedFileService {
 
   httpClient: HttpClient = inject(HttpClient);
   db?: IDBPDatabase<unknown>;
+  waiting: Promise<void | IDBPDatabase>;
 
   constructor() { 
-    openDB('imgcache',2, {
+    this.waiting = openDB('imgcache',2, {
       upgrade(db, oldVersion, newVersion, tx) {
         if (!db.objectStoreNames.contains('img'))
         {
@@ -50,23 +51,25 @@ export class CachedFileService {
   retrieve(url: string): Promise<CachedFile | undefined>
   {
     var result = new Promise<CachedFile | undefined>((resolve,reject)=>{
-      this.db?.get('img', url).then(
-        (value)=>{
-          if (value !== undefined)
-          {
-            resolve (value);
+      this.waiting.then(()=>{
+        this.db?.get('img', url).then(
+          (value)=>{
+            if (value !== undefined)
+            {
+              resolve (value);
+            }
+            else
+            {
+              resolve (undefined);
+            }
           }
-          else
-          {
-            resolve (undefined);
-          }
-        }
-      );
-      // a pre-encoded red dot
-      /*resolve({
-        mimetype: 'image/jpeg',
-        data: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
-      });*/
+        );
+          // a pre-encoded red dot
+          /*resolve({
+          mimetype: 'image/jpeg',
+          data: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
+          });*/
+      });
     });
     return result;
   }
