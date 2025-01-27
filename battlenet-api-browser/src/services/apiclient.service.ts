@@ -48,6 +48,12 @@ export class ApiclientService {
     //Log.setLogger(console);
     //Log.setLevel(Log.DEBUG);
     this.userManager = new UserManager(this.getClientSettings());
+
+    //auto-connect if appropriate
+    if (this.data.data.settings.autoConnect) 
+    {
+      this.connect();
+    }
   }
 
   getClientSettings(): UserManagerSettings

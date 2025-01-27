@@ -9,6 +9,7 @@
     <mat-label>Client Secret</mat-label>
     <input matInput type="text" title="Client Secret" [(ngModel)]="clientSecret" />
 </mat-form-field>
+<mat-checkbox [(ngModel)]="autoConnect">Automatically connect on startup</mat-checkbox>
 </div>
 <button mat-raised-button (click)="reset()">Reset</button>
 <button mat-raised-button (click)="save()">Save</button>

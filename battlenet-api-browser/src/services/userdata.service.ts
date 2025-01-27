@@ -2,10 +2,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
-import { userDataStruct } from '../model/userdata';
+import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 
 
 const dataItem: string = 'battlenet-api-data';
+const settingsItem: string = 'battlenet-api-settings';
 
 @Injectable({  providedIn: 'root',})
 /**
@@ -28,28 +29,42 @@ export class UserdataService {
 
   constructor()
   {
-    var loadList: Promise<any>[] = new Array();
-
+    var loadList: Promise<any>[] = new Array();  
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
-    console.log("Loading application key");
-    //load app keys first from LocalStorage
     try
     {
-      var json = JSON.parse(localStorage.getItem(dataItem)!);
+      console.log("Loading settings");
+      //load app keys first from LocalStorage      
+      var json = JSON.parse(localStorage.getItem(settingsItem)!);
       if (json === null) 
       {
         throw new Error("No data");
-      }
-      //console.log("Incoming Data: "+JSON.stringify(json));  
-      this.data.key = _.merge(this.data.key, json)  
-      //this.data = Object.assign(new userDataStruct(), json);
+      } 
+      this.data.key = _.merge(this.data.settings, json)
+    }   
+    catch
+    {
+      //initialize with blank data if corrupt or missing
+      console.log("Settings are corrupt or missing. Reinitializing with empty data.")   
+      this.data.settings = new settingsStruct();        
+    }     
+    try
+    {         
+      console.log("Loading application key");
+      //load app keys first from LocalStorage      
+      json = JSON.parse(localStorage.getItem(dataItem)!);
+      if (json === null) 
+      {
+        throw new Error("No data");
+      } 
+      this.data.key = _.merge(this.data.key, json)       
     }
     catch
     {
       //initialize with blank data if corrupt or missing
       console.log("User data is corrupt or missing. Reinitializing with empty data.")   
-      this.data = new userDataStruct();   
+      this.data.key = new appKeyStruct();         
     }
     //load saved api data from IndexedDB
     console.log("Loading stored api data");
@@ -72,13 +87,14 @@ export class UserdataService {
           this.dataLoadedEmitter.emit()           
         });
       }
-    );  
+    ); 
   }
 
 
   save()
   {
     localStorage.setItem(dataItem, JSON.stringify(this.data.key));
+    localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
     //save to indexedDB
     const db = openDB('data',1).then(
       db => {

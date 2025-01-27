@@ -62,10 +62,15 @@ export class apiDataStruct extends dataStruct
 /**
  * Data for application API access - Client ID and Secret 
  */
-class appKeyStruct
+export class appKeyStruct
 {
   clientID: string = "";
   clientSecret: string = "";
+}
+
+export class settingsStruct
+{
+  autoConnect: boolean = false;
 }
 
 /**
@@ -74,5 +79,6 @@ class appKeyStruct
 export class userDataStruct
 {
   key: appKeyStruct = new appKeyStruct();
+  settings: settingsStruct = new settingsStruct();  
   apiData: apiDataStruct = new apiDataStruct();
 }
