@@ -1,12 +1,13 @@
 # Battle.NET API Browser
 
-SPA client for the Battle.net API, written in Angular.
+[SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
 ## Requirements
 
-### Build 
+### Development and Build
 
-Written with Node v22.12.0, not tested on earlier versions.
+- Node v22.12.0, not tested on earlier versions.  
+
 
 ### Runtime
 
