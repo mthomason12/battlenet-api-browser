@@ -9,6 +9,7 @@ import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, Q
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
+import { mediaDataStruct } from '../model/datastructs';
 
 
 /**
@@ -189,7 +190,7 @@ export class ApiclientService {
     return this.queryStatic<achievementData>(`/data/wow/achievement/${id}`);
   }
 
-  getAchievementMedia(id: number): Promise<any> | undefined
+  getAchievementMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/achievement/${id}`);
   }
