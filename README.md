@@ -2,6 +2,17 @@
 
 SPA client for the Battle.net API, written in Angular.
 
+## Requirements
+
+### Build 
+
+Written with Node v22.12.0, not tested on earlier versions.
+
+### Runtime
+
+Tested on Chrome, Chromium, Firefox, and Edge.  
+Also includes build scripts for a standalone Electron version.
+
 ## Roadmap
 
 - Finish adding API endpoints
@@ -9,4 +20,4 @@ SPA client for the Battle.net API, written in Angular.
 - Option to background queue download of *all* data
 - JSON import/export
 - Search function
-- Hostable proxy to allow use without an API key
+- Hostable proxy to allow use without an API key on every client
