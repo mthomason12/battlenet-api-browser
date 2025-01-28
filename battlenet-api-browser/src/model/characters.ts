@@ -78,19 +78,20 @@ export class charsDataDoc extends dataDocCollection<charDataDoc>
   {
     await this.getItems!(apiclient).then (
       (data: accountProfileSummaryData) => {
-        this.items = new Array();
+        //clear array
+        this.items.length = 0;
         for (let account of data.wow_accounts)
-        {
-          for (let character of account.characters)
           {
-            character.account = account.id;
-            var json = JSON.stringify(character);
-            const reviver = Reviver.get(charDataDoc);
-            this.items.push (JSON.parse(json, reviver));
+            for (let character of account.characters)
+            {
+              character.account = account.id;
+              var json = JSON.stringify(character);
+              const reviver = Reviver.get(charDataDoc);
+              this.items.push (JSON.parse(json, reviver));
+            }
           }
-        }
         this.postFixup();
-        super.reload(apiclient);
+        this.lastupdate = new Date().getTime();
       }
     );
   }
