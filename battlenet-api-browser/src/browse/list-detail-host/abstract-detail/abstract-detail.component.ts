@@ -7,7 +7,7 @@ import { dataDetailDoc } from '../../../model/datastructs';
   templateUrl: './abstract-detail.component.html',
   styleUrl: './abstract-detail.component.scss'
 })
-export class AbstractDetailComponent<T extends dataDetailDoc>
+export abstract class AbstractDetailComponent<T extends dataDetailDoc>
 {
   ref = inject(ChangeDetectorRef);
 
