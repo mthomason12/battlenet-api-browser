@@ -7,7 +7,7 @@ import { dataDoc, dataDocCollection } from '../../../model/datastructs';
   templateUrl: './abstract-master.component.html',
   styleUrl: './abstract-master.component.scss'
 })
-export class AbstractMasterComponent<T extends dataDocCollection<any>> {
+export abstract class AbstractMasterComponent<T extends dataDocCollection<any>> {
   
   ref = inject(ChangeDetectorRef);
 
