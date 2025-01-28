@@ -98,9 +98,8 @@ export class connectedRealmsDataDoc extends dataDocDetailsCollection<connectedRe
     this.dbkey = "wow-g-connected-realms";
     this.thisType = connectedRealmsDataDoc;
     this.detailsType = connectedRealmDataDetailDoc;
-    this.itemsName = "connected-realms";
+    this.itemsName = "connected_realms";
     this.key = "id";
-    this.stringKey = true;
 }
 
   override getItems = function(apiClient: ApiclientService): Promise<connectedRealmIndex>
