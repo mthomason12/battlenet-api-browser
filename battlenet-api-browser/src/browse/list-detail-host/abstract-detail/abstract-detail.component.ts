@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-import { dataDoc } from '../../../model/datastructs';
+import { dataDetailDoc } from '../../../model/datastructs';
 
 @Component({
   selector: 'app-abstract-detail',
@@ -7,7 +7,7 @@ import { dataDoc } from '../../../model/datastructs';
   templateUrl: './abstract-detail.component.html',
   styleUrl: './abstract-detail.component.scss'
 })
-export class AbstractDetailComponent<T extends dataDoc>
+export class AbstractDetailComponent<T extends dataDetailDoc>
 {
   ref = inject(ChangeDetectorRef);
 
