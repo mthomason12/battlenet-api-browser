@@ -8,7 +8,7 @@ import { UserdataService } from './userdata.service';
 import { EventEmitter, inject } from '@angular/core';
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
-import { connectedRealmDataDetailDoc, connectedRealmIndex } from '../model/connectedrealm';
+import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 
 
 /**
@@ -246,7 +246,7 @@ export class ApiclientService {
     return this.queryDynamic('/data/wow/connected-realm/index');
   }  
 
-  getConnectedRealm(id: number): Promise<connectedRealmDataDetailDoc> | undefined
+  getConnectedRealm(id: number): Promise<connectedRealmData> | undefined
   {
     return this.queryDynamic(`/data/wow/connected-realm/${id}`);
   }    
