@@ -14,7 +14,8 @@ import { connectedRealmsDataDoc } from './connectedrealm';
   creatureFamiliesData: creatureFamiliesDataDoc,
   creatureTypesData: creatureTypesDataDoc,
   mountData: mountsDataDoc,  
-  realmData: realmsDataDoc
+  realmData: realmsDataDoc,
+  connectedRealmData: connectedRealmsDataDoc
 })
 export class publicDataStruct extends topDataStruct
 {
