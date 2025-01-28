@@ -131,12 +131,12 @@ export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charData
    */
   override async reloadItem(apiclient: ApiclientService, key: any)
   {
-      var json: string = JSON.stringify(this.items.find(
-        (data, index, array)=>{
-          return key === (data as any)[this.key];
-        }), jsonIgnoreReplacer);
-      var entry = this.addDetailEntryFromJson(json, apiclient);
-      entry.lastupdate = new Date().getTime();
+    var json: string = JSON.stringify(this.items.find(
+      (data, index, array)=>{
+        return key === (data as any)[this.key];
+      }), jsonIgnoreReplacer);
+    var entry = this.addDetailEntryFromJson(json, apiclient);
+    entry.lastupdate = new Date().getTime();
   }
 
 }
