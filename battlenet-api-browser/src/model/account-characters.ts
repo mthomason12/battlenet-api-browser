@@ -1,5 +1,5 @@
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
-import { dataDetailDoc, dataDoc, dataDocCollection, dataDocDetailsCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
+import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnoreReplacer } from 'json-ignore';
 
