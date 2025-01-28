@@ -86,6 +86,11 @@ export class connectedRealmDataDoc extends dataDoc
     var matches = regex.exec(this.href!);
     this.id = Number.parseInt(matches![1]);
   }
+
+  override getName(): string {
+    return "Connected Realm "+this.id;
+  }
+
 }
 
 @Reviver<connectedRealmsDataDoc>({
