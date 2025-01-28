@@ -1,9 +1,20 @@
-div.host{
-    height: 100%;
-}
-
-div.hidden{
-    height: 0 !important;
+// Using z-index ensures master retains its size to ensure the virtual scroller calculates properly
+div.host {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    &.master {
+        z-index:20;
+        &.hidden{
+            z-index:-10;
+        }
+    }
+    &.detail {
+        z-index:10;
+        overflow:auto;
+    }
 }
 
 cdk-virtual-scroll-viewport {

@@ -1,5 +1,5 @@
 <!-- Hide master rather than remove with a conditional, so it's easy to switch back without losing state information --->
-<div [ngClass]="{'hidden' : mode !== Mode.Master, 'host' : true}">
+<div [ngClass]="{'hidden' : mode !== Mode.Master, 'master' : true, 'host': true}">
     @if (data?.listComponent === undefined) {
     <!--- Master View ---->
     <!--- Virtual scroller because there are THOUSANDS of entries --->
@@ -12,6 +12,7 @@
         <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs;outputs:masterOutputs" />
     }
 </div>
+<div class="detail host">
 @if (mode === Mode.Detail)
 {
     <a mat-raised-button (click)="returnToMaster()">&lt; {{masterList?.name}}</a>
@@ -22,3 +23,4 @@
         <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />
     }   
 }
+</div>
