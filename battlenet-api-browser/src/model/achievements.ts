@@ -43,15 +43,15 @@ export interface achievementData
 {
   _links: linksStruct;
   id: number;
-  category: achievementCategory;
+  category?: achievementCategory;
   name: string;
-  description: string;
-  points: number;
-  is_account_wide: string;
-  criteria: achievementCriteria;
-  next_achievement: achievementNextAchievement;
-  media: mediaStruct;
-  display_order: number;
+  description?: string;
+  points?: number;
+  is_account_wide?: string;
+  criteria?: achievementCriteria;
+  next_achievement?: achievementNextAchievement;
+  media?: mediaStruct;
+  display_order?: number;
 }
 
 interface achievementIndexEntry
