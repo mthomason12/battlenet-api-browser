@@ -522,7 +522,22 @@ export class ApiclientService {
 
   //endregion
 
-  //todo - lots missing here
+  //region todo
+
+  //Mythic Keystone Affix
+  //Mythic Keystone Dungeon
+  //Mythic Keystone Leaderboard
+  //Mythic Raid Leaderboard
+  //Pet
+  //Playable Class
+  //Playable Race
+  //Playable Specialization
+  //Power Type
+  //Profession
+  //PvP Season
+  //PvP Tier
+
+  //end region
 
   //region Realm API
 
