@@ -88,7 +88,7 @@ export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charData
     this.thisType = charsDataDoc;
     this.detailsType = charDataDetailDoc;
     this.dbkey="wow-a-characters";
-    this.itemsName = "account-characters";
+    this.itemsName = "characters";
   }
 
   /**
