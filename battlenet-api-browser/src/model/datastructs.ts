@@ -479,7 +479,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   ensureDetailEntry(apiClient: ApiclientService, key: any): T2 
   {
     var entry = this.getDetailEntry(key)
-    if ( entry == undefined)
+    if ( entry === undefined)
     {
       var json = JSON.stringify(
         {[this.key]:key}
@@ -493,7 +493,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   {
     return this.details.find(
       (data, index, array)=>{
-        return key == (data as any)[this.key];
+        return key === (data as any)[this.key];
       }
     )
   }
