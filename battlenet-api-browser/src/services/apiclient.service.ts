@@ -1,11 +1,11 @@
 import { BlizzAPI, RegionIdOrName, QueryOptions } from 'blizzapi';
 import { Router } from '@angular/router';
+import { UserdataService } from './userdata.service';
+import { EventEmitter, inject } from '@angular/core';
 import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
-import { UserdataService } from './userdata.service';
-import { EventEmitter, inject } from '@angular/core';
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
