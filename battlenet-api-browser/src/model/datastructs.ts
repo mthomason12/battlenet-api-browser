@@ -605,6 +605,16 @@ export interface assetStruct
   file_data_id: number;
 }
 
+export interface moneyStruct
+{
+  value: number;
+  units: {
+    gold: number;
+    silver: number;
+    copper: number;
+  }
+}
+
 export interface refStruct
 {
   id: number;

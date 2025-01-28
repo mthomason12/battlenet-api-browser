@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureTypeData, creatureTypeIndex } from '../model/creature';
+import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
 import { UserdataService } from './userdata.service';
 import { EventEmitter, inject } from '@angular/core';
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
-import { connectedRealmDataDetailDoc, connectedRealmDataDoc, connectedRealmIndex } from '../model/connectedrealm';
+import { connectedRealmDataDetailDoc, connectedRealmIndex } from '../model/connectedrealm';
 
 
 /**
@@ -536,6 +537,51 @@ export class ApiclientService {
   //Profession
   //PvP Season
   //PvP Tier
+
+  //end region
+  
+  //region Quest API
+
+  
+  getQuestIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/index`);
+  }
+
+  getQuest(id: number): Promise<QuestData> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/${id}`);
+  }
+
+  getQuestCategoryIndex(): Promise<QuestCategoryIndex> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/category/index`);
+  }
+
+  getQuestCategory(id: number): Promise<QuestCategoryData> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/category/${id}`);
+  }
+
+  getQuestAreaIndex(): Promise<QuestAreaIndex> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/area/index`);
+  }
+
+  getQuestArea(id: number): Promise<QuestAreaData> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/area/${id}`);
+  }
+
+  getQuestTypeIndex(): Promise<QuestTypeIndex> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/type/index`);
+  }
+
+  getQuestType(id: number): Promise<QuestTypeData> | undefined
+  {
+    return this.queryStatic(`/data/wow/quest/type/${id}`);
+  }
 
   //end region
 
