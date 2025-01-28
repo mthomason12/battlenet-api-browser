@@ -1,15 +1,15 @@
 import { dataStruct, topDataStruct } from './datastructs';
-import { charsDataDoc } from './characters';
+import { charsDataDoc } from './account-characters';
 
 export class accountDataStruct extends topDataStruct
 {
-  characters: charsDataDoc;
+  characterData: charsDataDoc;
 
   constructor(parent: dataStruct)
   {
     super(parent);
   
-    this.characters = this.register(charsDataDoc);
+    this.characterData = this.register(charsDataDoc);
 
     this.icon = "folder";
   }
@@ -22,7 +22,7 @@ export class accountDataStruct extends topDataStruct
   override children(): dataStruct[]
   {
     return super.children().concat([
-      this.characters,
+      this.characterData,
     ]);
   }  
 

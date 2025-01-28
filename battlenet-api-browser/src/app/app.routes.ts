@@ -18,7 +18,11 @@ export const routes: Routes = [
             { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
             { path: 'achievements/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","achievementData"], detailComponent: AchievementComponent} 
-            },   
+            },
+            { path: 'account-characters', redirectTo: 'account-characters/', pathMatch: 'full'},               
+            { path: 'account-characters/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowaccount","characterData"]} 
+            },               
             { path: 'connected-realms', redirectTo: 'connected-realms/', pathMatch: 'full'},               
             { path: 'connected-realms/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","connectedRealmData"], detailComponent: ConnectedRealmComponent} 
