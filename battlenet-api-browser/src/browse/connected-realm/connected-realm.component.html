@@ -1,0 +1,10 @@
+<p>ID: {{data?.id}}</p>
+<p>Has Queue: {{data?.has_queue}}</p>
+<p>Status: {{data?.status?.name}}</p>
+<p>Population: {{data?.population?.name}}</p>
+<p>Realms:</p>
+<mat-list role="list">
+    @for (item of data?.realms; track item.id) {
+        <mat-list-item role="listitem"><a mat-button [routerLink]="'../../realms/'+item.slug">{{item.name}}</a></mat-list-item>
+    }
+</mat-list>

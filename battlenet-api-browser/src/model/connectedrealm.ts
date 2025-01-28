@@ -78,6 +78,14 @@ export class connectedRealmDataDetailDoc extends dataDetailDoc
 export class connectedRealmDataDoc extends dataDoc
 {
   href?: string;
+
+  override fixup(parent?: dataStruct | undefined): void {
+    super.fixup(parent);
+    //extract ID from the href url
+    const regex = /(?:.*)connected-realm\/(\d*)/;
+    var matches = regex.exec(this.href!);
+    this.id = Number.parseInt(matches![1]);
+  }
 }
 
 @Reviver<connectedRealmsDataDoc>({
@@ -100,7 +108,8 @@ export class connectedRealmsDataDoc extends dataDocDetailsCollection<connectedRe
     this.detailsType = connectedRealmDataDetailDoc;
     this.itemsName = "connected_realms";
     this.key = "id";
-}
+  }
+
 
   override getItems = function(apiClient: ApiclientService): Promise<connectedRealmIndex>
   {

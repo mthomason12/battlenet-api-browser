@@ -9,6 +9,7 @@ import { CreatureTypeComponent } from '../browse/creature-type/creature-type.com
 import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
 import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
 import { RealmComponent } from '../browse/realm/realm.component';
+import { ConnectedRealmComponent } from '../browse/connected-realm/connected-realm.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -17,7 +18,11 @@ export const routes: Routes = [
             { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
             { path: 'achievements/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","achievementData"], detailComponent: AchievementComponent} 
-            },         
+            },   
+            { path: 'connected-realms', redirectTo: 'connected-realms/', pathMatch: 'full'},               
+            { path: 'connected-realms/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","connectedRealmData"], detailComponent: ConnectedRealmComponent} 
+            },       
             { path: 'covenants', redirectTo: 'covenants/', pathMatch: 'full'},               
             { path: 'covenants/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","covenantData"], detailComponent: CovenantComponent} 
