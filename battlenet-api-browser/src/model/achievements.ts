@@ -1,4 +1,4 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
+import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 
@@ -9,11 +9,27 @@ interface achievementCategory
   id: number;
 }
 
+interface achievementOperator {
+  type: string; //known values: AND, COMPLETE_AT_LEAST
+  name: string; 
+}
+
+interface achievementChildCriteria
+{
+  id: number;
+  description?: string;
+  amount?: number;
+  achievement?: refStruct;
+  
+}
+
 interface achievementCriteria
 {
   id: number;
-  description: string;
-  amount: number;
+  description?: string;
+  amount?: number;
+  operator?: achievementOperator;
+  child_criteria?: achievementChildCriteria[];
 }
 
 interface achievementNextAchievement
