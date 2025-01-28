@@ -417,7 +417,6 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   }
 
   override postFixup(): void {
-    console.dir(this.items);
     this.items.forEach((item)=>{item.fixup(this)});
   }
 
