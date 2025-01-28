@@ -58,7 +58,7 @@ export class publicDataStruct extends topDataStruct
 
     this.addFolder("Pets");
 
-    this.addFolder("Playable Classes");
+    this.addFolder("Playables");
 
     this.addFolder("Professions");
 
@@ -73,7 +73,13 @@ export class publicDataStruct extends topDataStruct
 
     this.addFolder("Reputations");
 
+    this.addFolder("Spells");
+
     this.addFolder("Talents");
+
+    this.addFolder("Titles");
+
+    this.addFolder("Toys");
 
     this.icon = "folder";
   }
