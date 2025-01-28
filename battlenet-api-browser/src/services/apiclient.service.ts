@@ -603,6 +603,21 @@ export class ApiclientService {
   }
 
   //endregion
+  
+  
+  //region todo
+
+  //Region
+  //Reputation
+  //Spell
+  //Talent
+  //Tech Talent
+  //Title
+  //Toy
+  //WoW Token
+
+  //end region
+
 
   //#region Account Profile API
 
