@@ -343,7 +343,6 @@ export abstract class dataDetailDoc extends dataDoc
   }
 
   override myPath(): string {
-    console.dir(this);
     return (this as any)[(this._parent as any).key];
   }
 
