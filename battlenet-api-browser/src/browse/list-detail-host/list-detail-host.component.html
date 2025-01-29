@@ -1,5 +1,5 @@
 <!-- Hide master rather than remove with a conditional, so it's easy to switch back without losing state information --->
-<div [ngClass]="{'hidden' : mode !== Mode.Master, 'master' : true, 'host': true}">
+<div class="master host" [ngClass]="{'hidden' : mode !== Mode.Master}">
     <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
 </div>
 <div class="detail host">
