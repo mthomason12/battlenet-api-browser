@@ -5,6 +5,7 @@ div.host {
     bottom:0;
     left:0;
     right:0;
+    padding: 4px;
     &.master {
         z-index:20;
         &.hidden{
