@@ -500,7 +500,30 @@ export class ApiclientService {
 
   //region Modified Crafting API
 
-  //todo
+  getModifiedCraftingIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/modified-crafting/index`);
+  }
+
+  getModifiedCraftingCategoryIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/modified-crafting/category/index`);
+  }
+
+  getModifiedCraftingCategory(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/modified-crafting/category/${id}`);
+  }
+
+  getModifiedCraftingReagentSlotTypeIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/modified-crafting/reagent-slot-type/index`);
+  }
+
+  getModifiedCraftingReagentSlotType(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/modified-crafting/reagent-slot-type/${id}`);
+  }
 
   //endregion
 
