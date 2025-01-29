@@ -1,11 +1,19 @@
 <!-- Hide master rather than remove with a conditional, so it's easy to switch back without losing state information --->
 <div class="master host" [ngClass]="{'hidden' : mode !== Mode.Master}">
-    <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
+    <mat-tab-group>
+        <mat-tab [label]="masterList?.getName()!">
+            <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
+        </mat-tab>
+    </mat-tab-group>
 </div>
 <div class="detail host">
 @if (mode === Mode.Detail)
 {
-    <a mat-raised-button (click)="returnToMaster()">&lt; {{masterList?.name}}</a>
-    <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+    <a mat-raised-button (click)="returnToMaster()">&lt; {{masterList?.getName()}}</a>
+    <mat-tab-group>
+        <mat-tab [label]="detailItem?.getName()!">
+            <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+        </mat-tab>
+    </mat-tab-group>
 }
 </div>
