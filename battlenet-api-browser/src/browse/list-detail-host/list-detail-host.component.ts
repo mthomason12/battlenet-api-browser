@@ -5,7 +5,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
 import { dataDoc, dataDocCollection, dataDocDetailsCollection } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
-import { ListDataItemComponent } from '../../components/list-data-item/list-data-item.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { GenericMasterComponent } from './generic-master/generic-master.component';
