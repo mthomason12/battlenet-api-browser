@@ -1,16 +1,6 @@
 <!-- Hide master rather than remove with a conditional, so it's easy to switch back without losing state information --->
 <div [ngClass]="{'hidden' : mode !== Mode.Master, 'master' : true, 'host': true}">
-    @if (data?.listComponent === undefined) {
-    <!--- Master View ---->
-    <!--- Virtual scroller because there are THOUSANDS of entries --->
-    <cdk-virtual-scroll-viewport itemSize="36">
-        <ul>
-            <li *cdkVirtualFor="let item of masterList?.items"><app-list-data-item [item]="item" [key]="masterList!.key" [skipChange]="true" [hideKey]="data!.hideKey === true ? true : false" (clicked)="itemClicked($event)"/></li>
-        </ul>
-    </cdk-virtual-scroll-viewport>
-    } @else {
-        <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs;outputs:masterOutputs" />
-    }
+    <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
 </div>
 <div class="detail host">
 @if (mode === Mode.Detail)

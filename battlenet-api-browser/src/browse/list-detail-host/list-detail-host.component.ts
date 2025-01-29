@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, Type } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, OnDestroy, OnInit, Type } from '@angular/core';
 import { ApiclientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ListDataItemComponent } from '../../components/list-data-item/list-data-item.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { GenericMasterComponent } from './generic-master/generic-master.component';
 
 enum ListDetailHostComponentMode
 {
@@ -26,21 +27,22 @@ interface ListDetailHostComponentData
   selector: 'app-list-detail-host',
   imports: [
     ScrollingModule,
-    ListDataItemComponent,
     CommonModule,
     MatButtonModule
   ],
   templateUrl: './list-detail-host.component.html',
   styleUrl: './list-detail-host.component.scss'
 })
-export class ListDetailHostComponent implements OnInit, OnDestroy{
+export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   protected apiClient: ApiclientService = inject(ApiclientService);
   protected dataChangedSubscription?: Subscription;
   protected refreshSubscription?: Subscription;
+  protected itemClickedSubscription?: Subscription;
 
   private ref: ChangeDetectorRef
 
+  //id of current detail item
   private id?: number | string;
 
   Mode = ListDetailHostComponentMode;
@@ -56,6 +58,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
   protected masterOutputs: Record<string, unknown> | undefined  
   protected detailInputs: Record<string, unknown> | undefined
 
+  public itemClickedEmitter?: EventEmitter<void>;
+
   constructor(protected userData: UserdataService, protected route: ActivatedRoute)
   {
     this.ref = inject(ChangeDetectorRef);
@@ -65,15 +69,21 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.dataChangedSubscription?.unsubscribe();
     this.refreshSubscription?.unsubscribe();
+    this.itemClickedSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
+    /** Event triggered when user selection is changed */
+    this.itemClickedEmitter = new EventEmitter<any>();
+    this.itemClickedSubscription = this.itemClickedEmitter.subscribe((event)=>{this.itemClicked(event)});
+
     this.preinit();
     //catch data reloads
     this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(this.reload());
     //catch refresh button
     this.refreshSubscription = this.userData.refreshRequestEmitter.subscribe(this.refresh());
     this.postinit();
+
   }
 
   //called when refresh button is pressed
@@ -107,7 +117,6 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
     this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
-
     if (this.masterList!.stringKey)
     {
       if (idstr!.length > 0)
@@ -133,8 +142,9 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
       this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
       this.mode = ListDetailHostComponentMode.Detail;
     }
-    this.masterInputs = { 'data': this.masterList! };
-    this.masterOutputs = { 'clicked' : this.itemClicked }
+
+    this.masterInputs = { 'data': this.masterList!, 'clicked' : this.itemClickedEmitter };
+    
     this.userData.setCurrent(this.masterList!);
     this.masterList!.checkLoaded(this.apiClient); 
     if (this.id !== undefined)   
@@ -142,13 +152,17 @@ export class ListDetailHostComponent implements OnInit, OnDestroy{
       this.detailInputs = { 'data': this.detailItem! };
       (this.masterList as dataDocDetailsCollection<any,any>).checkItemLoaded(this.apiClient, this.id);
     }
+
+    if (!Object.hasOwn(this.data, "listComponent"))
+    {
+      this.data.listComponent = GenericMasterComponent;
+    }
     this.ref.detectChanges();    
   }
 
-  itemClicked(id: any)
+  itemClicked(item: any)
   {
-    this.id = id;
-    console.log(this.id);    
+    this.id = (item as any)[this.masterList!.key]
     this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
     this.mode = ListDetailHostComponentMode.Detail;    
     this.detailInputs = { 'data': this.detailItem! };

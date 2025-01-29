@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, input, Input, Output } from '@angular/core';
 import { dataDocCollection } from '../../../model/datastructs';
 
 @Component({
@@ -23,5 +23,14 @@ export abstract class AbstractMasterComponent<T extends dataDocCollection<any>> 
     this.ref.detectChanges();
   }
 
-  @Output('clicked') clickedEvent = new EventEmitter<string | number>();
+  // reference to an event emitter to emit to when an item is clicked
+  @Input({required: true})
+  clicked?: EventEmitter<any>;
+  
+
+  click(item: any)
+  {
+    this.clicked!.emit(item);
+  }
+
 }

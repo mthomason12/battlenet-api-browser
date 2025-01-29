@@ -1,0 +1,17 @@
+div {
+    height: 100%;
+    display: flex;
+}
+
+cdk-virtual-scroll-viewport {
+    flex: 1;
+}
+
+li {
+    padding-bottom: 2pt;
+    list-style-type: none;
+}
+
+li a {
+    height: 36px;
+}

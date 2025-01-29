@@ -12,9 +12,9 @@ import { ListDataItemComponent } from '../../../components/list-data-item/list-d
   ],
   templateUrl: './generic-master.component.html',
   styleUrl: './generic-master.component.scss',
-  inputs: ['data'],
-  outputs: ['clicked']
+  inputs: ['data','clicked']
 })
 export class GenericMasterComponent extends AbstractMasterComponent<any> {
+
 
 }
