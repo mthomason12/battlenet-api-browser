@@ -23,13 +23,13 @@ interface ListDetailHostComponentData
   list: string[], //path to the list under userData.data.apiData
   listComponent?: Type<any>, //optional component to use in place of list
   listPages?: { 
-    name: string, 
-    class: Type<any>
+    title: string, 
+    component: Type<any>
   }[], //optional additional tabs to add on list page
   detailComponent?: Type<any> //optional component to use in place of detail
   detailPages?: { 
-    name: string,
-    class: Type<any>
+    title: string,
+    component: Type<any>
   }[], //optional additional tabs to add on detail page
   hideKey?: Boolean //option to hide key value from list
 }

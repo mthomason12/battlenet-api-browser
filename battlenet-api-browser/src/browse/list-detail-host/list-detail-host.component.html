@@ -6,8 +6,8 @@
         </mat-tab>
         @for (page of data!.listPages; track $index)
         {
-            <mat-tab [label]="page.name">
-                <ng-container *ngComponentOutlet="page.class;inputs:masterInputs" />
+            <mat-tab [label]="page!.title!">
+                <ng-container *ngComponentOutlet="page!.component!;inputs:masterInputs" />
             </mat-tab>
         }
         <mat-tab label="Raw Data">
@@ -25,8 +25,8 @@
         </mat-tab>
         @for (page of data!.detailPages; track $index)
         {
-            <mat-tab [label]="page.name">
-                <ng-container *ngComponentOutlet="page.class;inputs:detailInputs" />
+            <mat-tab [label]="page.title">
+                <ng-container *ngComponentOutlet="page.component;inputs:detailInputs" />
             </mat-tab>            
         }        
         <mat-tab label="Raw Data">
