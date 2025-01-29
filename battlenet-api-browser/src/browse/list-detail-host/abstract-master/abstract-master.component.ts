@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { dataDoc, dataDocCollection } from '../../../model/datastructs';
+import { dataDocCollection } from '../../../model/datastructs';
 
 @Component({
   selector: 'app-abstract-master',
