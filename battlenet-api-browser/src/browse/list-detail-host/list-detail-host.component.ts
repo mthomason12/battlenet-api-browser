@@ -49,7 +49,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   private id?: number | string;
 
   Mode = ListDetailHostComponentMode;
-  protected mode: ListDetailHostComponentMode = ListDetailHostComponentMode.Master;
+  protected mode: ListDetailHostComponentMode = this.Mode.Master;
   protected data?: ListDetailHostComponentData;
 
   //references to current master/detail data
