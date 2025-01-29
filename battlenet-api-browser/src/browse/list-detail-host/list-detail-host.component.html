@@ -4,6 +4,9 @@
         <mat-tab [label]="masterList?.getName()!">
             <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
         </mat-tab>
+        <mat-tab label="Raw Data">
+            <app-raw-data [data]="this.masterList"></app-raw-data>
+        </mat-tab>
     </mat-tab-group>
 </div>
 <div class="detail host">
@@ -14,6 +17,9 @@
         <mat-tab [label]="detailItem?.getName()!">
             <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
         </mat-tab>
+        <mat-tab label="Raw Data">
+            <app-raw-data [data]="this.detailItem"></app-raw-data>
+        </mat-tab>        
     </mat-tab-group>
 }
 </div>

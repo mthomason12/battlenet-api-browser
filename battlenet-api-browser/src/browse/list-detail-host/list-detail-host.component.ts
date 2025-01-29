@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { GenericMasterComponent } from './generic-master/generic-master.component';
 import { GenericDetailComponent } from './generic-detail/generic-detail.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { RawDataComponent } from "./raw-data/raw-data.component";
 
 enum ListDetailHostComponentMode
 {
@@ -33,8 +34,9 @@ interface ListDetailHostComponentData
     ScrollingModule,
     CommonModule,
     MatButtonModule,
-    MatTabsModule
-  ],
+    MatTabsModule,
+    RawDataComponent
+],
   templateUrl: './list-detail-host.component.html',
   styleUrl: './list-detail-host.component.scss'
 })

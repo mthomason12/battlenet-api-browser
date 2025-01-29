@@ -30,4 +30,8 @@ mat-tab-group {
     flex: 1;
 }
 
+app-raw-data {
+    display: block;
+}
+
 //note that there's also CSS in the main application CSS for app-list-detail-host .mat-mdc-tab-body-wrapper that won't work here
