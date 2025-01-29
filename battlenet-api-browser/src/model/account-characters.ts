@@ -68,6 +68,10 @@ export class charDataDoc extends dataDoc
   playable_race?: refStruct;
   gender?: genderStruct;
   faction?: factionStruct;
+
+  override getName(): string {
+      return `${this.name} (${this.realm?.name})`;
+  }
 }
 
 
@@ -113,8 +117,15 @@ export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charData
           }
         this.postFixup();
         this.lastupdate = new Date().getTime();
+        this.postProcess();
       }
     );
+  }
+
+  override postProcess(): void {
+      super.postProcess();
+      //sort entries alphabetically
+      this.items.sort(function(a, b){return ('' + a.name).localeCompare(b.name)})
   }
 
   override getItems = function(apiClient: ApiclientService): Promise<accountProfileSummaryData>
