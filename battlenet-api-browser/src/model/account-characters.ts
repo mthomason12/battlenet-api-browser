@@ -70,7 +70,7 @@ export class charDataDoc extends dataDoc
   faction?: factionStruct;
 
   override getName(): string {
-      return `${this.name} (${this.realm?.name})`;
+      return `${this.name} - L${this.level} ${this.playable_race?.name} ${this.playable_class?.name} (${this.realm?.name})`;
   }
 }
 
