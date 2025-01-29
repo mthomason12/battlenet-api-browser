@@ -20,7 +20,6 @@ export abstract class AbstractDetailComponent<T extends dataDetailDoc>
 
   set data(value: T) {
     this._rec = value;
-    console.log("Data set");
     console.dir(value);
     this.ref.detectChanges();
   }
