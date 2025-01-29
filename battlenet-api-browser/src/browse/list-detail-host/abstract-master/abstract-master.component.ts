@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, input, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input } from '@angular/core';
 import { dataDocCollection } from '../../../model/datastructs';
 
 @Component({
