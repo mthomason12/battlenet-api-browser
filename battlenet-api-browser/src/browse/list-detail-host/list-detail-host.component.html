@@ -6,11 +6,6 @@
 @if (mode === Mode.Detail)
 {
     <a mat-raised-button (click)="returnToMaster()">&lt; {{masterList?.name}}</a>
-    @if (data?.detailComponent === undefined) {    
-        <!---- Detail View ---->
-        <p>Name: {{detailItem!.name}}</p>
-    } @else {
-        <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />
-    }   
+    <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
 }
 </div>

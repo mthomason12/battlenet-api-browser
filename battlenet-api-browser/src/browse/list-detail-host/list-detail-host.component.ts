@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { GenericMasterComponent } from './generic-master/generic-master.component';
+import { GenericDetailComponent } from './generic-detail/generic-detail.component';
 
 enum ListDetailHostComponentMode
 {
@@ -142,20 +143,29 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
       this.mode = ListDetailHostComponentMode.Detail;
     }
 
+    //set data and clicked emitter for master 
     this.masterInputs = { 'data': this.masterList!, 'clicked' : this.itemClickedEmitter };
     
     this.userData.setCurrent(this.masterList!);
     this.masterList!.checkLoaded(this.apiClient); 
+
+    //set data if we have a detail id
     if (this.id !== undefined)   
     {
+      //set data for details
       this.detailInputs = { 'data': this.detailItem! };
       (this.masterList as dataDocDetailsCollection<any,any>).checkItemLoaded(this.apiClient, this.id);
     }
 
+    //load generic master and detail components
+    if (!Object.hasOwn(this.data, "detailComponent"))
+      {
+        this.data.listComponent = GenericDetailComponent;
+      }
     if (!Object.hasOwn(this.data, "listComponent"))
-    {
-      this.data.listComponent = GenericMasterComponent;
-    }
+      {
+        this.data.listComponent = GenericMasterComponent;
+      }
     this.ref.detectChanges();    
   }
 
