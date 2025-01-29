@@ -39,6 +39,8 @@ interface ListDetailHostComponentData
 export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   protected apiClient: ApiclientService = inject(ApiclientService);
+
+  //event subscriptions
   protected dataChangedSubscription?: Subscription;
   protected refreshSubscription?: Subscription;
   protected itemClickedSubscription?: Subscription;
@@ -50,6 +52,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   Mode = ListDetailHostComponentMode;
   protected mode: ListDetailHostComponentMode = this.Mode.Master;
+
+  //data passed from route
   protected data?: ListDetailHostComponentData;
 
   //references to current master/detail data
@@ -61,6 +65,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   protected masterOutputs: Record<string, unknown> | undefined  
   protected detailInputs: Record<string, unknown> | undefined
 
+  //event emitter for list items being clicked/selected
   public itemClickedEmitter?: EventEmitter<void>;
 
   constructor(protected userData: UserdataService, protected route: ActivatedRoute)
@@ -172,6 +177,11 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     this.ref.detectChanges();    
   }
 
+  /**
+   * Called by Event Emitter for item clicked events.
+   * Switches to the detail page.
+   * @param item 
+   */
   itemClicked(item: any)
   {
     this.id = (item as any)[this.masterList!.key]
@@ -183,6 +193,9 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     this.ref.detectChanges();  
   }
 
+  /**
+   * Switch back to master page
+   */
   returnToMaster() {
     this.mode = this.Mode.Master;
     window.history.pushState({}, '', this.masterList!.path());
