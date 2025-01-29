@@ -1,0 +1,7 @@
+<!--- Master View ---->
+<!--- Virtual scroller because there are THOUSANDS of entries --->
+<cdk-virtual-scroll-viewport itemSize="36">
+    <ul>
+        <li *cdkVirtualFor="let item of data.items"><app-list-data-item [item]="item" [key]="item.key" [skipChange]="true" [hideKey]="data!.hideKey === true ? true : false" (clicked)="this.clickedEvent.emit(item)"/></li>
+    </ul>
+</cdk-virtual-scroll-viewport>
