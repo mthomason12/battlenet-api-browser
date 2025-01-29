@@ -437,6 +437,9 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   getDetails?: Function;
   detailsType?: Class;
 
+  @jsonIgnore()
+  override id: number = 0;
+
 
   override postFixup(): void {
     super.postFixup();
