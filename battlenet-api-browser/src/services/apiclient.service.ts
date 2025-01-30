@@ -808,4 +808,31 @@ export class ApiclientService {
   }   
 
   //#endregion
+
+  //region todo
+
+  //character achievements
+  //character appearance
+  //character collections
+  //character encounters
+  //character equipment
+  //character hunter pets
+  //character media
+  //character mythic keystone profile
+  //character professions
+  //character profile
+  //character pvp
+  //character quests
+  //character reputation
+  //character soulbinds
+  //character specializations
+  //character statistics
+  //character titles
+
+  //guild api
+  
+
+  //endregion
+
+
 }
