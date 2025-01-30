@@ -3,7 +3,8 @@ import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
-import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu'
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -12,10 +13,12 @@ import { ApiclientService } from '../services/apiclient.service';
 import { UserdataService } from '../services/userdata.service';
 import { dataStruct } from '../model/datastructs';
 import { Subscription } from 'rxjs';
+import FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-root',
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule,
+  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, 
+    MatProgressSpinnerModule, MatMenuModule,
     ApitreeComponent, RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -77,6 +80,13 @@ export class AppComponent implements OnDestroy, OnInit {
       }
     )
   }
+
+  export()
+  {
+    var blob = new Blob([this.data.export()], {type: "text/json;charset=utf-8"});
+    FileSaver.saveAs(blob, "battlenet-api-data.json", { autoBom: true });
+  }
+
   treeChanged(item: dataStruct)
   {
     //item.postProcess();

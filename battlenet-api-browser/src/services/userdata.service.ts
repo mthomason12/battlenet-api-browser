@@ -3,8 +3,6 @@ import { openDB } from 'idb';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
-import FileSaver from 'file-saver';
-
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
@@ -110,15 +108,14 @@ export class UserdataService {
   /**
    * Export all data to JSON
    */
-  export()
+  export(): string
   {
     var obj = new Object();
     this.data.apiData.wowpublic.export(obj,'wowpublic');
     this.data.apiData.wowaccount.export(obj,'wowaccount');
     this.data.apiData.wowprofile.export(obj,'wowprofile');
     var json = JSON.stringify(obj);
-    var blob = new Blob([json], {type: "text/json;charset utf-8"});
-    FileSaver.saveAs(blob, "battlenet-api-data.json");
+    return json;
   }
 
   /**

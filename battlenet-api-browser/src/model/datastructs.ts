@@ -229,7 +229,10 @@ export abstract class topDataStruct extends dataStruct
   {
     var exportObj: any = new Object();
     this.data.forEach((item)=>{
-      exportObj[item.ref.dbkey!] = JSON.parse(JSON.stringify(item.ref, jsonIgnore));
+      console.dir(item.ref);
+      var json = JSON.stringify(item.ref, jsonIgnoreReplacer);
+      console.log(json);
+      exportObj[item.ref.dbkey!] = JSON.parse(json);
     });
     obj[name] = exportObj;
   }
