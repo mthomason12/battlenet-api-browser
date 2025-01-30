@@ -14,6 +14,15 @@
 Tested on Chrome, Chromium, Firefox, and Edge.  
 Also includes build scripts for a standalone Electron version.
 
+#### Battle.net Client Registration
+
+Note: You will need to provide your own Battle.net API Key and secret. 
+You can get this from the [Battle.net Developer Portal](https://develop.battle.net/access/clients)
+
+When registering your client, you'll need to provide a redirect URL.  If running locally under the defaults, this will be http://localhost:4200/auth-callback
+
+Check "I do not have a service URL for this client"
+
 ## Roadmap
 
 - Finish adding API endpoints
