@@ -1,4 +1,4 @@
-# Battle.NET API Browser
+# Battle&#46;NET API Browser
 
 [SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
@@ -14,14 +14,16 @@
 Tested on Chrome, Chromium, Firefox, and Edge.  
 Also includes build scripts for a standalone Electron version.
 
-#### Battle.net Client Registration
+#### Battle&#46;net Client Registration
 
-Note: You will need to provide your own Battle.net API Key and secret. 
+Note: You will need to provide your own Battle&#46;net API Key and secret. 
 You can get this from the [Battle.net Developer Portal](https://develop.battle.net/access/clients)
 
 When registering your client, you'll need to provide a redirect URL.  If running locally under the defaults, this will be http://localhost:4200/auth-callback
 
 Check "I do not have a service URL for this client"
+
+One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
 
 ## Roadmap
 
