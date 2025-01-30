@@ -16,7 +16,6 @@ Also includes build scripts for a standalone Electron version.
 
 ## Roadmap
 
-- Additional page tabs for master/detail views
 - Finish adding API endpoints
 - Option to retrieve all detail records (e.g. all the individual mounts) from a master (index) page.
 - Option to background queue download of *all* data
