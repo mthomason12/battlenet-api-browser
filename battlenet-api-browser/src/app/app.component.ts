@@ -89,9 +89,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   treeChanged(item: dataStruct)
   {
-    //item.postProcess();
     this.treedata = item;
-    //console.dir(item);
   }
 
 }
