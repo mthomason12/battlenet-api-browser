@@ -655,8 +655,23 @@ export class ApiclientService {
 
   //endregion
 
+  //region Mythic Raid Leaderboard API
+
+  /**
+   * 
+   * @param raid 
+   * @param faction - should be "alliance" or "horde"
+   * @returns 
+   */
+  getMythicRaidLeaderboard(raid: string, faction: string): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/leaderboard/hall-of-fame/${raid}/${faction}`);
+  }  
+
+  //endregion
+
   //region todo  
-  //Mythic Raid Leaderboard
+
   //Pet
   //Playable Class
   //Playable Race
@@ -665,6 +680,7 @@ export class ApiclientService {
   //Profession
   //PvP Season
   //PvP Tier
+
   //end region
   
   //region Quest API
