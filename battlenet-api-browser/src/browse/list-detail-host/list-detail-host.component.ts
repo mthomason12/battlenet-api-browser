@@ -81,7 +81,6 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   constructor(protected userData: UserdataService, protected route: ActivatedRoute)
   {
     this.ref = inject(ChangeDetectorRef);
-    console.log("Creating Component");
   }
 
   ngOnDestroy(): void {
