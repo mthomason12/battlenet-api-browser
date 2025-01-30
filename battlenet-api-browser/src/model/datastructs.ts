@@ -220,6 +220,20 @@ export abstract class topDataStruct extends dataStruct
     });
   }
 
+  /**
+   * Export data to a property in the specified object
+   * @param obj 
+   * @param name 
+   */
+  export(obj: any, name: string)
+  {
+    var exportObj: any = new Object();
+    this.data.forEach((item)=>{
+      exportObj[item.ref.dbkey!] = JSON.parse(JSON.stringify(item.ref, jsonIgnore));
+    });
+    obj[name] = exportObj;
+  }
+
 
   /**
    * Save a dataDoc object to indexedDB
