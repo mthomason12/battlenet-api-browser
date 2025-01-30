@@ -10,7 +10,7 @@ import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 import { mediaDataStruct } from '../model/datastructs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserInfo } from 'angular-oauth2-oidc';
 
 
@@ -196,14 +196,20 @@ export class ApiclientService {
   {
     return new Promise((resolve, reject)=>
     {
-      this.httpClient.request('GET','https://oauth.battle.net/oauth/userinfo',{responseType:'json', headers:{
-        'Authorization': 'Bearer '+this.userAccessToken
-      } }).subscribe(
+      this.httpClient.request('GET','https://oauth.battle.net/oauth/userinfo',{responseType:'json', headers: this.bearerAuth() }).subscribe(
         (data)=>{
           resolve(data as UserInfo);
         }
       );
     });
+  }
+
+  /**
+   * Returns a header for bearer authentication
+   */
+  bearerAuth(): {[Header: string]: string}
+  {
+    return {'Authorization': 'Bearer '+this.userAccessToken};
   }
 
   //region
