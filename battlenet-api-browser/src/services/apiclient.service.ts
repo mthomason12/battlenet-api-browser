@@ -10,6 +10,8 @@ import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 import { mediaDataStruct } from '../model/datastructs';
+import { HttpClient } from '@angular/common/http';
+import { UserInfo } from 'angular-oauth2-oidc';
 
 
 /**
@@ -39,13 +41,13 @@ export class ApiclientService {
   private router: Router;
 
   public connectedEvent = new EventEmitter<void>();
-  //private httpClient: HttpClient;
+  private httpClient: HttpClient;
 
   constructor ()
   {   
     this.data = inject(UserdataService);
     this.router = inject(Router);
-    //this.httpClient = inject(HttpClient);
+    this.httpClient = inject(HttpClient);
     this.clientID = this.data.data.key.clientID;
     this.clientSecret = this.data.data.key.clientSecret;
     this.region = "us";
@@ -124,6 +126,7 @@ export class ApiclientService {
             clientSecret: this.data.data.key.clientSecret,
             accessToken: this.userAccessToken
           });  
+          //this.userInfo();
           this._loggedIn = true;
           this._loggingIn = false;
           sessionStorage.removeItem('is_logging_in');
@@ -177,6 +180,33 @@ export class ApiclientService {
   }  
 
   //#region
+
+  //region OAuth Queries
+
+  /**
+   * Currently returns the following structure
+   * {
+   *   sub: string, the user's numeric ID as a string
+   *   id: number, the user's numeric ID
+   *   battletag: string - the user's battletag
+   * }
+   * @returns 
+   */
+  userInfo(): Promise<UserInfo>
+  {
+    return new Promise((resolve, reject)=>
+    {
+      this.httpClient.request('GET','https://oauth.battle.net/oauth/userinfo',{responseType:'json', headers:{
+        'Authorization': 'Bearer '+this.userAccessToken
+      } }).subscribe(
+        (data)=>{
+          resolve(data as UserInfo);
+        }
+      );
+    });
+  }
+
+  //region
 
   //#region Achievements API
 
