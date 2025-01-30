@@ -20,8 +20,13 @@ export abstract class AbstractDetailComponent<T extends dataDetailDoc>
 
   set data(value: T) {
     this._rec = value;
+    this.dataSet();
     this.ref.detectChanges();
   }
 
+  /** called when data input is set */
+  dataSet()
+  {
+  }
 
 }

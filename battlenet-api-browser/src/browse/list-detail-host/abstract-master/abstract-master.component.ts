@@ -20,6 +20,7 @@ export abstract class AbstractMasterComponent<T extends dataDocCollection<any>> 
 
   set data(value: T) {
     this._rec = value;
+    this.dataSet();
     this.ref.detectChanges();
   }
 
@@ -31,6 +32,11 @@ export abstract class AbstractMasterComponent<T extends dataDocCollection<any>> 
   click(item: any)
   {
     this.clicked!.emit(item);
+  }
+
+  /** called when data input is set */
+  dataSet()
+  {
   }
 
 }
