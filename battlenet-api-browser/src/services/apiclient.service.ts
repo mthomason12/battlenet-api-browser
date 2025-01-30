@@ -685,7 +685,10 @@ export class ApiclientService {
   
   //region Quest API
 
-  
+  /**
+   * An "index of indexes" - returns links to the quest category, quest area, and quest type indexes
+   * @returns 
+   */
   getQuestIndex(): Promise<any> | undefined
   {
     return this.queryStatic(`/data/wow/quest/index`);
