@@ -90,7 +90,9 @@ export class UserdataService {
     ); 
   }
 
-
+  /**
+   * Save all data
+   */
   save()
   {
     localStorage.setItem(dataItem, JSON.stringify(this.data.key));
@@ -103,6 +105,8 @@ export class UserdataService {
         this.data.apiData.wowprofile.save(db);
       });
   }
+
+
 
   /**
    * fix up any references after reloading from JSON
