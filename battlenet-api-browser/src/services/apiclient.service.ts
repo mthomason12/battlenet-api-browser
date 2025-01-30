@@ -583,11 +583,79 @@ export class ApiclientService {
 
   //endregion
 
-  //region todo
+  //region Mythic Keystone Affix API
 
-  //Mythic Keystone Affix
-  //Mythic Keystone Dungeon
-  //Mythic Keystone Leaderboard
+  getKeystoneAffixIndex(): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/keystone-affix/index`);
+  }
+
+  getKeystoneAffix(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/keystone-affix/${id}`);
+  }
+
+  getKeystoneAffixMedia(id: number): Promise<any> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/keystone-affix/${id}`);
+  }  
+
+  //end region
+
+  //region Mythic Keystone Dungeon API
+
+  getMythicKeystoneIndex(): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/index`);
+  }
+
+  getMythicKeystoneDungeonIndex(): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/dungeon/index`);
+  }  
+
+  getMythicKeystoneDungeon(id: number): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/dungeon/${id}`);
+  }
+
+  getMythicKeystonePeriodIndex(): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/period/index`);
+  }  
+
+  getMythicKeystonePeriod(id: number): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/period/${id}`);
+  }
+
+  getMythicKeystoneSeasonIndex(): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/season/index`);
+  }  
+
+  getMythicKeystoneSeason(id: number): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/mythic-keystone/season/${id}`);
+  }  
+
+  //endregion
+
+  //region Mythic Keystone Leaderboard API
+
+  getMythicKeystoneLeaderboardIndex(realmId: number): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/connected-realm/${realmId}/mythic-leaderboard/index`);
+  }  
+
+  getMythicKeystoneLeaderboard(realmId: number, dungeonId: number, periodId: number): Promise<any> | undefined
+  {
+    return this.queryDynamic(`/data/wow/connected-realm/${realmId}/mythic-leaderboard/${dungeonId}/period/${periodId}`);
+  }    
+
+  //endregion
+
+  //region todo  
   //Mythic Raid Leaderboard
   //Pet
   //Playable Class
@@ -597,7 +665,6 @@ export class ApiclientService {
   //Profession
   //PvP Season
   //PvP Tier
-
   //end region
   
   //region Quest API
