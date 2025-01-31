@@ -37,7 +37,7 @@ export interface journalExpansionsIndex {
 @Reviver<journalExpansionsDataDoc>({
   '.': Jsonizer.Self.assign(journalExpansionsDataDoc),
   items: {
-    '*': journalExpansionsDataDoc
+    '*': journalExpansionDataDoc
   },
   details: {
     '*': journalExpansionDataDetailDoc
