@@ -10,7 +10,7 @@ import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 import { mediaDataStruct } from '../model/datastructs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserInfo } from 'angular-oauth2-oidc';
 
 
