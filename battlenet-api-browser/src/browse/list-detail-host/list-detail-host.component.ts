@@ -176,13 +176,13 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
     //load generic master and detail components
     if (!Object.hasOwn(this.data, "detailComponent"))
-      {
-        this.data.detailComponent = GenericDetailComponent;
-      }
+    {
+      this.data.detailComponent = GenericDetailComponent;
+    }
     if (!Object.hasOwn(this.data, "listComponent"))
-      {
-        this.data.listComponent = GenericMasterComponent;
-      }
+    {
+      this.data.listComponent = GenericMasterComponent;
+    }
     this.ref.detectChanges();    
   }
 
