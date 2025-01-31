@@ -93,6 +93,7 @@ export class AppComponent implements OnDestroy, OnInit {
   {
     var blob = new Blob([this.data.export()], {type: "text/json;charset=utf-8"});
     FileSaver.saveAs(blob, "battlenet-api-data.json", { autoBom: true });
+    this._snackBar.open("Data exported", "", {duration:3000});
   }
 
   settings()
