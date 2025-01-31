@@ -26,7 +26,7 @@ export class JobQueueService {
   jobs: jobQueueJob[] = new Array();
   _running: boolean = false;
   _executing: boolean = false;
-  _timer: any = undefined;
+  _timer?: any = undefined;
 
   constructor() { }
 
@@ -37,8 +37,14 @@ export class JobQueueService {
 
   start()
   {
-    this._running = true;
-    this.run();
+    if (this._timer === undefined)
+    {
+      this.run();
+    }
+    else
+    {
+      this._running = true;
+    }
   }
 
   pause()
@@ -50,6 +56,8 @@ export class JobQueueService {
   {
     this._running = false;
     this.jobs.length=0;
+    clearInterval(this._timer);
+    this._timer = undefined;
   }
 
   size(): number
