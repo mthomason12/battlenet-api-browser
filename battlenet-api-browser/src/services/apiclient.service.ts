@@ -12,6 +12,7 @@ import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm
 import { mediaDataStruct } from '../model/datastructs';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from 'angular-oauth2-oidc';
+import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 
 
 /**
@@ -481,12 +482,12 @@ export class ApiclientService {
 
   //region Journal API
 
-  getJournalExpansionsIndex(): Promise<any> | undefined
+  getJournalExpansionsIndex(): Promise<journalExpansionsIndex> | undefined
   {
     return this.queryStatic(`/data/wow/journal-expansion/index`);
   }
 
-  getJournalExpansion(id: number): Promise<any> | undefined
+  getJournalExpansion(id: number): Promise<journalExpansionData> | undefined
   {
     return this.queryStatic(`/data/wow/journal-expansion/${id}`);
   }

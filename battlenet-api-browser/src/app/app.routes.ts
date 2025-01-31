@@ -10,6 +10,7 @@ import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-
 import { RealmComponent } from '../browse/realm/realm.component';
 import { ConnectedRealmComponent } from '../browse/connected-realm/connected-realm.component';
 import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
+import { JournalExpansionComponent } from '../browse/journal-expansion/journal-expansion.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -43,6 +44,10 @@ export const routes: Routes = [
             { path: 'creature-types/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","creatureTypesData"], detailComponent: CreatureTypeComponent} 
             },  
+            { path: 'expansions', redirectTo: 'expansions/', pathMatch: 'full'},               
+            { path: 'expansions/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","journalExpansionData"], detailComponent: JournalExpansionComponent} 
+            },                  
             { path: 'mounts', redirectTo: 'mounts/', pathMatch: 'full'}, 
             { path: 'mounts/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","mountData"]} 

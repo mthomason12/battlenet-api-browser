@@ -1,0 +1,8 @@
+<p>ID: {{data?.id}}</p>
+<p>Name: {{data?.name}}</p>
+<p>Dungeons:</p>
+<mat-list role="list">
+    @for (item of data?.dungeons; track item.id) {
+        <mat-list-item role="listitem">{{item.name}}</mat-list-item>
+    }
+</mat-list>

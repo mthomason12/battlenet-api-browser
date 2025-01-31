@@ -6,6 +6,7 @@ import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
 import { realmsDataDoc } from './realm';
 import { mountsDataDoc } from './mounts';
 import { connectedRealmsDataDoc } from './connectedrealm';
+import { journalExpansionsDataDoc } from './journal';
 
 @Reviver<publicDataStruct>({
   '.': Jsonizer.Self.assign(publicDataStruct),
@@ -15,7 +16,8 @@ import { connectedRealmsDataDoc } from './connectedrealm';
   creatureTypesData: creatureTypesDataDoc,
   mountData: mountsDataDoc,  
   realmData: realmsDataDoc,
-  connectedRealmData: connectedRealmsDataDoc
+  connectedRealmData: connectedRealmsDataDoc,
+  journalExpansionData: journalExpansionsDataDoc
 })
 export class publicDataStruct extends topDataStruct
 {
@@ -27,6 +29,7 @@ export class publicDataStruct extends topDataStruct
   mountData: mountsDataDoc;
   realmData: realmsDataDoc;
   connectedRealmData: connectedRealmsDataDoc;
+  journalExpansionData: journalExpansionsDataDoc;
 
   constructor(parent: dataStruct)
   {
@@ -48,7 +51,9 @@ export class publicDataStruct extends topDataStruct
 
     this.addFolder("Items");
 
-    this.addFolder("Journal");
+    this.addFolder("Journal",[
+      this.journalExpansionData = this.register(journalExpansionsDataDoc)
+    ]);
 
     this.addFolder("Mythic Keystones");
 
