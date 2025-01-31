@@ -14,8 +14,15 @@ export class RecDB {
     {
         return new Promise<void>((resolve, reject)=>{
             console.log("Opening RecDB");
-            openDB('recdb',1, {
-                upgrade(db, oldversion, newversion) {
+            openDB('recdb',2, {
+                upgrade(db, oldversion, newversion, transaction) {
+                    //upgrade to version 2
+                    if (oldversion < 1)
+                    {
+                        db.createObjectStore('wow-p-data',{keyPath: ['type', 'id']});
+                        transaction.objectStore('wow-p-data').createIndex('id','id');
+                        transaction.objectStore('wow-p-data').createIndex('type','type');
+                    }
                 }
             }).then((db) => { 
                 this.db = db; 
