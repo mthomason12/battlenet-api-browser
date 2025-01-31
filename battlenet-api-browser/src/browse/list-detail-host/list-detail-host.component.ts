@@ -41,7 +41,8 @@ interface ListDetailHostComponentData
     CommonModule,
     MatButtonModule,
     MatTabsModule,
-    RawDataComponent
+    RawDataComponent,
+    GenericDetailComponent
 ],
   templateUrl: './list-detail-host.component.html',
   styleUrl: './list-detail-host.component.scss'
@@ -175,10 +176,11 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     }
 
     //load generic master and detail components
-    if (!Object.hasOwn(this.data, "detailComponent"))
+    //currently no need for detail as we're using the generic detail on *everything*
+    /**if (!Object.hasOwn(this.data, "detailComponent"))
     {
       this.data.detailComponent = GenericDetailComponent;
-    }
+    }*/
     if (!Object.hasOwn(this.data, "listComponent"))
     {
       this.data.listComponent = GenericMasterComponent;

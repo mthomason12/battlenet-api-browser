@@ -26,11 +26,19 @@
 {
     <a mat-raised-button class="breadcrumb" (click)="returnToMaster()">&lt; {{masterList?.getName()}}</a>
     <mat-tab-group>
-        <mat-tab [label]="detailItem?.getName()!">
+        @if (data?.detailComponent !== undefined)
+        {
+            <mat-tab [label]="detailItem?.getName()!">
+                <ng-template matTabContent>
+                    <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+                </ng-template>
+            </mat-tab>
+        }
+        <mat-tab [label]="detailItem?.getName()!+' Data'">
             <ng-template matTabContent>
-                <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+                <app-generic-detail [data]="detailItem"></app-generic-detail>
             </ng-template>
-        </mat-tab>
+        </mat-tab>          
         @for (page of data!.detailPages; track $index)
         {
             <mat-tab [label]="page.title">
