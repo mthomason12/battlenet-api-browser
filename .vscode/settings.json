@@ -10,7 +10,9 @@
         "dbkey",
         "gamedata",
         "Jsonizer",
+        "soulbind",
         "soulbinds",
+        "wowaccount",
         "wowprofile",
         "wowpublic"
     ]
