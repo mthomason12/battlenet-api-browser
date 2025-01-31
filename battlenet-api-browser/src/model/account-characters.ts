@@ -39,7 +39,7 @@ interface accountProfileSummaryData
 }
 
 @Reviver<charDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(charDataDetailDoc),
+  '.': Jsonizer.Self.assign(charDataDetailDoc),
 })
 export class charDataDetailDoc extends dataDetailDoc
 {
@@ -76,9 +76,12 @@ export class charDataDoc extends dataDoc
 
 
 @Reviver<charsDataDoc>({
-  '.': Jsonizer.Self.assign(charsDataDoc),
+  '.': Jsonizer.Self.endorse(charsDataDoc),
   items: {
     '*': charDataDoc
+  },
+  details: {
+    '*': charDataDetailDoc
   }
 })
 export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charDataDetailDoc>
