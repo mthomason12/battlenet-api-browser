@@ -1,3 +1,7 @@
+<ng-container [ngTemplateOutlet]="table" [ngTemplateOutletContext]="{data: data}">
+</ng-container>
+
+<ng-template #table let-data="data">
 <table mat-table [dataSource]="data">
   <!-- Property Name Column -->
   <ng-container matColumnDef="property">
@@ -11,7 +15,8 @@
           {{item.value}}           
         }
         @else if ( typeof item.value == 'object' ) {
-            <app-object-table [dataSource]="item.value"></app-object-table>
+          <ng-container [ngTemplateOutlet]="table" [ngTemplateOutletContext]="{data: objToArray(item.value)}">
+          </ng-container>
         }
         @else if ( typeof item.value == 'function') {
           <!--- do nothing --->
@@ -21,3 +26,4 @@
 
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+</ng-template>

@@ -2,11 +2,12 @@ import { Component, input, OnInit } from '@angular/core';
 import { ObjToArray, propertyData } from '../../lib/utils';
 import { MatTableModule } from '@angular/material/table';
 import { isObject } from 'lodash';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-object-table',
-  imports: [ MatTableModule ],
+  imports: [ MatTableModule, CommonModule ],
   templateUrl: './object-table.component.html',
   styleUrl: './object-table.component.scss'
 })
@@ -27,6 +28,11 @@ export class ObjectTableComponent implements OnInit {
 
     rows(): propertyData[] {
       return ObjToArray(this.dataSource()).filter((value)=>{return value.name !== '_parent'});
+    }
+
+    objToArray(obj: any): propertyData[]
+    {
+      return ObjToArray(obj);
     }
 
     isObject(data: any): boolean {
