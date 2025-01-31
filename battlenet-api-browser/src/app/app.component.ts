@@ -14,12 +14,15 @@ import { UserdataService } from '../services/userdata.service';
 import { dataStruct } from '../model/datastructs';
 import { Subscription } from 'rxjs';
 import FileSaver from 'file-saver';
+import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-root',
   imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, 
-    MatProgressSpinnerModule, MatMenuModule,
-    ApitreeComponent, RouterOutlet, RouterLink],
+    MatProgressSpinnerModule, MatMenuModule, MatDialogModule,
+    ApitreeComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -31,6 +34,8 @@ export class AppComponent implements OnDestroy, OnInit {
   protected readonly isMobile = signal(true);
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
+
+  readonly dialog = inject(MatDialog);
 
   private connectSubscription?: Subscription;
 
@@ -87,9 +92,28 @@ export class AppComponent implements OnDestroy, OnInit {
     FileSaver.saveAs(blob, "battlenet-api-data.json", { autoBom: true });
   }
 
+  settings()
+  {
+      this.dialog.open(SettingsDialog, {
+        width: "90%",
+        data: { current: this.data.getCurrent() }
+      });
+  }
+
   treeChanged(item: dataStruct)
   {
     this.treedata = item;
   }
 
+}
+
+
+@Component({
+  selector: 'settings-dialog',
+  templateUrl: 'settings-dialog.html',
+  imports: [MatButtonModule, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogTitle, CommonModule,
+    SettingsComponent
+  ],
+})
+export class SettingsDialog {
 }

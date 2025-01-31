@@ -62,6 +62,5 @@ export const routes: Routes = [
             { path: '**', children: [] }
         ]},       
         { path: '**', children: [] }
-    ]},       
-    { path: 'settings', component: SettingsComponent },
+    ]}
 ];
