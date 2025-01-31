@@ -3,13 +3,14 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { dataStruct, dataDoc } from '../model/datastructs';
+import { dataStruct, dataDoc, dataDocDetailsCollection } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
+import { JobQueueService } from '../services/jobqueue.service';
 
 @Component({
   selector: 'app-browse',
@@ -26,6 +27,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   dataChangedSubscription?: Subscription;
 
   readonly dialog = inject(MatDialog);
+  readonly jobQueue = inject(JobQueueService);
 
   constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   { 
@@ -73,6 +75,19 @@ export class BrowseComponent implements OnInit, OnDestroy {
   currentDataDoc(): dataDoc | undefined
   {
     return this.currentData() as dataDoc;
+  }
+
+  canGetAll(): boolean
+  {
+    return (this.currentData() instanceof dataDocDetailsCollection);
+  }
+
+  getAll()
+  {
+    if (this.currentData() instanceof dataDocDetailsCollection )
+    {
+      (this.currentData() as dataDocDetailsCollection<any,any>).getAll(this.apiClient, this.jobQueue);
+    }
   }
 
 }

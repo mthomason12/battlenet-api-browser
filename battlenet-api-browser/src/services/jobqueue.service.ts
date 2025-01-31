@@ -28,7 +28,9 @@ export class JobQueueService {
   _executing: boolean = false;
   _timer?: any = undefined;
 
-  constructor() { }
+  constructor() { 
+    this.start();
+  }
 
   add(f: Function)
   {
@@ -69,13 +71,13 @@ export class JobQueueService {
     this._running = true;
     this._timer = setInterval(
       async()=>{ 
-        if (this._running && !this._executing)
+        if (this._running && !this._executing && this.jobs.length > 0)
         {
           //flag to prevent job overlap
           this._executing = true
           await this.jobs.pop()?.exec();
           this._executing = false;
         }
-      },50);
+      },40);
   }
 }

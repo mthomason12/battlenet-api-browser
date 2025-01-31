@@ -3,6 +3,7 @@ import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';
+import { JobQueueService } from '../services/jobqueue.service';
 
 //#region dataStruct
 
@@ -478,6 +479,14 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
         var json: string = JSON.stringify(data);
         var entry = this.addDetailEntryFromJson(json, apiclient);
         entry.lastupdate = new Date().getTime();
+      }
+    );
+  }
+
+  getAll(apiclient: ApiclientService, jobqueue: JobQueueService) {
+    this.items.forEach(
+      (item)=>{
+        jobqueue.add( ()=>this.reloadItem(apiclient, (item as any)[this.key]) );
       }
     );
   }

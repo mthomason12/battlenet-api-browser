@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { openDB } from 'idb';
+import { IDBPDatabase, openDB } from 'idb';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
@@ -104,12 +104,13 @@ export class UserdataService {
     localStorage.setItem(dataItem, JSON.stringify(this.data.key));
     localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
     //save to indexedDB
-    const db = openDB('data',1).then(
+    const db = openDB('data',3).then(
       db => {
         this.data.apiData.wowpublic.save(db);
         this.data.apiData.wowaccount.save(db);        
         this.data.apiData.wowprofile.save(db);
       });
+    console.log("Data saved");
   }
 
   /**
