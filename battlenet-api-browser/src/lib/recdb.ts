@@ -1,5 +1,18 @@
 import { IDBPDatabase, openDB } from 'idb';
 
+export class RecDBRec {
+    type: string;
+    id: string;
+    data: object | undefined;
+
+    constructor (type: string, id: string, data: object | undefined = undefined)
+    {
+        this.type = type;
+        this.id = id;
+        this.data = data;
+    }
+}
+
 /**
  * RecDB - A layer over IndexedDB for accessing individually-stored records
  */
@@ -29,6 +42,22 @@ export class RecDB {
                 resolve();
             });
         });
+    }
+
+    get(store: string, query: IDBValidKey): Promise<any> | undefined
+    {
+        return this.db?.get(store, query);
+    }
+
+    getAll(store: string, query: IDBValidKey): Promise<any> | undefined
+    {
+        return this.db?.getAll(store, query);
+    }
+
+    add(store: string, type: string, id: string, data: object): Promise<IDBValidKey> | undefined
+    {
+        var rec: RecDBRec = new RecDBRec(type, id, data);
+        return this.db?.add(store, rec);
     }
 
 
