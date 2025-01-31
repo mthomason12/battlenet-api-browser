@@ -2,9 +2,12 @@
     "npm.enableRunFromFolder": true,
     "npm.packageManager": "npm",
     "cSpell.words": [
+        "Apiclient",
         "apitree",
+        "badcafe",
         "bnet",
         "datastructs",
+        "dbkey",
         "gamedata",
         "Jsonizer",
         "soulbinds",
