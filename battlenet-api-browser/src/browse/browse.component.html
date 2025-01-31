@@ -1,56 +1,54 @@
 
 
-  <mat-card appearance="outlined" class="outerCard">
-      <mat-card-header>
-          <mat-card-title>
-            @if (currentData()?._parent!.hasData())
-            {
-            <div class="breadcrumbs" role="navigation"><app-breadcrumb [location]="currentData()?._parent!"></app-breadcrumb></div>
-            }
-            {{currentData()?.getName()}}
-          </mat-card-title>
-      </mat-card-header>
+<mat-card appearance="outlined" class="outerCard">
+  <mat-card-header>
+    <mat-card-title>
+      @if (currentData()?._parent!.hasData())
+      {
+      <div class="breadcrumbs" role="navigation"><app-breadcrumb [location]="currentData()?._parent!"></app-breadcrumb></div>
+      }
+      {{currentData()?.getName()}}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-card appearance="outlined" class="innerCard">
       <mat-card-content>
-        
-   
-          <mat-card appearance="outlined" class="innerCard">
-            <mat-card-content>
-              <router-outlet></router-outlet>
-            </mat-card-content>
-          </mat-card>
-
-
+        <router-outlet></router-outlet>
       </mat-card-content>
-      <mat-card-actions>
-        @if(currentData()?.hasData()) 
-        {
-          @if(apiClient.isConnected())
-          {
-              <button mat-raised-button (click)="reload()">Reload</button>
-          }
-          @else 
-          {
-            <button mat-raised-button disabled>Connect to update data</button>
-          }          
-          <!--button mat-raised-button (click)="debug()"><mat-icon>bug_report</mat-icon>Debug</button-->
-        }        
-        @else 
-        {
-          <button mat-raised-button disabled>Browse to a node that has data</button>
-        }
-        <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
-      </mat-card-actions>
-      <mat-card-footer>
-        @if(currentDataDoc()?.hasData())
-        {
-          @if (currentDataDoc()?.isLoaded())
-          {
-            <p>Data last updated: {{ currentDataDoc()?.getLastUpdate() }}</p>
-          }
-          @else
-          {
-            <p>Data not loaded</p>
-          }          
-        } 
-      </mat-card-footer>      
-  </mat-card>
+    </mat-card>
+  </mat-card-content>
+  
+  <mat-card-actions>
+    @if(currentData()?.hasData()) 
+    {
+      @if(apiClient.isConnected())
+      {
+          <button mat-raised-button (click)="reload()">Reload</button>
+      }
+      @else 
+      {
+        <button mat-raised-button disabled>Connect to update data</button>
+      }          
+      <!--button mat-raised-button (click)="debug()"><mat-icon>bug_report</mat-icon>Debug</button-->
+    }        
+    @else 
+    {
+      <button mat-raised-button disabled>Browse to a node that has data</button>
+    }
+    <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
+  </mat-card-actions>
+  <mat-card-footer>
+    @if(currentDataDoc()?.hasData())
+    {
+      @if (currentDataDoc()?.isLoaded())
+      {
+        <p>Data last updated: {{ currentDataDoc()?.getLastUpdate() }}</p>
+      }
+      @else
+      {
+        <p>Data not loaded</p>
+      }          
+    } 
+  </mat-card-footer>      
+</mat-card>
