@@ -18,7 +18,7 @@
 <div class="detail host">
 @if (mode === Mode.Detail)
 {
-    <a mat-raised-button (click)="returnToMaster()">&lt; {{masterList?.getName()}}</a>
+    <a mat-raised-button class="breadcrumb" (click)="returnToMaster()">&lt; {{masterList?.getName()}}</a>
     <mat-tab-group>
         <mat-tab [label]="detailItem?.getName()!">
             <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  

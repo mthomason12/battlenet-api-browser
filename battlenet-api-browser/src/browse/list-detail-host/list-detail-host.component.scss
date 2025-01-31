@@ -33,4 +33,8 @@ app-raw-data {
     display: block;
 }
 
+a.breadcrumb {
+    min-height:40px;
+}
+
 //note that there's also CSS in the main application CSS for app-list-detail-host .mat-mdc-tab-body-wrapper that won't work here
