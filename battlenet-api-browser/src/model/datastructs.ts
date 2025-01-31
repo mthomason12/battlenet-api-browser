@@ -214,11 +214,13 @@ export abstract class topDataStruct extends dataStruct
     return entries;
   }
 
-  save(db: IDBPDatabase<unknown>)
+  save(db: IDBPDatabase<unknown>): Promise<any>[]
   {
+    var entries: Promise<any>[] = new Array();    
     this.data.forEach((item)=>{
-      this.saveObject(db, item.ref);
+      entries.push(this.saveObject(db, item.ref));
     });
+    return entries;
   }
 
   /**

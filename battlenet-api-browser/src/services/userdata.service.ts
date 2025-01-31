@@ -99,18 +99,27 @@ export class UserdataService {
   /**
    * Save all data
    */
-  save()
+  save(): Promise<void>
   {
-    localStorage.setItem(dataItem, JSON.stringify(this.data.key));
-    localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
-    //save to indexedDB
-    const db = openDB('data',3).then(
-      db => {
-        this.data.apiData.wowpublic.save(db);
-        this.data.apiData.wowaccount.save(db);        
-        this.data.apiData.wowprofile.save(db);
-      });
-    console.log("Data saved");
+    return new Promise((resolve, reject)=>{
+      localStorage.setItem(dataItem, JSON.stringify(this.data.key));
+      localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
+      //save to indexedDB
+      var saveList: Promise<any>[] = new Array(); 
+      const db = openDB('data',3).then(
+        db => {
+          saveList = saveList.concat(this.data.apiData.wowpublic.save(db));
+          saveList = saveList.concat(this.data.apiData.wowaccount.save(db));        
+          saveList = saveList.concat(this.data.apiData.wowprofile.save(db));
+        });
+      Promise.allSettled(saveList).then(
+        ()=>{
+          console.log("Data saved");
+          resolve();
+        }
+      );
+      
+    });
   }
 
   /**
