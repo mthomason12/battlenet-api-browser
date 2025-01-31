@@ -29,7 +29,6 @@ One item on the [roadmap](#roadmap) is to provide a public API proxy for use by 
 ## Roadmap
 
 - Finish adding API endpoints
-- Option to retrieve all detail records (e.g. all the individual mounts) from a master (index) page.
 - JSON import
 - Search function
 - Hostable proxy to allow use without an API key on every client
