@@ -10,6 +10,9 @@
         @if ( typeof item.value == 'object' ) {
             <app-object-table [dataSource]="item.value"></app-object-table>
         }
+        @else if ( typeof item.value == 'function') {
+          <!--- do nothing -->
+        }
         @else {
             {{item.value}} 
         }  
