@@ -1,8 +1,8 @@
-//region Journal Expansions 
-
 import { Jsonizer, Reviver } from "@badcafe/jsonizer";
 import { ApiclientService } from "../services/apiclient.service";
 import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, keyStruct, linksStruct, refStruct } from "./datastructs";
+
+//region Journal Expansions 
 
 export interface journalExpansionData
 {
