@@ -66,7 +66,7 @@ export class journalExpansionsDataDoc extends dataDocDetailsCollection<journalEx
   }
 
   override myPath(): string {
-    return "expansions";
+    return "instances";
   }  
 }
 
