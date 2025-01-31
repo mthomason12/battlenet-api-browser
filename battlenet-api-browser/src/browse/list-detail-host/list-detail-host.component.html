@@ -14,9 +14,9 @@
                 </ng-template>
             </mat-tab>
         }
-        <mat-tab label="Raw Data">
+        <mat-tab label="Tools">
             <ng-template matTabContent>
-                <app-raw-data [data]="this.masterList"></app-raw-data>
+                <app-data-tools [data]="this.masterList" [name]="masterList?.getName()!"></app-data-tools>
             </ng-template>
         </mat-tab>
     </mat-tab-group>
@@ -47,11 +47,11 @@
                 </ng-template>
             </mat-tab>            
         }        
-        <mat-tab label="Raw Data">
+        <mat-tab label="Tools">
             <ng-template matTabContent>
-                <app-raw-data [data]="this.detailItem"></app-raw-data>
+                <app-data-tools [data]="this.detailItem" [name]="masterList?.getName()+'-'+detailItem?.getName()!"></app-data-tools>
             </ng-template>
-        </mat-tab>        
+        </mat-tab>
     </mat-tab-group>
 }
 </div>
