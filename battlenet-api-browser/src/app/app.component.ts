@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu'
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
@@ -36,6 +37,8 @@ export class AppComponent implements OnDestroy, OnInit {
   private readonly _mobileQueryListener: () => void;
 
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject( MatSnackBar );
+
 
   private connectSubscription?: Subscription;
 
@@ -99,6 +102,14 @@ export class AppComponent implements OnDestroy, OnInit {
         data: { current: this.data.getCurrent() }
       });
   }
+
+  save()
+  {
+    this.data.save().then(()=>{
+      this._snackBar.open("Data saved", "", {duration:3000});
+    });
+  }
+
 
   treeChanged(item: dataStruct)
   {

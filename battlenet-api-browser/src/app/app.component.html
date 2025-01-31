@@ -17,7 +17,7 @@
       }
     }
     @else {
-      <button mat-raised-button (click)="connect()" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
+      <button mat-raised-button (click)="connect();" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
         <mat-icon>login</mat-icon>Connect
       </button>
     }
@@ -25,6 +25,10 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="save()" [disabled]="!data.loaded">
+        <mat-icon>save</mat-icon>
+        <span>Save</span>
+      </button>      
       <button mat-menu-item (click)="settings()">
         <mat-icon>settings</mat-icon>
         <span>Settings</span>
