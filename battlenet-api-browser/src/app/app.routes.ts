@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { SettingsComponent } from '../settings/settings.component';
 import { AuthCallbackComponent } from '..//components/auth-callback/auth-callback.component';
 import { BrowseComponent } from '../browse/browse.component';
 import { AchievementComponent } from '../browse/achievement/achievement.component';
