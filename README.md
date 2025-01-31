@@ -8,7 +8,6 @@
 
 - Node v22.12.0, not tested on earlier versions.  
 
-
 ### Runtime
 
 Tested on Chrome (132.0.6834.110), Firefox (113.0.3), and Edge (132.0.2957.127) running from a local webserver. 
