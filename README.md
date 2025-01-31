@@ -25,6 +25,10 @@ Check "I do not have a service URL for this client"
 
 One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
 
+## Usage
+
+The vast majority of data is left as-is from the Battle.net API.  However, some things are tweaked for usability, and some are combined.  For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.
+
 ## Roadmap
 
 - Finish adding API endpoints
