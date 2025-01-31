@@ -3,6 +3,7 @@ import { openDB } from 'idb';
 import _ from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
+import { RecDB } from '../lib/recdb';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
@@ -14,6 +15,8 @@ const settingsItem: string = 'battlenet-api-settings';
 export class UserdataService {
   /** mutable data held that can be loaded/saved */
   public data: userDataStruct = new userDataStruct();
+  /** class for accessing individually-stored records in IndexedDB */
+  public recDB: RecDB = new RecDB();
   /** reference to the current user-selected item */
   private currentData?: dataStruct;
   /** whether we've finished loading */
@@ -67,15 +70,19 @@ export class UserdataService {
     }
     //load saved api data from IndexedDB
     console.log("Loading stored api data");
-    openDB('data',1, {
-      upgrade(db) {
-        db.createObjectStore('data');
+    openDB('data',3, {
+      upgrade(db, oldversion, newversion) {
+        if (oldversion < 1)
+          db.createObjectStore('data');
+        if (oldversion < 3)
+          db.deleteObjectStore('recordstore');
       }
     }).then (
       (db) => {
         loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db));
         loadList = loadList.concat(this.data.apiData.wowaccount.loadAll(db));        
         loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db));
+        loadList = loadList.concat(this.recDB.connect());
         //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
         Promise.allSettled(loadList).then
         (_res => {   
