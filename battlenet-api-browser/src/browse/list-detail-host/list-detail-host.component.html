@@ -2,16 +2,22 @@
 <div class="master host" [ngClass]="{'hidden' : mode !== Mode.Master}">
     <mat-tab-group>
         <mat-tab [label]="masterList?.getName()!">
-            <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
+            <ng-template matTabContent>
+                <ng-container *ngComponentOutlet="data!.listComponent!;inputs:masterInputs" />
+            </ng-template>
         </mat-tab>
         @for (page of data!.listPages; track $index)
         {
             <mat-tab [label]="page!.title!">
-                <ng-container *ngComponentOutlet="page!.component!;inputs:masterInputs" />
+                <ng-template matTabContent>                
+                    <ng-container *ngComponentOutlet="page!.component!;inputs:masterInputs" />
+                </ng-template>
             </mat-tab>
         }
         <mat-tab label="Raw Data">
-            <app-raw-data [data]="this.masterList"></app-raw-data>
+            <ng-template matTabContent>
+                <app-raw-data [data]="this.masterList"></app-raw-data>
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
 </div>
@@ -21,16 +27,22 @@
     <a mat-raised-button class="breadcrumb" (click)="returnToMaster()">&lt; {{masterList?.getName()}}</a>
     <mat-tab-group>
         <mat-tab [label]="detailItem?.getName()!">
-            <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+            <ng-template matTabContent>
+                <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
+            </ng-template>
         </mat-tab>
         @for (page of data!.detailPages; track $index)
         {
             <mat-tab [label]="page.title">
-                <ng-container *ngComponentOutlet="page.component;inputs:detailInputs" />
+                <ng-template matTabContent>
+                    <ng-container *ngComponentOutlet="page.component;inputs:detailInputs" />
+                </ng-template>
             </mat-tab>            
         }        
         <mat-tab label="Raw Data">
-            <app-raw-data [data]="this.detailItem"></app-raw-data>
+            <ng-template matTabContent>
+                <app-raw-data [data]="this.detailItem"></app-raw-data>
+            </ng-template>
         </mat-tab>        
     </mat-tab-group>
 }
