@@ -1,21 +1,21 @@
-<table mat-table [dataSource]="rows()">
+<table mat-table [dataSource]="data">
   <!-- Property Name Column -->
   <ng-container matColumnDef="property">
-    <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+    <td mat-cell *matCellDef="let item"><b>{{item.name}}</b></td>
   </ng-container>
 
   <!-- Value Column -->
   <ng-container matColumnDef="value">
     <td mat-cell *matCellDef="let item"> 
-        @if ( typeof item.value == 'object' ) {
+        @if ( typeof item.value == 'string' || typeof item.value == 'number' || typeof item.value == 'boolean') {
+          {{item.value}}           
+        }
+        @else if ( typeof item.value == 'object' ) {
             <app-object-table [dataSource]="item.value"></app-object-table>
         }
         @else if ( typeof item.value == 'function') {
-          <!--- do nothing -->
+          <!--- do nothing --->
         }
-        @else {
-            {{item.value}} 
-        }  
     </td>
   </ng-container>
 

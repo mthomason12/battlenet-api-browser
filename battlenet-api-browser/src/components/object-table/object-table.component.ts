@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { ObjToArray, propertyData } from '../../lib/utils';
 import { MatTableModule } from '@angular/material/table';
 import { isObject } from 'lodash';
@@ -13,17 +13,27 @@ import { isObject } from 'lodash';
 /**
  * Angular component for displaying an object's properties as a table
  */
-export class ObjectTableComponent {
+export class ObjectTableComponent implements OnInit {
+
     dataSource = input.required<Object>();
 
     displayedColumns: string[] = ['property', 'value'];
 
+    data = new Array();
+
+    ngOnInit(): void {
+      this.data = this.rows();
+    }
+
     rows(): propertyData[] {
-      return ObjToArray(this.dataSource);
+      return ObjToArray(this.dataSource()).filter((value)=>{return value.name !== '_parent'});
     }
 
     isObject(data: any): boolean {
       return isObject(data);
     }
+  
+
+
 }
 
