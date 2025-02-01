@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { GenericMasterComponent } from './generic-master/generic-master.component';
 import { GenericDetailComponent } from './generic-detail/generic-detail.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { RawDataComponent } from "./raw-data/raw-data.component";
 import { DataToolsComponent } from './data-tools/data-tools.component';
 
 enum ListDetailHostComponentMode
@@ -42,7 +41,6 @@ interface ListDetailHostComponentData
     CommonModule,
     MatButtonModule,
     MatTabsModule,
-    RawDataComponent,
     GenericDetailComponent,
     DataToolsComponent
 ],
