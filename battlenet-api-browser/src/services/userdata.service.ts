@@ -211,7 +211,7 @@ export class UserdataService {
     var recDB = this.recDB;
     return new Promise((resolve, reject)=>{
       recDB.delete(type, id).then(()=> {
-        recDB.add(type, id, record)!.then ((result)=>{
+        recDB.add(type, id, record as object).then ((result)=>{
           resolve(result);
         })
       });
