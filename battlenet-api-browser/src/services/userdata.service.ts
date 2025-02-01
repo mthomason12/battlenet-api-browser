@@ -179,12 +179,16 @@ export class UserdataService {
    * @param id 
    * @returns 
    */
-  getDBRec<T>(type: string, id: string): Promise<T>
+  getDBRec<T>(type: string, id: string): Promise<T | undefined>
   {
-    return new Promise<T>((resolve,reject)=>{
+    return new Promise<T | undefined>((resolve,reject)=>{
       this.recDB.get(type, id)?.then((res)=>{
-        resolve(res.data as T);
-      });
+        if (res === undefined)
+          resolve(undefined)
+        else
+          resolve(res.data as T);
+      }
+    );
     });
   }
 
@@ -196,8 +200,20 @@ export class UserdataService {
   getDBRecs<T>(type: string): Promise<T[]>
   {
     return new Promise<T[]>((resolve,reject)=>{
-      this.recDB.getAll(type)?.then((res)=>{
+      this.recDB.getAll(type).then((res)=>{
         resolve(res.map( (value)=> value.data) as T[] );
+      });
+    });
+  }
+
+  putDBRec<T>(type: string, id: string, record: Object): Promise<IDBValidKey>
+  {
+    var recDB = this.recDB;
+    return new Promise((resolve, reject)=>{
+      recDB.delete(type, id).then(()=> {
+        recDB.add(type, id, record)!.then ((result)=>{
+          resolve(result);
+        })
       });
     });
   }

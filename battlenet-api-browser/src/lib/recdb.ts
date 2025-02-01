@@ -56,14 +56,18 @@ export class RecDB {
         });
     }
 
-    get(type: string, id: string): Promise<RecDBRec> | undefined
+    get(type: string, id: string): Promise<RecDBRec | undefined> | undefined
     {
         return this.db?.get(this._store, [type, id]);
     }
 
-    getAll(type: string): Promise<RecDBRec[]> | undefined
+    getAll(type: string): Promise<RecDBRec[]>
     {
-        return this.db?.getAllFromIndex(this._store, 'type', type);
+        return this.db!.getAllFromIndex(this._store, 'type', type);
+    }
+
+    delete(type: string, id: string): Promise<void> {
+        return this.db!.delete(this._store, [type, id]);
     }
 
     add(type: string, id: string, data: object): Promise<IDBValidKey> | undefined

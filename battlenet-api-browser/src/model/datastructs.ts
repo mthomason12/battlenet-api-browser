@@ -616,6 +616,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 export abstract class dbData<T1,T2> extends dataStruct
 {
   type: string;
+  indexProperty: string = "items"; // the property in the index that holds the array of index items
 
   constructor (parent: dataStruct, type: string)
   {
@@ -623,12 +624,36 @@ export abstract class dbData<T1,T2> extends dataStruct
     this.type = type;
   }
 
-  getDBIndex(userData: UserdataService): Promise<T1>
+  /**
+   * Get index for this type
+   * @param userData 
+   */
+  getIndex(userData: UserdataService): Promise<T1>
+  {
+    return new Promise<T1>((resolve, reject)=>{
+      this.getDBIndex(userData).then((result)=>{
+        if (result === undefined)
+        {
+          //get from API and store in DB
+          this.getAPIIndex()!.then((result)=>{
+            userData.putDBRec('index', this.type, result!);
+          })
+        }
+        else
+        {
+          //use the result from the DB
+          resolve(result);
+        }
+      })
+    })
+  }
+
+  getDBIndex(userData: UserdataService): Promise<T1 | undefined>
   {
     return userData.getDBRec<T1>('index', this.type);
   }
 
-  getDBRec(userData: UserdataService, id: string): Promise<T2>
+  getDBRec(userData: UserdataService, id: string): Promise<T2 | undefined>
   {
     return userData.getDBRec<T2>(this.type, id);
   }
@@ -638,9 +663,9 @@ export abstract class dbData<T1,T2> extends dataStruct
     return userData.getDBRecs<T2>(this.type);
   }
 
-  abstract getAPIIndex(userData: UserdataService): T1 | undefined;
+  abstract getAPIIndex(): Promise<T1 | undefined>;
 
-  abstract getAPIRecord(userData: UserdataService, id: string): T1 | undefined;  
+  abstract getAPIRecord(id: string): Promise<T1 | undefined>;  
 }
 
 //#endregion
