@@ -8,6 +8,10 @@ import { RecDB } from '../lib/recdb';
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
 
+interface dataCacheKey {
+  key: string;
+}
+
 @Injectable({  providedIn: 'root',})
 /**
  * Service to hold and maintain data in application
@@ -16,7 +20,7 @@ export class UserdataService {
   /** mutable data held that can be loaded/saved */
   public data: userDataStruct = new userDataStruct();
   /** class for accessing individually-stored records in IndexedDB */
-  public recDB: RecDB = new RecDB();
+  public recDB: RecDB = new RecDB('bnetapi-recdb','wow-data');
   /** reference to the current user-selected item */
   private currentData?: dataStruct;
   /** whether we've finished loading */
@@ -25,6 +29,8 @@ export class UserdataService {
   public dataLoadedEmitter: EventEmitter<void> = new EventEmitter();  
   /** Event triggered when user selection is changed */
   public dataChangedEmitter: EventEmitter<void> = new EventEmitter();
+
+  private dataCache: WeakMap<dataCacheKey, object> = new WeakMap();
 
   /** Event triggered when refresh button is pressed */
   public refreshRequestEmitter: EventEmitter<void> = new EventEmitter();
@@ -79,18 +85,22 @@ export class UserdataService {
       }
     }).then (
       (db) => {
-        loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db));
-        loadList = loadList.concat(this.data.apiData.wowaccount.loadAll(db));        
-        loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db));
-        loadList = loadList.concat(this.recDB.connect());
-        //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
-        Promise.allSettled(loadList).then
-        (_res => {   
-          this.fixup();        
-          console.log("Data loaded");
-          this.loaded = true;
-          //send a notification to any subscribers
-          this.dataLoadedEmitter.emit()           
+        //complete connection to recDB first as it could be needed at any time
+        this.recDB.connect().then(()=>{
+          //load data stores
+          loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db, this));
+          loadList = loadList.concat(this.data.apiData.wowaccount.loadAll(db, this));        
+          loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db, this));
+          loadList = loadList.concat(this.recDB.connect());
+          //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
+          Promise.allSettled(loadList).then
+          (_res => {   
+            this.fixup();        
+            console.log("Data loaded");
+            this.loaded = true;
+            //send a notification to any subscribers
+            this.dataLoadedEmitter.emit()           
+          });
         });
       }
     ); 

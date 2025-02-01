@@ -4,6 +4,8 @@ import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
+import { RecDB } from '../lib/recdb';
+import { UserdataService } from '../services/userdata.service';
 
 //#region dataStruct
 
@@ -206,7 +208,14 @@ export abstract class topDataStruct extends dataStruct
     this.data.forEach((item)=>{item.ref.fixup(this)});
   }
 
-  loadAll(db: IDBPDatabase<unknown>): Promise<any>[] {
+  /**
+   * Currently pulls in all data.
+   * todo - just store a recDB connection for loading on demand later
+   * @param db 
+   * @param recDB 
+   * @returns 
+   */
+  loadAll(db: IDBPDatabase<unknown>, userData: UserdataService): Promise<any>[] {
     var entries: Promise<any>[] = new Array();
     this.data.forEach((item)=>{
       entries.push(this.load(db, item.ref, item.type))

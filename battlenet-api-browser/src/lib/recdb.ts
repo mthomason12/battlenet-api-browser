@@ -20,44 +20,50 @@ export class RecDB {
 
     db?: IDBPDatabase;
 
-    constructor(){       
+    private _dbName: string;
+    private _store: string;
+
+    constructor(dbName: string, store: string){       
+        this._dbName = dbName;
+        this._store = store;
     }
 
-    connect(): Promise<void>
+    connect(): Promise<IDBPDatabase>
     {
-        return new Promise<void>((resolve, reject)=>{
+        var store = this._store;
+        return new Promise<IDBPDatabase>((resolve, reject)=>{
             console.log("Opening RecDB");
-            openDB('recdb',2, {
+            openDB(this._dbName,2, {
                 upgrade(db, oldversion, newversion, transaction) {
                     //upgrade to version 2
                     if (oldversion < 1)
                     {
-                        db.createObjectStore('wow-p-data',{keyPath: ['type', 'id']});
-                        transaction.objectStore('wow-p-data').createIndex('id','id');
-                        transaction.objectStore('wow-p-data').createIndex('type','type');
+                        db.createObjectStore(store,{keyPath: ['type', 'id']});
+                        transaction.objectStore(store).createIndex('id','id');
+                        transaction.objectStore(store).createIndex('type','type');
                     }
                 }
             }).then((db) => { 
                 this.db = db; 
-                resolve();
+                resolve(db);
             });
         });
     }
 
-    get(store: string, query: IDBValidKey): Promise<any> | undefined
+    get(type: string, id: string): Promise<RecDBRec> | undefined
     {
-        return this.db?.get(store, query);
+        return this.db?.get(this._store, [type, id]);
     }
 
-    getAll(store: string, query: IDBValidKey): Promise<any> | undefined
+    getAll(type: string): Promise<RecDBRec[]> | undefined
     {
-        return this.db?.getAll(store, query);
+        return this.db?.getAllFromIndex(this._store, 'type', type);
     }
 
-    add(store: string, type: string, id: string, data: object): Promise<IDBValidKey> | undefined
+    add(type: string, id: string, data: object): Promise<IDBValidKey> | undefined
     {
         var rec: RecDBRec = new RecDBRec(type, id, data);
-        return this.db?.add(store, rec);
+        return this.db?.add(this._store, rec);
     }
 
 
