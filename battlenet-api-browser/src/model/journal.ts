@@ -1,6 +1,7 @@
 import { Jsonizer, Reviver } from "@badcafe/jsonizer";
 import { ApiclientService } from "../services/apiclient.service";
-import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, keyStruct, linksStruct, mediaDataStruct, mediaStruct, refStruct } from "./datastructs";
+import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, idNameStruct, keyStruct, linksStruct, mediaDataStruct, mediaStruct, realmStruct, refStruct } from "./datastructs";
+import { NumberValueAccessor } from "@angular/forms";
 
 //region Journal Expansions 
 
@@ -72,9 +73,7 @@ export class journalExpansionsDataDoc extends dataDocDetailsCollection<journalEx
 
 //endregion
 
-//region Journal Encounters
-
-//endregion
+//region Journal Instances
 
 interface journalEncounterCreature {
   id?: number;
@@ -170,3 +169,83 @@ export class journalEncountersDataDoc extends dataDocDetailsCollection<journalEn
   }
 
 }
+
+//endregion
+
+//region Journal Instances
+
+export interface journalInstanceData
+{
+    _links?: linksStruct;
+    id: Number;
+    name: string;
+    map?: idNameStruct;
+    area?: idNameStruct;
+    description?: string;
+    encounters?: refStruct[];
+    media?: mediaStruct;
+    minimum_level: number;
+    category: {
+      type: string;
+    }
+    order_index: number;
+}
+
+@Reviver<journalInstanceDataDetailDoc>({
+  '.': Jsonizer.Self.endorse(journalInstanceDataDetailDoc)
+})
+export class journalInstanceDataDetailDoc extends dataDetailDoc
+{
+  _links?: linksStruct;
+  instances?: refStruct[];
+}
+
+@Reviver<journalInstanceDataDoc>({
+  '.': Jsonizer.Self.endorse(journalInstanceDataDoc)
+})
+export class journalInstanceDataDoc extends dataDoc
+{
+  key?: keyStruct;
+}
+
+
+export interface journalInstancesIndex {
+    _links: linksStruct;
+    Instances: refStruct[];
+}
+
+@Reviver<journalInstancesDataDoc>({
+  '.': Jsonizer.Self.assign(journalInstancesDataDoc),
+  items: {
+    '*': journalInstanceDataDoc
+  },
+  details: {
+    '*': journalInstanceDataDetailDoc
+  }
+})
+export class journalInstancesDataDoc extends dataDocDetailsCollection<journalInstanceDataDoc, journalInstanceDataDetailDoc>
+{
+  constructor (parent: dataStruct)
+  {
+    super(parent, "Instances");
+    this.icon = "door_front";
+    this.dbkey = "wow-g-instances";
+    this.thisType = journalInstancesDataDoc;
+    this.detailsType = journalInstanceDataDetailDoc;
+    this.itemsName = "instances";
+}
+
+  override getItems = function(apiClient: ApiclientService): Promise<journalInstancesIndex>
+  {
+    return apiClient.getJournalInstancesIndex() as Promise<journalInstancesIndex>;
+  }
+
+  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<journalInstanceData>
+  {
+    return apiClient.getJournalInstance(id) as Promise<journalInstanceData>;
+  }
+
+}
+
+
+//endregion

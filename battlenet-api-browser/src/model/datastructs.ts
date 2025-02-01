@@ -644,6 +644,12 @@ export interface moneyStruct
   }
 }
 
+export interface idNameStruct
+{
+  id: number;
+  name: string;
+}
+
 export interface refStruct
 {
   id: number;

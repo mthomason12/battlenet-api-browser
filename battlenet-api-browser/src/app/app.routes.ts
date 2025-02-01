@@ -51,7 +51,11 @@ export const routes: Routes = [
             { path: 'expansions', redirectTo: 'expansions/', pathMatch: 'full'},               
             { path: 'expansions/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","journalExpansionData"], detailComponent: JournalExpansionComponent} 
-            },                  
+            },          
+            { path: 'instances', redirectTo: 'instances/', pathMatch: 'full'},               
+            { path: 'instances/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","journalInstanceData"] } 
+            },         
             { path: 'mounts', redirectTo: 'mounts/', pathMatch: 'full'}, 
             { path: 'mounts/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","mountData"]} 
