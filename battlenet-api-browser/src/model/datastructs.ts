@@ -656,7 +656,7 @@ export abstract class dbData<T1,T2> extends dataStruct
   }
 
   /**
-   * Get index for this type
+   * Get a record for this type, by ID
    * @param userData 
    */
   getRec(id: recID): Promise<T2 | undefined>
