@@ -171,4 +171,22 @@ export class UserdataService {
   {
     return this.currentData;
   }
+
+  getDBRec<T>(type: string, id: string): Promise<T>
+  {
+    return new Promise<T>((resolve,reject)=>{
+      this.recDB.get(type, id)?.then((res)=>{
+        resolve(res.data as T);
+      });
+    });
+  }
+
+  getDBRecs<T>(type: string): Promise<T[]>
+  {
+    return new Promise<T[]>((resolve,reject)=>{
+      this.recDB.getAll(type)?.then((res)=>{
+        resolve(res.map( (value)=> value.data) as T[] );
+      });
+    });
+  }
 };

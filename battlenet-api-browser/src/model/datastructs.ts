@@ -155,15 +155,33 @@ export class dataFolder extends dataStruct
 export abstract class topDataStruct extends dataStruct
 {
   data: {ref: dataDoc, type: any}[] = Array();
+  dbData: {ref: dbData<any,any>, type: any}[] = Array();
 
   folders: dataFolder[] = Array();
 
+  /**
+   * Register a legacy data structure, which is held in memory permanently
+   * @param typeref 
+   * @returns 
+   */
   register<T extends dataDoc>(typeref: { new(...args : any[]):T}): T
   {
     var struct = {ref: new typeref(this), type:typeref};
     this.data.push(struct);
     return struct.ref;
   }
+
+  /**
+   * Register a new-style data structure, which loads records on demand
+   * @param typeref
+   * @returns 
+   */
+  dbRegister<T extends dbData<any,any>>(typeref: { new(...args : any[]):T}): T
+  {
+    var struct = {ref: new typeref(this), type:typeref};
+    this.dbData.push(struct);
+    return struct.ref;
+  }  
 
   addFolder(name: string, members: dataStruct[] = [], icon: string = 'folder')
   {
@@ -209,8 +227,7 @@ export abstract class topDataStruct extends dataStruct
   }
 
   /**
-   * Currently pulls in all data.
-   * todo - just store a recDB connection for loading on demand later
+   * Pulls in all data for legacy data structures
    * @param db 
    * @param recDB 
    * @returns 
@@ -223,6 +240,11 @@ export abstract class topDataStruct extends dataStruct
     return entries;
   }
 
+  /**
+   * Saves all data for legacy data structures
+   * @param db 
+   * @returns 
+   */
   save(db: IDBPDatabase<unknown>): Promise<any>[]
   {
     var entries: Promise<any>[] = new Array();    
@@ -233,7 +255,7 @@ export abstract class topDataStruct extends dataStruct
   }
 
   /**
-   * Export data to a property in the specified object
+   * Export legacy data to a property in the specified object
    * @param obj 
    * @param name 
    */
@@ -357,6 +379,7 @@ export abstract class dataDoc extends dataStruct
   }
 
 }
+
 
 //#endregion
 
@@ -582,6 +605,38 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     }  
   }
 
+}
+
+/**
+ * alternative to dataDocDetailsCollection that uses recDB for storage
+ * 
+ * T1 is the index type
+ * T2 is the detail type
+ */
+export abstract class dbData<T1,T2> extends dataStruct
+{
+  type: string;
+
+  constructor (parent: dataStruct, type: string)
+  {
+    super(parent);
+    this.type = type;
+  }
+
+  getDBIndex(userData: UserdataService): Promise<T1>
+  {
+    return userData.getDBRec<T1>('index', this.type);
+  }
+
+  getDBRec(userData: UserdataService, id: string): Promise<T2>
+  {
+    return userData.getDBRec<T2>(this.type, id);
+  }
+
+  getDBRecs(userData: UserdataService): Promise<T2[]>
+  {
+    return userData.getDBRecs<T2>(this.type);
+  }
 }
 
 //#endregion
