@@ -104,7 +104,9 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   }
 
-  //called when refresh button is pressed
+  /**
+   * called when refresh button is pressed
+   */
   refresh()
   {
     if (this.mode == this.Mode.Master)
@@ -126,7 +128,9 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     return [].concat(key).reduce((o, k) => o[k], obj);
   }
 
-  //things to do just before oninit
+  /**
+   * things to do just before oninit
+   */
   preinit()
   {    
     this.id = undefined;
@@ -151,6 +155,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
       }
     }
 
+    //Use presence (or lack thereof) of id to determine if we're showing master or detail
     if (this.id === undefined)
     {
       this.mode = ListDetailHostComponentMode.Master;
