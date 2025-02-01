@@ -5,6 +5,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 /* This is needed for tabs to take up the full height on the page in the list-detail view*/
-app-list-detail-host .mat-mdc-tab-body-wrapper {
+app-list-detail-host div.host > mat-tab-group > .mat-mdc-tab-body-wrapper  {
     flex: 1;
+    & > mat-tab-body {
+        position: absolute;
+    }
 }
