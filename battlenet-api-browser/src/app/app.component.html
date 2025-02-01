@@ -1,6 +1,6 @@
 <div class="app-container">
 <mat-toolbar #toolbar>
-  <button mat-icon-button (click)="sidenav.toggle()">
+  <button mat-icon-button aria-label="Toggle Sidebar" type="button" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   @if (!isMobile()) {
@@ -13,27 +13,28 @@
     @if (this.apiClient.isConnected()) {
       @if (!this.apiClient.isLoggedIn())
       {
-        <button mat-raised-button (click)="bnetLogin()"><mat-icon>login</mat-icon>Battle.net Login</button>
+        <button mat-raised-button (click)="bnetLogin()" type="button" aria-label="Battle.net login"><mat-icon>login</mat-icon>Battle.net Login</button>
       }
     }
     @else {
-      <button mat-raised-button (click)="connect();" [style.display]="this.apiClient.isConnected() ? 'none' : '' ">
+      <button mat-raised-button (click)="connect();" [style.display]="this.apiClient.isConnected() ? 'none' : '' "
+        type="button" aria-label="Connect to API">
         <mat-icon>login</mat-icon>Connect
       </button>
     }
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu button" type="button">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="save()" [disabled]="!data.loaded">
+      <button mat-menu-item (click)="save()" [disabled]="!data.loaded" aria-label="Save option" type="button">
         <mat-icon>save</mat-icon>
         <span>Save</span>
       </button>      
-      <button mat-menu-item (click)="settings()">
+      <button mat-menu-item (click)="settings()" aria-label="Settings option" type="button">
         <mat-icon>settings</mat-icon>
         <span>Settings</span>
       </button>
-      <button mat-menu-item (click)="export()">
+      <button mat-menu-item (click)="export()" aria-label="Export as JSON option" type="button">
         <mat-icon>file_download</mat-icon>
         <span>Export data as JSON</span>
       </button> 
