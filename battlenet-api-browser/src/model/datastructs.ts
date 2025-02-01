@@ -617,26 +617,33 @@ export abstract class dbData<T1,T2> extends dataStruct
 {
   type: string;
   indexProperty: string = "items"; // the property in the index that holds the array of index items
+  userData: UserdataService;
+  apiClient: ApiclientService;
 
-  constructor (parent: dataStruct, type: string)
+
+  constructor (parent: dataStruct, type: string, userData: UserdataService, apiClient: ApiclientService)
   {
     super(parent);
     this.type = type;
+    this.userData = userData;
+    this.apiClient = apiClient;
   }
 
   /**
    * Get index for this type
    * @param userData 
    */
-  getIndex(userData: UserdataService): Promise<T1>
+  getIndex(): Promise<T1 | undefined>
   {
     return new Promise<T1>((resolve, reject)=>{
-      this.getDBIndex(userData).then((result)=>{
+      this.getDBIndex().then((result)=>{
         if (result === undefined)
         {
           //get from API and store in DB
           this.getAPIIndex()!.then((result)=>{
-            userData.putDBRec('index', this.type, result!);
+            if (result !== undefined)
+              this.putDBIndex(result);
+            resolve(result!);
           })
         }
         else
@@ -648,27 +655,64 @@ export abstract class dbData<T1,T2> extends dataStruct
     })
   }
 
-  getDBIndex(userData: UserdataService): Promise<T1 | undefined>
+  /**
+   * Get index for this type
+   * @param userData 
+   */
+  getRec(id: recID): Promise<T2 | undefined>
   {
-    return userData.getDBRec<T1>('index', this.type);
+    return new Promise<T2>((resolve, reject)=>{
+      this.getDBRec(id).then((result)=>{
+        if (result === undefined)
+        {
+          //get from API and store in DB
+          this.getAPIRec(id)!.then((result)=>{
+            if (result !== undefined)
+              this.putDBRec(id, result);
+            resolve(result!);
+          })
+        }
+        else
+        {
+          //use the result from the DB
+          resolve(result);
+        }
+      })
+    })
+  }  
+
+  getDBIndex(): Promise<T1 | undefined>
+  {
+    return this.userData.getDBRec<T1>('index', this.type);
   }
 
-  getDBRec(userData: UserdataService, id: string): Promise<T2 | undefined>
+  getDBRec(id:  recID): Promise<T2 | undefined>
   {
-    return userData.getDBRec<T2>(this.type, id);
+    return this.userData.getDBRec<T2>(this.type, id);
   }
 
-  getDBRecs(userData: UserdataService): Promise<T2[]>
+  getDBRecs(): Promise<T2[]>
   {
-    return userData.getDBRecs<T2>(this.type);
+    return this.userData.getDBRecs<T2>(this.type);
   }
+
+  putDBRec(id:  recID, rec: T2): Promise<IDBValidKey>
+  {
+    return this.userData.putDBRec(this.type, id, rec as object);
+  }
+
+  putDBIndex(rec: T1): Promise<IDBValidKey>
+  {
+    return this.userData.putDBRec('index', this.type, rec as object);
+  }  
 
   abstract getAPIIndex(): Promise<T1 | undefined>;
 
-  abstract getAPIRecord(id: string): Promise<T1 | undefined>;  
+  abstract getAPIRec(id:  recID): Promise<T2 | undefined>;  
 }
 
 //#endregion
+
 
 //#region Common Interfaces
 
