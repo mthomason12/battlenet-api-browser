@@ -4,7 +4,7 @@ import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
-import { RecDB } from '../lib/recdb';
+import { RecDB, recID } from '../lib/recdb';
 import { UserdataService } from '../services/userdata.service';
 
 //#region dataStruct

@@ -2,16 +2,20 @@ import { IDBPDatabase, openDB } from 'idb';
 
 export class RecDBRec {
     type: string;
-    id: string;
+    id: recID;
     data: object | undefined;
 
-    constructor (type: string, id: string, data: object | undefined = undefined)
+    constructor (type: string, id: recID, data: object | undefined = undefined)
     {
         this.type = type;
         this.id = id;
         this.data = data;
     }
 }
+
+//record id type
+export type recID = string | number;
+
 
 /**
  * RecDB - A layer over IndexedDB for accessing individually-stored records
@@ -56,7 +60,7 @@ export class RecDB {
         });
     }
 
-    get(type: string, id: string): Promise<RecDBRec | undefined> | undefined
+    get(type: string, id: recID): Promise<RecDBRec | undefined> | undefined
     {
         return this.db?.get(this._store, [type, id]);
     }
@@ -66,11 +70,11 @@ export class RecDB {
         return this.db!.getAllFromIndex(this._store, 'type', type);
     }
 
-    delete(type: string, id: string): Promise<void> {
+    delete(type: string, id: recID): Promise<void> {
         return this.db!.delete(this._store, [type, id]);
     }
 
-    add(type: string, id: string, data: object): Promise<IDBValidKey> | undefined
+    add(type: string, id: recID, data: object): Promise<IDBValidKey> | undefined
     {
         var rec: RecDBRec = new RecDBRec(type, id, data);
         return this.db?.add(this._store, rec);

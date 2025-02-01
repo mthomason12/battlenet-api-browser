@@ -3,7 +3,7 @@ import { openDB } from 'idb';
 import _, { StringNullableChain } from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
-import { RecDB } from '../lib/recdb';
+import { RecDB, recID } from '../lib/recdb';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
@@ -179,7 +179,7 @@ export class UserdataService {
    * @param id 
    * @returns 
    */
-  getDBRec<T>(type: string, id: string): Promise<T | undefined>
+  getDBRec<T>(type: string, id: recID): Promise<T | undefined>
   {
     return new Promise<T | undefined>((resolve,reject)=>{
       this.recDB.get(type, id)?.then((res)=>{
@@ -206,7 +206,7 @@ export class UserdataService {
     });
   }
 
-  putDBRec<T>(type: string, id: string, record: Object): Promise<IDBValidKey>
+  putDBRec(type: string, id: recID, record: object): Promise<IDBValidKey>
   {
     var recDB = this.recDB;
     return new Promise((resolve, reject)=>{
