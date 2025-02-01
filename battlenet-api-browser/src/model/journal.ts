@@ -1,6 +1,6 @@
 import { Jsonizer, Reviver } from "@badcafe/jsonizer";
 import { ApiclientService } from "../services/apiclient.service";
-import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, keyStruct, linksStruct, refStruct } from "./datastructs";
+import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, keyStruct, linksStruct, mediaDataStruct, mediaStruct, refStruct } from "./datastructs";
 
 //region Journal Expansions 
 
@@ -70,4 +70,103 @@ export class journalExpansionsDataDoc extends dataDocDetailsCollection<journalEx
   }  
 }
 
-//region
+//endregion
+
+//region Journal Encounters
+
+//endregion
+
+interface journalEncounterCreature {
+  id?: number;
+  name?: string;
+  creature_display?: mediaStruct;
+}
+
+
+interface journalEncounterItem {
+  id?: number;
+  item?: refStruct;
+}
+
+interface journalEncounterSection {
+  id?: number;
+  title?: string;
+  body_text?: string;
+  sections?: journalEncounterSection[];
+  creature_display?: mediaStruct;
+}
+
+interface journalEncounterMode {
+  type?: string;
+  name?: string;
+}
+
+export interface journalEncounterData
+{
+    _links?: linksStruct;
+    description?: string;
+    creatures: journalEncounterCreature[];
+    items: journalEncounterItem[];
+    sections: journalEncounterSection[];
+    instance: refStruct;
+    category: {
+      type: string;
+    };
+    modes: journalEncounterMode[]
+}
+
+@Reviver<journalEncounterDataDetailDoc>({
+  '.': Jsonizer.Self.endorse(journalEncounterDataDetailDoc)
+})
+export class journalEncounterDataDetailDoc extends dataDetailDoc
+{
+  _links?: linksStruct;
+  encounters?: refStruct[];
+}
+
+@Reviver<journalEncounterDataDoc>({
+  '.': Jsonizer.Self.endorse(journalEncounterDataDoc)
+})
+export class journalEncounterDataDoc extends dataDoc
+{
+  key?: keyStruct;
+}
+
+
+export interface journalEncountersIndex {
+    _links: linksStruct;
+    encounters: refStruct[];
+}
+
+@Reviver<journalEncountersDataDoc>({
+  '.': Jsonizer.Self.assign(journalEncountersDataDoc),
+  items: {
+    '*': journalEncounterDataDoc
+  },
+  details: {
+    '*': journalEncounterDataDetailDoc
+  }
+})
+export class journalEncountersDataDoc extends dataDocDetailsCollection<journalEncounterDataDoc, journalEncounterDataDetailDoc>
+{
+  constructor (parent: dataStruct)
+  {
+    super(parent, "Encounters");
+    this.icon = "sports_kabaddi";
+    this.dbkey = "wow-g-encounters";
+    this.thisType = journalEncountersDataDoc;
+    this.detailsType = journalEncounterDataDetailDoc;
+    this.itemsName = "encounters";
+}
+
+  override getItems = function(apiClient: ApiclientService): Promise<journalEncountersIndex>
+  {
+    return apiClient.getJournalEncountersIndex() as Promise<journalEncountersIndex>;
+  }
+
+  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<journalEncounterData>
+  {
+    return apiClient.getJournalEncounter(id) as Promise<journalEncounterData>;
+  }
+
+}

@@ -14,7 +14,10 @@
         @if ( typeof item.value == 'string' || typeof item.value == 'number' || typeof item.value == 'boolean') {
           {{item.value}}           
         }
-        @else if ( typeof item.value == 'object' ) {
+        @else if ( typeof item.value == 'object' && item.value === null) {
+          (null)
+        }
+        @else if ( typeof item.value == 'object' && item.value !== null) {
           <ng-container [ngTemplateOutlet]="table" [ngTemplateOutletContext]="{data: objToArray(item.value)}">
           </ng-container>
         }

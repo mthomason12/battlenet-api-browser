@@ -43,7 +43,11 @@ export const routes: Routes = [
             { path: 'creature-types', redirectTo: 'creature-types/', pathMatch: 'full'}, 
             { path: 'creature-types/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","creatureTypesData"], detailComponent: CreatureTypeComponent} 
-            },  
+            }, 
+            { path: 'encounters', redirectTo: 'encounters/', pathMatch: 'full'},               
+            { path: 'encounters/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","journalEncounterData"] } 
+            },   
             { path: 'expansions', redirectTo: 'expansions/', pathMatch: 'full'},               
             { path: 'expansions/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","journalExpansionData"], detailComponent: JournalExpansionComponent} 
