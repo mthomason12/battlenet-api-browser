@@ -24,8 +24,7 @@ Array.prototype.onlyUnique = function(): any[] {
 Array.prototype.merge = function(arr: any[], key: string): any[] {
   return Array.from([...this, ...arr]
     .reduce((prev, current) => prev.set(current[key], current), new Map)
-    .values()
-);
+    .values());
 }
 
 
