@@ -74,10 +74,10 @@ export class RecDB {
         return this.db!.delete(this._store, [type, id]);
     }
 
-    add(type: string, id: recID, data: object): Promise<IDBValidKey> | undefined
+    add(type: string, id: recID, data: object): Promise<IDBValidKey>
     {
         var rec: RecDBRec = new RecDBRec(type, id, data);
-        return this.db?.add(this._store, rec);
+        return this.db!.add(this._store, rec);
     }
 
 
