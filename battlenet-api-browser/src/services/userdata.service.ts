@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
-import _ from 'lodash';
+import _, { StringNullableChain } from 'lodash';
 import { dataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
@@ -9,7 +9,8 @@ const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
 
 interface dataCacheKey {
-  key: string;
+  type: string;
+  id: string;
 }
 
 @Injectable({  providedIn: 'root',})
@@ -172,6 +173,12 @@ export class UserdataService {
     return this.currentData;
   }
 
+  /**
+   * Retrieve record from database
+   * @param type 
+   * @param id 
+   * @returns 
+   */
   getDBRec<T>(type: string, id: string): Promise<T>
   {
     return new Promise<T>((resolve,reject)=>{
@@ -181,6 +188,11 @@ export class UserdataService {
     });
   }
 
+  /**
+   * Retrieve all records of type 
+   * @param type
+   * @returns 
+   */
   getDBRecs<T>(type: string): Promise<T[]>
   {
     return new Promise<T[]>((resolve,reject)=>{

@@ -637,6 +637,10 @@ export abstract class dbData<T1,T2> extends dataStruct
   {
     return userData.getDBRecs<T2>(this.type);
   }
+
+  abstract getAPIIndex(userData: UserdataService): T1 | undefined;
+
+  abstract getAPIRecord(userData: UserdataService, id: string): T1 | undefined;  
 }
 
 //#endregion
