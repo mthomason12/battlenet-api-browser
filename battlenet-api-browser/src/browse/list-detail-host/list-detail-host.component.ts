@@ -3,7 +3,7 @@ import { ApiclientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
-import { dataDoc, dataDocCollection, dataDocDetailsCollection } from '../../model/datastructs';
+import { dataDoc, dataDocDetailsCollection, IMasterDetail } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -68,7 +68,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   protected data?: ListDetailHostComponentData;
 
   //references to current master/detail data
-  protected masterList?: dataDocCollection<any>;
+  protected masterList?: IMasterDetail;
   protected detailItem?: dataDoc;
 
   //inputs and outputs to pass to override components
@@ -111,11 +111,11 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   {
     if (this.mode == this.Mode.Master)
     {
-      this.masterList?.reload(this.apiClient);
+      this.masterList!.reload(this.apiClient);
     }
     else
     {
-      (this.masterList as dataDocDetailsCollection<any,any>).reloadItem(this.apiClient, this.id)
+      this.masterList!.reloadItem(this.apiClient, this.id)
     }
   }
 
@@ -139,6 +139,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     //find reference from string passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
     this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
+    
     if (this.masterList!.stringKey)
     {
       if (idstr!.length > 0)
@@ -180,17 +181,12 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
       (this.masterList as dataDocDetailsCollection<any,any>).checkItemLoaded(this.apiClient, this.id);
     }
 
-    //load generic master and detail components
-    //currently no need for detail as we're using the generic detail on *everything*
-    /**if (!Object.hasOwn(this.data, "detailComponent"))
-    {
-      this.data.detailComponent = GenericDetailComponent;
-    }*/
+    //load generic master components if needed
     if (!Object.hasOwn(this.data, "listComponent"))
     {
       this.data.listComponent = GenericMasterComponent;
     }
-    this.ref.detectChanges();    
+    this.ref.detectChanges(); 
   }
 
   /**

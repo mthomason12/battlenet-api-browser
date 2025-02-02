@@ -3,7 +3,7 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { dataStruct, dataDoc, dataDocDetailsCollection } from '../model/datastructs';
+import { dataDoc, dataDocDetailsCollection, IMasterDetail } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -67,14 +67,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
   }
 
-  currentData(): dataStruct | undefined
+  currentData(): IMasterDetail | undefined
   {
     return this.data.getCurrent();
   }
 
-  currentDataDoc(): dataDoc | undefined
+  currentDataDoc(): dataDoc
   {
-    return this.currentData() as dataDoc;
+    if (this.currentData() instanceof dataDoc)
+    {
+      return this.currentData() as unknown as dataDoc;
+    }
+    else
+    {
+      throw new Error("Attempt to access a non-dataDoc as dataDoc");
+    }
   }
 
   canGetAll(): boolean
