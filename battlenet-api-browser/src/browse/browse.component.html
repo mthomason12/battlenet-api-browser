@@ -39,9 +39,9 @@
     <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
   </mat-card-actions>
   <mat-card-footer>
-    @if(currentDataDoc()?.hasData())
+    @if(currentDataDoc().hasData())
     {
-      @if (currentDataDoc()?.isLoaded())
+      @if (currentDataDoc().isLoaded())
       {
         <p>Data last updated: {{ currentDataDoc().getLastUpdate() }}</p>
       }
