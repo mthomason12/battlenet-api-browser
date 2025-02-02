@@ -71,11 +71,19 @@ export abstract class dataStruct {
   {
   }
 
+  /**
+   * Return this object's segment of the URL
+   * @returns
+   */
   myPath(): string
   {
     return "";
   }
 
+  /**
+   * Return a full URL to this object, recursing through parents to build it
+   * @returns 
+   */
   path(): string
   {
     return (this._parent?.path() ?? "")+"/"+this.myPath();
@@ -610,9 +618,11 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 /**
  * alternative to dataDocDetailsCollection that uses recDB for storage
  * 
- * T1 is the index type
- * T2 is the detail type
- * These are usually provided as interfaces representing the API data structures.
+ * @template T1 - index type
+ * @template T2 - detail type 
+ * 
+ * @description
+ * T1 and T2 are usually provided as interfaces representing the API data structures.
  * 
  * Descendant classes are expected to set the following in their constructor:
  * type
@@ -686,35 +696,69 @@ export abstract class dbData<T1,T2> extends dataStruct
     })
   }  
 
+  /**
+   * Get index directly from the database
+   * @returns 
+   */
   getDBIndex(): Promise<T1 | undefined>
   {
     return this.userData.getDBRec<T1>('index', this.type);
   }
 
+  /**
+   * Get a record directly from the database, specified by ID
+   * @param id 
+   * @returns 
+   */
   getDBRec(id:  recID): Promise<T2 | undefined>
   {
     return this.userData.getDBRec<T2>(this.type, id);
   }
 
+  /**
+   * Get all records of this type from the database
+   * @returns 
+   */
   getDBRecs(): Promise<T2[]>
   {
     return this.userData.getDBRecs<T2>(this.type);
   }
 
-  putDBRec(id:  recID, rec: T2): Promise<IDBValidKey>
+  /**
+   * Put a record into the database, overwriting the same ID if present
+   * @param id
+   * @param rec 
+   * @returns 
+   */
+  putDBRec(id: recID, rec: T2): Promise<IDBValidKey>
   {
     return this.userData.putDBRec(this.type, id, rec as object);
   }
 
+  /**
+   * Put index into the database, overwriting existing if present
+   * @param rec
+   * @returns 
+   */
   putDBIndex(rec: T1): Promise<IDBValidKey>
   {
     return this.userData.putDBRec('index', this.type, rec as object);
   }  
 
+  /**
+   * Override in descendants to pull the index from the API
+   */
   abstract getAPIIndex(): Promise<T1 | undefined>;
 
+  /**
+   * Override in descendants to pull a record from the API
+   * @param id 
+   */
   abstract getAPIRec(id:  recID): Promise<T2 | undefined>;  
 
+  /**
+   * @inheritdoc 
+   */
   override myPath(): string {
     return this.itemsName.replaceAll('_','-');
   }
