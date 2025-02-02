@@ -612,21 +612,26 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
  * 
  * T1 is the index type
  * T2 is the detail type
+ * These are usually provided as interfaces representing the API data structures.
+ * 
+ * Descendant classes are expected to set the following in their constructor:
+ * type
+ * indexProperty
+ * icon
+ * itemsName (used both as the "items" array property in the index and in the path )
  */
 export abstract class dbData<T1,T2> extends dataStruct
 {
-  type: string;
-  indexProperty: string = "items"; // the property in the index that holds the array of index items
+  type: string = "items";
+  itemsName: string = "items";
   userData: UserdataService;
-  apiClient: ApiclientService;
+  apiClient?: ApiclientService;
 
 
-  constructor (parent: dataStruct, type: string, userData: UserdataService, apiClient: ApiclientService)
+  constructor (parent: dataStruct, userData: UserdataService)
   {
     super(parent);
-    this.type = type;
     this.userData = userData;
-    this.apiClient = apiClient;
   }
 
   /**
@@ -709,6 +714,10 @@ export abstract class dbData<T1,T2> extends dataStruct
   abstract getAPIIndex(): Promise<T1 | undefined>;
 
   abstract getAPIRec(id:  recID): Promise<T2 | undefined>;  
+
+  override myPath(): string {
+    return this.itemsName.replaceAll('_','-');
+  }
 }
 
 //#endregion
