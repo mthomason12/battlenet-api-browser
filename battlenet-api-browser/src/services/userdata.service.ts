@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import _, { StringNullableChain } from 'lodash';
-import { dataStruct } from '../model/datastructs';
+import { apiDataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB, recID } from '../lib/recdb';
 
@@ -19,11 +19,11 @@ interface dataCacheKey {
  */
 export class UserdataService {
   /** mutable data held that can be loaded/saved */
-  public data: userDataStruct = new userDataStruct();
+  public data: userDataStruct;
   /** class for accessing individually-stored records in IndexedDB */
   public recDB: RecDB = new RecDB('bnetapi-recdb','wow-data');
   /** reference to the current user-selected item */
-  private currentData?: dataStruct;
+  private currentData?: IMasterDetail;
   /** whether we've finished loading */
   public loaded: boolean = false;
   /** Event triggered when data has finished loading */
@@ -38,6 +38,7 @@ export class UserdataService {
 
   constructor()
   {
+    this.data = new userDataStruct(this.recDB);
     var loadList: Promise<any>[] = new Array();  
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
@@ -158,7 +159,7 @@ export class UserdataService {
    * Set the current user-selected data struct
    * @param data 
    */
-  setCurrent(data: dataStruct)
+  setCurrent(data: IMasterDetail)
   {
     this.currentData = data;
     this.dataChangedEmitter.emit();
@@ -168,53 +169,9 @@ export class UserdataService {
    * Get the current user-selected data struct
    * @returns 
    */
-  getCurrent(): dataStruct | undefined
+  getCurrent(): IMasterDetail
   {
-    return this.currentData;
+    return this.currentData!;
   }
 
-  /**
-   * Retrieve record from database
-   * @param type 
-   * @param id 
-   * @returns 
-   */
-  getDBRec<T>(type: string, id: recID): Promise<T | undefined>
-  {
-    return new Promise<T | undefined>((resolve,reject)=>{
-      this.recDB.get(type, id)?.then((res)=>{
-        if (res === undefined)
-          resolve(undefined)
-        else
-          resolve(res.data as T);
-      }
-    );
-    });
-  }
-
-  /**
-   * Retrieve all records of type 
-   * @param type
-   * @returns 
-   */
-  getDBRecs<T>(type: string): Promise<T[]>
-  {
-    return new Promise<T[]>((resolve,reject)=>{
-      this.recDB.getAll(type).then((res)=>{
-        resolve(res.map( (value)=> value.data) as T[] );
-      });
-    });
-  }
-
-  putDBRec(type: string, id: recID, record: object): Promise<IDBValidKey>
-  {
-    var recDB = this.recDB;
-    return new Promise((resolve, reject)=>{
-      recDB.delete(type, id).then(()=> {
-        recDB.add(type, id, record as object).then ((result)=>{
-          resolve(result);
-        })
-      });
-    });
-  }
 };

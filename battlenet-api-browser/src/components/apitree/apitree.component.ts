@@ -35,11 +35,11 @@ export class ApitreeComponent {
 
   select(item: dataStruct)
   {   
-    this.selectedItem = item;   
     if (item instanceof dataDocDetailsCollection || item instanceof dbData)
     {
-      this.dataService.setCurrent(item);
+      this.selectedItem = item;   
+      this.dataService.setCurrent(item);    
     }
-    this.changed.emit(this.selectedItem);
+    this.changed.emit(this.selectedItem);      
   }
 }

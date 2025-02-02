@@ -1,6 +1,6 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, dataDetailDoc, dataDocDetailsCollection, factionStruct, refStruct } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, factionStruct, refStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 interface mountRequirementsStruct
 {
@@ -20,7 +20,7 @@ interface mountSourceStruct
   name: string;
 }
 
-export interface mountData
+export interface mountData extends apiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -40,61 +40,29 @@ interface mountIndexEntry
   id: number;
 }
 
-export interface mountsIndex
+export interface mountsIndex extends apiIndexDoc
 {
   _links: linksStruct;
   mounts: mountIndexEntry;
 }
 
-@Reviver<mountDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(mountDataDetailDoc)
-})
-export class mountDataDetailDoc extends dataDetailDoc
+export class mountsDataDoc extends dbData<mountsIndex, mountData>
 {
-  _links?: linksStruct;
-  description?: string;
-  creature_displays?: mountDisplaysStruct[];
-  source?: mountSourceStruct;
-  faction?: factionStruct;
-  requirements?: mountRequirementsStruct;
-  should_exclude_if_uncollected?: boolean;
-}
-
-@Reviver<mountDataDoc>({
-  '.': Jsonizer.Self.endorse(mountDataDoc)
-})
-export class mountDataDoc extends dataDoc
-{
-  key?: keyStruct;
-}
-
-@Reviver<mountsDataDoc>({
-  '.': Jsonizer.Self.assign(mountsDataDoc),
-  items: {
-    '*': mountDataDoc
-  },
-  details: {
-    '*': mountDataDetailDoc
-  }
-})
-export class mountsDataDoc extends dataDocDetailsCollection<mountDataDoc, mountDataDetailDoc>
-{
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, "Mounts");
+    super(parent, recDB);
     this.icon = "bedroom_baby";
-    this.dbkey = "wow-g-mounts";
-    this.thisType = mountsDataDoc;
-    this.detailsType = mountDataDetailDoc;
+    this.type = "mounts";
     this.itemsName = "mounts";
+    this.title = "Mounts";
 }
 
-  override getItems = function(apiClient: ApiclientService): Promise<mountsIndex>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<mountsIndex>
   {
     return apiClient.getMountIndex() as Promise<mountsIndex>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<mountData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<mountData>
   {
     return apiClient.getMount(id) as Promise<mountData>;
   }

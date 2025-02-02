@@ -1,13 +1,14 @@
 import { dataStruct, topDataStruct } from './datastructs';
 import { charsDataDoc } from './account-characters';
+import { RecDB } from '../lib/recdb';
 
 export class accountDataStruct extends topDataStruct
 {
   characterData: charsDataDoc;
 
-  constructor(parent: dataStruct)
+  constructor(parent: dataStruct, recDB: RecDB)
   {
-    super(parent);
+    super(parent, recDB);
   
     this.characterData = this.register(charsDataDoc);
 

@@ -3,20 +3,19 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { dataDoc, dataDocDetailsCollection, IMasterDetail } from '../model/datastructs';
+import { dataDocDetailsCollection, IMasterDetail } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { JobQueueService } from '../services/jobqueue.service';
 
 @Component({
   selector: 'app-browse',
   imports: [ 
     MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, MatCardFooter,
-    CommonModule, RouterOutlet, BreadcrumbComponent 
+    CommonModule, RouterOutlet
   ],
   templateUrl: './browse.component.html',
   styleUrl: './browse.component.scss'
@@ -28,6 +27,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   readonly dialog = inject(MatDialog);
   readonly jobQueue = inject(JobQueueService);
+
+  displayData?: IMasterDetail;
 
   constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   { 
@@ -42,7 +43,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
 
     this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(()=>{
-      this.cdr.detectChanges(); 
+      this.displayData = this.currentData();
     });
   }
 
@@ -62,26 +63,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
   debug()
   {
     this.dialog.open(BrowseDebugDialog, {
-      width: "90%",
-      data: { current: this.data.getCurrent() }
+      width: "90%"
     });
   }
 
   currentData(): IMasterDetail | undefined
   {
     return this.data.getCurrent();
-  }
-
-  currentDataDoc(): dataDoc
-  {
-    if (this.currentData() instanceof dataDoc)
-    {
-      return this.currentData() as unknown as dataDoc;
-    }
-    else
-    {
-      throw new Error("Attempt to access a non-dataDoc as dataDoc");
-    }
   }
 
   canGetAll(): boolean

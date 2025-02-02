@@ -3,11 +3,7 @@
 <mat-card appearance="outlined" class="outerCard">
   <mat-card-header>
     <mat-card-title>
-      @if (currentData()?._parent!.hasData())
-      {
-      <div class="breadcrumbs" role="navigation"><app-breadcrumb [location]="currentData()?._parent!"></app-breadcrumb></div>
-      }
-      {{currentData()?.getName()}}
+      {{displayData?.getName()}}
     </mat-card-title>
   </mat-card-header>
 
@@ -20,7 +16,7 @@
   </mat-card-content>
   
   <mat-card-actions>
-    @if(currentData()?.hasData()) 
+    @if(displayData?.hasData()) 
     {
       @if(apiClient.isConnected())
       {
@@ -39,11 +35,11 @@
     <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
   </mat-card-actions>
   <mat-card-footer>
-    @if(currentDataDoc().hasData())
+    @if(displayData?.hasData())
     {
-      @if (currentDataDoc().isLoaded())
+      @if (displayData?.getLastUpdate())
       {
-        <p>Data last updated: {{ currentDataDoc().getLastUpdate() }}</p>
+        <p>Data last updated: {{ displayData?.getLastUpdate() }}</p>
       }
       @else
       {

@@ -1,5 +1,5 @@
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
-import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
+import { apiDataDoc, dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnoreReplacer } from 'json-ignore';
 
@@ -102,27 +102,30 @@ export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charData
    * Custom load mechanism as characters are inside account objects
    * @param apiclient 
    */
-  override async reload(apiclient: ApiclientService)
+  override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
   {
-    await this.getItems!(apiclient).then (
-      (data: accountProfileSummaryData) => {
-        //clear array
-        this.items.length = 0;
-        for (let account of data.wow_accounts)
-          {
-            for (let character of account.characters)
+    return new Promise<apiDataDoc>((resolve)=>{
+      this.getItems!(apiclient).then (
+        (data: accountProfileSummaryData) => {
+          //clear array
+          this.items.length = 0;
+          for (let account of data.wow_accounts)
             {
-              character.account = account.id;
-              var json = JSON.stringify(character);
-              const reviver = Reviver.get(charDataDoc);
-              this.items.push (JSON.parse(json, reviver));
+              for (let character of account.characters)
+              {
+                character.account = account.id;
+                var json = JSON.stringify(character);
+                const reviver = Reviver.get(charDataDoc);
+                this.items.push (JSON.parse(json, reviver));
+              }
             }
-          }
-        this.postFixup();
-        this.lastupdate = new Date().getTime();
-        this.postProcess();
-      }
-    );
+          this.postFixup();
+          this.lastUpdate = new Date().getTime();
+          this.postProcess();
+          resolve(this);
+        }
+      );
+    });
   }
 
   override postProcess(): void {
@@ -143,14 +146,15 @@ export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charData
    * @param apiclient 
    * @param key 
    */
-  override async reloadItem(apiclient: ApiclientService, key: any)
+  override async reloadItem(apiclient: ApiclientService, key: any): Promise<apiDataDoc>
   {
     var json: string = JSON.stringify(this.items.find(
       (data, index, array)=>{
         return key === (data as any)[this.key];
       }), jsonIgnoreReplacer);
     var entry = this.addDetailEntryFromJson(json, apiclient);
-    entry.lastupdate = new Date().getTime();
+    entry.lastUpdate = new Date().getTime();
+    return new Promise((resolve)=>{return entry});
   }
 
 }

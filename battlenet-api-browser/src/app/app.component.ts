@@ -30,7 +30,6 @@ import { SettingsComponent } from '../settings/settings.component';
 export class AppComponent implements OnDestroy, OnInit {
   title = 'battlenet-api-browser';
   apiClient!: ApiclientService;
-  treedata: dataStruct | undefined;
 
   protected readonly isMobile = signal(true);
   private readonly _mobileQuery: MediaQueryList;
@@ -99,8 +98,7 @@ export class AppComponent implements OnDestroy, OnInit {
   settings()
   {
       this.dialog.open(SettingsDialog, {
-        width: "90%",
-        data: { current: this.data.getCurrent() }
+        width: "90%"
       });
   }
 
@@ -109,12 +107,6 @@ export class AppComponent implements OnDestroy, OnInit {
     this.data.save().then(()=>{
       this._snackBar.open("Data saved", "", {duration:3000});
     });
-  }
-
-
-  treeChanged(item: dataStruct)
-  {
-    this.treedata = item;
   }
 
 }

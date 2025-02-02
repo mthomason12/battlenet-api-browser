@@ -7,20 +7,8 @@ import { realmsDataDoc } from './realm';
 import { mountsDataDoc } from './mounts';
 import { connectedRealmsDataDoc } from './connectedrealm';
 import { journalEncountersDataDoc, journalExpansionsDataDoc, journalInstancesDataDoc } from './journal';
+import { RecDB } from '../lib/recdb';
 
-@Reviver<publicDataStruct>({
-  '.': Jsonizer.Self.assign(publicDataStruct),
-  achievementData: achievementsDataDoc,
-  covenantData: covenantsDataDoc,
-  creatureFamiliesData: creatureFamiliesDataDoc,
-  creatureTypesData: creatureTypesDataDoc,
-  mountData: mountsDataDoc,  
-  realmData: realmsDataDoc,
-  connectedRealmData: connectedRealmsDataDoc,
-  journalExpansionData: journalExpansionsDataDoc,
-  journalEncounterData: journalEncountersDataDoc,
-  journalInstanceData: journalInstancesDataDoc
-})
 export class publicDataStruct extends topDataStruct
 {
   achievementData: achievementsDataDoc;
@@ -35,9 +23,9 @@ export class publicDataStruct extends topDataStruct
   journalEncounterData: journalEncountersDataDoc;
   journalInstanceData: journalInstancesDataDoc;
 
-  constructor(parent: dataStruct)
+  constructor(parent: dataStruct, recDB: RecDB)
   {
-    super(parent);
+    super(parent, recDB);
  
     this.addFolder("Achievements",[
       this.achievementData = this.register(achievementsDataDoc)
@@ -64,7 +52,7 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Mythic Keystones");
 
     this.addFolder("Mounts",[
-      this.mountData = this.register(mountsDataDoc)
+      this.mountData = this.dbRegister(mountsDataDoc)
     ]);
 
     this.addFolder("Pets");

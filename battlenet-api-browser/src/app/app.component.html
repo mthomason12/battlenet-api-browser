@@ -42,7 +42,7 @@
 </mat-toolbar>
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" [opened]="true"  fixedTopGap="56">
-    <app-apitree (valueChanged)="treeChanged($event)"></app-apitree>    
+    <app-apitree></app-apitree>    
   </mat-sidenav>
   <mat-sidenav-content #content> 
     @if (data.loaded) {

@@ -4,19 +4,22 @@ import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _ from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
-import { recID } from '../lib/recdb';
+import { RecDB, recID } from '../lib/recdb';
 import { UserdataService } from '../services/userdata.service';
+import { inject } from '@angular/core';
+import { apiDataStruct } from './userdata';
 
 //#region dataStruct
 
 /**
  * A generic data structure
  */
-export abstract class dataStruct {
+export abstract class dataStruct implements apiDataDoc {
   @jsonIgnore()
   _parent?: dataStruct;
   @jsonIgnore()
   icon: string = "";
+  lastUpdate: number | undefined;
 
   constructor (parent?: dataStruct)
   {
@@ -46,9 +49,10 @@ export abstract class dataStruct {
    * Reload data from API
    * @param apiclient 
    */
-  async reload(_apiclient: ApiclientService): Promise<void>
+  async reload(_apiclient: ApiclientService): Promise<apiDataDoc>
   {
     this.postProcess();
+    return new Promise((resolve)=>{resolve(this)});
   }
 
   /**
@@ -164,8 +168,14 @@ export abstract class topDataStruct extends dataStruct
 {
   data: {ref: dataDoc, type: any}[] = Array();
   dbData: {ref: dbData<any,any>, type: any}[] = Array();
-
   folders: dataFolder[] = Array();
+  recDB: RecDB;
+
+  constructor (parent: dataStruct, recDB: RecDB)
+  {
+    super (parent);
+    this.recDB = recDB;
+  }
 
   /**
    * Register a legacy data structure, which is held in memory permanently
@@ -186,7 +196,7 @@ export abstract class topDataStruct extends dataStruct
    */
   dbRegister<T extends dbData<any,any>>(typeref: { new(...args : any[]):T}): T
   {
-    var struct = {ref: new typeref(this), type:typeref};
+    var struct = {ref: new typeref(this, this.recDB), type:typeref};
     this.dbData.push(struct);
     return struct.ref;
   }  
@@ -313,8 +323,6 @@ export abstract class dataDoc extends dataStruct
   @jsonIgnore()
   needsauth: boolean = false;
 
-  lastupdate: number | undefined;
-
   constructor(parent: dataStruct, id: number, name: string)
   {
     super(parent);
@@ -332,19 +340,25 @@ export abstract class dataDoc extends dataStruct
     return true;
   }  
 
-  override async reload(apiclient: ApiclientService): Promise<void>
+  override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
   {
-    super.reload(apiclient).then (
-      () => {this.lastupdate = new Date().getTime()}
-    )
+    var ret = super.reload(apiclient);
+    ret.then (
+      (result) => {
+        this.lastUpdate = new Date().getTime();
+      }
+    ) 
+    return ret; 
   }
 
   override checkLoaded(apiclient: ApiclientService): void
   {
-    if (!this.isLoaded() && apiclient.isConnected())
-    {
-      this.reload(apiclient);
-    }
+    this.isLoaded().then((res)=>{
+      if (res && apiclient.isConnected())
+      {
+        this.reload(apiclient);
+      }
+    });
   }
 
   /**
@@ -352,15 +366,17 @@ export abstract class dataDoc extends dataStruct
    */
   getLastUpdate(): Date
   {
-    return new Date(this.lastupdate!);
+    return new Date(this.lastUpdate!);
   }
 
   /**
    * @returns true if data is loaded, otherwise false
    */
-  isLoaded(): boolean
+  isLoaded(): Promise<boolean>
   {
-    return (this.lastupdate !== undefined);
+    return new Promise((resolve)=>{
+      resolve (this.lastUpdate !== undefined);
+    })
   }
 
   /**
@@ -394,9 +410,8 @@ export abstract class dataDoc extends dataStruct
 //#region dataDetailDoc
 
 //a numerically-indexed dataDoc designed for use in an array
-export abstract class dataDetailDoc extends dataDoc
+export abstract class dataDetailDoc extends dataDoc implements apiIndexDoc
 {
-
   constructor (parent: dataStruct, id: number, name: string)
   {
     super(parent, id, name);
@@ -411,11 +426,16 @@ export abstract class dataDetailDoc extends dataDoc
   {  
   }
 
-  override async reload(apiClient: ApiclientService)
+  override async reload(apiClient: ApiclientService): Promise<apiDataDoc>
   {
-    (this._parent as any).reloadItem(apiClient, (this as any)[(this._parent as any).key]).then(()=>{
-      super.reload(apiClient);
+    return new Promise<apiDataDoc>((resolve)=>{
+      (this._parent as dataDocDetailsCollection<any,any>).reloadItem(apiClient, (this as any)[(this._parent as any).key]).then(()=>{
+        super.reload(apiClient).then((res)=>{
+          resolve(res);
+        });
+      })
     })
+
   }
 
 }
@@ -461,18 +481,22 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
     }      
   }
 
-  override async reload(apiclient: ApiclientService)
+  override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
   {
-    this.getItems!(apiclient).then (
-      (data: any) => {
-        var json: string = JSON.stringify(data[this.itemsName]);
-        const reviver = Reviver.get(this.thisType);
-        const thisReviver = reviver['items'] as Reviver<T[]>;
-        this.items = JSON.parse(json, thisReviver);
-        this.postFixup();
-        super.reload(apiclient);
-      }
-    );
+    return new Promise((resolve)=>{
+      this.getItems!(apiclient).then (
+        (data: any) => {
+          var json: string = JSON.stringify(data[this.itemsName]);
+          const reviver = Reviver.get(this.thisType);
+          const thisReviver = reviver['items'] as Reviver<T[]>;
+          this.items = JSON.parse(json, thisReviver);
+          this.postFixup();
+          super.reload(apiclient).then((res)=>{
+            resolve(res);
+          })
+        }
+      );
+    });
   }
 
   override postFixup(): void {
@@ -491,7 +515,7 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
 /**
  * Class for a dataDocCollection that also maintains a set of individual details records
  */
-export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDoc> extends dataDocCollection<T1>
+export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDoc> extends dataDocCollection<T1> implements IMasterDetail
 {
   details: T2[] = new Array();
   getDetails?: Function;
@@ -514,15 +538,18 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     }
   }
 
-  async reloadItem(apiclient: ApiclientService, key: any)
+  async reloadItem(apiclient: ApiclientService, key: any): Promise<apiIndexDoc>
   {
-    this.getDetails!(apiclient, key).then (
-      (data: any) => {
-        var json: string = JSON.stringify(data);
-        var entry = this.addDetailEntryFromJson(json, apiclient);
-        entry.lastupdate = new Date().getTime();
-      }
-    );
+    return new Promise((resolve)=>{
+      this.getDetails!(apiclient, key).then (
+        (data: any) => {
+          var json: string = JSON.stringify(data);
+          var entry = this.addDetailEntryFromJson(json, apiclient);
+          entry.lastUpdate = new Date().getTime();
+          resolve(entry);
+        }
+      );
+    });
   }
 
   getAll(apiclient: ApiclientService, jobqueue: JobQueueService) {
@@ -612,8 +639,11 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
       this.details = this.details.sort(function(a:any, b:any){return a[key] - b[key]});  
     }  
   }
-
 }
+
+//endregion
+
+//region dbData
 
 /**
  * alternative to dataDocDetailsCollection that uses recDB for storage
@@ -630,16 +660,68 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
  * icon
  * itemsName (used both as the "items" array property in the index and in the path )
  */
-export abstract class dbData<T1,T2> extends dataStruct
+export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> extends dataDoc implements IMasterDetail
 {
   type: string = "items";
   itemsName: string = "items";
-  userData: UserdataService;
+  needsAuth: boolean = false;
+  title: string = "untitled";
+  private: boolean = false;
+  recDB: RecDB;
+  key: string = "id";
+  stringKey: boolean = false;
+  //_index: WeakRef<T1>;
+  //_items: WeakMap<{id: recID},T2>;
 
-  constructor (parent: dataStruct, userData: UserdataService)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent);
-    this.userData = userData;
+    super(parent, 0, "");
+    this.recDB = recDB;
+    //this._index = new WeakRef(undefined as unknown as T1);
+    //this._items = new WeakMap();
+  }
+
+  override reload(api: ApiclientService): Promise<T1> {
+    return new Promise<T1>((resolve, reject)=>{
+      this.getAPIIndex(api).then((res)=>{
+        if (res !== undefined)
+          resolve(res);
+        else
+          reject("API Error");
+      })
+    });
+  }
+
+  reloadItem(api: ApiclientService, key: any): Promise<T2> {
+    return new Promise<T2>((resolve, reject)=>{
+      this.getAPIRec(api, key).then((res)=>{
+        if (res !== undefined)
+          resolve(res);
+        else
+          reject("API Error");
+      })
+    });
+  }
+
+  override isLoaded(): Promise<boolean> {
+    return new Promise<boolean>((resolve)=>{
+      this.getDBIndex().then((res)=>{
+        resolve(res?.lastUpdate !== undefined)
+      });
+    })
+  }
+
+  override isPrivate(): boolean {
+    return this.private;
+  }
+
+  override hasData(): boolean {
+      return true;
+  }
+
+  override getName(): string
+  {
+    return this.title;
   }
 
   /**
@@ -655,7 +737,10 @@ export abstract class dbData<T1,T2> extends dataStruct
           //get from API and store in DB
           this.getAPIIndex(api)!.then((result)=>{
             if (result !== undefined)
+            {
+              result.lastUpdate = new Date().getTime();
               this.putDBIndex(result);
+            }
             resolve(result!);
           })
         }
@@ -672,7 +757,7 @@ export abstract class dbData<T1,T2> extends dataStruct
    * Get a record for this type, by ID
    * @param userData 
    */
-  getRec(api: ApiclientService, id: recID): Promise<T2 | undefined>
+  getRec(api: ApiclientService,id: recID): Promise<T2 | undefined>
   {
     return new Promise<T2>((resolve, reject)=>{
       this.getDBRec(id).then((result)=>{
@@ -694,13 +779,19 @@ export abstract class dbData<T1,T2> extends dataStruct
     })
   }  
 
+  
+
   /**
    * Get index directly from the database
    * @returns 
    */
   getDBIndex(): Promise<T1 | undefined>
   {
-    return this.userData.getDBRec<T1>('index', this.type);
+    return new Promise<T1 | undefined>((resolve)=>{
+      this.recDB.get('index', this.type)?.then((data)=>{
+        resolve(data?.data as T1);
+      });
+    });
   }
 
   /**
@@ -710,7 +801,11 @@ export abstract class dbData<T1,T2> extends dataStruct
    */
   getDBRec(id:  recID): Promise<T2 | undefined>
   {
-    return this.userData.getDBRec<T2>(this.type, id);
+    return new Promise<T2| undefined>((resolve)=>{
+      this.recDB.get(this.type, id)?.then((data)=>{
+        resolve(data?.data as T2);
+      });
+    });
   }
 
   /**
@@ -719,7 +814,11 @@ export abstract class dbData<T1,T2> extends dataStruct
    */
   getDBRecs(): Promise<T2[]>
   {
-    return this.userData.getDBRecs<T2>(this.type);
+    return new Promise<T2[]>((resolve)=>{
+      this.recDB.getAll(this.type)?.then((data)=>{
+        resolve(data.map((data)=>data.data) as T2[]);
+      });
+    });    
   }
 
   /**
@@ -730,7 +829,7 @@ export abstract class dbData<T1,T2> extends dataStruct
    */
   putDBRec(id: recID, rec: T2): Promise<IDBValidKey>
   {
-    return this.userData.putDBRec(this.type, id, rec as object);
+    return this.recDB.add(this.type, id, rec as object);
   }
 
   /**
@@ -740,7 +839,7 @@ export abstract class dbData<T1,T2> extends dataStruct
    */
   putDBIndex(rec: T1): Promise<IDBValidKey>
   {
-    return this.userData.putDBRec('index', this.type, rec as object);
+    return this.recDB.add('index', this.type, rec as object);
   }  
 
   /**
@@ -766,6 +865,30 @@ export abstract class dbData<T1,T2> extends dataStruct
 
 
 //#region Common Interfaces
+
+export interface IMasterDetail
+{
+  reload(api: ApiclientService): Promise<apiIndexDoc>;
+  reloadItem(api: ApiclientService, key: any): Promise<apiDataDoc>;
+  _parent?: dataStruct;
+  path(): string;
+  getName(): string;
+  hasData(): boolean;
+  key: string;
+  stringKey: boolean;
+  checkLoaded(api: ApiclientService): void;
+  getLastUpdate(): Date;
+  isLoaded(): Promise<boolean>;
+}
+
+export interface apiIndexDoc extends apiDataDoc
+{
+}
+
+export interface apiDataDoc
+{
+  lastUpdate: number | undefined;
+}
 
 export interface mediaDataStruct
 {

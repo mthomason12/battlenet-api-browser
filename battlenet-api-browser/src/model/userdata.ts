@@ -2,6 +2,7 @@ import { dataStruct } from './datastructs';
 import { profileDataStruct } from './profile';
 import { publicDataStruct } from './gamedata';
 import { accountDataStruct } from './account';
+import { RecDB } from '../lib/recdb';
 
 /**
  * All API data retrieved and stored in the application
@@ -15,12 +16,12 @@ export class apiDataStruct extends dataStruct
   /**
    * Constructor
    */
-  constructor()
+  constructor(recDB: RecDB)
   {
     super(undefined);
-    this.wowpublic = new publicDataStruct(this);
-    this.wowaccount = new accountDataStruct(this);
-    this.wowprofile = new profileDataStruct(this);
+    this.wowpublic = new publicDataStruct(this, recDB);
+    this.wowaccount = new accountDataStruct(this, recDB);
+    this.wowprofile = new profileDataStruct(this, recDB);
   }
 
   /**
@@ -81,5 +82,10 @@ export class userDataStruct
 {
   key: appKeyStruct = new appKeyStruct();
   settings: settingsStruct = new settingsStruct();  
-  apiData: apiDataStruct = new apiDataStruct();
+  apiData: apiDataStruct;
+  
+  constructor (recDB: RecDB)
+  {
+    this.apiData = new apiDataStruct(recDB);
+  }
 }
