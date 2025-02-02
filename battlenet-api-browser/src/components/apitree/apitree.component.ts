@@ -4,7 +4,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UserdataService } from '../../services/userdata.service';
-import { dataStruct } from '../../model/datastructs';
+import { dataDocDetailsCollection, dataStruct, dbData } from '../../model/datastructs';
 import { RouterLink } from '@angular/router';
 
 
@@ -34,10 +34,12 @@ export class ApitreeComponent {
   }
 
   select(item: dataStruct)
-  {
-    //console.log("Selected "+item.name());     
+  {   
     this.selectedItem = item;   
-    this.dataService.setCurrent(item);
+    if (item instanceof dataDocDetailsCollection || item instanceof dbData)
+    {
+      this.dataService.setCurrent(item);
+    }
     this.changed.emit(this.selectedItem);
   }
 }
