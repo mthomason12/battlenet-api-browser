@@ -635,8 +635,6 @@ export abstract class dbData<T1,T2> extends dataStruct
   type: string = "items";
   itemsName: string = "items";
   userData: UserdataService;
-  apiClient?: ApiclientService;
-
 
   constructor (parent: dataStruct, userData: UserdataService)
   {
@@ -648,14 +646,14 @@ export abstract class dbData<T1,T2> extends dataStruct
    * Get index for this type
    * @param userData 
    */
-  getIndex(): Promise<T1 | undefined>
+  getIndex(api: ApiclientService): Promise<T1 | undefined>
   {
     return new Promise<T1>((resolve, reject)=>{
       this.getDBIndex().then((result)=>{
         if (result === undefined)
         {
           //get from API and store in DB
-          this.getAPIIndex()!.then((result)=>{
+          this.getAPIIndex(api)!.then((result)=>{
             if (result !== undefined)
               this.putDBIndex(result);
             resolve(result!);
@@ -674,14 +672,14 @@ export abstract class dbData<T1,T2> extends dataStruct
    * Get a record for this type, by ID
    * @param userData 
    */
-  getRec(id: recID): Promise<T2 | undefined>
+  getRec(api: ApiclientService, id: recID): Promise<T2 | undefined>
   {
     return new Promise<T2>((resolve, reject)=>{
       this.getDBRec(id).then((result)=>{
         if (result === undefined)
         {
           //get from API and store in DB
-          this.getAPIRec(id)!.then((result)=>{
+          this.getAPIRec(api, id)!.then((result)=>{
             if (result !== undefined)
               this.putDBRec(id, result);
             resolve(result!);
@@ -748,13 +746,13 @@ export abstract class dbData<T1,T2> extends dataStruct
   /**
    * Override in descendants to pull the index from the API
    */
-  abstract getAPIIndex(): Promise<T1 | undefined>;
+  abstract getAPIIndex(api: ApiclientService): Promise<T1 | undefined>;
 
   /**
    * Override in descendants to pull a record from the API
    * @param id 
    */
-  abstract getAPIRec(id:  recID): Promise<T2 | undefined>;  
+  abstract getAPIRec(api: ApiclientService, id:  recID): Promise<T2 | undefined>;  
 
   /**
    * @inheritdoc 
