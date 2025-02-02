@@ -43,7 +43,7 @@
     {
       @if (currentDataDoc()?.isLoaded())
       {
-        <p>Data last updated: {{ currentDataDoc()?.getLastUpdate() }}</p>
+        <p>Data last updated: {{ currentDataDoc().getLastUpdate() }}</p>
       }
       @else
       {
