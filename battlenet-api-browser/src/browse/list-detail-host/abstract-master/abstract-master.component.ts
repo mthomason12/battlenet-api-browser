@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit } from '@angular/core';
-import { apiIndexDoc, dataDoc, dataDocCollection, IIndexItem, IMasterDetail } from '../../../model/datastructs';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input } from '@angular/core';
+import { apiIndexDoc, IIndexItem, IMasterDetail } from '../../../model/datastructs';
 import { ApiclientService } from '../../../services/apiclient.service';
 
 @Component({
