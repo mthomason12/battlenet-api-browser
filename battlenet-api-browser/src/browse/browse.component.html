@@ -3,7 +3,7 @@
 <mat-card appearance="outlined" class="outerCard">
   <mat-card-header>
     <mat-card-title>
-      {{displayData?.getName()}}
+      {{getName()}}
     </mat-card-title>
   </mat-card-header>
 
@@ -16,7 +16,7 @@
   </mat-card-content>
   
   <mat-card-actions>
-    @if(displayData?.hasData()) 
+    @if(hasData()) 
     {
       @if(apiClient.isConnected())
       {
@@ -35,11 +35,11 @@
     <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
   </mat-card-actions>
   <mat-card-footer>
-    @if(displayData?.hasData())
+    @if(hasData())
     {
-      @if (displayData?.getLastUpdate())
+      @if ( getLastUpdate() )
       {
-        <p>Data last updated: {{ displayData?.getLastUpdate() }}</p>
+        <p>Data last updated: {{ getLastUpdate() }}</p>
       }
       @else
       {
