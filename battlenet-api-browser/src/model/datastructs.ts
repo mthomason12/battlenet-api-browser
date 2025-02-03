@@ -989,7 +989,7 @@ export interface IMasterDetail extends apiDataDoc
   hideKey: boolean;
   stringKey: boolean;
   checkLoaded(api: ApiclientService): void;
-  getLastUpdate(): Date;
+  getLastUpdate(idx: apiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
 }
 

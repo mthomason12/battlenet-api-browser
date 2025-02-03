@@ -36,7 +36,7 @@
         }
         <mat-tab [label]="masterList?.getRecName(this.detailItem!)+' (Data)'">
             <ng-template matTabContent>
-                <app-generic-detail [data]="detailItem"></app-generic-detail>
+                <app-generic-detail [data]="detailItem" [master]="masterList!"></app-generic-detail>
             </ng-template>
         </mat-tab>          
         @for (page of data!.detailPages; track $index)

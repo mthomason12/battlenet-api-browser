@@ -3,7 +3,7 @@
 <mat-card appearance="outlined" class="outerCard">
   <mat-card-header>
     <mat-card-title>
-      {{getName()}}
+      {{name}}
     </mat-card-title>
   </mat-card-header>
 
@@ -37,9 +37,9 @@
   <mat-card-footer>
     @if(hasData())
     {
-      @if ( getLastUpdate() )
+      @if ( lastUpdate )
       {
-        <p>Data last updated: {{ getLastUpdate() }}</p>
+        <p>Data last updated: {{ lastUpdate }}</p>
       }
       @else
       {

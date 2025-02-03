@@ -205,7 +205,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     this.masterList?.getRec(this.apiClient,this.id!).then((rec)=>{
       this.detailItem = rec;
       this.mode = ListDetailHostComponentMode.Detail;
-      this.detailInputs = { 'data': this.detailItem! };
+      this.detailInputs = { 'data': this.detailItem!, 'master': this.masterList };
+      this.userData.setCurrent(this.masterList!, rec);
       window.history.pushState({}, '', this.masterList?.getIndexItemPath(item));
       this.ref.detectChanges();           
     });
@@ -216,6 +217,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
    */
   returnToMaster() {
     this.mode = this.Mode.Master;
+    this.userData.setCurrent(this.masterList!, undefined);
     window.history.pushState({}, '', this.masterList!.path());
   }
 

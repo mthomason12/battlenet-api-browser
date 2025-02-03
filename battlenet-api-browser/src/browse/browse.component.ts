@@ -30,12 +30,16 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   displayData?: apiDataDoc;
   dataObject?: IMasterDetail;
+  lastUpdate?: Date;
+
+  name?: string;
 
   constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   { 
   }
 
   ngOnInit(): void {
+    this.update();
     this.navigationEndSubscription = this.router.events.subscribe((event: Event) => {
       if (event.type == EventType.NavigationEnd)
       {   
@@ -46,12 +50,28 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(({master, rec})=>{
       this.dataObject = master;      
       this.displayData = rec;
+      this.update();
     });
   }
 
   ngOnDestroy(): void {
     this.navigationEndSubscription?.unsubscribe;
     this.dataChangedSubscription?.unsubscribe;
+  }
+
+  update() {
+    if (this.displayData !== undefined)
+    {
+      this.name = this.dataObject!.getRecName(this.displayData);
+      this.lastUpdate = new Date(this.displayData!.lastUpdate!);
+    }
+    else
+    {
+      this.name = this.dataObject?.getName();
+      var idx = this.dataObject?.getIndex(this.apiClient).then((index)=>{
+        this.lastUpdate = new Date(index?.lastUpdate!);
+      })       
+    }
   }
 
   reload()
@@ -87,10 +107,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     }
   }
 
-  getLastUpdate()
-  {
-    return this.displayData?.lastUpdate ? new Date(this.displayData?.lastUpdate!) : "";
-  }
 
   hasData(): boolean {
     if (this.currentData() instanceof dataDoc)
@@ -100,9 +116,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  getName() {
-
-  }
 }
 
 @Component({
