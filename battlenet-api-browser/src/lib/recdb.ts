@@ -76,6 +76,19 @@ export class RecDB {
         return this.db!.getAllFromIndex(this._store, 'type', type);
     }
 
+    getKeys(type: string): Promise<recID[]>
+    {
+        return new Promise((resolve)=>{
+            const transaction = this.db!.transaction([this._store], "readonly");
+            const objstore = transaction.objectStore(this._store);
+            const idx = objstore.index("type");
+            const range = IDBKeyRange.only(type);
+            idx.getAllKeys(range).then((keys)=>{
+                resolve(keys as recID[]);
+            });
+        });
+    }
+
     delete(type: string, id: recID): Promise<void> {
         return this.db!.delete(this._store, [type, id]);
     }

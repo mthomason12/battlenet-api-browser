@@ -593,6 +593,10 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     }
   }
 
+  isItemLoaded(id: recID): boolean {
+      return (this.getDetailEntry(id) !== undefined);
+  }
+
   async reloadItem(apiclient: ApiclientService, key: any): Promise<apiIndexDoc>
   {
     return new Promise((resolve)=>{
@@ -734,6 +738,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
+  recKeys: recID[] = new Array();
   //_index: WeakRef<T1>;
   //_items: WeakMap<{id: recID},T2>;
 
@@ -773,6 +778,11 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
         resolve(res?.lastUpdate !== undefined)
       });
     })
+  }
+
+  isItemLoaded(id: recID): boolean
+  {
+    return this.recKeys.includes(id);
   }
 
   override isPrivate(): boolean {
@@ -835,6 +845,10 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   getIndex(api: ApiclientService): Promise<T1 | undefined>
   {
     return new Promise<T1>((resolve, reject)=>{
+      //fill the recKeys array
+      this.getDBRecKeys().then((array)=>{
+        this.recKeys = array;
+      })
       this.getDBIndex().then((result)=>{
         if (result === undefined)
         {
@@ -938,6 +952,15 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   }
 
   /**
+   * Get primary keys of all records of this type
+   * @returns 
+   */
+  getDBRecKeys(): Promise<recID[]>
+  {
+    return this.recDB.getKeys(this.type);
+  }
+
+  /**
    * Put a record into the database, overwriting the same ID if present
    * @param id
    * @param rec 
@@ -945,6 +968,9 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    */
   putDBRec(id: recID, rec: T2): Promise<IDBValidKey>
   {
+    //add key to our list of valid keys
+    if (!this.recKeys.includes(id))
+      this.recKeys.push(id);
     return this.recDB.add(this.type, id, rec as object);
   }
 
@@ -1002,13 +1028,13 @@ export interface IMasterDetail extends apiDataDoc
   checkLoaded(api: ApiclientService): void;
   getLastUpdate(idx: apiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
+  isItemLoaded(id: recID): boolean;  
 }
 
 export interface IIndexItem
 {
   id: recID;
   name: string;
-  loaded: boolean;
 }
 
 export interface apiIndexDoc extends apiDataDoc
