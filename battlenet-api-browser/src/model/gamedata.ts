@@ -1,5 +1,4 @@
 import { dataStruct, topDataStruct } from './datastructs';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { achievementsDataDoc } from './achievements';
 import { covenantsDataDoc, soulbindsDataDoc } from './covenants';
 import { creatureFamiliesDataDoc, creatureTypesDataDoc } from './creature';
