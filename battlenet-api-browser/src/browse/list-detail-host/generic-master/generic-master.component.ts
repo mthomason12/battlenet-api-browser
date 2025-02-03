@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ListDataItemComponent } from '../../../components/list-data-item/list-data-item.component';
+import { IMasterDetail } from '../../../model/datastructs';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { ListDataItemComponent } from '../../../components/list-data-item/list-d
   styleUrl: './generic-master.component.scss',
   inputs: ['data','clicked']
 })
-export class GenericMasterComponent extends AbstractMasterComponent<any> {
+export class GenericMasterComponent extends AbstractMasterComponent<IMasterDetail> {
 
 
 }

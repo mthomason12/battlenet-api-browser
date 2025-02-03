@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { dataDoc, dataDocDetailsCollection } from '../../model/datastructs';
+import { IIndexItem, IMasterDetail } from '../../model/datastructs';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,10 @@ import { CommonModule } from '@angular/common';
 export class ListDataItemComponent {
 
   //the item to display
-  item = input.required<dataDoc>();
+  item = input.required<IIndexItem>();
+
+  //the item's parent
+  parent = input.required<IMasterDetail>();
 
   //the item key
   key = input<string>('id');
@@ -27,15 +30,6 @@ export class ListDataItemComponent {
 
   //Function to call on click
   clicked = output<string>();
-
-  itemIsLoaded(): boolean
-  {
-    if (this.item()._parent instanceof dataDocDetailsCollection)
-    {
-      return (this.item()._parent as dataDocDetailsCollection<any,any>).hasDetailEntry(this.itemKey());
-    }
-    return false;
-  }
 
   itemKey(): string
   {

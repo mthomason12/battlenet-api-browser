@@ -1,7 +1,7 @@
-<a mat-raised-button [routerLink]="skipChange() ? null : item().path()" (click)="clicked.emit(itemKey())">
-    <span [ngClass]="{'hidden' : hideKey()}">{{itemKey()}}:&nbsp;</span>{{item().getName()}}
+<a mat-raised-button [routerLink]="skipChange() ? null : parent().getIndexItemPath(item())" (click)="clicked.emit(itemKey())">
+    <span [ngClass]="{'hidden' : hideKey()}">{{itemKey()}}:&nbsp;</span>{{item().name}}
 </a>
-@if(itemIsLoaded())
+@if(item().loaded)
 {
     <mat-icon class="isLoaded">article</mat-icon>
 }

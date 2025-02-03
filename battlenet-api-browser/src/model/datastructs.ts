@@ -6,8 +6,6 @@ import { Class, Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
 import { RecDB, recID } from '../lib/recdb';
 import { UserdataService } from '../services/userdata.service';
-import { inject } from '@angular/core';
-import { apiDataStruct } from './userdata';
 
 //#region dataStruct
 
@@ -59,8 +57,10 @@ export abstract class dataStruct implements apiDataDoc {
    * Checks if data is loaded, and attempts to load it if it isn't (and if we have an api connection)
    * @param apiclient 
    */
-  checkLoaded(apiclient: ApiclientService): void
+  checkLoaded(apiclient: ApiclientService): Promise<void>
   {
+    //default is just to resolve immediately
+    return new Promise((resolve)=>{ resolve(); })
   }
 
   postProcess(): void
@@ -323,6 +323,11 @@ export abstract class dataDoc extends dataStruct
   @jsonIgnore()
   needsauth: boolean = false;
 
+  public get loaded() : boolean {
+    return this.lastUpdate !== undefined;
+  }
+  
+
   constructor(parent: dataStruct, id: number, name: string)
   {
     super(parent);
@@ -351,13 +356,18 @@ export abstract class dataDoc extends dataStruct
     return ret; 
   }
 
-  override checkLoaded(apiclient: ApiclientService): void
+  override checkLoaded(apiclient: ApiclientService): Promise<void>
   {
-    this.isLoaded().then((res)=>{
-      if (res && apiclient.isConnected())
-      {
-        this.reload(apiclient);
-      }
+    return new Promise((resolve)=>{
+      this.isLoaded().then((res)=>{
+        if (res && apiclient.isConnected())
+        {
+          this.reload(apiclient).then(()=>{
+            resolve();
+          })
+        }
+      });
+      resolve();
     });
   }
 
@@ -520,10 +530,46 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   details: T2[] = new Array();
   getDetails?: Function;
   detailsType?: Class;
+  hideKey: boolean = false;
 
   @jsonIgnore()
   override id: number = 0;
 
+  /** translate index into array of IIndexItem */
+  getIndexItems(idx: apiIndexDoc, fresh: boolean): IIndexItem[] {
+    return (this.items as Array<IIndexItem>)
+      .map((value, index, array)=>{ return value;})
+  }
+
+  getIndexItemPath(item: IIndexItem): string
+  {
+    return this.path()+"/"+item.id;
+  }
+
+  getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined> {
+    return new Promise<apiIndexDoc>( (resolve) => {
+      this.isLoaded().then((isLoaded)=>{
+        if (isLoaded) {
+          resolve(this);
+        }
+        else
+        {
+          this.reload(api).then(()=>{
+            resolve(this);
+          })
+        }
+      });
+    });
+  }
+
+  getRec(api: ApiclientService, id: recID): Promise<apiIndexDoc | undefined> {
+    return new Promise((resolve)=>{
+      var rec = this.ensureDetailEntry(api, id);
+      rec.checkLoaded(api).then(()=>{
+        resolve(rec);
+      });
+    });
+  }
 
   override postFixup(): void {
     super.postFixup();
@@ -663,11 +709,13 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
 export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> extends dataDoc implements IMasterDetail
 {
   type: string = "items";
-  itemsName: string = "items";
+  /** the property of T1 that is an array of index items */
+  itemsName: string = "items"; 
   needsAuth: boolean = false;
   title: string = "untitled";
   private: boolean = false;
   recDB: RecDB;
+  hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
   //_index: WeakRef<T1>;
@@ -722,6 +770,26 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   override getName(): string
   {
     return this.title;
+  }
+
+  /** translate index into array of IIndexItem */
+  getIndexItems(idx: apiIndexDoc, fresh: boolean = false): IIndexItem[] {
+    return ((idx as any)[this.itemsName] as Array<IIndexItem>)
+      .map((value, index, array)=>{ return this.mutateIndexItem(value);})
+  }
+
+  /**
+   * Override in descendants to apply any necessary mutation to the index item
+   * @param item 
+   * @returns 
+   */
+  mutateIndexItem(item: IIndexItem): IIndexItem {
+    return item;
+  }
+
+  getIndexItemPath(item: IIndexItem): string
+  {
+    return this.path()+"/"+item.id;
   }
 
   /**
@@ -873,12 +941,24 @@ export interface IMasterDetail
   _parent?: dataStruct;
   path(): string;
   getName(): string;
+  getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
+  getIndexItems(idx: apiIndexDoc, fresh?: boolean): IIndexItem[];
+  getIndexItemPath(item: IIndexItem): string
+  getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>
   hasData(): boolean;
   key: string;
+  hideKey: boolean;
   stringKey: boolean;
   checkLoaded(api: ApiclientService): void;
   getLastUpdate(): Date;
   isLoaded(): Promise<boolean>;
+}
+
+export interface IIndexItem
+{
+  id: recID;
+  name: string;
+  loaded: boolean;
 }
 
 export interface apiIndexDoc extends apiDataDoc
