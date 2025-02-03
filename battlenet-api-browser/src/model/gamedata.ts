@@ -27,7 +27,7 @@ export class publicDataStruct extends topDataStruct
     super(parent, recDB);
  
     this.addFolder("Achievements",[
-      this.achievementData = this.register(achievementsDataDoc)
+      this.achievementData = this.dbRegister(achievementsDataDoc)
     ]);
 
     this.addFolder("Covenants", [

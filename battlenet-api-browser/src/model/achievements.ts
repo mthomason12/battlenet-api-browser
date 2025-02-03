@@ -1,6 +1,6 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct, refStruct } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, mediaDataStruct, refStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 interface achievementCategory
 {
@@ -39,7 +39,7 @@ interface achievementNextAchievement
   id: number;
 }
 
-export interface achievementData
+export interface achievementData extends apiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -52,6 +52,7 @@ export interface achievementData
   next_achievement?: achievementNextAchievement;
   media?: mediaStruct;
   display_order?: number;
+  mediaData?: mediaDataStruct;
 }
 
 interface achievementIndexEntry
@@ -61,73 +62,43 @@ interface achievementIndexEntry
   id: number;
 }
 
-export interface achievementsIndex
+export interface achievementsIndex extends apiIndexDoc
 {
   _links: linksStruct;
   achievements: achievementIndexEntry;
 }
 
-@Reviver<achievementDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(achievementDataDetailDoc)
-})
-export class achievementDataDetailDoc extends dataDetailDoc
+export class achievementsDataDoc extends dbData<achievementsIndex, achievementData>
 {
-  _links?: linksStruct;
-  category?: achievementCategory;
-  description?: string;
-  points?: number;
-  is_account_wide?: string;
-  criteria?: achievementCriteria;
-  next_achievement?: achievementNextAchievement;
-  media?: mediaStruct;
-  display_order?: number;
-  mediaData?: mediaDataStruct;
-
-  override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    await apiClient.getAchievementMedia(this.id)?.then(
-      (data: any) => {
-        this.mediaData = data;
-      });
-  }
-}
-
-@Reviver<achievementDataDoc>({
-  '.': Jsonizer.Self.endorse(achievementDataDoc)
-})
-export class achievementDataDoc extends dataDoc
-{
-  key?: keyStruct;
-}
-
-@Reviver<achievementsDataDoc>({
-  '.': Jsonizer.Self.assign(achievementsDataDoc),
-  items: {
-    '*': achievementDataDoc
-  },
-  details: {
-    '*': achievementDataDetailDoc
-  }
-})
-export class achievementsDataDoc extends dataDocDetailsCollection<achievementDataDoc, achievementDataDetailDoc>
-{
-  constructor (parent: dataStruct)
-  {
-    super(parent, "Achievements");
+    super(parent, recDB);
     this.icon = "emoji_events";
-    this.dbkey = "wow-g-achievements";
-    this.thisType = achievementsDataDoc;
-    this.detailsType = achievementDataDetailDoc;
     this.itemsName = "achievements";
+    this.type = "achievements";
+    this.title = "Achievements"; 
 }
 
-  override getItems = function(apiClient: ApiclientService): Promise<achievementsIndex>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
   {
     return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<achievementData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
   {
     return apiClient.getAchievement(id) as Promise<achievementData>;
   }
+
+  override getAPIExtra(apiClient: ApiclientService, apiRec: achievementData): Promise<void> 
+  {
+    return new Promise((resolve)=>{
+      apiClient.getAchievementMedia(apiRec.id)?.then(
+        (data: any) => {
+          apiRec.mediaData = data;
+          resolve();
+        });
+    })
+
+  }    
+
 }
