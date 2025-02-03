@@ -31,6 +31,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   displayData?: apiDataDoc;
   dataObject?: IMasterDetail;
   lastUpdate?: Date;
+  canGetAll: boolean = false;
 
   name?: string;
 
@@ -62,16 +63,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
   update() {
     if (this.displayData !== undefined)
     {
+      //we're looking at the detail
       this.name = this.dataObject!.getRecName(this.displayData);
       this.lastUpdate = new Date(this.displayData!.lastUpdate!);
+      this.canGetAll = false;
     }
     else
     {
+      //we're looking at the master
       this.name = this.dataObject?.getName();
       var idx = this.dataObject?.getIndex(this.apiClient).then((index)=>{
         this.lastUpdate = new Date(index?.lastUpdate!);
       })       
+      this.canGetAll =  (this.dataObject instanceof dataDocDetailsCollection || this.dataObject instanceof dbData);
     }
+    
   }
 
   reload()
@@ -94,16 +100,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
     return this.data.getCurrent();
   }
 
-  canGetAll(): boolean
-  {
-    return (this.currentData() instanceof dataDocDetailsCollection || this.currentData() instanceof dbData);
-  }
-
   getAll()
   {
-    if (this.canGetAll())
+    if (this.canGetAll)
     {
-      (this.currentData() as IMasterDetail).getAllRecs(this.apiClient, this.jobQueue);
+      this.dataObject!.getAllRecs(this.apiClient, this.jobQueue);
     }
   }
 

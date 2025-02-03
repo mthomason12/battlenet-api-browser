@@ -32,7 +32,7 @@
     {
       <button mat-raised-button disabled>Browse to a node that has data</button>
     }
-    <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll()">Get All</button>
+    <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll">Get All</button>
   </mat-card-actions>
   <mat-card-footer>
     @if(hasData())

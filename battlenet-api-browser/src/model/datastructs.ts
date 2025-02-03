@@ -536,7 +536,7 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
   override id: number = 0;
 
   /** translate index into array of IIndexItem */
-  getIndexItems(idx: apiIndexDoc, fresh: boolean): IIndexItem[] {
+  getIndexItems(idx: apiIndexDoc): IIndexItem[] {
     return (this.items as Array<IIndexItem>)
       .map((value, index, array)=>{ return value;})
   }
@@ -808,7 +808,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   }
 
   /** translate index into array of IIndexItem */
-  getIndexItems(idx: apiIndexDoc, fresh: boolean = false): IIndexItem[] {
+  getIndexItems(idx: apiIndexDoc): IIndexItem[] {
     var index = ((idx as any)[this.itemsName] as Array<IIndexItem>)
       .map((value, index, array)=>{ return this.mutateIndexItem(value);});
     index = index.sort((a,b)=>{return this.indexCompare(a,b)});
@@ -1016,7 +1016,7 @@ export interface IMasterDetail extends apiDataDoc
   path(): string;
   getName(): string;
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
-  getIndexItems(idx: apiIndexDoc, fresh?: boolean): IIndexItem[];
+  getIndexItems(idx: apiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
   getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>;
   getAllRecs(api: ApiclientService, queue: JobQueueService): Promise<void>;
