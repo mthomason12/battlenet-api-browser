@@ -57,6 +57,7 @@ export class realmsDataDoc extends dbData<realmIndex, realmData>
     this.key = "slug";
     this.stringKey = true;
     this.title = "Realms";
+    this.hideKey = true;
 }
 
   override getAPIIndex = function(apiClient: ApiclientService): Promise<realmIndex>
