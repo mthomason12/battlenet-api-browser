@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import _, {  } from 'lodash';
-import { IMasterDetail } from '../model/datastructs';
+import { apiDataDoc, IMasterDetail } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 
@@ -22,14 +22,16 @@ export class UserdataService {
   public data: userDataStruct;
   /** class for accessing individually-stored records in IndexedDB */
   public recDB: RecDB = new RecDB('bnetapi-recdb','wow-data');
+  /** reference to the current master-detail */
+  private currentMaster?: IMasterDetail;
   /** reference to the current user-selected item */
-  private currentData?: IMasterDetail;
+  private currentData?: apiDataDoc;
   /** whether we've finished loading */
   public loaded: boolean = false;
   /** Event triggered when data has finished loading */
   public dataLoadedEmitter: EventEmitter<void> = new EventEmitter();  
   /** Event triggered when user selection is changed */
-  public dataChangedEmitter: EventEmitter<void> = new EventEmitter();
+  public dataChangedEmitter: EventEmitter<{master: IMasterDetail, rec: apiDataDoc | undefined}> = new EventEmitter();
 
   //private dataCache: WeakMap<dataCacheKey, object> = new WeakMap();
 
@@ -159,17 +161,18 @@ export class UserdataService {
    * Set the current user-selected data struct
    * @param data 
    */
-  setCurrent(data: IMasterDetail)
+  setCurrent(master: IMasterDetail, data: apiDataDoc | undefined)
   {
+    this.currentMaster = master;
     this.currentData = data;
-    this.dataChangedEmitter.emit();
+    this.dataChangedEmitter.emit({master:master, rec:data});
   }
 
   /**
    * Get the current user-selected data struct
    * @returns 
    */
-  getCurrent(): IMasterDetail
+  getCurrent(): apiDataDoc
   {
     return this.currentData!;
   }

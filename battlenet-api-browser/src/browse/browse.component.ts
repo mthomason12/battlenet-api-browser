@@ -3,7 +3,7 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { dataDocDetailsCollection, IMasterDetail } from '../model/datastructs';
+import { apiDataDoc, dataDoc, dataDocDetailsCollection, dbData, IMasterDetail } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
   readonly dialog = inject(MatDialog);
   readonly jobQueue = inject(JobQueueService);
 
-  displayData?: IMasterDetail;
+  displayData?: apiDataDoc;
+  dataObject?: IMasterDetail;
 
   constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   { 
@@ -42,8 +43,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(()=>{
-      this.displayData = this.currentData();
+    this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(({master, rec})=>{
+      this.dataObject = master;      
+      this.displayData = rec;
     });
   }
 
@@ -67,24 +69,40 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
   }
 
-  currentData(): IMasterDetail | undefined
+  currentData(): apiDataDoc | undefined
   {
     return this.data.getCurrent();
   }
 
   canGetAll(): boolean
   {
-    return (this.currentData() instanceof dataDocDetailsCollection);
+    return (this.currentData() instanceof dataDocDetailsCollection || this.currentData() instanceof dbData);
   }
 
   getAll()
   {
-    if (this.currentData() instanceof dataDocDetailsCollection )
+    if (this.canGetAll())
     {
-      (this.currentData() as dataDocDetailsCollection<any,any>).getAll(this.apiClient, this.jobQueue);
+      (this.currentData() as IMasterDetail).getAllRecs(this.apiClient, this.jobQueue);
     }
   }
 
+  getLastUpdate()
+  {
+    return this.displayData?.lastUpdate ? new Date(this.displayData?.lastUpdate!) : "";
+  }
+
+  hasData(): boolean {
+    if (this.currentData() instanceof dataDoc)
+    {
+      return (this.currentData() as dataDoc).hasData();
+    }
+    return true;
+  }
+
+  getName() {
+
+  }
 }
 
 @Component({

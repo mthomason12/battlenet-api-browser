@@ -160,11 +160,13 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     if (this.id === undefined)
     {
       this.mode = ListDetailHostComponentMode.Master;
+      this.userData.setCurrent(this.masterList!, undefined);
     }        
     else
     {
       this.masterList?.getRec(this.apiClient,this.id).then((rec)=>{
         this.detailItem = rec;
+        this.userData.setCurrent(this.masterList!, this.detailItem!);
         this.mode = ListDetailHostComponentMode.Detail;
         this.detailInputs = { 'data': this.detailItem! };
         this.ref.detectChanges();           
@@ -173,8 +175,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
     //set data and clicked emitter for master 
     this.masterInputs = { 'data': this.masterList!, 'clicked' : this.itemClickedEmitter };
-    
-    this.userData.setCurrent(this.masterList!);
+
     this.masterList!.checkLoaded(this.apiClient); 
 
     //set data if we have a detail id
