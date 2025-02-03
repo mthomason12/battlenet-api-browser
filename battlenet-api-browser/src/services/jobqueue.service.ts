@@ -78,6 +78,6 @@ export class JobQueueService {
           await this.jobs.pop()?.exec();
           this._executing = false;
         }
-      },25);
+      },20);
   }
 }
