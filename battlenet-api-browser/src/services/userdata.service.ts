@@ -1,9 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
-import _, { StringNullableChain } from 'lodash';
-import { apiDataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
+import _, {  } from 'lodash';
+import { IMasterDetail } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
-import { RecDB, recID } from '../lib/recdb';
+import { RecDB } from '../lib/recdb';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
