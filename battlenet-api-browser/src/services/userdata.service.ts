@@ -163,9 +163,12 @@ export class UserdataService {
    */
   setCurrent(master: IMasterDetail, data: apiDataDoc | undefined)
   {
-    this.currentMaster = master;
-    this.currentData = data;
-    this.dataChangedEmitter.emit({master:master, rec:data});
+    if (this.currentMaster !== master && this.currentData !== data)
+    {
+      this.currentMaster = master;
+      this.currentData = data;
+      this.dataChangedEmitter.emit({master:master, rec:data});
+    }
   }
 
   /**
