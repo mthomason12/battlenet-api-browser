@@ -615,6 +615,13 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     );
   }
 
+  getAllRecs(api: ApiclientService, jobqueue: JobQueueService): Promise<void> {
+    return new Promise<void>((resolve)=>{
+      this.getAll(api, jobqueue);
+      resolve();
+    });
+  }  
+
   addDetailEntryFromJson(json: string, apiclient: ApiclientService): T2
   {
     const reviver = Reviver.get(this.detailsType);
@@ -868,7 +875,16 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     })
   }  
 
-  
+  getAllRecs(api: ApiclientService, jobqueue: JobQueueService): Promise<void> {
+    return new Promise<void>((resolve)=>{
+      this.getIndex(api).then((idx)=>{
+        this.getIndexItems(idx!).forEach((item)=>{
+          jobqueue.add( ()=> this.getRec(api, (item as any)[this.key]) );
+        });
+        resolve();
+      });
+    })
+  }
 
   /**
    * Get index directly from the database
@@ -955,7 +971,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
 
 //#region Common Interfaces
 
-export interface IMasterDetail
+export interface IMasterDetail extends apiDataDoc
 {
   reload(api: ApiclientService): Promise<apiIndexDoc>;
   reloadItem(api: ApiclientService, key: any): Promise<apiDataDoc>;
@@ -966,6 +982,7 @@ export interface IMasterDetail
   getIndexItems(idx: apiIndexDoc, fresh?: boolean): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
   getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>;
+  getAllRecs(api: ApiclientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: apiDataDoc): string;
   hasData(): boolean;
   key: string;
