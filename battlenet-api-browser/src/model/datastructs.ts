@@ -825,7 +825,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
 
   getIndexItemPath(item: IIndexItem): string
   {
-    return this.path()+"/"+item.id;
+    return this.path()+"/"+(item as any)[this.key];
   }
 
   /**
