@@ -886,7 +886,10 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
             if (result !== undefined)
             {
               result.lastUpdate = new Date().getTime();              
-              this.putDBRec(id, result);
+              //get anything extra that's needed
+              this.getAPIExtra(api, result).then (()=>{
+                this.putDBRec(id, result);
+              })              
             }
             resolve(result!);
           })
@@ -994,6 +997,17 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    * @param id 
    */
   abstract getAPIRec(api: ApiclientService, id:  recID): Promise<T2 | undefined>;  
+
+  /**
+   * Override in descendants if there's anything else to be fetched and attached to the api data record
+   * @param apiClient 
+   * @param apiRec 
+   * @returns 
+   */
+  getAPIExtra(apiClient: ApiclientService, apiRec: T2): Promise<void> 
+  {
+    return new Promise((resolve)=>{resolve();});
+  }
 
   /**
    * @inheritdoc 
