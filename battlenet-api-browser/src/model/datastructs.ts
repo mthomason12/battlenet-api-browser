@@ -1,7 +1,7 @@
 import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
-import _ from 'lodash';
+import _, {} from 'lodash';
 import { Class, Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
 import { RecDB, recID } from '../lib/recdb';
@@ -571,6 +571,15 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     });
   }
 
+  /**
+   * Get name from index doc
+   * @param rec
+   * @returns 
+   */
+  getRecName(rec: apiDataDoc): string {
+    return (rec as dataDoc).getName();
+  }  
+
   override postFixup(): void {
     super.postFixup();
     this.details.forEach((item)=>{item.fixup(this)});
@@ -772,6 +781,15 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     return this.title;
   }
 
+  /**
+   * Get name from index doc
+   * @param rec
+   * @returns 
+   */
+  getRecName(rec: apiDataDoc): string {
+    return (rec as any).name;
+}
+
   /** translate index into array of IIndexItem */
   getIndexItems(idx: apiIndexDoc, fresh: boolean = false): IIndexItem[] {
     return ((idx as any)[this.itemsName] as Array<IIndexItem>)
@@ -834,7 +852,10 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
           //get from API and store in DB
           this.getAPIRec(api, id)!.then((result)=>{
             if (result !== undefined)
+            {
+              result.lastUpdate = new Date().getTime();              
               this.putDBRec(id, result);
+            }
             resolve(result!);
           })
         }
@@ -943,8 +964,9 @@ export interface IMasterDetail
   getName(): string;
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
   getIndexItems(idx: apiIndexDoc, fresh?: boolean): IIndexItem[];
-  getIndexItemPath(item: IIndexItem): string
-  getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>
+  getIndexItemPath(item: IIndexItem): string;
+  getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>;
+  getRecName(rec: apiDataDoc): string;
   hasData(): boolean;
   key: string;
   hideKey: boolean;
