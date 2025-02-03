@@ -480,15 +480,15 @@ export class dataDocCollection<T extends dataDoc> extends dataDoc
   {
     var key = this.key;
     if (this.stringKey) 
-    {
-      this.items = this.items.sort(function(a:any, b:any){
-        return ('' + a[key]).localeCompare(b[key]);
-      });  
-    }
-    else
-    {
-      this.items = this.items.sort(function(a:any, b:any){return a[key] - b[key]});  
-    }      
+      {
+        this.items = this.items.sort(function(a:any, b:any){
+          return ('' + a[key]).localeCompare(b[key]);
+        });  
+      }
+      else
+      {
+        this.items = this.items.sort(function(a:any, b:any){return a[key] - b[key]});  
+      }      
   }
 
   override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
@@ -795,12 +795,23 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    */
   getRecName(rec: apiDataDoc): string {
     return (rec as any).name;
-}
+  }
 
   /** translate index into array of IIndexItem */
   getIndexItems(idx: apiIndexDoc, fresh: boolean = false): IIndexItem[] {
-    return ((idx as any)[this.itemsName] as Array<IIndexItem>)
-      .map((value, index, array)=>{ return this.mutateIndexItem(value);})
+    var index = ((idx as any)[this.itemsName] as Array<IIndexItem>)
+      .map((value, index, array)=>{ return this.mutateIndexItem(value);});
+    index = index.sort((a,b)=>{return this.indexCompare(a,b)});
+    return index;
+  }
+
+  indexCompare(a: any, b: any)
+  {
+    var key: string = this.key;
+    if (this.stringKey) 
+      return ('' + a[key]).localeCompare(b[key]); 
+    else
+      return a[key] - b[key];
   }
 
   /**
