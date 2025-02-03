@@ -34,4 +34,4 @@ The vast majority of data is left as-is from the Battle.net API.  However, some 
 - Finish adding API endpoints
 - JSON import
 - Search function
-- Hostable proxy to allow use without an API key on every client
+- Connect to a public API server without needing an API key

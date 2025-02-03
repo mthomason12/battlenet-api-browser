@@ -65,7 +65,7 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Quests");
 
     this.addFolder("Realms",[
-      this.realmData = this.register(realmsDataDoc),
+      this.realmData = this.dbRegister(realmsDataDoc),
       this.connectedRealmData = this.register(connectedRealmsDataDoc)
     ]);
 

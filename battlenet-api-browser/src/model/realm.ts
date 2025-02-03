@@ -1,6 +1,7 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct } from './datastructs';
+import { dataDoc, dataStruct, keyStruct, linksStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 interface realmType
 {
@@ -15,7 +16,7 @@ interface realmRegion
   id: number;
 }
 
-export interface realmData
+export interface realmData extends apiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -38,75 +39,32 @@ interface realmIndexEntry
   slug: string;
 }
 
-export interface realmIndex
+export interface realmIndex extends apiIndexDoc
 {
   _links: linksStruct;
   realms: realmIndexEntry[];
 }
 
-@Reviver<realmDataDetailDoc>({
-  '.': Jsonizer.Self.assign(realmDataDetailDoc)
-})
-export class realmDataDetailDoc extends dataDetailDoc
-{
-  _links?: linksStruct;
-  region?: realmRegion;
-  connected_realm?: keyStruct;
-  category?: string;
-  locale?: string;
-  timezone?: string;
-  type?: realmType;
-  is_tournament?: boolean;
-  slug?: string;
 
-  constructor (parent: dataStruct, id: number, name: string)
+export class realmsDataDoc extends dbData<realmIndex, realmData>
+{
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, id, name);
-  }
-
-  override myPath(): string {
-    return this.slug!;
-  }  
-}
-
-@Reviver<realmDataDoc>({
-  '.': Jsonizer.Self.endorse(realmDataDoc)
-})
-export class realmDataDoc extends dataDoc
-{
-  key?: keyStruct;
-  slug?: string;
-}
-
-@Reviver<realmsDataDoc>({
-  '.': Jsonizer.Self.assign(realmsDataDoc),
-  items: {
-    '*': realmDataDoc
-  },
-  details: {
-    '*': realmDataDetailDoc
-  }
-})
-export class realmsDataDoc extends dataDocDetailsCollection<realmDataDoc, realmDataDetailDoc>
-{
-  constructor (parent: dataStruct)
-  {
-    super(parent, "Realms");
+    super(parent, recDB);
     this.icon = "language";
-    this.dbkey = "wow-g-realms";
-    this.thisType = realmsDataDoc;
-    this.detailsType = realmDataDetailDoc;
     this.itemsName = "realms";
+    this.type = "realms";
     this.key = "slug";
     this.stringKey = true;
+    this.title = "Realms";
 }
 
-  override getItems = function(apiClient: ApiclientService): Promise<realmIndex>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<realmIndex>
   {
     return apiClient.getRealmIndex() as Promise<realmIndex>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, slug: string): Promise<realmData>
+  override getAPIRec = function(apiClient: ApiclientService, slug: string): Promise<realmData>
   {
     return apiClient.getRealm(slug) as Promise<realmData>;
   }
