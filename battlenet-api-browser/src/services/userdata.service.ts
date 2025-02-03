@@ -31,7 +31,7 @@ export class UserdataService {
   /** Event triggered when user selection is changed */
   public dataChangedEmitter: EventEmitter<void> = new EventEmitter();
 
-  private dataCache: WeakMap<dataCacheKey, object> = new WeakMap();
+  //private dataCache: WeakMap<dataCacheKey, object> = new WeakMap();
 
   /** Event triggered when refresh button is pressed */
   public refreshRequestEmitter: EventEmitter<void> = new EventEmitter();
