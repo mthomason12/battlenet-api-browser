@@ -36,4 +36,9 @@ export class ListDataItemComponent {
     return (this.item() as any)[this.key()];
   }
 
+  itemLoaded(): boolean
+  {
+    return this.parent().isItemLoaded(this.itemKey());
+  }
+
 }

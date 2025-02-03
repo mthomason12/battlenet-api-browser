@@ -84,7 +84,7 @@ export class RecDB {
             const idx = objstore.index("type");
             const range = IDBKeyRange.only(type);
             idx.getAllKeys(range).then((keys)=>{
-                resolve(keys as recID[]);
+                resolve(keys.map((key)=>{ return (key as Array<recID>)[1]}));
             });
         });
     }

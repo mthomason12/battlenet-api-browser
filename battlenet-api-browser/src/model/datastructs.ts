@@ -952,7 +952,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   }
 
   /**
-   * Get primary keys of all records of this type
+   * Get primary key of all records of this type
    * @returns 
    */
   getDBRecKeys(): Promise<recID[]>
