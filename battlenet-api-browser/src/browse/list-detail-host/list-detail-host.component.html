@@ -28,13 +28,13 @@
     <mat-tab-group>
         @if (data?.detailComponent !== undefined)
         {
-            <mat-tab [label]="detailItem?.getName()!">
+            <mat-tab [label]="masterList?.getRecName(this.detailItem!)!">
                 <ng-template matTabContent>
                     <ng-container *ngComponentOutlet="data!.detailComponent!;inputs:detailInputs" />  
                 </ng-template>
             </mat-tab>
         }
-        <mat-tab [label]="detailItem?.getName()!+' (Data)'">
+        <mat-tab [label]="masterList?.getRecName(this.detailItem!)+' (Data)'">
             <ng-template matTabContent>
                 <app-generic-detail [data]="detailItem"></app-generic-detail>
             </ng-template>
@@ -49,7 +49,7 @@
         }        
         <mat-tab label="Tools">
             <ng-template matTabContent>
-                <app-data-tools [data]="this.detailItem" [name]="masterList?.getName()+'-'+detailItem?.getName()!"></app-data-tools>
+                <app-data-tools [data]="this.detailItem" [name]="masterList?.getName()+'-'+masterList?.getRecName(this.detailItem!)"></app-data-tools>
             </ng-template>
         </mat-tab>
     </mat-tab-group>

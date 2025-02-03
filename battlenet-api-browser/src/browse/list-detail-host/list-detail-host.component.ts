@@ -3,7 +3,7 @@ import { ApiclientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
-import { dataDoc, dataDocDetailsCollection, IMasterDetail } from '../../model/datastructs';
+import { apiDataDoc, IMasterDetail } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -69,7 +69,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   //references to current master/detail data
   protected masterList?: IMasterDetail;
-  protected detailItem?: dataDoc;
+  protected detailItem?: apiDataDoc;
 
   //inputs and outputs to pass to override components
   protected masterInputs: Record<string, unknown> | undefined
@@ -163,8 +163,12 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     }        
     else
     {
-      this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
-      this.mode = ListDetailHostComponentMode.Detail;
+      this.masterList?.getRec(this.apiClient,this.id).then((rec)=>{
+        this.detailItem = rec;
+        this.mode = ListDetailHostComponentMode.Detail;
+        this.detailInputs = { 'data': this.detailItem! };
+        this.ref.detectChanges();           
+      });
     }
 
     //set data and clicked emitter for master 
@@ -177,8 +181,8 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     if (this.id !== undefined)   
     {
       //set data for details
-      this.detailInputs = { 'data': this.detailItem! };
-      (this.masterList as dataDocDetailsCollection<any,any>).checkItemLoaded(this.apiClient, this.id);
+
+      //this.masterList?.checkItemLoaded(this.apiClient, this.id);
     }
 
     //load generic master components if needed
@@ -197,12 +201,13 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   itemClicked(item: any)
   {
     this.id = (item as any)[this.masterList!.key]
-    this.detailItem = (this.masterList as dataDocDetailsCollection<any,any>).ensureDetailEntry(this.apiClient,this.id);     
-    this.mode = ListDetailHostComponentMode.Detail;    
-    this.detailInputs = { 'data': this.detailItem! };
-    this.detailItem!.checkLoaded(this.apiClient); 
-    window.history.pushState({}, '', this.detailItem?.path()); 
-    this.ref.detectChanges();  
+    this.masterList?.getRec(this.apiClient,this.id!).then((rec)=>{
+      this.detailItem = rec;
+      this.mode = ListDetailHostComponentMode.Detail;
+      this.detailInputs = { 'data': this.detailItem! };
+      window.history.pushState({}, '', this.masterList?.getIndexItemPath(item));
+      this.ref.detectChanges();           
+    });
   }
 
   /**
