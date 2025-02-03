@@ -10,6 +10,7 @@
         "datastructs",
         "dbkey",
         "gamedata",
+        "jobqueue",
         "Jsonizer",
         "soulbind",
         "soulbinds",
