@@ -178,14 +178,6 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
     this.masterList!.checkLoaded(this.apiClient); 
 
-    //set data if we have a detail id
-    if (this.id !== undefined)   
-    {
-      //set data for details
-
-      //this.masterList?.checkItemLoaded(this.apiClient, this.id);
-    }
-
     //load generic master components if needed
     if (!Object.hasOwn(this.data, "listComponent"))
     {
