@@ -43,9 +43,9 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Items");
 
     this.addFolder("Journal",[
-      this.journalExpansionData = this.register(journalExpansionsDataDoc),
-      this.journalEncounterData = this.register(journalEncountersDataDoc),
-      this.journalInstanceData = this.register(journalInstancesDataDoc)
+      this.journalExpansionData = this.dbRegister(journalExpansionsDataDoc),
+      this.journalEncounterData = this.dbRegister(journalEncountersDataDoc),
+      this.journalInstanceData = this.dbRegister(journalInstancesDataDoc)
     ]);
 
     this.addFolder("Mythic Keystones");

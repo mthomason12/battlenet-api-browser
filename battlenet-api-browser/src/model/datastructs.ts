@@ -1071,6 +1071,8 @@ export interface apiIndexDoc extends apiDataDoc
 
 export interface apiDataDoc
 {
+  id?: recID;
+  name?: string;
   lastUpdate: number | undefined;
 }
 

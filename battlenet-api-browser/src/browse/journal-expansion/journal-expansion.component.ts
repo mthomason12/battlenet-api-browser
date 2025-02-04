@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { journalExpansionDataDetailDoc } from '../../model/journal';
+import { journalExpansionData } from '../../model/journal';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -11,6 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './journal-expansion.component.scss',
   inputs: ['data']
 })
-export class JournalExpansionComponent extends AbstractDetailComponent<journalExpansionDataDetailDoc>{
+export class JournalExpansionComponent extends AbstractDetailComponent<journalExpansionData>{
 
 }

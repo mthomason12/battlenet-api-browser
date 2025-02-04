@@ -1,70 +1,41 @@
-import { Jsonizer, Reviver } from "@badcafe/jsonizer";
 import { ApiclientService } from "../services/apiclient.service";
-import { dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, idNameStruct, keyStruct, linksStruct, mediaDataStruct, mediaStruct, realmStruct, refStruct } from "./datastructs";
-import { NumberValueAccessor } from "@angular/forms";
+import { apiDataDoc, apiIndexDoc, dataStruct, dbData, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
+import { RecDB } from "../lib/recdb";
 
 //region Journal Expansions 
 
-export interface journalExpansionData
+export interface journalExpansionData extends apiDataDoc
 {
     _links?: linksStruct;
     dungeons: refStruct[];
 }
 
-
-@Reviver<journalExpansionDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(journalExpansionDataDetailDoc)
-})
-export class journalExpansionDataDetailDoc extends dataDetailDoc
+export interface journalExpansionsIndex extends apiIndexDoc
 {
-  _links?: linksStruct;
-  dungeons?: refStruct[];
-}
-
-@Reviver<journalExpansionDataDoc>({
-  '.': Jsonizer.Self.endorse(journalExpansionDataDoc)
-})
-export class journalExpansionDataDoc extends dataDoc
-{
-  key?: keyStruct;
-}
-
-
-export interface journalExpansionsIndex {
     _links: linksStruct;
     tiers: refStruct[];
 }
 
-@Reviver<journalExpansionsDataDoc>({
-  '.': Jsonizer.Self.assign(journalExpansionsDataDoc),
-  items: {
-    '*': journalExpansionDataDoc
-  },
-  details: {
-    '*': journalExpansionDataDetailDoc
-  }
-})
-export class journalExpansionsDataDoc extends dataDocDetailsCollection<journalExpansionDataDoc, journalExpansionDataDetailDoc>
+export class journalExpansionsDataDoc extends dbData<journalExpansionsIndex, journalExpansionData>
 {
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, "Expansions");
+    super(parent, recDB);
     this.icon = "sports_esports";
-    this.dbkey = "wow-g-expansions";
-    this.thisType = journalExpansionsDataDoc;
-    this.detailsType = journalExpansionDataDetailDoc;
     this.itemsName = "tiers";
+    this.type = "journal-expansions";
+    this.title = "Expansions";
 }
 
-  override getItems = function(apiClient: ApiclientService): Promise<journalExpansionsIndex>
-  {
-    return apiClient.getJournalExpansionsIndex() as Promise<journalExpansionsIndex>;
-  }
+override getAPIIndex = function(apiClient: ApiclientService): Promise<journalExpansionsIndex>
+{
+  return apiClient.getJournalExpansionsIndex() as Promise<journalExpansionsIndex>;
+}
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<journalExpansionData>
-  {
-    return apiClient.getJournalExpansion(id) as Promise<journalExpansionData>;
-  }
+override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalExpansionData>
+{
+  return apiClient.getJournalExpansion(id) as Promise<journalExpansionData>;
+}
 
   override myPath(): string {
     return "expansions";
@@ -80,7 +51,6 @@ interface journalEncounterCreature {
   name?: string;
   creature_display?: mediaStruct;
 }
-
 
 interface journalEncounterItem {
   id?: number;
@@ -100,7 +70,7 @@ interface journalEncounterMode {
   name?: string;
 }
 
-export interface journalEncounterData
+export interface journalEncounterData extends apiDataDoc
 {
     _links?: linksStruct;
     description?: string;
@@ -114,59 +84,31 @@ export interface journalEncounterData
     modes: journalEncounterMode[]
 }
 
-@Reviver<journalEncounterDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(journalEncounterDataDetailDoc)
-})
-export class journalEncounterDataDetailDoc extends dataDetailDoc
-{
-  _links?: linksStruct;
-  encounters?: refStruct[];
-}
-
-@Reviver<journalEncounterDataDoc>({
-  '.': Jsonizer.Self.endorse(journalEncounterDataDoc)
-})
-export class journalEncounterDataDoc extends dataDoc
-{
-  key?: keyStruct;
-}
-
-
-export interface journalEncountersIndex {
+export interface journalEncountersIndex extends apiIndexDoc {
     _links: linksStruct;
     encounters: refStruct[];
 }
 
-@Reviver<journalEncountersDataDoc>({
-  '.': Jsonizer.Self.assign(journalEncountersDataDoc),
-  items: {
-    '*': journalEncounterDataDoc
-  },
-  details: {
-    '*': journalEncounterDataDetailDoc
-  }
-})
-export class journalEncountersDataDoc extends dataDocDetailsCollection<journalEncounterDataDoc, journalEncounterDataDetailDoc>
+export class journalEncountersDataDoc extends dbData<journalEncountersIndex, journalEncounterData>
 {
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, "Encounters");
+    super(parent, recDB);
     this.icon = "sports_kabaddi";
-    this.dbkey = "wow-g-encounters";
-    this.thisType = journalEncountersDataDoc;
-    this.detailsType = journalEncounterDataDetailDoc;
     this.itemsName = "encounters";
+    this.title = "Encounters";
+    this.type = "journal-encounters";
 }
 
-  override getItems = function(apiClient: ApiclientService): Promise<journalEncountersIndex>
-  {
-    return apiClient.getJournalEncountersIndex() as Promise<journalEncountersIndex>;
-  }
+override getAPIIndex = function(apiClient: ApiclientService): Promise<journalEncountersIndex>
+{
+  return apiClient.getJournalEncountersIndex() as Promise<journalEncountersIndex>;
+}
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<journalEncounterData>
-  {
-    return apiClient.getJournalEncounter(id) as Promise<journalEncounterData>;
-  }
+override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalEncounterData>
+{
+  return apiClient.getJournalEncounter(id) as Promise<journalEncounterData>;
+}
 
 }
 
@@ -174,10 +116,9 @@ export class journalEncountersDataDoc extends dataDocDetailsCollection<journalEn
 
 //region Journal Instances
 
-export interface journalInstanceData
+export interface journalInstanceData extends apiDataDoc
 {
     _links?: linksStruct;
-    id: Number;
     name: string;
     map?: idNameStruct;
     area?: idNameStruct;
@@ -191,56 +132,28 @@ export interface journalInstanceData
     order_index: number;
 }
 
-@Reviver<journalInstanceDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(journalInstanceDataDetailDoc)
-})
-export class journalInstanceDataDetailDoc extends dataDetailDoc
-{
-  _links?: linksStruct;
-  instances?: refStruct[];
-}
-
-@Reviver<journalInstanceDataDoc>({
-  '.': Jsonizer.Self.endorse(journalInstanceDataDoc)
-})
-export class journalInstanceDataDoc extends dataDoc
-{
-  key?: keyStruct;
-}
-
-
-export interface journalInstancesIndex {
+export interface journalInstancesIndex extends apiIndexDoc {
     _links: linksStruct;
     Instances: refStruct[];
 }
 
-@Reviver<journalInstancesDataDoc>({
-  '.': Jsonizer.Self.assign(journalInstancesDataDoc),
-  items: {
-    '*': journalInstanceDataDoc
-  },
-  details: {
-    '*': journalInstanceDataDetailDoc
-  }
-})
-export class journalInstancesDataDoc extends dataDocDetailsCollection<journalInstanceDataDoc, journalInstanceDataDetailDoc>
+export class journalInstancesDataDoc extends dbData<journalInstancesIndex, journalInstanceData>
 {
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, "Instances");
+    super(parent, recDB);
     this.icon = "door_front";
-    this.dbkey = "wow-g-instances";
-    this.thisType = journalInstancesDataDoc;
-    this.detailsType = journalInstanceDataDetailDoc;
+    this.type = "journal-instances";
     this.itemsName = "instances";
-}
+    this.title = "Instances";
+  }
 
-  override getItems = function(apiClient: ApiclientService): Promise<journalInstancesIndex>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<journalInstancesIndex>
   {
     return apiClient.getJournalInstancesIndex() as Promise<journalInstancesIndex>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<journalInstanceData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalInstanceData>
   {
     return apiClient.getJournalInstance(id) as Promise<journalInstanceData>;
   }
