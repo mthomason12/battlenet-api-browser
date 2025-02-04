@@ -78,26 +78,17 @@ export class UserdataService {
       console.log("User data is corrupt or missing. Reinitializing with empty data.")   
       this.data.key = new appKeyStruct();         
     }
-    //load saved api data from IndexedDB
-    console.log("Loading stored api data");
-    openDB('data',3, {
-      upgrade(db, oldversion, newversion) {
-        if (oldversion < 1)
-          db.createObjectStore('data');
-        if (oldversion < 3)
-          db.deleteObjectStore('recordstore');
-      }
-    }).then ((db)=>{
+    this.recDB.connect().then(()=>{
       this.fixup();       
       this.loaded = true;
       console.log("Data loaded");      
       //send a notification to any subscribers
-      this.dataLoadedEmitter.emit();
-    }); 
+      this.dataLoadedEmitter.emit();    
+    });
   }
 
   /**
-   * Save all data
+   * Save all settings data
    */
   save(): Promise<void>
   {
@@ -116,10 +107,7 @@ export class UserdataService {
    */
   export(): string
   {
-    var obj = new Object();
-    /* todo */
-    var json = JSON.stringify(obj);
-    return json;
+    throw new Error("Not implemented");
   }
 
   /**
