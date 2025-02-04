@@ -75,10 +75,6 @@ export class charsDataDoc extends dbData<accountProfileIndex, accountProfileChar
     throw new Error("getAPIRec called for account characters, this shouldn't be happening!");
   }
 
-
-  //getDetails is not called due to our reimplementation of reloadItem, so we don't need to override it
-
-
   override getIndexItemName(item: IIndexItem): string
   {
     const itm = (item as accountProfileCharacterData);

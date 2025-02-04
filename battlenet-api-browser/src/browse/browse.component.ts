@@ -3,7 +3,7 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { apiDataDoc, dataDoc, dataDocDetailsCollection, dbData, IMasterDetail, INamedItem } from '../model/datastructs';
+import { apiDataDoc, dataDoc, dbData, IMasterDetail, INamedItem } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -62,7 +62,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   dataObjectIsLive(): boolean
   {
-    return (this.dataObject instanceof dataDocDetailsCollection || this.dataObject instanceof dbData);
+    return (this.dataObject instanceof dbData);
   }
 
   update() {

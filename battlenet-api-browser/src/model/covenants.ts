@@ -1,4 +1,4 @@
-import { dataStruct, linksStruct, refStruct, mediaStruct, dataDetailDoc, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem, keyStruct } from './datastructs';
+import { dataStruct, linksStruct, refStruct, mediaStruct, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem, keyStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
@@ -117,15 +117,6 @@ interface soulbindIndexData extends apiIndexDoc
   soulbinds: refStruct[];
 }
 
-
-export class soulbindDataDetailDoc extends dataDetailDoc
-{
-  _links?: linksStruct;
-  covenant?: refStruct;
-  creature?: refStruct;
-  follower?: soulbindFollowerData;
-  talent_tree?: refStruct;
-}
 
 export class soulbindsDataDoc extends dbData<soulbindIndexData, soulbindData>
 {
