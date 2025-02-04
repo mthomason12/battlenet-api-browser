@@ -1,6 +1,5 @@
-import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, linksStruct, refStruct, mediaStruct, dataDetailDoc, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem, keyStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { RecDB } from '../lib/recdb';
 
 //#region Covenants
@@ -36,7 +35,7 @@ interface covenantSignatureAbility
 export interface covenantData extends apiDataDoc
 {
   _links?: linksStruct;
-  id?: number;
+  id: number;
   name?: string;
   description?: string;
   signature_ability?: covenantSignatureAbility;
@@ -44,13 +43,18 @@ export interface covenantData extends apiDataDoc
   soulbinds?: refStruct[];
   renown_rewards?: covenantRenownReward[];
   media?: mediaStruct;
-  mediadata?: mediaDataStruct;
+  mediaData?: mediaDataStruct;
+}
+
+interface covenantIndexItem extends IIndexItem
+{
+  key: keyStruct;
 }
 
 export interface covenantIndexData extends apiIndexDoc
 {
   _links: linksStruct;
-  covenants: refStruct[];
+  covenants: covenantIndexItem[]
 }
 
 
@@ -66,8 +70,8 @@ export class covenantsDataDoc extends dbData<covenantIndexData, covenantData>
 
   override getAPIExtra(apiClient: ApiclientService, apiRec: covenantData): Promise<void> {
     return new Promise((resolve)=>{
-      apiClient.getCovenantMedia(this.id)?.then((data: any) => {
-        apiRec.mediadata = data;
+      apiClient.getCovenantMedia(apiRec.id)?.then((data: any) => {
+        apiRec.mediaData = data;
         resolve();
       });
     })
