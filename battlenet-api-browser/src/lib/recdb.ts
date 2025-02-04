@@ -36,7 +36,7 @@ export class RecDB {
     {
         var store = this._store;
         return new Promise<IDBPDatabase>((resolve, reject)=>{
-            console.log("Opening RecDB");
+            console.log("Opening RecDB "+this._dbName+"/"+this._store);
             openDB(this._dbName,5, {
                 upgrade(db, oldversion, newversion, transaction) {
                     //upgrade to version 2
