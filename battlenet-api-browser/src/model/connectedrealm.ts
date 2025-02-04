@@ -1,6 +1,6 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct, hrefStruct, refStruct } from './datastructs';
+import { dataStruct, linksStruct, hrefStruct, refStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 interface connectedRealmType
 {
@@ -34,7 +34,7 @@ interface connectedRealmStatus
     name?: string;
 }
 
-export interface connectedRealmData
+export interface connectedRealmData extends apiDataDoc
 {
     _links?: linksStruct;
     id?: number;
@@ -46,83 +46,53 @@ export interface connectedRealmData
     auctions?: hrefStruct;
 }
 
-export interface connectedRealmIndex
+interface connectedRealmIndexItem extends IIndexItem, hrefStruct
+{
+}
+
+export interface connectedRealmIndex extends apiIndexDoc
 {
   _links: linksStruct;
-  realms: hrefStruct[];
+  realms: connectedRealmIndexItem[];
 }
 
-@Reviver<connectedRealmDataDetailDoc>({
-  '.': Jsonizer.Self.assign(connectedRealmDataDetailDoc)
-})
-export class connectedRealmDataDetailDoc extends dataDetailDoc
+export class connectedRealmsDataDoc extends dbData<connectedRealmIndex, connectedRealmData>
 {
-    _links?: linksStruct;
-    has_queue?: boolean;
-    status?: connectedRealmStatus;
-    population?: connectedRealmPopulation;
-    realms?: connectedRealmRealm[];
-    mythic_leaderboards?: hrefStruct;
-    auctions?: hrefStruct;
-
-  constructor (parent: dataStruct, id: number, name: string)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent, id, name);
-  }
-
-}
-
-@Reviver<connectedRealmDataDoc>({
-  '.': Jsonizer.Self.endorse(connectedRealmDataDoc)
-})
-export class connectedRealmDataDoc extends dataDoc
-{
-  href?: string;
-
-  override fixup(parent?: dataStruct | undefined): void {
-    super.fixup(parent);
-    //extract ID from the href url
-    const regex = /(?:.*)connected-realm\/(\d*)/;
-    var matches = regex.exec(this.href!);
-    this.id = Number.parseInt(matches![1]);
-  }
-
-  override getName(): string {
-    return "Connected Realm "+this.id;
-  }
-
-}
-
-@Reviver<connectedRealmsDataDoc>({
-  '.': Jsonizer.Self.assign(connectedRealmsDataDoc),
-  items: {
-    '*': connectedRealmDataDoc
-  },
-  details: {
-    '*': connectedRealmDataDetailDoc
-  }
-})
-export class connectedRealmsDataDoc extends dataDocDetailsCollection<connectedRealmDataDoc, connectedRealmDataDetailDoc>
-{
-  constructor (parent: dataStruct)
-  {
-    super(parent, "Connected Realms");
+    super(parent, recDB);
     this.icon = "hub";
-    this.dbkey = "wow-g-connected-realms";
-    this.thisType = connectedRealmsDataDoc;
-    this.detailsType = connectedRealmDataDetailDoc;
     this.itemsName = "connected_realms";
-    this.key = "id";
+    this.type="connected_realms";
+    this.title="Connected Realms";
+  }
+
+  override getRecName(rec: connectedRealmData): string {
+    return "Connected Realm "+rec.id;
+  }
+
+  override getIndexItemName(item: IIndexItem): string {
+    return "Connected Realm "+item.id;
   }
 
 
-  override getItems = function(apiClient: ApiclientService): Promise<connectedRealmIndex>
+  override mutateIndexItem(item: connectedRealmIndexItem): IIndexItem {
+    //This index doesn't provide an ID field, so we need to extract ID from the href url
+    const regex = /(?:.*)connected-realm\/(\d*)/;
+    var matches = regex.exec(item.href!);
+    item.id = Number.parseInt(matches![1]);
+    return super.mutateIndexItem(item);
+  }
+
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<connectedRealmIndex>
   {
     return apiClient.getConnectedRealmsIndex() as Promise<connectedRealmIndex>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<connectedRealmData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<connectedRealmData>
   {
     return apiClient.getConnectedRealm(id) as Promise<connectedRealmData>;
   }
+
+
 }
