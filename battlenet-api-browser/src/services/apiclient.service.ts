@@ -4,7 +4,7 @@ import { UserdataService } from './userdata.service';
 import { EventEmitter, inject } from '@angular/core';
 import { UserManager, UserManagerSettings } from 'oidc-client-ts';
 import { achievementData, achievementsIndex } from '../model/achievements';
-import { creatureTypeData, creatureTypeIndex } from '../model/creature';
+import { creatureFamilyData, creatureFamilyIndex, creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
@@ -342,12 +342,12 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/media/creature-display/${displayId}`);
   }    
 
-  getCreatureFamilyIndex(): Promise<any> | undefined
+  getCreatureFamilyIndex(): Promise<creatureFamilyIndex> | undefined
   {
     return this.queryStatic(`/data/wow/creature-family/index`);
   }    
 
-  getCreatureFamily(id: number): Promise<any> | undefined
+  getCreatureFamily(id: number): Promise<creatureFamilyData> | undefined
   {
     return this.queryStatic(`/data/wow/creature-family/${id}`);
   }      

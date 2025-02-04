@@ -36,8 +36,8 @@ export class publicDataStruct extends topDataStruct
     ]);
 
     this.addFolder("Creatures",[
-      this.creatureFamiliesData = this.register(creatureFamiliesDataDoc),
-      this.creatureTypesData = this.register(creatureTypesDataDoc)
+      this.creatureFamiliesData = this.dbRegister(creatureFamiliesDataDoc),
+      this.creatureTypesData = this.dbRegister(creatureTypesDataDoc)
     ] );
 
     this.addFolder("Items");

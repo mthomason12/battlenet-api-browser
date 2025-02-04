@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { creatureTypeDetailsDoc } from '../../model/creature';
+import { creatureTypeData } from '../../model/creature';
 import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
 
 @Component({
@@ -10,5 +10,5 @@ import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abs
   inputs: ['data']
 })
 
-export class CreatureTypeComponent extends AbstractDetailComponent<creatureTypeDetailsDoc>{
+export class CreatureTypeComponent extends AbstractDetailComponent<creatureTypeData>{
 }

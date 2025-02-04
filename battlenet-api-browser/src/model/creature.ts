@@ -1,151 +1,103 @@
-import { dataDoc, dataStruct, dataDocCollection, linksStruct, assetStruct, dataDetailDoc, refStruct, dataDocDetailsCollection, keyStruct, mediaDataStruct } from './datastructs';
+import { dataStruct, linksStruct, refStruct, keyStruct, mediaDataStruct, dbData, IIndexItem, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 //#region Creature Family
 
-
-interface creatureFamilyData
+export interface creatureFamilyData extends apiDataDoc
 {
   _links: linksStruct;
   id: number;
   name: string;
   specialization: refStruct;
   media: keyStruct;
+  mediaData?: mediaDataStruct;  
 }
 
-  @Reviver<creatureFamilyDetailsDoc>({
-    '.': Jsonizer.Self.endorse(creatureFamilyDetailsDoc)
-  })
-  export class creatureFamilyDetailsDoc extends dataDetailDoc
-  {
-    _links?: linksStruct;
-    specialization?: refStruct;
-    mediaData?: mediaDataStruct;
+export interface creatureFamilyIndex extends apiIndexDoc
+{
+}
 
-    override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
-    {
-      await apiClient.getCreatureFamilyMedia(this.id)?.then(
-        (data: any) => {
-          this.mediaData = data;
-        });
-    }
+export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatureFamilyData>
+{
+
+  constructor (parent: dataStruct, recDB: RecDB)
+  {
+    super(parent, recDB);
+    this.icon = "pets";      
+    this.itemsName = "creature_families";
+    this.type = "creature_families";
+    this.title = "Creature Families";
   }
 
-  @Reviver<creatureFamilyDataDoc>({
-    '.': Jsonizer.Self.endorse(creatureFamilyDataDoc)
-  })
-  export class creatureFamilyDataDoc extends dataDoc
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<creatureFamilyIndex>
   {
+    return apiClient.getCreatureFamilyIndex() as Promise<creatureFamilyIndex>;
   }
 
-  
-  @Reviver<creatureFamiliesDataDoc>({
-    '.': Jsonizer.Self.assign(creatureFamiliesDataDoc),
-    items: {
-      '*': creatureFamilyDataDoc
-    },
-    details:{
-      '*': creatureFamilyDetailsDoc
-    }
-  })
-  export class creatureFamiliesDataDoc extends dataDocDetailsCollection<creatureFamilyDataDoc, creatureFamilyDetailsDoc>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<creatureFamilyData>
   {
-    constructor (parent: dataStruct)
-    {
-      super(parent,"Creature Families");
-      this.dbkey = "wow-g-creature_families";
-      this.icon = "pets";      
-      this.thisType = creatureFamiliesDataDoc;
-      this.detailsType = creatureFamilyDetailsDoc;
-      this.itemsName = "creature_families";
-    }
-  
-    override getItems = function(apiClient: ApiclientService): Promise<any>
-    {
-      return apiClient.getCreatureFamilyIndex() as Promise<any>;
-    }
-    
-    override getDetails? = function(apiClient: ApiclientService, id: number): Promise<creatureFamilyData>
-    {
-      return apiClient.getCreatureFamily(id) as Promise<creatureFamilyData>;
-    }
-  }
-  
+    return apiClient.getCreatureFamily(id) as Promise<creatureFamilyData>;
+  }    
 
+  override getAPIExtra(apiClient: ApiclientService, apiRec: creatureFamilyData): Promise<void>
+  {
+    return new Promise((resolve)=>{
+      apiClient.getCreatureFamilyMedia(apiRec.id)?.then((data: any) => {
+        apiRec.mediaData = data;
+        resolve();
+      });
+    })    
+  }    
+
+}
+  
 //#endregion
 
 //#region Creature Type
 
-  export interface creatureTypeData
+export interface creatureTypeData extends apiDataDoc
+{
+  _links: linksStruct;
+  id: number;
+  name: string;
+}
+
+
+interface creatureTypeIndexEntry extends IIndexItem
+{
+  key: keyStruct;
+  name: string;
+  id: number;
+}
+
+export interface creatureTypeIndex extends apiIndexDoc
+{
+  _links: linksStruct;
+  achievements: creatureTypeIndexEntry;
+}
+
+export class creatureTypesDataDoc extends dbData<creatureTypeIndex, creatureTypeData>
+{
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    _links: linksStruct;
-    id: number;
-    name: string;
+    super(parent, recDB);
+    this.icon = "cruelty_free";
+    this.itemsName = "creature_types";
+    this.type = "creature_types";
+    this.title = "Creature Types";
   }
 
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<creatureTypeIndex>
+  {
+    return apiClient.getCreatureTypesIndex() as Promise<creatureTypeIndex>;
+  }
+
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<creatureTypeData>
+  {
+    return apiClient.getCreatureType(id) as Promise<creatureTypeData>;
+  }    
   
-  interface creatureTypeIndexEntry
-  {
-    key: keyStruct;
-    name: string;
-    id: number;
-  }
+}
 
-  export interface creatureTypeIndex
-  {
-    _links: linksStruct;
-    achievements: creatureTypeIndexEntry;
-  }
-
-  @Reviver<creatureTypeDetailsDoc>({
-    '.': Jsonizer.Self.endorse(creatureTypeDetailsDoc)
-  })
-  export class creatureTypeDetailsDoc extends dataDetailDoc
-  {
-    _links?: linksStruct;
-  }
-
-  @Reviver<creatureTypeDataDoc>({
-    '.': Jsonizer.Self.endorse(creatureFamilyDataDoc)
-  })
-  export class creatureTypeDataDoc extends dataDoc
-  {
-  }
-
-
-  @Reviver<creatureTypesDataDoc>({
-    '.': Jsonizer.Self.assign(creatureTypesDataDoc),
-    items: {
-      '*': creatureTypeDataDoc
-    },
-    details: {
-      '*': creatureTypeDetailsDoc
-    }
-  })
-  export class creatureTypesDataDoc extends dataDocDetailsCollection<creatureTypeDataDoc, creatureTypeDetailsDoc>
-  {
-    constructor (parent: dataStruct)
-    {
-      super(parent,"Creature Types");
-      this.dbkey = "wow-g-creature_types";
-      this.icon = "cruelty_free";
-      this.thisType = creatureTypesDataDoc;
-      this.detailsType = creatureTypeDetailsDoc;
-      this.itemsName = "creature_types";
-    }
-    
-    override getItems = function(apiClient: ApiclientService): Promise<creatureTypeIndex>
-    {
-      return apiClient.getCreatureTypesIndex() as Promise<any>;
-    }
-
-    override getDetails = function(apiClient: ApiclientService, id: number): Promise<creatureTypeData>
-    {
-      return apiClient.getCreatureType(id)as Promise<creatureTypeData>
-    }
-    
-
-  }
-
-  //#endregion
+//#endregion
