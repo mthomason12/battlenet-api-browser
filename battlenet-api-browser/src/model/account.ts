@@ -10,7 +10,7 @@ export class accountDataStruct extends topDataStruct
   {
     super(parent, recDB);
   
-    this.characterData = this.register(charsDataDoc);
+    this.characterData = this.dbRegister(charsDataDoc);
 
     this.icon = "folder";
   }

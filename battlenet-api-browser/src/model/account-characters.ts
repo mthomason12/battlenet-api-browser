@@ -1,7 +1,6 @@
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
-import { apiDataDoc, dataDetailDoc, dataDoc, dataDocDetailsCollection, dataStruct, factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from './datastructs';
+import { apiDataDoc, apiIndexDoc, dataStruct, dbData, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { jsonIgnoreReplacer } from 'json-ignore';
+import { RecDB, recID } from '../lib/recdb';
 
 
 interface accountProfileSummaryLinks extends linksStruct
@@ -10,10 +9,8 @@ interface accountProfileSummaryLinks extends linksStruct
   profile: hrefStruct;
 }
 
-interface accountProfileCharacterData
+export interface accountProfileCharacterData extends apiDataDoc
 {
-  id: number;
-  name: string;
   level?: number;
   character?: hrefStruct;
   protected_character?: hrefStruct;
@@ -25,136 +22,68 @@ interface accountProfileCharacterData
   faction?: factionStruct;
 }
 
-interface accountProfileWoWAccountData
+interface accountProfileWoWAccountData extends IIndexItem
 {
   id: number;
   characters: accountProfileCharacterData[];
 }
 
-interface accountProfileSummaryData
+interface accountProfileIndex extends apiIndexDoc
 {
   _links: accountProfileSummaryLinks;
-  id: number;
+  id?: recID;
   wow_accounts: accountProfileWoWAccountData[];
-}
-
-@Reviver<charDataDetailDoc>({
-  '.': Jsonizer.Self.assign(charDataDetailDoc),
-})
-export class charDataDetailDoc extends dataDetailDoc
-{
-  level?: number;
-  character?: hrefStruct;
-  protected_character?: hrefStruct;
-  account?: number;
-  realm?: realmStruct;
-  playable_class?: refStruct;
-  playable_race?: refStruct;
-  gender?: genderStruct;
-  faction?: factionStruct;
-}
-
-@Reviver<charDataDoc>({
-  '.': Jsonizer.Self.endorse(charDataDoc),
-})
-export class charDataDoc extends dataDoc
-{
-  level?: number;
-  character?: hrefStruct;
-  protected_character?: hrefStruct;
-  account?: number;
-  realm?: realmStruct;
-  playable_class?: refStruct;
-  playable_race?: refStruct;
-  gender?: genderStruct;
-  faction?: factionStruct;
-
-  override getName(): string {
-      return `${this.name} - L${this.level} ${this.playable_race?.name} ${this.playable_class?.name} (${this.realm?.name})`;
-  }
+  characters?: accountProfileCharacterData[];
 }
 
 
-@Reviver<charsDataDoc>({
-  '.': Jsonizer.Self.endorse(charsDataDoc),
-  items: {
-    '*': charDataDoc
-  },
-  details: {
-    '*': charDataDetailDoc
-  }
-})
-export class charsDataDoc extends dataDocDetailsCollection<charDataDoc, charDataDetailDoc>
+export class charsDataDoc extends dbData<accountProfileIndex, accountProfileCharacterData>
 {
 
-  constructor(parent: dataStruct)
+  constructor(parent: dataStruct, recDB: RecDB)
   {
-    super(parent, "Characters");
+    super(parent, recDB);
     this.icon = "group";
     this.needsauth = true;
-    this.thisType = charsDataDoc;
-    this.detailsType = charDataDetailDoc;
-    this.dbkey="wow-a-characters";
     this.itemsName = "characters";
+    this.title = "Characters";
   }
 
-  /**
-   * Custom load mechanism as characters are inside account objects
-   * @param apiclient 
-   */
-  override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<accountProfileIndex>
   {
-    return new Promise<apiDataDoc>((resolve)=>{
-      this.getItems!(apiclient).then (
-        (data: accountProfileSummaryData) => {
-          //clear array
-          this.items.length = 0;
-          for (let account of data.wow_accounts)
-            {
-              for (let character of account.characters)
-              {
-                character.account = account.id;
-                var json = JSON.stringify(character);
-                const reviver = Reviver.get(charDataDoc);
-                this.items.push (JSON.parse(json, reviver));
-              }
-            }
-          this.postFixup();
-          this.lastUpdate = new Date().getTime();
-          this.postProcess();
-          resolve(this);
+    return new Promise((resolve)=>{
+      (apiClient.getAccountProfileSummary() as Promise<accountProfileIndex>).then ((index)=>{
+        index.characters = new Array();
+        //copy characters from each account into a single characters array
+        for (let account of index.wow_accounts) {
+          for (let character of account.characters)
+          {
+            character.account = account.id;
+            index.characters.push (character);
+          }
         }
-      );
+        //sort character array alphabetically
+        index.characters.sort(function(a, b){return ('' + a.name).localeCompare(b.name!)})
+        resolve(index);
+      });
     });
   }
 
-  override postProcess(): void {
-      super.postProcess();
-      //sort entries alphabetically
-      this.items.sort(function(a, b){return ('' + a.name).localeCompare(b.name)})
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<accountProfileCharacterData>
+  {
+    //this shouldn't ever need to happen
+    throw new Error("getAPIRec called for account characters, this shouldn't be happening!");
   }
 
-  override getItems = function(apiClient: ApiclientService): Promise<accountProfileSummaryData>
-  {
-    return apiClient.getAccountProfileSummary() as Promise<accountProfileSummaryData>;
-  }
 
   //getDetails is not called due to our reimplementation of reloadItem, so we don't need to override it
 
-  /**
-   * Override reloadItem to pull from items rather than an API call
-   * @param apiclient 
-   * @param key 
-   */
-  override async reloadItem(apiclient: ApiclientService, key: any): Promise<apiDataDoc>
+
+  override getIndexItemName(item: IIndexItem): string
   {
-    var json: string = JSON.stringify(this.items.find(
-      (data, index, array)=>{
-        return key === (data as any)[this.key];
-      }), jsonIgnoreReplacer);
-    var entry = this.addDetailEntryFromJson(json, apiclient);
-    entry.lastUpdate = new Date().getTime();
-    return new Promise((resolve)=>{return entry});
+    const itm = (item as accountProfileCharacterData);
+    return `${item.name} - L${itm.level} ${itm.playable_race?.name} ${itm.playable_class?.name} (${itm.realm?.name})`;
   }
+
 
 }
