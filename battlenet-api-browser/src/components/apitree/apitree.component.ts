@@ -35,7 +35,7 @@ export class ApitreeComponent {
 
   select(item: dataStruct)
   {   
-    this.selectedItem = item;   
+    this.selectedItem = item; 
     this.dataService.setCurrent(item, undefined);    
     this.changed.emit(this.selectedItem);      
   }
