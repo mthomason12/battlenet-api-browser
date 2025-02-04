@@ -1,11 +1,9 @@
-import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _, {} from 'lodash';
-import { Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
 import { RecDB, recID } from '../lib/recdb';
-import { UserdataService } from '../services/userdata.service';
+
 
 //#region dataStruct
 
