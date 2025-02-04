@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _, {  } from 'lodash';
-import { apiDataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
+import { apiDataDoc, dataStruct, IMasterDetail, topDataStruct } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 
@@ -100,13 +100,40 @@ export class UserdataService {
       resolve();      
     });
   }
+  
+  exportJSON(): Promise<string>
+  {
+    return new Promise((resolve)=>{
+      this.export().then((ob)=>{
+        resolve(JSON.stringify(ob, null, 2));
+      });
+    });
+  }
 
   /**
-   * Export all data to JSON
+   * Export all data
    */
-  export(): string
+  export(): Promise<object>
   {
-    throw new Error("Not implemented");
+    return new Promise((resolve)=>{
+      var exportOb: any = {};
+      var promises: Promise<any>[] = [];
+      this.data.apiData.children().forEach(element => {
+        if (element instanceof topDataStruct)
+        {
+          promises.push(new Promise<void>((resolve)=>{
+            element.export().then((ob)=>{
+              exportOb[element.getName()] = ob;
+              resolve();
+            });
+          }));
+        }
+      });
+      Promise.allSettled(promises).then(()=>{
+        resolve(exportOb);
+      });
+    });
+
   }
 
   /**

@@ -200,6 +200,25 @@ export abstract class topDataStruct extends dataStruct
     this.dbData.forEach((item)=>{item.ref.fixup(this)});
   }
 
+  export(): Promise<object> {
+    return new Promise((resolve)=>{
+      var exportOb: any = {};
+      var promises: Promise<any>[] = [];
+      this.dbData.forEach((data)=>{
+        var dataref = data.ref as any as dbData<any,any>;
+        promises.push(new Promise<void>((resolveInner)=>{
+          dataref.export().then((ob)=>{
+            exportOb[dataref.getName()] = ob;
+            resolveInner();
+          });
+        }));  
+      });
+      Promise.allSettled(promises).then(()=>{
+        resolve(exportOb);        
+      });
+    });
+  }
+
 }
 
 //#endregion
@@ -625,6 +644,26 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   override myPath(): string {
     return this.itemsName.replaceAll('_','-');
   }
+
+  /**
+   * Export all child data as an object
+   */
+  export(): Promise<object>{
+    return new Promise((resolve)=>{
+      var ob: any = {};
+      var promises = [];
+      promises.push(this.getDBIndex().then((idx)=>{
+        ob.index = idx;
+      }));
+      promises.push(this.getDBRecs().then((recs)=>{
+        ob.items = recs;
+      }));
+      Promise.allSettled(promises).then(()=>{
+        console.log("Exporting"+ this.getName());
+        resolve(ob);
+      });
+    })
+  }
 }
 
 //#endregion
@@ -657,6 +696,7 @@ export interface IMasterDetail extends apiDataDoc, INamedItem
   checkLoaded(api: ApiclientService): void;
   getLastUpdate(idx: apiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
+  export(): Promise<object>;
   isItemLoaded(id: recID): boolean;  
 }
 
