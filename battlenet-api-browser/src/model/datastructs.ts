@@ -546,6 +546,10 @@ export class dataDocDetailsCollection<T1 extends dataDoc,T2 extends dataDetailDo
     return this.path()+"/"+item.id;
   }
 
+  getIndexItemName(item: IIndexItem): string {
+    return (item as T1).getName();
+  }
+
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined> {
     return new Promise<apiIndexDoc>( (resolve) => {
       this.isLoaded().then((isLoaded)=>{
@@ -838,6 +842,11 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     return this.path()+"/"+(item as any)[this.key];
   }
 
+  getIndexItemName(item: IIndexItem): string
+  {
+    return item.name;
+  }
+
   /**
    * Get index for this type
    * @param userData 
@@ -1036,6 +1045,7 @@ export interface IMasterDetail extends apiDataDoc, INamedItem
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
   getIndexItems(idx: apiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
+  getIndexItemName(item: IIndexItem): string;
   getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>;
   getAllRecs(api: ApiclientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: apiDataDoc): string;
