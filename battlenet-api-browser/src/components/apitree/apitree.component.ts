@@ -4,7 +4,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UserdataService } from '../../services/userdata.service';
-import { dataDocDetailsCollection, dataStruct, dbData } from '../../model/datastructs';
+import { dataStruct } from '../../model/datastructs';
 import { RouterLink } from '@angular/router';
 
 
