@@ -2,6 +2,10 @@
 
 [SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
+This is a work in progress, many parts of the API are not implemented yet and only have a placeholder folder icon.
+
+![screenshot of the Covenants API viewing the Kyrian covenant](doc/images/screenshot-kyrian.png)
+
 ## Requirements
 
 ### Development and Build
@@ -28,6 +32,13 @@ One item on the [roadmap](#roadmap) is to provide a public API proxy for use by 
 ## Usage
 
 The vast majority of data is left as-is from the Battle.net API.  However, some things are tweaked for usability, and some are combined.  For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.
+
+## Known Issues
+
+There is currently very little in the way of error checking and handling.  
+Any problem with an API call tends to just fail silently other than an error message in the browser console.
+
+Currently everything is hard-coded to the US region
 
 ## Roadmap
 
