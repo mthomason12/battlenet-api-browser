@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import _, {  } from 'lodash';
-import { apiDataDoc, dataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
+import { apiDataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 
@@ -41,7 +41,7 @@ export class UserdataService {
   constructor()
   {
     this.data = new userDataStruct(this.recDB);
-    var loadList: Promise<any>[] = new Array();  
+
     //attempt to load existing data from localstorage
     console.log("Initializing Data Storage");
     try
@@ -87,26 +87,13 @@ export class UserdataService {
         if (oldversion < 3)
           db.deleteObjectStore('recordstore');
       }
-    }).then (
-      (db) => {
-        //complete connection to recDB first as it could be needed at any time
-        this.recDB.connect().then(()=>{
-          //load data stores
-          loadList = loadList.concat(this.data.apiData.wowpublic.loadAll(db, this));
-          loadList = loadList.concat(this.data.apiData.wowaccount.loadAll(db, this));        
-          loadList = loadList.concat(this.data.apiData.wowprofile.loadAll(db, this));
-          //wait for all data to be retrieved and merged then fixup to restore parent links, etc.
-          Promise.allSettled(loadList).then
-          (_res => {   
-            this.fixup();        
-            console.log("Data loaded");
-            this.loaded = true;
-            //send a notification to any subscribers
-            this.dataLoadedEmitter.emit()           
-          });
-        });
-      }
-    ); 
+    }).then ((db)=>{
+      this.fixup();       
+      this.loaded = true;
+      console.log("Data loaded");      
+      //send a notification to any subscribers
+      this.dataLoadedEmitter.emit();
+    }); 
   }
 
   /**
@@ -119,19 +106,8 @@ export class UserdataService {
       localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
       //save to indexedDB
       var saveList: Promise<any>[] = new Array(); 
-      const db = openDB('data',3).then(
-        db => {
-          saveList = saveList.concat(this.data.apiData.wowpublic.save(db));
-          saveList = saveList.concat(this.data.apiData.wowaccount.save(db));        
-          saveList = saveList.concat(this.data.apiData.wowprofile.save(db));
-        });
-      Promise.allSettled(saveList).then(
-        ()=>{
-          console.log("Data saved");
-          resolve();
-        }
-      );
-      
+      console.log("Data saved");      
+      resolve();      
     });
   }
 
@@ -141,9 +117,7 @@ export class UserdataService {
   export(): string
   {
     var obj = new Object();
-    this.data.apiData.wowpublic.export(obj,'wowpublic');
-    this.data.apiData.wowaccount.export(obj,'wowaccount');
-    this.data.apiData.wowprofile.export(obj,'wowprofile');
+    /* todo */
     var json = JSON.stringify(obj);
     return json;
   }

@@ -2,7 +2,7 @@ import { IDBPDatabase } from 'idb';
 import { ApiclientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _, {} from 'lodash';
-import { Class, Reviver } from '@badcafe/jsonizer';
+import { Reviver } from '@badcafe/jsonizer';
 import { JobQueueService } from '../services/jobqueue.service';
 import { RecDB, recID } from '../lib/recdb';
 import { UserdataService } from '../services/userdata.service';
@@ -166,7 +166,6 @@ export class dataFolder extends dataStruct
  */
 export abstract class topDataStruct extends dataStruct
 {
-  data: {ref: dataDoc, type: any}[] = Array();
   dbData: {ref: dbData<any,any>, type: any}[] = Array();
   folders: dataFolder[] = Array();
   recDB: RecDB;
@@ -175,18 +174,6 @@ export abstract class topDataStruct extends dataStruct
   {
     super (parent);
     this.recDB = recDB;
-  }
-
-  /**
-   * Register a legacy data structure, which is held in memory permanently
-   * @param typeref 
-   * @returns 
-   */
-  register<T extends dataDoc>(typeref: { new(...args : any[]):T}): T
-  {
-    var struct = {ref: new typeref(this), type:typeref};
-    this.data.push(struct);
-    return struct.ref;
   }
 
   /**
@@ -211,98 +198,10 @@ export abstract class topDataStruct extends dataStruct
     return super.children().concat(this.folders);
   }   
 
-  /**
-   * Attempt to merge data from database into specified data structure
-   * @param db 
-   * @param target 
-   * @param classtype 
-   * @returns 
-   */
-  async load(db: IDBPDatabase<unknown>, target: dataDoc, classtype: any): Promise<any>
-  {
-    var doc: any = target as any;
-    if (doc.dbkey == undefined)
-    {
-      throw new Error("Attempted to load into an object with no dbkey");
-    }
-    else
-    {
-      const value = await db.get('data', target.dbkey!);
-      if (value != undefined) {
-        //create a new object consisting of the revived data merged into the target
-        //as we receive an object from indexedDB we stringify it and then parse it again with the reviver
-        var newobj = _.merge(target, JSON.parse(JSON.stringify(value), Reviver.get(classtype)));
-        //We can't replace an object reference by reference, so instead replace target keys with new object keys
-        Object.keys(newobj).forEach(key => {
-          doc[key] = newobj[key];
-        });
-      }
-    }
-  }
-
   override postFixup(): void {
-    this.data.forEach((item)=>{item.ref.fixup(this)});
+    this.dbData.forEach((item)=>{item.ref.fixup(this)});
   }
 
-  /**
-   * Pulls in all data for legacy data structures
-   * @param db 
-   * @param recDB 
-   * @returns 
-   */
-  loadAll(db: IDBPDatabase<unknown>, userData: UserdataService): Promise<any>[] {
-    var entries: Promise<any>[] = new Array();
-    this.data.forEach((item)=>{
-      entries.push(this.load(db, item.ref, item.type))
-    });
-    return entries;
-  }
-
-  /**
-   * Saves all data for legacy data structures
-   * @param db 
-   * @returns 
-   */
-  save(db: IDBPDatabase<unknown>): Promise<any>[]
-  {
-    var entries: Promise<any>[] = new Array();    
-    this.data.forEach((item)=>{
-      entries.push(this.saveObject(db, item.ref));
-    });
-    return entries;
-  }
-
-  /**
-   * Export legacy data to a property in the specified object
-   * @param obj 
-   * @param name 
-   */
-  export(obj: any, name: string)
-  {
-    var exportObj: any = new Object();
-    this.data.forEach((item)=>{
-      console.dir(item.ref);
-      var json = JSON.stringify(item.ref, jsonIgnoreReplacer);
-      console.log(json);
-      exportObj[item.ref.dbkey!] = JSON.parse(json);
-    });
-    obj[name] = exportObj;
-  }
-
-
-  /**
-   * Save a dataDoc object to indexedDB
-   * @param db 
-   * @param object 
-   * @returns 
-   */
-  saveObject(db: IDBPDatabase<unknown>, object: dataDoc): Promise<IDBValidKey>
-  {
-    //We need to ignore certain fields and strip class information so first we're JSONizing the dataDoc and then parsing it to 
-    //get an instance of plain old Object
-    var json = JSON.stringify(object, jsonIgnoreReplacer);
-    return db.put('data', JSON.parse(json), object.dbkey);
-  }
 }
 
 //#endregion
