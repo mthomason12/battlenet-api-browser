@@ -1,5 +1,5 @@
 import { RecDB } from '../lib/recdb';
-import { dataFolder, dataStruct, topDataStruct } from './datastructs';
+import { dataStruct, topDataStruct } from './datastructs';
 
 export class profileDataStruct extends topDataStruct
 {
