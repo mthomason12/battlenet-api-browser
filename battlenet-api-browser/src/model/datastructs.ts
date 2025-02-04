@@ -12,7 +12,7 @@ import { UserdataService } from '../services/userdata.service';
 /**
  * A generic data structure
  */
-export abstract class dataStruct implements apiDataDoc {
+export abstract class dataStruct implements apiDataDoc, INamedItem {
   @jsonIgnore()
   _parent?: dataStruct;
   @jsonIgnore()
@@ -1022,13 +1022,17 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
 
 //#region Common Interfaces
 
-export interface IMasterDetail extends apiDataDoc
+export interface INamedItem 
+{
+  getName(): string;
+}
+
+export interface IMasterDetail extends apiDataDoc, INamedItem
 {
   reload(api: ApiclientService): Promise<apiIndexDoc>;
   reloadItem(api: ApiclientService, key: any): Promise<apiDataDoc>;
   _parent?: dataStruct;
   path(): string;
-  getName(): string;
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
   getIndexItems(idx: apiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
