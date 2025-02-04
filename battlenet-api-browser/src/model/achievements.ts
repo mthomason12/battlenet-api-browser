@@ -79,15 +79,15 @@ export class achievementsDataDoc extends dbData<achievementsIndex, achievementDa
     this.title = "Achievements"; 
 }
 
-override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
-{
-  return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
-}
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
+  {
+    return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
+  }
 
-override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
-{
-  return apiClient.getAchievement(id) as Promise<achievementData>;
-}
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
+  {
+    return apiClient.getAchievement(id) as Promise<achievementData>;
+  }
 
   override getAPIExtra(apiClient: ApiclientService, apiRec: achievementData): Promise<void> 
   {
