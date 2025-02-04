@@ -3,7 +3,7 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { apiDataDoc, dataDoc, dataDocDetailsCollection, dbData, IMasterDetail } from '../model/datastructs';
+import { apiDataDoc, dataDoc, dataDocDetailsCollection, dbData, IMasterDetail, INamedItem } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiclientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   readonly jobQueue = inject(JobQueueService);
 
   displayData?: apiDataDoc;
-  dataObject?: IMasterDetail;
+  dataObject?: INamedItem;
   lastUpdate?: Date;
   canGetAll: boolean = false;
 
@@ -60,11 +60,17 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.dataChangedSubscription?.unsubscribe;
   }
 
+  dataObjectIsLive(): boolean
+  {
+    return (this.dataObject instanceof dataDocDetailsCollection || this.dataObject instanceof dbData);
+  }
+
   update() {
     if (this.displayData !== undefined)
     {
       //we're looking at the detail
-      this.name = this.dataObject!.getRecName(this.displayData);
+      if (this.dataObjectIsLive())
+        this.name = (this.dataObject as IMasterDetail).getRecName(this.displayData);
       this.lastUpdate = new Date(this.displayData!.lastUpdate!);
       this.canGetAll = false;
     }
@@ -72,10 +78,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
     {
       //we're looking at the master
       this.name = this.dataObject?.getName();
-      var idx = this.dataObject?.getIndex(this.apiClient).then((index)=>{
-        this.lastUpdate = new Date(index?.lastUpdate!);
-      })       
-      this.canGetAll =  (this.dataObject instanceof dataDocDetailsCollection || this.dataObject instanceof dbData);
+      if (this.dataObjectIsLive())
+      {
+        (this.dataObject as IMasterDetail).getIndex(this.apiClient).then((index)=>{
+          this.lastUpdate = new Date(index?.lastUpdate!);
+        })      
+      } 
+      this.canGetAll = this.dataObjectIsLive();
     }
     
   }
@@ -104,7 +113,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   {
     if (this.canGetAll)
     {
-      this.dataObject!.getAllRecs(this.apiClient, this.jobQueue);
+      (this.dataObject as IMasterDetail).getAllRecs(this.apiClient, this.jobQueue);
     }
   }
 
