@@ -1,6 +1,5 @@
-import { dataDoc, dataStruct, keyStruct, linksStruct, dataDetailDoc, dataDocDetailsCollection, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
-import { Jsonizer, Reviver } from '@badcafe/jsonizer';
 import { RecDB } from '../lib/recdb';
 
 interface realmType
