@@ -1,4 +1,4 @@
-import { dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, mediaDataStruct, refStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, mediaStruct, dataDetailDoc, mediaDataStruct, refStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
@@ -55,7 +55,7 @@ export interface achievementData extends apiDataDoc
   mediaData?: mediaDataStruct;
 }
 
-interface achievementIndexEntry
+interface achievementIndexEntry extends IIndexItem
 {
   key: keyStruct;
   name: string;
@@ -79,15 +79,15 @@ export class achievementsDataDoc extends dbData<achievementsIndex, achievementDa
     this.title = "Achievements"; 
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
-  {
-    return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
-  }
+override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
+{
+  return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
+}
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
-  {
-    return apiClient.getAchievement(id) as Promise<achievementData>;
-  }
+override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
+{
+  return apiClient.getAchievement(id) as Promise<achievementData>;
+}
 
   override getAPIExtra(apiClient: ApiclientService, apiRec: achievementData): Promise<void> 
   {
