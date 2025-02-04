@@ -162,7 +162,8 @@ export class UserdataService {
    */
   setCurrent(master: dataStruct | IMasterDetail, data: apiDataDoc | undefined)
   {
-    if (this.currentMaster !== master && this.currentData !== data)
+    //if either have changed, inform subscribers
+    if ((this.currentMaster !== master) || (this.currentData !== data))
     {
       this.currentMaster = master;
       this.currentData = data;
