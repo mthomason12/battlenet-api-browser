@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { openDB } from 'idb';
 import _, {  } from 'lodash';
 import { apiDataDoc, dataStruct, IMasterDetail } from '../model/datastructs';
 import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
