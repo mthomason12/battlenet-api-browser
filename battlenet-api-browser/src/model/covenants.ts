@@ -1,6 +1,7 @@
-import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc, mediaDataStruct } from './datastructs';
+import { dataDoc, dataStruct, linksStruct, refStruct, mediaStruct, assetStruct, dataDocDetailsCollection, dataDetailDoc, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { Jsonizer, Reviver } from '@badcafe/jsonizer';
+import { RecDB } from '../lib/recdb';
 
 //#region Covenants
 
@@ -32,7 +33,7 @@ interface covenantSignatureAbility
   spell_tooltip: covenantSpellTooltip;
 }
 
-interface covenantData
+export interface covenantData extends apiDataDoc
 {
   _links?: linksStruct;
   id?: number;
@@ -43,71 +44,41 @@ interface covenantData
   soulbinds?: refStruct[];
   renown_rewards?: covenantRenownReward[];
   media?: mediaStruct;
+  mediadata?: mediaDataStruct;
 }
 
-export interface covenantIndexData
+export interface covenantIndexData extends apiIndexDoc
 {
   _links: linksStruct;
   covenants: refStruct[];
 }
 
-@Reviver<covenantDataDetailDoc>({
-  '.': Jsonizer.Self.assign(covenantDataDetailDoc)
-})
-export class covenantDataDetailDoc extends dataDetailDoc
-{  
-  _links?: linksStruct;
-  description?: string;
-  signature_ability?: covenantSignatureAbility;
-  class_abilities?: covenantClassAbility[] = new Array();
-  soulbinds?: refStruct[] = new Array();
-  renown_rewards?: covenantRenownReward[] = new Array();
-  media?: mediaStruct;
-  mediadata?: mediaDataStruct;
 
-  override async getExtraDetails(apiClient: ApiclientService): Promise<void> 
-  {
-    await apiClient.getCovenantMedia(this.id)?.then(
-      (data: any) => {
-        this.mediadata = data;
-      });
-  }
-}
-
-@Reviver<covenantDataDoc>({
-  '.': Jsonizer.Self.endorse(covenantDataDoc)
-})
-export class covenantDataDoc extends dataDoc
+export class covenantsDataDoc extends dbData<covenantIndexData, covenantData>
 {
-}
-
-
-@Reviver<covenantsDataDoc>({
-  '.': Jsonizer.Self.assign(covenantsDataDoc),
-  items: {
-    '*': covenantDataDoc
-  },
-  details: {
-    '*': covenantDataDetailDoc
-  }
-})
-export class covenantsDataDoc extends dataDocDetailsCollection<covenantDataDoc, covenantDataDetailDoc>
-{
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent,"Covenants");
-    this.dbkey = "wow-g-covenants";
-    this.thisType = covenantsDataDoc;
-    this.detailsType = covenantDataDetailDoc;
+    super(parent, recDB);
     this.itemsName = "covenants";
+    this.type = "covenants";
+    this.title = "Covenants";
   }
 
-  override getItems = function(apiClient: ApiclientService): Promise<covenantIndexData>
+  override getAPIExtra(apiClient: ApiclientService, apiRec: covenantData): Promise<void> {
+    return new Promise((resolve)=>{
+      apiClient.getCovenantMedia(this.id)?.then((data: any) => {
+        apiRec.mediadata = data;
+        resolve();
+      });
+    })
+  }
+
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<covenantIndexData>
   {
     return apiClient.getCovenantIndex() as Promise<covenantIndexData>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<covenantData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<covenantData>
   {
     return apiClient.getCovenant(id) as Promise<covenantData>;
   }
@@ -125,7 +96,7 @@ interface soulbindFollowerData
   name: string;
 }
 
-interface soulbindData
+export interface soulbindData extends apiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -136,15 +107,13 @@ interface soulbindData
   talent_tree: refStruct;
 }
 
-interface soulbindIndexData
+interface soulbindIndexData extends apiIndexDoc
 {
   _links: linksStruct;
   soulbinds: refStruct[];
 }
 
-@Reviver<soulbindDataDetailDoc>({
-  '.': Jsonizer.Self.endorse(soulbindDataDetailDoc),
-})
+
 export class soulbindDataDetailDoc extends dataDetailDoc
 {
   _links?: linksStruct;
@@ -154,43 +123,27 @@ export class soulbindDataDetailDoc extends dataDetailDoc
   talent_tree?: refStruct;
 }
 
-@Reviver<soulbindDataDoc>({
-  '.': Jsonizer.Self.endorse(soulbindDataDoc),
-})
-export class soulbindDataDoc extends dataDoc
+export class soulbindsDataDoc extends dbData<soulbindIndexData, soulbindData>
 {
-}
-
-@Reviver<soulbindsDataDoc>({
-  '.': Jsonizer.Self.assign(soulbindsDataDoc),
-  items: {
-    '*': soulbindDataDoc
-  },
-  details: {
-    '*': soulbindDataDetailDoc
-  }  
-})
-export class soulbindsDataDoc extends dataDocDetailsCollection<soulbindDataDoc, soulbindDataDetailDoc>
-{
-  constructor (parent: dataStruct)
+  constructor (parent: dataStruct, recDB: RecDB)
   {
-    super(parent,"Soulbinds");
-    this.dbkey = "wow-g-soulbinds";
+    super(parent,recDB);
     this.icon = "people"; 
-    this.thisType = soulbindsDataDoc;
-    this.detailsType = soulbindDataDetailDoc;
     this.itemsName = "soulbinds";
+    this.type="soulbinds";
+    this.title = "Soulbinds";
   }
 
-  override getItems = function(apiClient: ApiclientService): Promise<soulbindIndexData>
+  override getAPIIndex = function(apiClient: ApiclientService): Promise<soulbindIndexData>
   {
     return apiClient.getSoulbindIndex() as Promise<soulbindIndexData>;
   }
 
-  override getDetails? = function(apiClient: ApiclientService, id: number): Promise<soulbindData>
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<soulbindData>
   {
     return apiClient.getSoulbind(id) as Promise<soulbindData>;
   }
+
 }
 
 

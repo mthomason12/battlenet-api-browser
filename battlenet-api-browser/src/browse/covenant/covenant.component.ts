@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { covenantDataDetailDoc } from '../../model/covenants';
+import { covenantData } from '../../model/covenants';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,5 +15,6 @@ import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abs
   styleUrl: './covenant.component.scss',
   inputs: ['data']
 })
-export class CovenantComponent extends AbstractDetailComponent<covenantDataDetailDoc>{
+
+export class CovenantComponent extends AbstractDetailComponent<covenantData>{
 }

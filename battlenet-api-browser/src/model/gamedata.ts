@@ -31,8 +31,8 @@ export class publicDataStruct extends topDataStruct
     ]);
 
     this.addFolder("Covenants", [
-      this.covenantData = this.register(covenantsDataDoc),
-      this.soulbindsData = this.register(soulbindsDataDoc)
+      this.covenantData = this.dbRegister(covenantsDataDoc),
+      this.soulbindsData = this.dbRegister(soulbindsDataDoc)
     ]);
 
     this.addFolder("Creatures",[
