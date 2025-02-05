@@ -5,7 +5,18 @@ div.app-container
 
 mat-sidenav-container
 {
+    position: absolute;    
     margin-top:56px;
+    margin-bottom:20pt;  
+}
+
+mat-sidenav {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-sidenav app-apitree {
+    flex:1;
 }
 
 div.sidenav-content {
@@ -18,11 +29,20 @@ div.sidenav-content {
     }
 }
 
-mat-toolbar {
+mat-toolbar.top-toolbar {
     position: sticky;
     .spacer {
         flex: 1 1 auto;
     }
+}
+
+mat-toolbar.statusbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:20pt;
+    font-size:10pt;
 }
 
 ul.buttons {

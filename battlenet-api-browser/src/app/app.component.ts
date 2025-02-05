@@ -18,6 +18,7 @@ import FileSaver from 'file-saver';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from '../settings/settings.component';
+import { JobQueueService } from '../services/jobqueue.service';
 
 @Component({
   selector: 'app-root',
@@ -37,6 +38,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   readonly dialog = inject(MatDialog);
   private _snackBar = inject( MatSnackBar );
+  protected jobQueue = inject(JobQueueService);
 
 
   private connectSubscription?: Subscription;
