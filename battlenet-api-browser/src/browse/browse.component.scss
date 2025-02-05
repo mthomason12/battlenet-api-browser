@@ -10,6 +10,12 @@ mat-card-content {
   overflow: auto;
 }
 
+mat-card-actions span.dataStatus {
+  padding-left: 8pt;
+  padding-right: 8pt;
+  font-size:10pt;
+}
+
 mat-card-footer {
   padding-left: 8px;
   padding-right: 8px;

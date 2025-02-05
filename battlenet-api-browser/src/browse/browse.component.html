@@ -20,7 +20,7 @@
     {
       @if(apiClient.isConnected())
       {
-          <button mat-raised-button (click)="reload()">Reload</button>
+          <button mat-raised-button (click)="reload()" [disabled]="!dataObjectIsLive()">Reload</button>
       }
       @else 
       {
@@ -33,18 +33,23 @@
       <button mat-raised-button disabled>Browse to a node that has data</button>
     }
     <button mat-raised-button (click)="getAll()" [disabled]="!canGetAll">Get All</button>
-  </mat-card-actions>
-  <mat-card-footer>
-    @if(hasData())
+    <span class="dataStatus">
+    @if(dataObjectIsLive())
     {
       @if ( lastUpdate )
       {
-        <p>Data last updated: {{ lastUpdate }}</p>
+        Last updated:<br>{{ lastUpdate.toLocaleDateString() }} {{ lastUpdate.toLocaleTimeString() }}
       }
       @else
       {
-        <p>Data not loaded</p>
+        Data not loaded
       }          
     } 
+    @else {
+      No data to load
+    }
+    </span>
+  </mat-card-actions>
+  <mat-card-footer>
   </mat-card-footer>      
 </mat-card>
