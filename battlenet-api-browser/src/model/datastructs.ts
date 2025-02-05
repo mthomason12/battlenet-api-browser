@@ -690,7 +690,7 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
   }
 
   override getDBRecKeys(): Promise<recID[]> {
-    throw new Error("dbDataIndexOnly unsupported function");
+    return Promise.resolve([]);
   }
 
   override putDBRec(id: recID, rec: any): Promise<IDBValidKey> {

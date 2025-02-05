@@ -18,9 +18,12 @@ export const routes: Routes = [
         { path: 'account', children: [           
             { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},               
             { path: 'characters/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowaccount","characterData"], listPages: [
+                data:{list: ["wowaccount","characters"], listPages: [
                     { title: 'Table', component: CharacterTableComponent }
                 ]} 
+            },
+            { path: 'heirlooms', component: ListDetailHostComponent,
+                data:{ list: ["wowaccount","heirlooms"] } 
             }
         ]},
         { path: 'public', children: [
