@@ -305,7 +305,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/covenant/${id}`);
   }  
 
-  getCovenantMedia(id: number): Promise<any> | undefined
+  getCovenantMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/covenant/${id}`);
   }  
@@ -339,7 +339,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/creature/${id}`);
   }  
 
-  getCreatureDisplayMedia(displayId: number): Promise<any> | undefined
+  getCreatureDisplayMedia(displayId: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/creature-display/${displayId}`);
   }    
@@ -354,7 +354,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/creature-family/${id}`);
   }      
 
-  getCreatureFamilyMedia(id: number): Promise<any> | undefined
+  getCreatureFamilyMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/creature-family/${id}`);
   }      
@@ -378,12 +378,12 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/guild-crest/index`);
   }  
 
-  getGuildCrestBorderMedia(id: number): Promise<any> | undefined
+  getGuildCrestBorderMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/guild-crest/border/${id}`);
   }      
 
-  getGuildCrestEmblemMedia(id: number): Promise<any> | undefined
+  getGuildCrestEmblemMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/guild-crest/emblem/${id}`);
   }        
@@ -416,7 +416,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/item/search?${params}`);
   }        
 
-  getItemMedia(id: number): Promise<any> | undefined
+  getItemMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/item/${id}`);
   }    
@@ -519,7 +519,7 @@ export class ApiclientService {
     return this.queryStatic(`/data/wow/journal-instance/${id}`);
   }
 
-  getJournalInstanceMedia(id: number): Promise<any> | undefined
+  getJournalInstanceMedia(id: number): Promise<mediaDataStruct> | undefined
   {
     return this.queryStatic(`/data/wow/media/journal-instance/${id}`);
   }
