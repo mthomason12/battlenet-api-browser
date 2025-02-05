@@ -152,7 +152,7 @@ export class apiClient {
             this.blizzapi.query(apiEndpoint, options).then((value)=>{
                 resolve(value as T);
             },(reason)=>{
-                resolve(undefined);
+                reject(undefined);
             })
         });
       }
