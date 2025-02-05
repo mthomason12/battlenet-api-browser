@@ -1,4 +1,4 @@
-import { BlizzAPI, RegionIdOrName } from "blizzapi";
+import { BlizzAPI, QueryOptions, RegionIdOrName } from "blizzapi";
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserdataService } from "./userdata.service";
 import { Router } from "@angular/router";
@@ -138,4 +138,39 @@ export class apiClient {
     {
         return this._loggingIn;
     }
+
+     //#region Base queries
+    
+      query<T = any>(apiEndpoint: string, params: string, options: QueryOptions = {}): Promise<T | undefined>
+      {
+        return new Promise((resolve, reject)=>{
+            var extraparams: string = "";
+            if (params != "")
+            {
+                extraparams = "&"+params;
+            }    
+            this.blizzapi.query(apiEndpoint, options).then((value)=>{
+                resolve(value as T);
+            },(reason)=>{
+                resolve(undefined);
+            })
+        });
+      }
+    
+      queryStatic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      {
+        return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params, options);
+      }  
+    
+      queryDynamic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      {
+        return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params, options);
+      }  
+    
+      queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      {
+        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
+      }  
+    
+      //#region
 }
