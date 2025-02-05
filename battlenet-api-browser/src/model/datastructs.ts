@@ -520,9 +520,9 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
               //get anything extra that's needed
               this.getAPIExtra(api, result).then (()=>{
                 this.putDBRec(id, result);
+                resolve(result!);                
               })              
             }
-            resolve(result!);
           })
         }
         else
