@@ -27,6 +27,7 @@ export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts>
         this.itemsName = "mounts";
         this.title = "Mounts";
         this.hideKey = true;
+        this.private = true;        
     }
 
     override getAPIIndex = function(apiClient: ApiclientService): Promise<accountMounts>

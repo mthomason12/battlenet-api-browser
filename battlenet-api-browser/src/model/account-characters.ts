@@ -49,6 +49,7 @@ export class accountCharsDataDoc extends dbDataIndexOnly<accountProfileIndex>
     this.itemsName = "characters";
     this.title = "Characters";
     this.hideKey = true;
+    this.private = true;
   }
 
   override getAPIIndex = function(apiClient: ApiclientService): Promise<accountProfileIndex>

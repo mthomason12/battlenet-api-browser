@@ -30,6 +30,7 @@ export class accountHeirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
         this.itemsName = "heirlooms";
         this.title = "Heirlooms";
         this.hideKey = true;
+        this.private = true;        
     }
 
     override getAPIIndex = function(apiClient: ApiclientService): Promise<accountHeirlooms>
