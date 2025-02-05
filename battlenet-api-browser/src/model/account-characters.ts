@@ -28,7 +28,7 @@ interface accountProfileWoWAccountData extends IIndexItem
   characters: accountProfileCharacterData[];
 }
 
-interface accountProfileIndex extends apiIndexDoc
+export interface accountProfileIndex extends apiIndexDoc
 {
   _links: accountProfileSummaryLinks;
   id?: recID;

@@ -13,6 +13,7 @@ import { mediaDataStruct } from '../model/datastructs';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from 'angular-oauth2-oidc';
 import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
+import { accountProfileIndex } from '../model/account-characters';
 
 
 /**
@@ -773,7 +774,7 @@ export class ApiclientService {
     return this.queryProfile(`/profile/user/wow`);
   }    
 
-  getProtectedCharacterProfileSummary(characterId: number, realmId: number): Promise<any> | undefined
+  getProtectedCharacterProfileSummary(characterId: number, realmId: number): Promise<accountProfileIndex> | undefined
   {
     return this.queryProfile(`/profile/user/wow/protected-character/${realmId}-${characterId}`);
   }
