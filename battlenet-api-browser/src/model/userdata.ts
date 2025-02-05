@@ -1,6 +1,6 @@
 import { dataStruct } from './datastructs';
 import { profileDataStruct } from './profile';
-import { publicDataStruct } from './gamedata';
+import { publicDataStruct } from './publicdata';
 import { accountDataStruct } from './account';
 import { RecDB } from '../lib/recdb';
 
