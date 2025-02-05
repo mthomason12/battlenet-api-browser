@@ -237,7 +237,7 @@ export abstract class dataDoc extends dataStruct
   dbkey?: string;
 
   @jsonIgnore()
-  needsauth: boolean = false;
+  needsAuth: boolean = false;
 
   public get loaded() : boolean {
     return this.lastUpdate !== undefined;
@@ -310,7 +310,7 @@ export abstract class dataDoc extends dataStruct
    */
   isPrivate(): boolean
   {
-    return this.needsauth;
+    return this.needsAuth;
   }
 
   /** Path segment defaults to the ID */
@@ -355,7 +355,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   type: string = "items";
   /** the property of T1 that is an array of index items */
   itemsName: string = "items"; 
-  needsAuth: boolean = false;
+  override needsAuth: boolean = false;
   title: string = "untitled";
   private: boolean = false;
   recDB: RecDB;

@@ -44,7 +44,7 @@ export class charsDataDoc extends dbDataIndexOnly<accountProfileIndex>
   {
     super(parent, recDB);
     this.icon = "group";
-    this.needsauth = true;
+    this.needsAuth = true;
     this.type = "account-characters";
     this.itemsName = "characters";
     this.title = "Characters";

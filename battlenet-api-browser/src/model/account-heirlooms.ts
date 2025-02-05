@@ -25,7 +25,7 @@ export class heirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
     {
         super(parent, recDB);
         this.icon = "emoji_events";
-        this.needsauth = true;
+        this.needsAuth = true;
         this.type = "account-heirlooms";
         this.itemsName = "heirlooms";
         this.title = "Heirlooms";
