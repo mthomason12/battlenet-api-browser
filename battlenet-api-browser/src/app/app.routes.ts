@@ -81,7 +81,15 @@ export const routes: Routes = [
             { path: 'regions', redirectTo: 'regions/', pathMatch: 'full'},   
             { path: 'regions/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","regionData"] } 
-            },              
+            },       
+            { path: 'reputation-factions', redirectTo: 'reputation-factions/', pathMatch: 'full'},   
+            { path: 'reputation-factions/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","reputationFactions"] } 
+            },  
+            { path: 'reputation-tiers', redirectTo: 'reputation-tiers/', pathMatch: 'full'},   
+            { path: 'reputation-tiers/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowpublic","reputationTiers"] } 
+            },                                      
             { path: 'soulbinds', redirectTo: 'soulbinds/', pathMatch: 'full'},   
             { path: 'soulbinds/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","soulbindsData"], detailComponent: SoulbindComponent} 

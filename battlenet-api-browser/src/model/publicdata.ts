@@ -9,6 +9,7 @@ import { journalEncountersDataDoc, journalExpansionsDataDoc, journalInstancesDat
 import { RecDB } from '../lib/recdb';
 import { petAbilitiesDataDoc, petsDataDoc } from './pets';
 import { regionsDataDoc } from './region';
+import { reputationFactionDataDoc, reputationTierDataDoc } from './reputation';
 
 export class publicDataStruct extends topDataStruct
 {
@@ -21,7 +22,9 @@ export class publicDataStruct extends topDataStruct
   pets: petsDataDoc;
   petAbilities: petAbilitiesDataDoc;
   realmData: realmsDataDoc;
-  regionData: regionsDataDoc
+  regionData: regionsDataDoc;
+  reputationFactions: reputationFactionDataDoc;
+  reputationTiers: reputationTierDataDoc;
   connectedRealmData: connectedRealmsDataDoc;
   journalExpansionData: journalExpansionsDataDoc;
   journalEncounterData: journalEncountersDataDoc;
@@ -81,7 +84,10 @@ export class publicDataStruct extends topDataStruct
       this.regionData = this.dbRegister(regionsDataDoc)
     ])
 
-    this.addFolder("Reputations");
+    this.addFolder("Reputations",[
+      this.reputationFactions = this.dbRegister(reputationFactionDataDoc),
+      this.reputationTiers = this.dbRegister(reputationTierDataDoc)
+    ]);
 
     this.addFolder("Spells");
 
