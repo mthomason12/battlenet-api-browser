@@ -18,7 +18,7 @@ export interface accountHeirlooms extends apiIndexDoc
 }
 
 
-export class heirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
+export class accountHeirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
 {
 
     constructor(parent: dataStruct, recDB: RecDB)

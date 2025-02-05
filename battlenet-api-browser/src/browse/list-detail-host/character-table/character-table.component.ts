@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
-import { accountProfileCharacterData, charsDataDoc } from '../../../model/account-characters';
+import { accountProfileCharacterData, accountCharsDataDoc } from '../../../model/account-characters';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +30,7 @@ interface charRow {
   styleUrl: './character-table.component.scss',
   inputs: ['data','clicked']
 })
-export class CharacterTableComponent extends AbstractMasterComponent<charsDataDoc>{
+export class CharacterTableComponent extends AbstractMasterComponent<accountCharsDataDoc>{
   displayedColumns: string[] = ['name','level','class','race','faction','server','account'];
 
   //data

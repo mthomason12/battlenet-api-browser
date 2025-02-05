@@ -37,7 +37,7 @@ export interface accountProfileIndex extends apiIndexDoc
 }
 
 
-export class charsDataDoc extends dbDataIndexOnly<accountProfileIndex>
+export class accountCharsDataDoc extends dbDataIndexOnly<accountProfileIndex>
 {
 
   constructor(parent: dataStruct, recDB: RecDB)

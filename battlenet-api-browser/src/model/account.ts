@@ -1,19 +1,19 @@
 import { dataStruct, topDataStruct } from './datastructs';
-import { charsDataDoc } from './account-characters';
+import { accountCharsDataDoc } from './account-characters';
 import { RecDB } from '../lib/recdb';
-import { heirloomsDataDoc } from './account-heirlooms';
+import { accountHeirloomsDataDoc } from './account-heirlooms';
 
 export class accountDataStruct extends topDataStruct
 {
-  characters: charsDataDoc;
-  heirlooms: heirloomsDataDoc;
+  characters: accountCharsDataDoc;
+  heirlooms: accountHeirloomsDataDoc;
 
   constructor(parent: dataStruct, recDB: RecDB)
   {
     super(parent, recDB);
   
-    this.characters = this.dbRegister(charsDataDoc);
-    this.heirlooms = this.dbRegister(heirloomsDataDoc);
+    this.characters = this.dbRegister(accountCharsDataDoc);
+    this.heirlooms = this.dbRegister(accountHeirloomsDataDoc);
 
     this.icon = "folder";
   }
