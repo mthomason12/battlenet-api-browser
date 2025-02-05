@@ -24,6 +24,9 @@ export const routes: Routes = [
             },
             { path: 'heirlooms', component: ListDetailHostComponent,
                 data:{ list: ["wowaccount","heirlooms"] } 
+            },
+            { path: 'mounts', component: ListDetailHostComponent,
+                data:{ list: ["wowaccount","mounts"] } 
             }
         ]},
         { path: 'public', children: [
