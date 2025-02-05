@@ -380,7 +380,11 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     return new Promise<T1>((resolve, reject)=>{
       this.getAPIIndex(api).then((res)=>{
         if (res !== undefined)
+        {
+          res.lastUpdate = new Date().getTime();          
+          this.putDBIndex(res);
           resolve(res);
+        }
         else
           reject("API Error");
       })
@@ -391,7 +395,14 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     return new Promise<T2>((resolve, reject)=>{
       this.getAPIRec(api, key).then((res)=>{
         if (res !== undefined)
-          resolve(res);
+        {
+          res.lastUpdate = new Date().getTime();
+          //get anything extra that's needed
+          this.getAPIExtra(api, res).then (()=>{
+                this.putDBRec(key, res);
+                resolve(res!);                
+              })             
+        }
         else
           reject("API Error");
       })
@@ -483,15 +494,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
       this.getDBIndex().then((result)=>{
         if (result === undefined)
         {
-          //get from API and store in DB
-          this.getAPIIndex(api)!.then((result)=>{
-            if (result !== undefined)
-            {
-              result.lastUpdate = new Date().getTime();
-              this.putDBIndex(result);
-            }
-            resolve(result!);
-          })
+          resolve(this.reload(api))
         }
         else
         {
@@ -513,17 +516,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
         if (result === undefined)
         {
           //get from API and store in DB
-          this.getAPIRec(api, id)!.then((result)=>{
-            if (result !== undefined)
-            {
-              result.lastUpdate = new Date().getTime();              
-              //get anything extra that's needed
-              this.getAPIExtra(api, result).then (()=>{
-                this.putDBRec(id, result);
-                resolve(result!);                
-              })              
-            }
-          })
+          resolve(this.reloadItem(api, id))
         }
         else
         {

@@ -97,9 +97,9 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
     this.preinit();
     //catch data reloads
-    this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(this.reload());
+    this.dataChangedSubscription = this.userData.dataChangedEmitter.subscribe(()=>{ this.reload()});
     //catch refresh button
-    this.refreshSubscription = this.userData.refreshRequestEmitter.subscribe(this.refresh());
+    this.refreshSubscription = this.userData.refreshRequestEmitter.subscribe(()=>{ this.refresh()});
     this.postinit();
 
   }
