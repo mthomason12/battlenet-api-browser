@@ -1,4 +1,4 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, dbData, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
+import { apiDataDoc, apiIndexDoc, dataStruct, dbData, dbDataIndexOnly, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
 import { ApiclientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
 
@@ -37,7 +37,7 @@ interface accountProfileIndex extends apiIndexDoc
 }
 
 
-export class charsDataDoc extends dbData<accountProfileIndex, accountProfileCharacterData>
+export class charsDataDoc extends dbDataIndexOnly<accountProfileIndex>
 {
 
   constructor(parent: dataStruct, recDB: RecDB)
@@ -74,12 +74,6 @@ export class charsDataDoc extends dbData<accountProfileIndex, accountProfileChar
   override indexCompare(a: accountProfileCharacterData, b: accountProfileCharacterData)
   {
     return ('' + a.name).localeCompare(b.name!); 
-  }
-
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<accountProfileCharacterData>
-  {
-    //this shouldn't ever need to happen
-    throw new Error("getAPIRec called for account characters, this shouldn't be happening!");
   }
 
   override getIndexItemName(item: IIndexItem): string

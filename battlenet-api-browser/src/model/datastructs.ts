@@ -668,6 +668,40 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
 
 //#endregion
 
+//region dbDataIndexOnly
+
+/**
+ * dbData variant that *only* has an index, no records
+ */
+export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, any>
+{
+
+  //these functions shouldn't ever get called
+  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<apiDataDoc> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  override getRec(api: ApiclientService, id: recID): Promise<any> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  override getDBRec(id: recID): Promise<any> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  override getDBRecKeys(): Promise<recID[]> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  override putDBRec(id: recID, rec: any): Promise<IDBValidKey> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+
+
+}
+
+//endregion
 
 //#region Common Interfaces
 
