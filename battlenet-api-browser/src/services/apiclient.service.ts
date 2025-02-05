@@ -739,8 +739,6 @@ export class apiClientService extends apiClient {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
   }
 
-
-
   //character encounters
   //character equipment
   //character hunter pets
