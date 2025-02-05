@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
-
+/**
+ * An individual job for JobQueueService
+ */
 class jobQueueJob
 {
   task: Function; //a task function needs to return a promise
@@ -18,9 +20,14 @@ class jobQueueJob
   }
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Background task manager.  Maintains a queue of jobs and ensures only a specified number can execute
+ * concurrently.
+ */
 export class JobQueueService {
 
   jobs: jobQueueJob[] = new Array();
