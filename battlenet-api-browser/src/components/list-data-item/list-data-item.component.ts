@@ -46,4 +46,12 @@ export class ListDataItemComponent {
     return this.parent().isItemLoaded(this.itemKey());
   }
 
+  shouldSkipChange(): boolean
+  {
+    if (this.parent().crossLink)
+      return false;
+    else
+      return this.skipChange();
+  }
+
 }
