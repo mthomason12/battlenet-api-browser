@@ -12,6 +12,7 @@ import { accountHeirlooms } from '../model/account-heirlooms';
 import { accountProfileIndex } from '../model/account-characters';
 import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pets';
 import { apiClient } from './apiclient';
+import { regionData, regionIndex } from '../model/region';
 
 
 /**
@@ -653,10 +654,22 @@ export class apiClientService extends apiClient {
 
   //endregion
   
-  
+  //region Region API
+
+  getRegionIndex(): Promise<regionIndex> | undefined
+  {
+    return this.queryDynamic(`/data/wow/region/index`);
+  }
+
+  getRegion(id: number): Promise<regionData> | undefined
+  {
+    return this.queryDynamic(`/data/wow/region/${id}`);
+  }
+
+  //endregion
+
   //region todo
 
-  //Region
   //Reputation
   //Spell
   //Talent
@@ -712,7 +725,7 @@ export class apiClientService extends apiClient {
 
   //#endregion
 
-  //region todo
+  //region Characters
 
   //character achievements
   //character appearance
@@ -731,6 +744,10 @@ export class apiClientService extends apiClient {
   //character specializations
   //character statistics
   //character titles
+
+  //endregion
+
+  //region Guilds
 
   //guild api
   

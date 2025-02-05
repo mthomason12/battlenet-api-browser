@@ -8,6 +8,7 @@ import { connectedRealmsDataDoc } from './connectedrealm';
 import { journalEncountersDataDoc, journalExpansionsDataDoc, journalInstancesDataDoc } from './journal';
 import { RecDB } from '../lib/recdb';
 import { petAbilitiesDataDoc, petsDataDoc } from './pets';
+import { regionsDataDoc } from './region';
 
 export class publicDataStruct extends topDataStruct
 {
@@ -20,6 +21,7 @@ export class publicDataStruct extends topDataStruct
   pets: petsDataDoc;
   petAbilities: petAbilitiesDataDoc;
   realmData: realmsDataDoc;
+  regionData: regionsDataDoc
   connectedRealmData: connectedRealmsDataDoc;
   journalExpansionData: journalExpansionsDataDoc;
   journalEncounterData: journalEncountersDataDoc;
@@ -74,6 +76,10 @@ export class publicDataStruct extends topDataStruct
       this.realmData = this.dbRegister(realmsDataDoc),
       this.connectedRealmData = this.dbRegister(connectedRealmsDataDoc)
     ]);
+
+    this.addFolder("Regions",[
+      this.regionData = this.dbRegister(regionsDataDoc)
+    ])
 
     this.addFolder("Reputations");
 
