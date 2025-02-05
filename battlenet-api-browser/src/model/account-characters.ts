@@ -45,6 +45,7 @@ export class charsDataDoc extends dbData<accountProfileIndex, accountProfileChar
     super(parent, recDB);
     this.icon = "group";
     this.needsauth = true;
+    this.type = "account-characters";
     this.itemsName = "characters";
     this.title = "Characters";
     this.hideKey = true;
@@ -64,10 +65,15 @@ export class charsDataDoc extends dbData<accountProfileIndex, accountProfileChar
           }
         }
         //sort character array alphabetically
-        index.characters.sort(function(a, b){return ('' + a.name).localeCompare(b.name!)})
+        index.characters = index.characters.sort(function(a, b){return ('' + a.name).localeCompare(b.name!)})
         resolve(index);
       });
     });
+  }
+
+  override indexCompare(a: accountProfileCharacterData, b: accountProfileCharacterData)
+  {
+    return ('' + a.name).localeCompare(b.name!); 
   }
 
   override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<accountProfileCharacterData>
