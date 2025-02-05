@@ -362,6 +362,8 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
+  //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
+  crossLink: boolean = false;
   recKeys: recID[] = new Array();
   //_index: WeakRef<T1>;
   //_items: WeakMap<{id: recID},T2>;
@@ -675,6 +677,11 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
  */
 export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, any>
 {
+  constructor(parent: dataStruct, recDB: RecDB)
+  {
+    super(parent, recDB);
+    this.crossLink = true;
+  }
 
   //these functions shouldn't ever get called
   override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<apiDataDoc> {
@@ -716,6 +723,7 @@ export interface IMasterDetail extends apiDataDoc, INamedItem
   reloadItem(api: ApiclientService, key: any): Promise<apiDataDoc>;
   _parent?: dataStruct;
   path(): string;
+  crossLink: boolean;
   getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
   getIndexItems(idx: apiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
