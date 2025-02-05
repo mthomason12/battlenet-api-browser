@@ -56,27 +56,27 @@ export class apiClientService extends apiClient {
 
   //#region Achievements API
 
-  getAchievementIndex(): Promise<achievementsIndex| undefined >
+  getAchievementIndex(): Promise<achievementsIndex| undefined>
   {
     return this.queryStatic<achievementsIndex>('/data/wow/achievement/index');
   }
 
-  getAchievement(id: number): Promise<achievementData| undefined >
+  getAchievement(id: number): Promise<achievementData| undefined>
   {
     return this.queryStatic<achievementData>(`/data/wow/achievement/${id}`);
   }
 
-  getAchievementMedia(id: number): Promise<mediaDataStruct| undefined >
+  getAchievementMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/achievement/${id}`);
   }
 
-  getAchievementCategoryIndex(): Promise<any| undefined >
+  getAchievementCategoryIndex(): Promise<any| undefined>
   {
     return this.queryStatic('/data/wow/achievement-category/index');
   }
 
-  getAchievementCategory(id: number): Promise<any| undefined >
+  getAchievementCategory(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/achievement-category/${id}`);
   }  
@@ -85,12 +85,12 @@ export class apiClientService extends apiClient {
 
   //#region Auctions API
 
-  getAuctions(connectedRealmID: number): Promise<any| undefined >
+  getAuctions(connectedRealmID: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/connected-realm/auctions/${connectedRealmID}`);
   } 
 
-  getCommodities(): Promise<any| undefined >
+  getCommodities(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/auctions/commodities`);
   }   
@@ -99,17 +99,17 @@ export class apiClientService extends apiClient {
 
   //#region Azerite Essence API
 
-  getAzeriteEssenceIndex(): Promise<any| undefined >
+  getAzeriteEssenceIndex(): Promise<any| undefined>
   {
     return this.queryStatic('/data/wow/azerite-essence/index');
   }  
 
-  getAzeriteEssence(id: number): Promise<any| undefined >
+  getAzeriteEssence(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/azerite-essence/${id}`);
   }    
 
-  getAzeriteEssenceMedia(id: number): Promise<any| undefined >
+  getAzeriteEssenceMedia(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/media/azerite-essence/${id}`);
   }      
@@ -118,12 +118,12 @@ export class apiClientService extends apiClient {
 
   //#region Connected Realm API
 
-  getConnectedRealmsIndex(): Promise<connectedRealmIndex| undefined >
+  getConnectedRealmsIndex(): Promise<connectedRealmIndex| undefined>
   {
     return this.queryDynamic('/data/wow/connected-realm/index');
   }  
 
-  getConnectedRealm(id: number): Promise<connectedRealmData| undefined >
+  getConnectedRealm(id: number): Promise<connectedRealmData| undefined>
   {
     return this.queryDynamic(`/data/wow/connected-realm/${id}`);
   }    
@@ -132,37 +132,37 @@ export class apiClientService extends apiClient {
 
   //#region Covenant API
 
-  getCovenantIndex(): Promise<any| undefined >
+  getCovenantIndex(): Promise<any| undefined>
   {
     return this.queryStatic('/data/wow/covenant/index');
   }  
 
-  getCovenant(id: number): Promise<any| undefined >
+  getCovenant(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/covenant/${id}`);
   }  
 
-  getCovenantMedia(id: number): Promise<mediaDataStruct| undefined >
+  getCovenantMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/covenant/${id}`);
   }  
 
-  getSoulbindIndex(): Promise<any| undefined >
+  getSoulbindIndex(): Promise<any| undefined>
   {
     return this.queryStatic('/data/wow/covenant/soulbind/index');
   }
 
-  getSoulbind(id: number): Promise<any| undefined >
+  getSoulbind(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/covenant/soulbind/${id}`);
   }  
 
-  getConduitIndex(): Promise<any| undefined >
+  getConduitIndex(): Promise<any| undefined>
   {
     return this.queryStatic('/data/wow/covenant/conduit/index');
   }
 
-  getConduit(id: number): Promise<any| undefined >
+  getConduit(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/covenant/conduit/${id}`);
   }  
@@ -171,37 +171,37 @@ export class apiClientService extends apiClient {
 
   //#region Creature API
 
-  getCreature(id: number): Promise<any| undefined >
+  getCreature(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/creature/${id}`);
   }  
 
-  getCreatureDisplayMedia(displayId: number): Promise<mediaDataStruct| undefined >
+  getCreatureDisplayMedia(displayId: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/creature-display/${displayId}`);
   }    
 
-  getCreatureFamilyIndex(): Promise<creatureFamilyIndex| undefined >
+  getCreatureFamilyIndex(): Promise<creatureFamilyIndex| undefined>
   {
     return this.queryStatic(`/data/wow/creature-family/index`);
   }    
 
-  getCreatureFamily(id: number): Promise<creatureFamilyData| undefined >
+  getCreatureFamily(id: number): Promise<creatureFamilyData| undefined>
   {
     return this.queryStatic(`/data/wow/creature-family/${id}`);
   }      
 
-  getCreatureFamilyMedia(id: number): Promise<mediaDataStruct| undefined >
+  getCreatureFamilyMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/creature-family/${id}`);
   }      
 
-  getCreatureTypesIndex(): Promise<creatureTypeIndex| undefined >
+  getCreatureTypesIndex(): Promise<creatureTypeIndex| undefined>
   {
     return this.queryStatic(`/data/wow/creature-type/index`);
   }      
 
-  getCreatureType(id: number): Promise<creatureTypeData| undefined >
+  getCreatureType(id: number): Promise<creatureTypeData| undefined>
   {
     return this.queryStatic(`/data/wow/creature-type/${id}`);
   }    
@@ -210,17 +210,17 @@ export class apiClientService extends apiClient {
 
   //#region Guild Crest API
 
-  getGuildCrestComponentsIndex(): Promise<any| undefined >
+  getGuildCrestComponentsIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/guild-crest/index`);
   }  
 
-  getGuildCrestBorderMedia(id: number): Promise<mediaDataStruct| undefined >
+  getGuildCrestBorderMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/guild-crest/border/${id}`);
   }      
 
-  getGuildCrestEmblemMedia(id: number): Promise<mediaDataStruct| undefined >
+  getGuildCrestEmblemMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/guild-crest/emblem/${id}`);
   }        
@@ -229,12 +229,12 @@ export class apiClientService extends apiClient {
 
   //#region Heirloom API
 
-  getHeirloomIndex(): Promise<any| undefined >
+  getHeirloomIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/heirloom/index`);
   }  
 
-  getHeirloom(id: number): Promise<any| undefined >
+  getHeirloom(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/heirloom/${id}`);
   }      
@@ -243,42 +243,42 @@ export class apiClientService extends apiClient {
 
   //#region Item API
 
-  getItem(id: number): Promise<any| undefined >
+  getItem(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
-  getItemSearch(params: string): Promise<any| undefined >
+  getItemSearch(params: string): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item/search?${params}`);
   }        
 
-  getItemMedia(id: number): Promise<mediaDataStruct| undefined >
+  getItemMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/item/${id}`);
   }    
 
-  getItemClassesIndex(): Promise<any| undefined >
+  getItemClassesIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/index`);
   }    
 
-  getItemClass(id: number): Promise<any| undefined >
+  getItemClass(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/${id}`);
   }       
 
-  getItemSetsIndex(): Promise<any| undefined >
+  getItemSetsIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-set/index`);
   }    
 
-  getItemSet(id: number): Promise<any| undefined >
+  getItemSet(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-set/${id}`);
   }       
   
-  getItemSubclass(id: number, subid: number): Promise<any| undefined >
+  getItemSubclass(id: number, subid: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/${id}/item-subclass/${subid}`);
   }     
@@ -287,32 +287,32 @@ export class apiClientService extends apiClient {
 
   //region Item Appearance API
 
-  getItemAppearance(id: number): Promise<any| undefined >
+  getItemAppearance(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-appearance/${id}`);
   }
 
-  getItemAppearanceSearch(params: string): Promise<any| undefined >
+  getItemAppearanceSearch(params: string): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/search/item-appearance?${params}`);
   }
 
-  getItemAppearanceSetIndex(): Promise<any| undefined >
+  getItemAppearanceSetIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-appearance/set/index`);
   }
 
-  getItemAppearanceSet(id: number): Promise<any| undefined >
+  getItemAppearanceSet(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-appearance/set/${id}`);
   }
 
-  getItemAppearanceSlotIndex(): Promise<any| undefined >
+  getItemAppearanceSlotIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-appearance/slot/index`);
   }
 
-  getItemAppearanceSlot(id: number): Promise<any| undefined >
+  getItemAppearanceSlot(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/item-appearance/slot/${id}`);
   }
@@ -321,42 +321,42 @@ export class apiClientService extends apiClient {
 
   //region Journal API
 
-  getJournalExpansionsIndex(): Promise<journalExpansionsIndex| undefined >
+  getJournalExpansionsIndex(): Promise<journalExpansionsIndex| undefined>
   {
     return this.queryStatic(`/data/wow/journal-expansion/index`);
   }
 
-  getJournalExpansion(id: number): Promise<journalExpansionData| undefined >
+  getJournalExpansion(id: number): Promise<journalExpansionData| undefined>
   {
     return this.queryStatic(`/data/wow/journal-expansion/${id}`);
   }
 
-  getJournalEncountersIndex(): Promise<any| undefined >
+  getJournalEncountersIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/journal-encounter/index`);
   }
 
-  getJournalEncounter(id: number): Promise<any| undefined >
+  getJournalEncounter(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/journal-encounter/${id}`);
   }
 
-  getJournalEncounterSearch(params: string): Promise<any| undefined >
+  getJournalEncounterSearch(params: string): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/search/journal-encounter?params=${params}`);
   }
 
-  getJournalInstancesIndex(): Promise<any| undefined >
+  getJournalInstancesIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/journal-instance/index`);
   }
 
-  getJournalInstance(id: number): Promise<any| undefined >
+  getJournalInstance(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/journal-instance/${id}`);
   }
 
-  getJournalInstanceMedia(id: number): Promise<mediaDataStruct| undefined >
+  getJournalInstanceMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/journal-instance/${id}`);
   }
@@ -366,7 +366,7 @@ export class apiClientService extends apiClient {
 
   //region Media Search API
 
-  getMediaSearch(params: string): Promise<any| undefined >
+  getMediaSearch(params: string): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/search/media?params=${params}`);
   } 
@@ -376,27 +376,27 @@ export class apiClientService extends apiClient {
 
   //region Modified Crafting API
 
-  getModifiedCraftingIndex(): Promise<any| undefined >
+  getModifiedCraftingIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/modified-crafting/index`);
   }
 
-  getModifiedCraftingCategoryIndex(): Promise<any| undefined >
+  getModifiedCraftingCategoryIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/modified-crafting/category/index`);
   }
 
-  getModifiedCraftingCategory(id: number): Promise<any| undefined >
+  getModifiedCraftingCategory(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/modified-crafting/category/${id}`);
   }
 
-  getModifiedCraftingReagentSlotTypeIndex(): Promise<any| undefined >
+  getModifiedCraftingReagentSlotTypeIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/modified-crafting/reagent-slot-type/index`);
   }
 
-  getModifiedCraftingReagentSlotType(id: number): Promise<any| undefined >
+  getModifiedCraftingReagentSlotType(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/modified-crafting/reagent-slot-type/${id}`);
   }
@@ -406,17 +406,17 @@ export class apiClientService extends apiClient {
 
   //region Mount API
 
-  getMountIndex(): Promise<mountsIndex| undefined >
+  getMountIndex(): Promise<mountsIndex| undefined>
   {
     return this.queryStatic(`/data/wow/mount/index`);
   }
 
-  getMount(id: number): Promise<mountData| undefined >
+  getMount(id: number): Promise<mountData| undefined>
   {
     return this.queryStatic(`/data/wow/mount/${id}`);
   }
 
-  getMountSearch(params: string): Promise<any| undefined >
+  getMountSearch(params: string): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/search/mount?params=${params}`);
   }
@@ -425,17 +425,17 @@ export class apiClientService extends apiClient {
 
   //region Mythic Keystone Affix API
 
-  getKeystoneAffixIndex(): Promise<any| undefined >
+  getKeystoneAffixIndex(): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/keystone-affix/index`);
   }
 
-  getKeystoneAffix(id: number): Promise<any| undefined >
+  getKeystoneAffix(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/keystone-affix/${id}`);
   }
 
-  getKeystoneAffixMedia(id: number): Promise<any| undefined >
+  getKeystoneAffixMedia(id: number): Promise<any| undefined>
   {
     return this.queryStatic(`/data/wow/media/keystone-affix/${id}`);
   }  
@@ -444,37 +444,37 @@ export class apiClientService extends apiClient {
 
   //region Mythic Keystone Dungeon API
 
-  getMythicKeystoneIndex(): Promise<any| undefined >
+  getMythicKeystoneIndex(): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/index`);
   }
 
-  getMythicKeystoneDungeonIndex(): Promise<any| undefined >
+  getMythicKeystoneDungeonIndex(): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/dungeon/index`);
   }  
 
-  getMythicKeystoneDungeon(id: number): Promise<any| undefined >
+  getMythicKeystoneDungeon(id: number): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/dungeon/${id}`);
   }
 
-  getMythicKeystonePeriodIndex(): Promise<any| undefined >
+  getMythicKeystonePeriodIndex(): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/period/index`);
   }  
 
-  getMythicKeystonePeriod(id: number): Promise<any| undefined >
+  getMythicKeystonePeriod(id: number): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/period/${id}`);
   }
 
-  getMythicKeystoneSeasonIndex(): Promise<any| undefined >
+  getMythicKeystoneSeasonIndex(): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/season/index`);
   }  
 
-  getMythicKeystoneSeason(id: number): Promise<any| undefined >
+  getMythicKeystoneSeason(id: number): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/mythic-keystone/season/${id}`);
   }  
@@ -483,12 +483,12 @@ export class apiClientService extends apiClient {
 
   //region Mythic Keystone Leaderboard API
 
-  getMythicKeystoneLeaderboardIndex(realmId: number): Promise<any| undefined >
+  getMythicKeystoneLeaderboardIndex(realmId: number): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/connected-realm/${realmId}/mythic-leaderboard/index`);
   }  
 
-  getMythicKeystoneLeaderboard(realmId: number, dungeonId: number, periodId: number): Promise<any| undefined >
+  getMythicKeystoneLeaderboard(realmId: number, dungeonId: number, periodId: number): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/connected-realm/${realmId}/mythic-leaderboard/${dungeonId}/period/${periodId}`);
   }    
@@ -503,7 +503,7 @@ export class apiClientService extends apiClient {
    * @param faction - should be "alliance" or "horde"
    * @returns 
    */
-  getMythicRaidLeaderboard(raid: string, faction: string): Promise<any| undefined >
+  getMythicRaidLeaderboard(raid: string, faction: string): Promise<any| undefined>
   {
     return this.queryDynamic(`/data/wow/leaderboard/hall-of-fame/${raid}/${faction}`);
   }  
@@ -512,27 +512,27 @@ export class apiClientService extends apiClient {
  
   //region Pet API
 
-  getPetsIndex(): Promise<petsIndex| undefined >
+  getPetsIndex(): Promise<petsIndex| undefined>
   {
     return this.queryStatic(`/data/wow/pet/index`);
   }
 
-  getPet(id: number): Promise<petData| undefined >
+  getPet(id: number): Promise<petData| undefined>
   {
     return this.queryStatic(`/data/wow/pet/${id}`);
   }
 
-  getPetMedia(id: number): Promise<mediaDataStruct| undefined >
+  getPetMedia(id: number): Promise<mediaDataStruct| undefined>
   {
     return this.queryStatic(`/data/wow/media/pet/${id}`);
   }    
 
-  getPetAbilitiesIndex(): Promise<petAbilityIndex| undefined >
+  getPetAbilitiesIndex(): Promise<petAbilityIndex| undefined>
   {
     return this.queryStatic(`/data/wow/pet-ability/index`);
   }
 
-  getPetAbility(id: number): Promise<petAbilityData| undefined >
+  getPetAbility(id: number): Promise<petAbilityData| undefined>
   {
     return this.queryStatic(`/data/wow/pet-ability/${id}`);
   }
