@@ -27,6 +27,8 @@ export class JobQueueService {
   _running: boolean = false;
   _executing: boolean = false;
   _timer?: any = undefined;
+  _maxConcurrent: number = 4;
+  _concurrentCount: number = 0;
 
   constructor() { 
     this.start();
@@ -62,22 +64,39 @@ export class JobQueueService {
     this._timer = undefined;
   }
 
+  /**
+   * How many jobs are queued
+   * @returns 
+   */
   size(): number
   {
     return this.jobs.length;
+  }
+
+  /**
+   * How many jobs are currently executing
+   * @returns
+   */
+  execCount(): number
+  {
+    return this._concurrentCount;
   }
 
   run() {
     this._running = true;
     this._timer = setInterval(
       async()=>{ 
-        if (this._running && !this._executing && this.jobs.length > 0)
+        if (this._running && (this._concurrentCount < this._maxConcurrent) && (this.jobs.length > 0) )
         {
           //flag to prevent job overlap
-          this._executing = true
-          await this.jobs.pop()?.exec();
-          this._executing = false;
+          this._concurrentCount++;
+          this.jobs.pop()?.exec().then(()=>{
+            this._concurrentCount--;
+          }).catch(()=>{
+            //catch any failed promises
+            this._concurrentCount--;
+          })
         }
-      },20);
+      },10);
   }
 }
