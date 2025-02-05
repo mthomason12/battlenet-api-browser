@@ -44,7 +44,7 @@ override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<
 
 //endregion
 
-//region Journal Instances
+//region Journal Encounters
 
 interface journalEncounterCreature {
   id?: number;
