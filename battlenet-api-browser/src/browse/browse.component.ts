@@ -24,6 +24,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   navigationEndSubscription?: Subscription;
   dataChangedSubscription?: Subscription;
+  dataRefreshedSubscription?: Subscription;
 
   readonly dialog = inject(MatDialog);
   readonly jobQueue = inject(JobQueueService);
@@ -41,6 +42,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.update();
+
+    //catch navigation ended events
     this.navigationEndSubscription = this.router.events.subscribe((event: Event) => {
       if (event.type == EventType.NavigationEnd)
       {   
@@ -48,11 +51,17 @@ export class BrowseComponent implements OnInit, OnDestroy {
       }
     });
 
+    //catch data changed events (current data object reference has changed)
     this.dataChangedSubscription = this.data.dataChangedEmitter.subscribe(({master, rec})=>{
       this.dataObject = master;      
       this.displayData = rec;
       this.update();
     });
+
+    //catch data refreshed events (current data object contents but not reference have changed)
+    this.dataRefreshedSubscription= this.data.dataRefreshedEmitter.subscribe(()=>{
+      this.update();
+    })
   }
 
   ngOnDestroy(): void {

@@ -111,11 +111,19 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
   {
     if (this.mode == this.Mode.Master)
     {
-      this.masterList!.reload(this.apiClient);
+      this.masterList!.reload(this.apiClient).then((list)=>{
+        this.userData.dataRefreshedEmitter.emit();
+      });
     }
     else
     {
-      this.masterList!.reloadItem(this.apiClient, this.id)
+      this.masterList!.reloadItem(this.apiClient, this.id).then((rec)=>{
+        this.detailItem = rec;
+        this.userData.setCurrent(this.masterList!, this.detailItem!);
+        this.mode = ListDetailHostComponentMode.Detail;
+        this.detailInputs = { 'data': this.detailItem! };               
+        this.userData.dataRefreshedEmitter.emit();
+      });
     }
   }
 

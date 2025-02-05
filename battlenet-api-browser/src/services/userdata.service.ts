@@ -31,6 +31,8 @@ export class UserdataService {
   public dataLoadedEmitter: EventEmitter<void> = new EventEmitter();  
   /** Event triggered when user selection is changed */
   public dataChangedEmitter: EventEmitter<{master: dataStruct | IMasterDetail, rec: apiDataDoc | undefined}> = new EventEmitter();
+  /** Event triggered when current data is refreshed.  Typically called by external classes that affect the data */
+  public dataRefreshedEmitter: EventEmitter<void> = new EventEmitter();
 
   //private dataCache: WeakMap<dataCacheKey, object> = new WeakMap();
 
