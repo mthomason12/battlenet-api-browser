@@ -3,7 +3,7 @@ import { ApiclientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
 
 
-interface accountProfileSummaryLinks extends linksStruct
+export interface accountProfileSummaryLinks extends linksStruct
 {
   user: hrefStruct;
   profile: hrefStruct;
