@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import FileSaver from 'file-saver';
 import { jsonIgnoreReplacer } from 'json-ignore';
+import { dbData } from '../../../model/datastructs';
 
 @Component({
   selector: 'app-data-tools',
@@ -46,9 +47,24 @@ export class DataToolsComponent {
 
   exportJSON()
   {
+    if (this.data instanceof dbData)
+    {
+      this.data.export().then((ob)=>{
+        this.doExport(ob);
+      });
+    }
+    else
+    {
+      this.doExport(this.data);
+    }
+  }
+
+  doExport(ob: object) {
     var fname = "battlenet-api-data-"+this.name()+".json";
-    var blob = new Blob([JSON.stringify(this.data, jsonIgnoreReplacer, 2)], {type: "text/json;charset=utf-8"});
+    var blob = new Blob([JSON.stringify(ob, jsonIgnoreReplacer, 2)], {type: "text/json;charset=utf-8"});
     FileSaver.saveAs(blob, fname, { autoBom: true });
     this._snackBar.open("Data exported as "+fname, "", {duration:3000});
   }
+
+
 }
