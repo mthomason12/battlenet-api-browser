@@ -1,4 +1,4 @@
-import { ApiclientService } from "../services/apiclient.service";
+import { apiClientService } from "../services/apiclient.service";
 import { apiDataDoc, apiIndexDoc, dataStruct, dbData, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
 import { RecDB } from "../lib/recdb";
 
@@ -27,12 +27,12 @@ export class journalExpansionsDataDoc extends dbData<journalExpansionsIndex, jou
     this.title = "Expansions";
 }
 
-override getAPIIndex = function(apiClient: ApiclientService): Promise<journalExpansionsIndex>
+override getAPIIndex = function(apiClient: apiClientService): Promise<journalExpansionsIndex>
 {
   return apiClient.getJournalExpansionsIndex() as Promise<journalExpansionsIndex>;
 }
 
-override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalExpansionData>
+override getAPIRec = function(apiClient: apiClientService, id: number): Promise<journalExpansionData>
 {
   return apiClient.getJournalExpansion(id) as Promise<journalExpansionData>;
 }
@@ -100,12 +100,12 @@ export class journalEncountersDataDoc extends dbData<journalEncountersIndex, jou
     this.type = "journal-encounters";
 }
 
-override getAPIIndex = function(apiClient: ApiclientService): Promise<journalEncountersIndex>
+override getAPIIndex = function(apiClient: apiClientService): Promise<journalEncountersIndex>
 {
   return apiClient.getJournalEncountersIndex() as Promise<journalEncountersIndex>;
 }
 
-override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalEncounterData>
+override getAPIRec = function(apiClient: apiClientService, id: number): Promise<journalEncounterData>
 {
   return apiClient.getJournalEncounter(id) as Promise<journalEncounterData>;
 }
@@ -148,12 +148,12 @@ export class journalInstancesDataDoc extends dbData<journalInstancesIndex, journ
     this.title = "Instances";
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<journalInstancesIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<journalInstancesIndex>
   {
     return apiClient.getJournalInstancesIndex() as Promise<journalInstancesIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<journalInstanceData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<journalInstanceData>
   {
     return apiClient.getJournalInstance(id) as Promise<journalInstanceData>;
   }

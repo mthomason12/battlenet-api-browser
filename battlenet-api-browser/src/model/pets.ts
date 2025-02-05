@@ -1,5 +1,5 @@
 import { dataStruct, keyStruct, linksStruct, dbData, apiIndexDoc, apiDataDoc, refStruct, mediaStruct, mediaDataStruct } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 
@@ -62,17 +62,17 @@ export class petsDataDoc extends dbData<petsIndex, petData>
     this.title = "Pets";
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<petsIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<petsIndex>
   {
     return apiClient.getPetsIndex() as Promise<petsIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<petData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<petData>
   {
     return apiClient.getPet(id) as Promise<petData>;
   }
 
-  override getAPIExtra(apiClient: ApiclientService, apiRec: petData): Promise<void> 
+  override getAPIExtra(apiClient: apiClientService, apiRec: petData): Promise<void> 
   {
     return new Promise((resolve)=>{
       apiClient.getPetMedia(apiRec.id)?.then(
@@ -124,17 +124,17 @@ export class petAbilitiesDataDoc extends dbData<petAbilityIndex, petAbilityData>
     this.title = "Pet Abilities";
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<petAbilityIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<petAbilityIndex>
   {
     return apiClient.getPetAbilitiesIndex() as Promise<petAbilityIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<petAbilityData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<petAbilityData>
   {
     return apiClient.getPetAbility(id) as Promise<petAbilityData>;
   }
 
-  override getAPIExtra(apiClient: ApiclientService, apiRec: petAbilityData): Promise<void> 
+  override getAPIExtra(apiClient: apiClientService, apiRec: petAbilityData): Promise<void> 
   {
     return new Promise((resolve)=>{
       apiClient.getPetAbilityMedia(apiRec.id)?.then(

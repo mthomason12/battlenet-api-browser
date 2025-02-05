@@ -1,5 +1,5 @@
 import { dataStruct, keyStruct, linksStruct, mediaStruct, mediaDataStruct, refStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 interface achievementCategory
@@ -79,17 +79,17 @@ export class achievementsDataDoc extends dbData<achievementsIndex, achievementDa
     this.title = "Achievements"; 
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<achievementsIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<achievementsIndex>
   {
     return apiClient.getAchievementIndex() as Promise<achievementsIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<achievementData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<achievementData>
   {
     return apiClient.getAchievement(id) as Promise<achievementData>;
   }
 
-  override getAPIExtra(apiClient: ApiclientService, apiRec: achievementData): Promise<void> 
+  override getAPIExtra(apiClient: apiClientService, apiRec: achievementData): Promise<void> 
   {
     return new Promise((resolve)=>{
       apiClient.getAchievementMedia(apiRec.id)?.then(

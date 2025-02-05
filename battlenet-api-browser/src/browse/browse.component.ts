@@ -5,7 +5,7 @@ import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialog
 import { UserdataService } from '../services/userdata.service';
 import { apiDataDoc, dataDoc, dbData, IMasterDetail, INamedItem } from '../model/datastructs';
 import { MatButtonModule } from '@angular/material/button';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, Event, EventType } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -36,7 +36,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   name?: string;
 
-  constructor(protected apiClient: ApiclientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
+  constructor(protected apiClient: apiClientService, protected data: UserdataService, private cdr: ChangeDetectorRef, private router: Router)
   { 
   }
 

@@ -1,5 +1,5 @@
 import { apiDataDoc, apiIndexDoc, dataStruct, dbDataIndexOnly, IIndexItem, refStruct } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 import { accountProfileSummaryLinks } from './account-characters';
 
@@ -33,7 +33,7 @@ export class accountHeirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
         this.private = true;        
     }
 
-    override getAPIIndex = function(apiClient: ApiclientService): Promise<accountHeirlooms>
+    override getAPIIndex = function(apiClient: apiClientService): Promise<accountHeirlooms>
     {
         return apiClient.getAccountHeirloomsCollectionsSummary() as Promise<accountHeirlooms>;
     }

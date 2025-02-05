@@ -1,5 +1,5 @@
 import { dataStruct, linksStruct, refStruct, keyStruct, mediaDataStruct, dbData, IIndexItem, apiIndexDoc, apiDataDoc } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 //#region Creature Family
@@ -30,17 +30,17 @@ export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatur
     this.title = "Creature Families";
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<creatureFamilyIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<creatureFamilyIndex>
   {
     return apiClient.getCreatureFamilyIndex() as Promise<creatureFamilyIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<creatureFamilyData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<creatureFamilyData>
   {
     return apiClient.getCreatureFamily(id) as Promise<creatureFamilyData>;
   }    
 
-  override getAPIExtra(apiClient: ApiclientService, apiRec: creatureFamilyData): Promise<void>
+  override getAPIExtra(apiClient: apiClientService, apiRec: creatureFamilyData): Promise<void>
   {
     return new Promise((resolve)=>{
       apiClient.getCreatureFamilyMedia(apiRec.id)?.then((data: any) => {
@@ -88,12 +88,12 @@ export class creatureTypesDataDoc extends dbData<creatureTypeIndex, creatureType
     this.title = "Creature Types";
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<creatureTypeIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<creatureTypeIndex>
   {
     return apiClient.getCreatureTypesIndex() as Promise<creatureTypeIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<creatureTypeData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<creatureTypeData>
   {
     return apiClient.getCreatureType(id) as Promise<creatureTypeData>;
   }    

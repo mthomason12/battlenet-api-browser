@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ApitreeComponent } from "../components/apitree/apitree.component";
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { UserdataService } from '../services/userdata.service';
 import { dataStruct } from '../model/datastructs';
 import { Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ import { SettingsComponent } from '../settings/settings.component';
 })
 export class AppComponent implements OnDestroy, OnInit {
   title = 'battlenet-api-browser';
-  apiClient!: ApiclientService;
+  apiClient!: apiClientService;
 
   protected readonly isMobile = signal(true);
   private readonly _mobileQuery: MediaQueryList;
@@ -41,7 +41,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   private connectSubscription?: Subscription;
 
-  constructor(private apiCli: ApiclientService, protected data: UserdataService, private router: Router)
+  constructor(private apiCli: apiClientService, protected data: UserdataService, private router: Router)
   {
     this.apiClient = apiCli;
     const media = inject(MediaMatcher);

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, OnDestroy, OnInit, Type } from '@angular/core';
-import { ApiclientService } from '../../services/apiclient.service';
+import { apiClientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
@@ -49,7 +49,7 @@ interface ListDetailHostComponentData
 })
 export class ListDetailHostComponent implements OnInit, OnDestroy {
 
-  protected apiClient: ApiclientService = inject(ApiclientService);
+  protected apiClient: apiClientService = inject(apiClientService);
 
   //event subscriptions
   protected dataChangedSubscription?: Subscription;

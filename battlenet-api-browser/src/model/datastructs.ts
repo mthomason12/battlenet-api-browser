@@ -1,4 +1,4 @@
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { jsonIgnore, jsonIgnoreReplacer } from 'json-ignore';
 import _, {} from 'lodash';
 import { JobQueueService } from '../services/jobqueue.service';
@@ -45,7 +45,7 @@ export abstract class dataStruct implements apiDataDoc, INamedItem {
    * Reload data from API
    * @param apiclient 
    */
-  async reload(_apiclient: ApiclientService): Promise<apiDataDoc>
+  async reload(_apiclient: apiClientService): Promise<apiDataDoc>
   {
     this.postProcess();
     return new Promise((resolve)=>{resolve(this)});
@@ -55,7 +55,7 @@ export abstract class dataStruct implements apiDataDoc, INamedItem {
    * Checks if data is loaded, and attempts to load it if it isn't (and if we have an api connection)
    * @param apiclient 
    */
-  checkLoaded(apiclient: ApiclientService): Promise<void>
+  checkLoaded(apiclient: apiClientService): Promise<void>
   {
     //default is just to resolve immediately
     return new Promise((resolve)=>{ resolve(); })
@@ -261,7 +261,7 @@ export abstract class dataDoc extends dataStruct
     return true;
   }  
 
-  override async reload(apiclient: ApiclientService): Promise<apiDataDoc>
+  override async reload(apiclient: apiClientService): Promise<apiDataDoc>
   {
     var ret = super.reload(apiclient);
     ret.then (
@@ -272,7 +272,7 @@ export abstract class dataDoc extends dataStruct
     return ret; 
   }
 
-  override checkLoaded(apiclient: ApiclientService): Promise<void>
+  override checkLoaded(apiclient: apiClientService): Promise<void>
   {
     return new Promise((resolve)=>{
       this.isLoaded().then((res)=>{
@@ -376,7 +376,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     //this._items = new WeakMap();
   }
 
-  override reload(api: ApiclientService): Promise<T1> {
+  override reload(api: apiClientService): Promise<T1> {
     return new Promise<T1>((resolve, reject)=>{
       this.getAPIIndex(api).then((res)=>{
         if (res !== undefined)
@@ -391,7 +391,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     });
   }
 
-  reloadItem(api: ApiclientService, key: any): Promise<T2> {
+  reloadItem(api: apiClientService, key: any): Promise<T2> {
     return new Promise<T2>((resolve, reject)=>{
       this.getAPIRec(api, key).then((res)=>{
         if (res !== undefined)
@@ -484,7 +484,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    * Get index for this type
    * @param userData 
    */
-  getIndex(api: ApiclientService): Promise<T1 | undefined>
+  getIndex(api: apiClientService): Promise<T1 | undefined>
   {
     return new Promise<T1>((resolve, reject)=>{
       //fill the recKeys array
@@ -509,7 +509,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    * Get a record for this type, by ID
    * @param userData 
    */
-  getRec(api: ApiclientService,id: recID): Promise<T2 | undefined>
+  getRec(api: apiClientService,id: recID): Promise<T2 | undefined>
   {
     return new Promise<T2>((resolve, reject)=>{
       this.getDBRec(id).then((result)=>{
@@ -527,7 +527,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
     })
   }  
 
-  getAllRecs(api: ApiclientService, jobqueue: JobQueueService): Promise<void> {
+  getAllRecs(api: apiClientService, jobqueue: JobQueueService): Promise<void> {
     return new Promise<void>((resolve)=>{
       this.getIndex(api).then((idx)=>{
         this.getIndexItems(idx!).forEach((item)=>{
@@ -614,13 +614,13 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
   /**
    * Override in descendants to pull the index from the API
    */
-  abstract getAPIIndex(api: ApiclientService): Promise<T1 | undefined>;
+  abstract getAPIIndex(api: apiClientService): Promise<T1 | undefined>;
 
   /**
    * Override in descendants to pull a record from the API
    * @param id 
    */
-  abstract getAPIRec(api: ApiclientService, id:  recID): Promise<T2 | undefined>;  
+  abstract getAPIRec(api: apiClientService, id:  recID): Promise<T2 | undefined>;  
 
   /**
    * Override in descendants if there's anything else to be fetched and attached to the api data record
@@ -628,7 +628,7 @@ export abstract class dbData<T1 extends apiIndexDoc,T2 extends apiDataDoc> exten
    * @param apiRec 
    * @returns 
    */
-  getAPIExtra(apiClient: ApiclientService, apiRec: T2): Promise<void> 
+  getAPIExtra(apiClient: apiClientService, apiRec: T2): Promise<void> 
   {
     return new Promise((resolve)=>{resolve();});
   }
@@ -677,11 +677,11 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
   }
 
   //these functions shouldn't ever get called
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<apiDataDoc> {
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<apiDataDoc> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
-  override getRec(api: ApiclientService, id: recID): Promise<any> {
+  override getRec(api: apiClientService, id: recID): Promise<any> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
@@ -712,23 +712,23 @@ export interface INamedItem
 
 export interface IMasterDetail extends apiDataDoc, INamedItem
 {
-  reload(api: ApiclientService): Promise<apiIndexDoc>;
-  reloadItem(api: ApiclientService, key: any): Promise<apiDataDoc>;
+  reload(api: apiClientService): Promise<apiIndexDoc>;
+  reloadItem(api: apiClientService, key: any): Promise<apiDataDoc>;
   _parent?: dataStruct;
   path(): string;
   crossLink: boolean;
-  getIndex(api: ApiclientService): Promise<apiIndexDoc | undefined>
+  getIndex(api: apiClientService): Promise<apiIndexDoc | undefined>
   getIndexItems(idx: apiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
   getIndexItemName(item: IIndexItem): string;
-  getRec(api: ApiclientService,id: recID): Promise<apiIndexDoc | undefined>;
-  getAllRecs(api: ApiclientService, queue: JobQueueService): Promise<void>;
+  getRec(api: apiClientService,id: recID): Promise<apiIndexDoc | undefined>;
+  getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: apiDataDoc): string;
   hasData(): boolean;
   key: string;
   hideKey: boolean;
   stringKey: boolean;
-  checkLoaded(api: ApiclientService): void;
+  checkLoaded(api: apiClientService): void;
   getLastUpdate(idx: apiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
   export(): Promise<object>;

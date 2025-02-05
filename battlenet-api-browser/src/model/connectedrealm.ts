@@ -1,5 +1,5 @@
 import { dataStruct, linksStruct, hrefStruct, refStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 interface connectedRealmType
@@ -84,12 +84,12 @@ export class connectedRealmsDataDoc extends dbData<connectedRealmIndex, connecte
     return super.mutateIndexItem(item);
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<connectedRealmIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<connectedRealmIndex>
   {
     return apiClient.getConnectedRealmsIndex() as Promise<connectedRealmIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<connectedRealmData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<connectedRealmData>
   {
     return apiClient.getConnectedRealm(id) as Promise<connectedRealmData>;
   }

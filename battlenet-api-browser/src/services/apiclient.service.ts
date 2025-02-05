@@ -22,7 +22,7 @@ import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pe
  * This is missing a *lot* of error handling.
  * For example, it currently assumes every http call will return a successful result
  */
-export class ApiclientService { 
+export class apiClientService { 
   region: RegionIdOrName;
   clientID: string;
   clientSecret: string;

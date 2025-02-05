@@ -1,5 +1,5 @@
 import { dataStruct, keyStruct, linksStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 interface realmType
@@ -59,12 +59,12 @@ export class realmsDataDoc extends dbData<realmIndex, realmData>
     this.hideKey = true;
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<realmIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<realmIndex>
   {
     return apiClient.getRealmIndex() as Promise<realmIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, slug: string): Promise<realmData>
+  override getAPIRec = function(apiClient: apiClientService, slug: string): Promise<realmData>
   {
     return apiClient.getRealm(slug) as Promise<realmData>;
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiclientService } from '../../services/apiclient.service';
+import { apiClientService } from '../../services/apiclient.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './auth-callback.component.scss'
 })
 export class AuthCallbackComponent {
-  constructor(private apiclient: ApiclientService, private router: Router)
+  constructor(private apiclient: apiClientService, private router: Router)
   {
   }
 

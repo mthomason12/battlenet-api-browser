@@ -1,5 +1,5 @@
 import { dataStruct, linksStruct, refStruct, mediaStruct, mediaDataStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem, keyStruct } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 //#region Covenants
@@ -68,7 +68,7 @@ export class covenantsDataDoc extends dbData<covenantIndexData, covenantData>
     this.title = "Covenants";
   }
 
-  override getAPIExtra(apiClient: ApiclientService, apiRec: covenantData): Promise<void> {
+  override getAPIExtra(apiClient: apiClientService, apiRec: covenantData): Promise<void> {
     return new Promise((resolve)=>{
       apiClient.getCovenantMedia(apiRec.id)?.then((data: any) => {
         apiRec.mediaData = data;
@@ -77,12 +77,12 @@ export class covenantsDataDoc extends dbData<covenantIndexData, covenantData>
     })
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<covenantIndexData>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<covenantIndexData>
   {
     return apiClient.getCovenantIndex() as Promise<covenantIndexData>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<covenantData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<covenantData>
   {
     return apiClient.getCovenant(id) as Promise<covenantData>;
   }
@@ -129,12 +129,12 @@ export class soulbindsDataDoc extends dbData<soulbindIndexData, soulbindData>
     this.title = "Soulbinds";
   }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<soulbindIndexData>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<soulbindIndexData>
   {
     return apiClient.getSoulbindIndex() as Promise<soulbindIndexData>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<soulbindData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<soulbindData>
   {
     return apiClient.getSoulbind(id) as Promise<soulbindData>;
   }

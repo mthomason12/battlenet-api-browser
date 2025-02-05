@@ -1,5 +1,5 @@
 import { dataStruct, keyStruct, linksStruct, factionStruct, refStruct, dbData, apiIndexDoc, apiDataDoc } from './datastructs';
-import { ApiclientService } from '../services/apiclient.service';
+import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 interface mountRequirementsStruct
@@ -57,12 +57,12 @@ export class mountsDataDoc extends dbData<mountsIndex, mountData>
     this.title = "Mounts";
 }
 
-  override getAPIIndex = function(apiClient: ApiclientService): Promise<mountsIndex>
+  override getAPIIndex = function(apiClient: apiClientService): Promise<mountsIndex>
   {
     return apiClient.getMountIndex() as Promise<mountsIndex>;
   }
 
-  override getAPIRec = function(apiClient: ApiclientService, id: number): Promise<mountData>
+  override getAPIRec = function(apiClient: apiClientService, id: number): Promise<mountData>
   {
     return apiClient.getMount(id) as Promise<mountData>;
   }

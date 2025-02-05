@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input } from '@angular/core';
 import { apiIndexDoc, IIndexItem, IMasterDetail } from '../../../model/datastructs';
-import { ApiclientService } from '../../../services/apiclient.service';
+import { apiClientService } from '../../../services/apiclient.service';
 
 @Component({
   selector: 'app-abstract-master',
@@ -11,7 +11,7 @@ import { ApiclientService } from '../../../services/apiclient.service';
 export abstract class AbstractMasterComponent<T extends IMasterDetail> {
   
   ref = inject(ChangeDetectorRef);
-  api = inject(ApiclientService);
+  api = inject(apiClientService);
 
   index?: apiIndexDoc;
   indexItems?: IIndexItem[];
