@@ -22,7 +22,7 @@ export class regionsDataDoc extends dbData<regionIndex, regionData>
 {
   constructor (parent: dataStruct, recDB: RecDB) {
     super(parent, recDB);
-    this.icon = "hub";
+    this.icon = "south_america";
     this.itemsName = "regions";
     this.type="region";
     this.title="Regions";
