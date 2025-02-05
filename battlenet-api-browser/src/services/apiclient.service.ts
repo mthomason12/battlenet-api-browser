@@ -698,9 +698,49 @@ export class apiClientService extends apiClient {
 
   //region Characters
 
-  //character achievements
-  //character appearance
-  //character collections
+
+  getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements`);
+  }
+
+  getCharacterAchievementsStatistics(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements/statistics`);
+  }
+
+  getCharacterAppearance(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/appearance`);
+  }
+
+  getCharacterHeirlooms(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/heirlooms`);
+  }
+
+  getCharacterMounts(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/mounts`);
+  }
+
+  getCharacterPets(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/pets`);
+  }
+
+  getCharacterToys(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/toys`);
+  }
+
+  getCharacterTransmogs(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
+  }
+
+
+
   //character encounters
   //character equipment
   //character hunter pets

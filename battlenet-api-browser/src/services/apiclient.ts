@@ -32,28 +32,27 @@ export class apiClient {
 
     constructor ()
     {   
-    this.data = inject(UserdataService);
-    this.router = inject(Router);
-    this.httpClient = inject(HttpClient);
-    this.clientID = this.data.data.key.clientID;
-    this.clientSecret = this.data.data.key.clientSecret;
-    this.region = "us";
-    this.blizzapi = new BlizzAPI({
-        region: this.region!,
-        clientId: this.data.data.key.clientID,
-        clientSecret: this.data.data.key.clientSecret
-    });  
-    //Log.setLogger(console);
-    //Log.setLevel(Log.DEBUG);
-    this.userManager = new UserManager(this.getClientSettings());
+        this.data = inject(UserdataService);
+        this.router = inject(Router);
+        this.httpClient = inject(HttpClient);
+        this.clientID = this.data.data.key.clientID;
+        this.clientSecret = this.data.data.key.clientSecret;
+        this.region = "us";
+        this.blizzapi = new BlizzAPI({
+            region: this.region!,
+            clientId: this.data.data.key.clientID,
+            clientSecret: this.data.data.key.clientSecret
+        });  
 
-    this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
+        this.userManager = new UserManager(this.getClientSettings());
 
-    //auto-connect if appropriate
-    if (!this._loggingIn && this.data.data.settings.autoConnect) 
-    {
-        this.connect();
-    }    
+        this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
+
+        //auto-connect if appropriate
+        if (!this._loggingIn && this.data.data.settings.autoConnect) 
+        {
+            this.connect();
+        }    
     } 
 
     getClientSettings(): UserManagerSettings
@@ -167,7 +166,19 @@ export class apiClient {
         return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params, options);
       }  
     
+      /** 
+       * Private profile query.  Needs to pass an oauth access token from the user's battle.net account
+       */
       queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      {
+        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
+      }  
+
+      /** 
+       * Public profile query 
+       * 
+       */
+      queryPubProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
       {
         return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
       }  
