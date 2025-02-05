@@ -44,10 +44,6 @@ export class CharacterTableComponent extends AbstractMasterComponent<charsDataDo
   @ViewChild(MatSort) sort?: MatSort;
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort!;
-    this.dataSource.filterPredicate = (data, filter)=>{
-      return ((this.accountFilter.length == 0) || this.accountFilter.includes(data.account) )
-    };
   }  
 
   filterChanged()
@@ -55,30 +51,31 @@ export class CharacterTableComponent extends AbstractMasterComponent<charsDataDo
     this.dataSource.filter = this.accountFilter.toString();
   }
 
-  override dataSet(): void {
-    this.data?.getIndex(this.api).then((idx)=>{
-      this.index = idx;
-      this.indexItems = this.data?.getIndexItems(idx!);
-      //data has been set, lets clone over what we need
-      this.dataSource.data.length=0;
-      (this.indexItems! as accountProfileCharacterData[]).forEach((item)=>{
-        this.dataSource.data.push(
-          {
-            name: item.name!,
-            level: item.level!,
-            class: item.playable_class!.name,
-            race: item.playable_race!.name,
-            faction: item.faction!.name,
-            server: item.realm!.name,
-            account: item.account!
-          }
-        )
-      });
-      //get list of unique accounts
-      this.accounts = this.dataSource.data.map((value, index, array)=>{
-        return value.account;
-      }).onlyUnique();
-      this.ref.detectChanges();
+  override processData(): void {
+    //data has been set, lets clone over what we need
+    this.dataSource.data.length=0;
+    (this.indexItems! as accountProfileCharacterData[]).forEach((item)=>{
+      this.dataSource.data.push(
+        {
+          name: item.name!,
+          level: item.level!,
+          class: item.playable_class!.name,
+          race: item.playable_race!.name,
+          faction: item.faction!.name,
+          server: item.realm!.name,
+          account: item.account!
+        }
+      )
     });
+    //get list of unique accounts
+    this.accounts = this.dataSource.data.map((value, index, array)=>{
+      return value.account;
+    }).onlyUnique();
+    this.dataSource.sort = this.sort!;
+    this.dataSource.filterPredicate = (data, filter)=>{
+      return ((this.accountFilter.length == 0) || this.accountFilter.includes(data.account) )
+    };
   }
+
+ 
 }

@@ -44,8 +44,15 @@ export abstract class AbstractMasterComponent<T extends IMasterDetail> {
     this.data?.getIndex(this.api).then((idx)=>{
       this.index = idx;
       this.indexItems = this.data?.getIndexItems(idx!);
+      this.processData();
       this.ref.detectChanges();
     });
+  }
+
+  /** Called when data is ready for any additional processing */
+  processData()
+  {
+    //do nothing by default
   }
 
 
