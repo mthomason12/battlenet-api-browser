@@ -15,6 +15,7 @@ import { UserInfo } from 'angular-oauth2-oidc';
 import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 import { accountHeirlooms } from '../model/account-heirlooms';
 import { accountProfileIndex } from '../model/account-characters';
+import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pets';
 
 
 /**
@@ -672,10 +673,45 @@ export class ApiclientService {
   }  
 
   //endregion
+ 
+  //region Pet API
+
+  getPetsIndex(): Promise<petsIndex> | undefined
+  {
+    return this.queryStatic(`/data/wow/pet/index`);
+  }
+
+  getPet(id: number): Promise<petData> | undefined
+  {
+    return this.queryStatic(`/data/wow/pet/${id}`);
+  }
+
+  getPetMedia(id: number): Promise<mediaDataStruct> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/pet/${id}`);
+  }    
+
+  getPetAbilitiesIndex(): Promise<petAbilityIndex> | undefined
+  {
+    return this.queryStatic(`/data/wow/pet-ability/index`);
+  }
+
+  getPetAbility(id: number): Promise<petAbilityData> | undefined
+  {
+    return this.queryStatic(`/data/wow/pet-ability/${id}`);
+  }
+
+  getPetAbilityMedia(id: number): Promise<mediaDataStruct> | undefined
+  {
+    return this.queryStatic(`/data/wow/media/pet-ability/${id}`);
+  }      
+
+  
+
+  //endregion
 
   //region todo  
 
-  //Pet
   //Playable Class
   //Playable Race
   //Playable Specialization

@@ -7,6 +7,7 @@ import { mountsDataDoc } from './mounts';
 import { connectedRealmsDataDoc } from './connectedrealm';
 import { journalEncountersDataDoc, journalExpansionsDataDoc, journalInstancesDataDoc } from './journal';
 import { RecDB } from '../lib/recdb';
+import { petAbilitiesDataDoc, petsDataDoc } from './pets';
 
 export class publicDataStruct extends topDataStruct
 {
@@ -16,6 +17,8 @@ export class publicDataStruct extends topDataStruct
   creatureFamiliesData: creatureFamiliesDataDoc;
   creatureTypesData: creatureTypesDataDoc;
   mountData: mountsDataDoc;
+  pets: petsDataDoc;
+  petAbilities: petAbilitiesDataDoc;
   realmData: realmsDataDoc;
   connectedRealmData: connectedRealmsDataDoc;
   journalExpansionData: journalExpansionsDataDoc;
@@ -54,7 +57,10 @@ export class publicDataStruct extends topDataStruct
       this.mountData = this.dbRegister(mountsDataDoc)
     ]);
 
-    this.addFolder("Pets");
+    this.addFolder("Pets",[
+      this.pets = this.dbRegister(petsDataDoc),
+      this.petAbilities = this.dbRegister(petAbilitiesDataDoc)
+    ]);
 
     this.addFolder("Playables");
 
