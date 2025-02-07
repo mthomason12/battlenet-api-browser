@@ -69,11 +69,19 @@ export class appKeyStruct
   clientSecret: string = "";
 }
 
+export enum ConnectionType {
+  direct = 0, 
+  apiproxy = 1
+}
+
 export class settingsStruct
 {
   autoConnect: boolean = false;
   autoLogin: boolean = false;
+  proxyAddress: string = "";
+  connectionType: ConnectionType = ConnectionType.direct;
 }
+
 
 /**
  * All data held by {@link UserdataService}
