@@ -641,29 +641,29 @@ export class apiClientService extends apiClient {
 
   //endregion
 
-    //region Reputation API
+  //region Reputation API
 
-    getReputationFactionIndex(): Promise<ReputationFactionIndex | undefined> 
-    {
-      return this.queryStatic(`/data/wow/reputation-faction/index`);
-    }
-  
-    getReputationFaction(id: number): Promise<ReputationFactionData | undefined> 
-    {
-      return this.queryStatic(`/data/wow/reputation-faction/${id}`);
-    }
-  
-    getReputationTiersIndex(): Promise<ReputationTierIndex | undefined> 
-    {
-      return this.queryStatic(`/data/wow/reputation-tiers/index`);
-    }
-  
-    getReputationTier(id: number): Promise<ReputationTierData | undefined> 
-    {
-      return this.queryStatic(`/data/wow/reputation-tiers/${id}`);
-    }  
-  
-    //endregion
+  getReputationFactionIndex(): Promise<ReputationFactionIndex | undefined> 
+  {
+    return this.queryStatic(`/data/wow/reputation-faction/index`);
+  }
+
+  getReputationFaction(id: number): Promise<ReputationFactionData | undefined> 
+  {
+    return this.queryStatic(`/data/wow/reputation-faction/${id}`);
+  }
+
+  getReputationTiersIndex(): Promise<ReputationTierIndex | undefined> 
+  {
+    return this.queryStatic(`/data/wow/reputation-tiers/index`);
+  }
+
+  getReputationTier(id: number): Promise<ReputationTierData | undefined> 
+  {
+    return this.queryStatic(`/data/wow/reputation-tiers/${id}`);
+  }  
+
+  //endregion
 
   //region todo
 
