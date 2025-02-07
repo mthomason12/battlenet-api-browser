@@ -752,9 +752,21 @@ export class apiClientService extends apiClient {
 
 //endregion
 
+//region Title API
+
+  getTitleIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/title/index`);
+  }  
+
+  getTitle(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/title/${id}`);
+  }  
+
 //region todo
 
-  //Title
+
   //Toy
   //WoW Token
 
