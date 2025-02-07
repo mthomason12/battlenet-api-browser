@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import '../../../lib/utils';
+import { transform } from 'lodash';
 
 interface charRow {
   name: string;
@@ -53,9 +54,9 @@ export class CharacterTableComponent extends AbstractMasterComponent<accountChar
 
   override processData(): void {
     //data has been set, lets clone over what we need
-    this.dataSource.data.length=0;
+    var source = new MatTableDataSource<charRow>();
     (this.indexItems! as accountProfileCharacterData[]).forEach((item)=>{
-      this.dataSource.data.push(
+      source.data.push(
         {
           name: item.name!,
           level: item.level!,
@@ -68,9 +69,10 @@ export class CharacterTableComponent extends AbstractMasterComponent<accountChar
       )
     });
     //get list of unique accounts
-    this.accounts = this.dataSource.data.map((value, index, array)=>{
+    this.accounts = source.data.map((value, index, array)=>{
       return value.account;
     }).onlyUnique();
+    this.dataSource = source;
     this.dataSource.sort = this.sort!;
     this.dataSource.filterPredicate = (data, filter)=>{
       return ((this.accountFilter.length == 0) || this.accountFilter.includes(data.account) )
