@@ -27,7 +27,10 @@ export const routes: Routes = [
             },
             { path: 'mounts', component: ListDetailHostComponent,
                 data:{ list: ["wowaccount","mounts"] } 
-            }
+            },
+            { path: 'pets',  component: ListDetailHostComponent, 
+                data:{list: ["wowaccount","pets"]} 
+            },    
         ]},
         { path: 'public', children: [
             { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
