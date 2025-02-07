@@ -1,6 +1,8 @@
 import { inject, Injectable, Type } from '@angular/core';
 import { AbstractExtension, ExtensionRegistration } from './abstract/abstract-extension'
 import { UserdataService } from '../services/userdata.service';
+import { extensions } from './app.extensions';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,10 @@ export class ExtensionManagerService {
   data: UserdataService = inject(UserdataService);
 
   constructor() { 
+    //load extensions
+    extensions.forEach((extension)=>{
+      this.load(extension.class);
+    })
   }
 
   load( extension: Type<AbstractExtension>) {
