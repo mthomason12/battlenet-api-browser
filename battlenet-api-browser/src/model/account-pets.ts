@@ -49,7 +49,7 @@ export class accountPetsDataDoc extends dbDataIndexOnly<accountPets>
 
     override getAPIIndex = function(apiClient: apiClientService): Promise<accountPets>
     {
-        return apiClient.getAccountMountsCollectionsSummary() as Promise<accountPets>;
+        return apiClient.getAccountPetsCollectionsSummary() as Promise<accountPets>;
     }
 
     override getIndexItemName(item: IIndexItem): string
