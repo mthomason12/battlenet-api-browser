@@ -12,7 +12,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ApitreeComponent } from "../components/apitree/apitree.component";
 import { apiClientService } from '../services/apiclient.service';
 import { UserdataService } from '../services/userdata.service';
-import { dataStruct } from '../model/datastructs';
 import { Subscription } from 'rxjs';
 import FileSaver from 'file-saver';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
