@@ -15,7 +15,10 @@ import { regionData, regionIndex } from '../model/region';
 import { ReputationFactionData, ReputationFactionIndex, ReputationTierData, ReputationTierIndex } from '../model/reputation';
 import { accountPets } from '../model/account-pets';
 import { accountMounts } from '../model/account-mounts';
+import { Injectable } from '@angular/core';
 
+@Injectable({  providedIn: 'root',})
+export class apiClientService extends apiClient { 
 
 
 export class apiClientService extends apiClient { 
