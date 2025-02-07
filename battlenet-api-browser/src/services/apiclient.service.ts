@@ -20,7 +20,7 @@ import { accountMounts } from '../model/account-mounts';
 
 export class apiClientService extends apiClient { 
 
-  //region OAuth Queries
+//region OAuth Queries
 
   /**
    * Currently returns the following structure
