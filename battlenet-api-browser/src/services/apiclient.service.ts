@@ -1,4 +1,3 @@
-import { QueryOptions } from 'blizzapi';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureFamilyData, creatureFamilyIndex, creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
@@ -14,6 +13,8 @@ import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pe
 import { apiClient } from './apiclient';
 import { regionData, regionIndex } from '../model/region';
 import { ReputationFactionData, ReputationFactionIndex, ReputationTierData, ReputationTierIndex } from '../model/reputation';
+import { accountPets } from '../model/account-pets';
+import { accountMounts } from '../model/account-mounts';
 
 
 /**
@@ -698,12 +699,12 @@ export class apiClientService extends apiClient {
     return this.queryProfile(`/profile/user/wow/collections/heirlooms`);
   }   
 
-  getAccountMountsCollectionsSummary(): Promise<any> 
+  getAccountMountsCollectionsSummary(): Promise<accountMounts | undefined> 
   {
     return this.queryProfile(`/profile/user/wow/collections/mounts`);
   }   
 
-  getAccountPetsCollectionsSummary(): Promise<any> 
+  getAccountPetsCollectionsSummary(): Promise<accountPets | undefined> 
   {
     return this.queryProfile(`/profile/user/wow/collections/pets`);
   }   
@@ -720,8 +721,7 @@ export class apiClientService extends apiClient {
 
   //#endregion
 
-  //region Characters
-
+  //region Character Collections
 
   getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
   {
@@ -764,6 +764,9 @@ export class apiClientService extends apiClient {
   }
 
   //character encounters
+
+  //region todo 
+
   //character equipment
   //character hunter pets
   //character media
