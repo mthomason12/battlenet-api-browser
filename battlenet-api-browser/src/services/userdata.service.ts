@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _, {  } from 'lodash';
 import { apiDataDoc, dataStruct, IMasterDetail, topDataStruct } from '../model/datastructs';
-import { appKeyStruct, settingsStruct, userDataStruct } from '../model/userdata';
+import { appKeyStruct, extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
+const extDataItem: string = 'battlenet-api-extdata';
 
 interface dataCacheKey {
   type: string;
@@ -78,6 +79,23 @@ export class UserdataService {
       //initialize with blank data if corrupt or missing
       console.log("User data is corrupt or missing. Reinitializing with empty data.")   
       this.data.key = new appKeyStruct();         
+    }
+    try 
+    {
+      console.log("Loading extension data");
+      //load extension data from LocalStorage
+      json = JSON.parse(localStorage.getItem(extDataItem)!);
+      if (json === null) 
+      {
+        throw new Error("No data");
+      } 
+      this.data.extensions = _.merge(this.data.extensions, json)       
+    }
+    catch
+    {
+      //initialize with blank data if corrupt or missing
+      console.log("Extension data is corrupt or missing. Reinitializing with empty data.")   
+      this.data.extensions = new extensionsDataStruct();           
     }
     this.recDB.connect().then(()=>{
       this.fixup();       

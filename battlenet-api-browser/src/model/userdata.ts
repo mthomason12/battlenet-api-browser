@@ -82,6 +82,10 @@ export class settingsStruct
   connectionType: ConnectionType = ConnectionType.direct;
 }
 
+export class extensionsDataStruct
+{
+  [key: string] : any;
+}
 
 /**
  * All data held by {@link UserdataService}
@@ -89,7 +93,8 @@ export class settingsStruct
 export class userDataStruct
 {
   key: appKeyStruct = new appKeyStruct();
-  settings: settingsStruct = new settingsStruct();  
+  settings: settingsStruct = new settingsStruct();
+  extensions: extensionsDataStruct = new extensionsDataStruct();
   apiData: apiDataStruct;
   
   constructor (recDB: RecDB)
