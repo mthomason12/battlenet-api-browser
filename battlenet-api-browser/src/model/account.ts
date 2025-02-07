@@ -3,12 +3,14 @@ import { accountCharsDataDoc } from './account-characters';
 import { RecDB } from '../lib/recdb';
 import { accountHeirloomsDataDoc } from './account-heirlooms';
 import { accountMountsDataDoc } from './account-mounts';
+import { accountPetsDataDoc } from './account-pets';
 
 export class accountDataStruct extends topDataStruct
 {
   characters: accountCharsDataDoc;
   heirlooms: accountHeirloomsDataDoc;
   mounts: accountMountsDataDoc;
+  pets: accountPetsDataDoc;
 
   constructor(parent: dataStruct, recDB: RecDB)
   {
@@ -17,6 +19,7 @@ export class accountDataStruct extends topDataStruct
     this.characters = this.dbRegister(accountCharsDataDoc);
     this.heirlooms = this.dbRegister(accountHeirloomsDataDoc);
     this.mounts = this.dbRegister(accountMountsDataDoc);
+    this.pets = this.dbRegister(accountPetsDataDoc);
 
     this.icon = "folder";
   }
@@ -31,7 +34,8 @@ export class accountDataStruct extends topDataStruct
     return super.children().concat([
       this.characters, 
       this.heirlooms,
-      this.mounts
+      this.mounts,
+      this.pets
     ]);
   }  
 

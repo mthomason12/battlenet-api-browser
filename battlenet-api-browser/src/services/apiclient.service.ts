@@ -1,4 +1,3 @@
-import { QueryOptions } from 'blizzapi';
 import { achievementData, achievementsIndex } from '../model/achievements';
 import { creatureFamilyData, creatureFamilyIndex, creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
@@ -14,6 +13,8 @@ import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pe
 import { apiClient } from './apiclient';
 import { regionData, regionIndex } from '../model/region';
 import { ReputationFactionData, ReputationFactionIndex, ReputationTierData, ReputationTierIndex } from '../model/reputation';
+import { accountPets } from '../model/account-pets';
+import { accountMounts } from '../model/account-mounts';
 
 
 /**
@@ -698,12 +699,12 @@ export class apiClientService extends apiClient {
     return this.queryProfile(`/profile/user/wow/collections/heirlooms`);
   }   
 
-  getAccountMountsCollectionsSummary(): Promise<any> 
+  getAccountMountsCollectionsSummary(): Promise<accountMounts | undefined> 
   {
     return this.queryProfile(`/profile/user/wow/collections/mounts`);
   }   
 
-  getAccountPetsCollectionsSummary(): Promise<any> 
+  getAccountPetsCollectionsSummary(): Promise<accountPets | undefined> 
   {
     return this.queryProfile(`/profile/user/wow/collections/pets`);
   }   
@@ -720,8 +721,7 @@ export class apiClientService extends apiClient {
 
   //#endregion
 
-  //region Characters
-
+  //region Character Collections API
 
   getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
   {
@@ -763,10 +763,56 @@ export class apiClientService extends apiClient {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
   }
 
-  //character encounters
-  //character equipment
-  //character hunter pets
-  //character media
+  //endregion
+
+  //region Character Encounters API
+
+  getCharacterEncountersSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters`);
+  }
+
+  getCharacterDungeons(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/dungeons`);
+  }
+
+  getCharacterRaids(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/raids`);
+  }
+
+  //endregion
+
+  //region Character Equipment API
+
+  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/equipment`);
+  }
+
+  //endregion
+
+  //region Character Hunter Pets API
+
+  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/hunter-pets`);
+  }
+
+  //end region
+
+  //region Character Media API
+
+  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/character-media`);
+  }
+
+  //end region
+
+  //region todo 
+
   //character mythic keystone profile
   //character professions
   //character profile

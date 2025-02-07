@@ -1,3 +1,26 @@
+@use '../../../lib/classcolors';
+@use 'sass:map';
+@use '@angular/material' as mat;
+
 table  {
     position:absolute;
+}
+
+td.mat-column-name {
+    font-weight: bold;
+}
+
+@each $class, $color in classcolors.$classes {
+    .#{$class}
+    {
+        color: $color;
+    }
+}
+
+.character-button {
+    width:100%;
+    @include mat.button-overrides((
+        filled-container-color: #333333,
+        filled-label-text-size: 120%,
+    ));
 }
