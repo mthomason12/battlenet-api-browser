@@ -581,9 +581,28 @@ export class apiClientService extends apiClient {
 
 //endregion
 
+//region Playable Specialization API
+
+  getPlayableSpecializationIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-specialization/index`);
+  }
+
+  getPlayableSpecialization(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-specialization/${id}`);
+  }
+
+  getPlayableSpecializationMedia(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/media/playable-specialization/${id}`);
+  }  
+
+//endregion
+
+
 //region todo  
 
-  //Playable Specialization
   //Power Type
   //Profession
   //PvP Season
