@@ -12,6 +12,9 @@ export abstract class AbstractExtension {
 export interface ExtensionRegistration {
 
     name: string,
+    version?: string,
+    author?: string,
+    website?: string,
     //different connection methods
     connections?:{
         name: string; //name
