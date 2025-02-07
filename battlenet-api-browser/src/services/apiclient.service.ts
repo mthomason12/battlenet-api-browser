@@ -721,12 +721,39 @@ export class apiClientService extends apiClient {
     return this.queryStatic(`/data/wow/pvp-talent/${id}`);
   }
 
+//endregion
+
+//region Tech Talent API
+
+  getTechTalentTreeIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/tech-talent-tree/index`);
+  }    
+
+  getTechTalentTree(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/tech-talent-tree/${id}`);
+  }
+
+  getTechTalentIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/tech-talent/index`);
+  }  
+
+  getTechTalent(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/tech-talent/${id}`);
+  }  
+
+  getTechTalentMedia(id: number): Promise<any| undefined>
+  {
+    return this.queryStatic(`/data/wow/media/tech-talent/${id}`);
+  }      
 
 //endregion
 
 //region todo
 
-  //Tech Talent
   //Title
   //Toy
   //WoW Token
