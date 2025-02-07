@@ -764,11 +764,27 @@ export class apiClientService extends apiClient {
     return this.queryStatic(`/data/wow/title/${id}`);
   }  
 
-//region todo
+//region Toy API
+
+  getToyIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/toy/index`);
+  }  
+
+  getToy(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/toy/${id}`);
+  }  
+
+//end region
 
 
-  //Toy
-  //WoW Token
+//WoW Token API
+
+  getWoWTokenIndex(): Promise<any | undefined> 
+  {
+    return this.queryDynamic(`/data/wow/token/index`);
+  }
 
 //endregion
 
