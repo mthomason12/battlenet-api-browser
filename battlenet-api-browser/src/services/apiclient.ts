@@ -5,6 +5,10 @@ import { Router } from "@angular/router";
 import { EventEmitter, inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
+/**
+ * This is missing a *lot* of error handling.
+ * For example, it currently assumes every http call will return a successful result
+ */
 export class apiClient {
     region: RegionIdOrName;
     clientID: string;

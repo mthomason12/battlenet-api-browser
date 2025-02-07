@@ -17,10 +17,7 @@ import { accountPets } from '../model/account-pets';
 import { accountMounts } from '../model/account-mounts';
 
 
-/**
- * This is missing a *lot* of error handling.
- * For example, it currently assumes every http call will return a successful result
- */
+
 export class apiClientService extends apiClient { 
 
   //region OAuth Queries
