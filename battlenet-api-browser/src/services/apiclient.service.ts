@@ -600,11 +600,56 @@ export class apiClientService extends apiClient {
 
 //endregion
 
+//region Power Type API
+
+  getPowerTypesIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/power-type/index`);
+  }
+
+  getPowerType(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/power-type/${id}`);
+  }
+
+//endregion
+
+//region Profession API
+
+  getProfessionIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/profession/index`);
+  }
+
+  getProfession(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/profession/${id}`);
+  }
+
+  getProfessionMedia(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/media/profession/${id}`);
+  }
+
+  getProfessionSkillTier(id: number, skilltierID: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/profession/${id}/skill-tier/${skilltierID}`);
+  }
+
+  getRecipe(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/recipe/${id}`);
+  }
+
+  getRecipeMedia(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/media/recipe/${id}`);
+  }  
+
+//endregion
 
 //region todo  
 
-  //Power Type
-  //Profession
   //PvP Season
   //PvP Tier
 
