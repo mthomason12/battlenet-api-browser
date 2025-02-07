@@ -541,23 +541,58 @@ export class apiClientService extends apiClient {
     return this.queryStatic(`/data/wow/media/pet-ability/${id}`);
   }      
 
-  
+//endregion
 
-  //endregion
+//region Playable Class API
 
-  //region todo  
+  getPlayableClassIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-class/index`);
+  }
 
-  //Playable Class
-  //Playable Race
+  getPlayableClass(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-class/${id}`);
+  }
+
+  getPlayableClassMedia(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/media/playable-class/${id}`);
+  }
+
+  getPlayableClassPVPTalentSlots(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-class/${id}/pvp-talent-slots`);
+  }  
+
+//endregion
+
+//region Playable Race API
+
+  getPlayableRaceIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-race/index`);
+  }
+
+  getPlayableRace(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/playable-race/${id}`);
+  }
+
+//endregion
+
+//region todo  
+
   //Playable Specialization
   //Power Type
   //Profession
   //PvP Season
   //PvP Tier
 
-  //end region
+//endregion
   
-  //region Quest API
+
+//region Quest API
 
   /**
    * An "index of indexes" - returns links to the quest category, quest area, and quest type indexes
