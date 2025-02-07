@@ -663,21 +663,39 @@ export class apiClientService extends apiClient {
     return this.queryStatic(`/data/wow/reputation-tiers/${id}`);
   }  
 
-  //endregion
+//endregion
 
-  //region todo
+//region Spells API
 
-  //Spell
+  getSpell(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/spell/${id}`);
+  }  
+
+  getSpellMedia(id: number): Promise<any| undefined>
+  {
+    return this.queryStatic(`/data/wow/media/spell/${id}`);
+  }      
+
+  getSpellSearch(params: string): Promise<any| undefined>
+  {
+    return this.queryStatic(`/data/wow/search/spell?${params}`);
+  }          
+
+//end region
+
+//region todo
+
   //Talent
   //Tech Talent
   //Title
   //Toy
   //WoW Token
 
-  //end region
+//end region
 
 
-  //#region Account Profile API
+//#region Account Profile API
 
   getAccountProfileSummary(): Promise<any>
   {
