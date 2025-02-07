@@ -11,7 +11,7 @@ interface accountMountsEntry extends apiDataDoc {
 export interface accountMounts extends apiIndexDoc
 {
   _links: accountProfileSummaryLinks;
-  heirlooms: accountMountsEntry[]
+  mounts: accountMountsEntry[]
 }
 
 
