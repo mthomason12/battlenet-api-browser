@@ -682,17 +682,56 @@ export class apiClientService extends apiClient {
     return this.queryStatic(`/data/wow/search/spell?${params}`);
   }          
 
-//end region
+//endregion
+
+//region Talent API
+
+  getTalentTreeIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/talent-tree/index`);
+  }  
+
+  getTalentTree(id: number, specid: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/talent-tree/${id}/playable-specialization/${specid}`);
+  }  
+  
+  getTalentTreeNodes(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/talent-tree/${id}`);
+  }
+
+  getTalentsIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/talent/index`);
+  }    
+
+  getTalent(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/talent/${id}`);
+  }
+
+  getPVPTalentsIndex(): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/pvp-talent/index`);
+  }    
+
+  getPVPTalent(id: number): Promise<any | undefined> 
+  {
+    return this.queryStatic(`/data/wow/pvp-talent/${id}`);
+  }
+
+
+//endregion
 
 //region todo
 
-  //Talent
   //Tech Talent
   //Title
   //Toy
   //WoW Token
 
-//end region
+//endregion
 
 
 //#region Account Profile API
@@ -737,9 +776,9 @@ export class apiClientService extends apiClient {
     return this.queryProfile(`/profile/user/wow/collections/transmogs`);
   }   
 
-  //#endregion
+//#endregion
 
-  //region Character Collections API
+//region Character Collections API
 
   getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
   {
