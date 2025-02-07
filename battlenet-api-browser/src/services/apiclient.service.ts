@@ -648,10 +648,52 @@ export class apiClientService extends apiClient {
 
 //endregion
 
-//region todo  
+//region PvP Season API
+ 
+  getPVPSeasonsIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-season/index`);
+  }
 
-  //PvP Season
-  //PvP Tier
+  getPVPSeason(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-season/${id}`);
+  }
+
+  getPVPLeaderboardIndex(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-season/${id}/pvp-leaderboard/index`);
+  }
+
+  getPVPLeaderboard(id: number, bracket: string): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-season/${id}/pvp-leaderboard/${bracket}}`);
+  }  
+
+  getPVPRewardIndex(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-season/${id}/pvp-reward/index`);
+  }  
+
+//endregion
+
+
+//region PvP Tier API  
+
+  getPVPTierIndex(): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-tier/index`);
+  }
+
+  getPVPTier(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/pvp-tier/${id}`);
+  }
+
+  getPVPTierMedia(id: number): Promise<any | undefined>
+  {
+    return this.queryStatic(`/data/wow/media/pvp-tier/${id}`);
+  }    
 
 //endregion
   
