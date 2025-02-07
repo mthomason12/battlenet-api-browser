@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import '../../../lib/utils';
 import { transform } from 'lodash';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 interface charRow {
   name: string;
@@ -26,7 +27,7 @@ interface charRow {
 @Component({
   selector: 'app-character-table',
   imports: [ MatTableModule, MatSortModule, MatExpansionModule, MatIconModule, MatFormFieldModule, 
-    MatInputModule, MatSelectModule, FormsModule, ReactiveFormsModule ],
+    MatInputModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatButtonModule],
   templateUrl: './character-table.component.html',
   styleUrl: './character-table.component.scss',
   inputs: ['data','clicked']
