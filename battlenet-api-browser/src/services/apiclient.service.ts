@@ -721,7 +721,7 @@ export class apiClientService extends apiClient {
 
   //#endregion
 
-  //region Character Collections
+  //region Character Collections API
 
   getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
   {
@@ -763,13 +763,56 @@ export class apiClientService extends apiClient {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
   }
 
-  //character encounters
+  //endregion
+
+  //region Character Encounters API
+
+  getCharacterEncountersSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters`);
+  }
+
+  getCharacterDungeons(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/dungeons`);
+  }
+
+  getCharacterRaids(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/raids`);
+  }
+
+  //endregion
+
+  //region Character Equipment API
+
+  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/equipment`);
+  }
+
+  //endregion
+
+  //region Character Hunter Pets API
+
+  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/hunter-pets`);
+  }
+
+  //end region
+
+  //region Character Media API
+
+  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/character-media`);
+  }
+
+  //end region
 
   //region todo 
 
-  //character equipment
-  //character hunter pets
-  //character media
   //character mythic keystone profile
   //character professions
   //character profile
