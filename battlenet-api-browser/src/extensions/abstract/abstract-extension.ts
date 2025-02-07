@@ -12,9 +12,13 @@ export abstract class AbstractExtension {
     /**
      * Return a new top-level data struct.
      * Is only called if extendsData is set to true in the extension registration.
+     * 
+     * To use, override without calling super.extendData().
      * @param data 
      */
-    abstract extendData(): topDataStruct;
+    extendData(): topDataStruct | undefined {
+        return undefined;
+    }
 
 }
 
