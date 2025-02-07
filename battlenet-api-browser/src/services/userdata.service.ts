@@ -54,7 +54,7 @@ export class UserdataService {
       {
         throw new Error("No data");
       } 
-      this.data.key = _.merge(this.data.settings, json)
+      this.data.settings = _.merge(this.data.settings, json)
     }   
     catch
     {
