@@ -48,7 +48,7 @@ export class UserdataService {
     try
     {
       console.log("Loading settings");
-      //load app keys first from LocalStorage      
+      //load settings first from LocalStorage      
       var json = JSON.parse(localStorage.getItem(settingsItem)!);
       if (json === null) 
       {
@@ -65,7 +65,7 @@ export class UserdataService {
     try
     {         
       console.log("Loading application key");
-      //load app keys first from LocalStorage      
+      //load app keys from LocalStorage      
       json = JSON.parse(localStorage.getItem(dataItem)!);
       if (json === null) 
       {
