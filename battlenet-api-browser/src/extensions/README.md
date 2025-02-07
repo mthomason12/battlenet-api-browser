@@ -1,0 +1,1 @@
+This folder is intended for extensions to the main application, allowing for easier maintenance of modified codebases.
