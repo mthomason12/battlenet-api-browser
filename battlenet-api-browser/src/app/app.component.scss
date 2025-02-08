@@ -44,6 +44,9 @@ mat-toolbar.statusbar {
     height:20pt;
     font-size:10pt;
     background-color: lightgray;
+    .spacer {
+        flex: 1 1 auto;
+    }
 }
 
 ul.buttons {

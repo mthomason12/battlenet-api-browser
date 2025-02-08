@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserdataService } from '../services/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { settingsStruct } from '../model/userdata';
+import { appKeyStruct, settingsStruct } from '../model/userdata';
 import { MatCardModule } from '@angular/material/card';
 import _ from 'lodash';
 
@@ -20,29 +20,12 @@ import _ from 'lodash';
 })
 
 export class SettingsComponent {
-  clientId: string;
-  clientSecret: string;
-  settings: settingsStruct = new settingsStruct()
+
+  settings = input.required<settingsStruct>();
+  key = input.required<appKeyStruct>();
 
   constructor(protected userdata: UserdataService)
   {
-    this.clientId = this.userdata.data.key.clientID;
-    this.clientSecret = this.userdata.data.key.clientSecret;
-    this.settings = _.merge(this.settings, this.userdata.data.settings)
   }
 
-  reset()
-  {
-    this.clientId = this.userdata.data.key.clientID;
-    this.clientSecret = this.userdata.data.key.clientSecret;
-    this.settings = this.userdata.data.settings;
-  }
-
-  save()
-  {
-    this.userdata.data.key.clientID = this.clientId;
-    this.userdata.data.key.clientSecret = this.clientSecret;
-    this.userdata.data.settings = this.settings;
-    this.userdata.save();
-  }
 }

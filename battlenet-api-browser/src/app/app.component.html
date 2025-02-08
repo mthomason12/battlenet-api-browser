@@ -17,7 +17,7 @@
       }
     }
     @else {
-      <button mat-raised-button (click)="connect();" [style.display]="this.apiClient.isConnected() ? 'none' : '' "
+      <button mat-raised-button (click)="connect();" [disabled]= "!apiClient.canConnect()" [style.display]="apiClient.isConnected() ? 'none' : '' "
         type="button" aria-label="Connect to API">
         <mat-icon>login</mat-icon>Connect
       </button>
@@ -58,5 +58,7 @@
 </mat-sidenav-container>
 <mat-toolbar class="statusbar">
   <span>Background Jobs: {{jobQueue.execCount()}}/{{jobQueue.size()}}</span>
+  <span class="spacer"></span>
+  <span>{{statusMessage}}</span>
 </mat-toolbar>
 </div>

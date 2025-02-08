@@ -54,6 +54,12 @@ export class apiClientService  {
     this.extMgr.connections.forEach((value, key)=>{
       this.connections.set(key, value);
     })
+
+    //subscribe to settings changed events
+    this.data.settingsChangedEmitter.subscribe(()=>{
+      //act as if we were provided settings from scratch again
+      this.provideSettings(this.data.data.settings.api);
+    })
   }
 
   /**
@@ -108,6 +114,10 @@ completeAuthentication(authcode: string, router: Router)
     this.apiConnection!.completeAuthentication(authcode, router);
 }
 
+canConnect(): boolean
+{
+  return this.apiConnection!.canConnect();
+}
 
 isConnected(): boolean
 {

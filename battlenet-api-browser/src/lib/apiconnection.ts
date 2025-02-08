@@ -34,7 +34,17 @@ export abstract class APIConnection {
     }
 
     /**
+     * Override to return true if preconditions are met for a connection attempt.
+     * For example, check that there's an API Key and Secret configured.
+     * @returns 
+     */
+    canConnect(): boolean {
+        return false;
+    }
+
+    /**
      * Override to perform any connection code necessary.
+     * Should reject the promise if connection is not possible.
      * @returns 
      */
     connect(): Promise<void>

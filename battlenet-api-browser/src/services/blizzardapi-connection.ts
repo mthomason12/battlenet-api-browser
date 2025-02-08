@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserInfo } from "angular-oauth2-oidc";
 import { HttpClient } from "@angular/common/http";
+import { apiClientSettings } from "./apiclientsettings";
 
 /**
  * Handles Client ID/Secret, OAuth, and HTTP calls to Battle.net API
@@ -29,6 +30,8 @@ export class BlizzardAPIConnection extends APIConnection {
         super(undefined, httpClient);
         this.data = data;
         this.region = "us";
+        this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
+
         this.clientID = this.data.key.clientID;
         this.clientSecret = this.data.key.clientSecret;
 
@@ -37,9 +40,6 @@ export class BlizzardAPIConnection extends APIConnection {
             clientId: this.data.key.clientID,
             clientSecret: this.data.key.clientSecret
         });  
-
-        this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
-
         this.userManager = new UserManager(this.getClientSettings()); 
     
     }
@@ -64,14 +64,37 @@ export class BlizzardAPIConnection extends APIConnection {
         };    
     }
 
+    override canConnect(): boolean {
+        return (this.clientID !=="" && this.clientSecret !== "")
+    }
+
     override connect(): Promise<void> {
-        return new Promise((resolve)=>{
+        return new Promise((resolve,reject)=>{
+            if (!this.canConnect())
+                reject();
             this.getAccessToken().then ((token)=>{
                 this.accessToken = token;
                 this._connected = true;
                 resolve();
             });
         });
+    }
+
+    override provideSettings(settings: apiClientSettings)
+    {
+        super.provideSettings(settings);
+
+        //reinitialize everything affected by a settings changed
+        this.clientID = this.data.key.clientID;
+        this.clientSecret = this.data.key.clientSecret;
+
+        this.blizzapi = new BlizzAPI({
+            region: this.region!,
+            clientId: this.data.key.clientID,
+            clientSecret: this.data.key.clientSecret
+        });  
+        
+        this.userManager = new UserManager(this.getClientSettings()); 
     }
 
 

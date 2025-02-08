@@ -7,11 +7,11 @@
             <mat-card-content>
                 <mat-form-field class="full-width">
                     <mat-label>Client ID</mat-label>
-                    <input matInput type="text" title="Client ID" [(ngModel)]="clientId" />
+                    <input matInput type="text" title="Client ID" [(ngModel)]="key().clientID" />
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>Client Secret</mat-label>
-                    <input matInput type="text" title="Client Secret" [(ngModel)]="clientSecret" />
+                    <input matInput type="text" title="Client Secret" [(ngModel)]="key().clientSecret" />
                 </mat-form-field>
                 <mat-accordion>
                     <mat-expansion-panel>
@@ -32,14 +32,11 @@
                 <mat-card-subtitle>Preferences</mat-card-subtitle>
             </mat-card-header>            
             <mat-card-content>
-                <mat-checkbox [(ngModel)]="settings.autoConnect">Automatically connect on startup</mat-checkbox>
-                <mat-checkbox [(ngModel)]="settings.autoLogin">Automatically attempt login on startup</mat-checkbox>
+                <mat-checkbox [(ngModel)]="settings().autoConnect">Automatically connect on startup</mat-checkbox>
+                <mat-checkbox [(ngModel)]="settings().autoLogin">Automatically attempt login on startup</mat-checkbox>
             </mat-card-content>
         </mat-card>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button (click)="save()">Save</button>
-    </mat-card-actions>
 </mat-card>
 
 
