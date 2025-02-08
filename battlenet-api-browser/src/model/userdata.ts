@@ -77,9 +77,13 @@ export class settingsStruct
   api: apiClientSettings = new apiClientSettings();
 } 
 
+export interface extensionDataStruct {
+  [key: string]: any;
+}
+
 export class extensionsDataStruct
 {
-  [key: string] : any;
+  [key: string] : extensionDataStruct;
 }
 
 /**

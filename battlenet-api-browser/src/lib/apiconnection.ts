@@ -15,8 +15,9 @@ export abstract class APIConnection {
     protected _loggingIn = false;
     protected _connected = false;
 
-    constructor (httpClient: HttpClient)
+    constructor (settings: apiClientSettings | undefined, httpClient: HttpClient)
     {
+        this.settings = settings;
         this.httpClient = httpClient;
     }
 

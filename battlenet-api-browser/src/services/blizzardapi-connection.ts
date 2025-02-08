@@ -26,7 +26,7 @@ export class BlizzardAPIConnection extends APIConnection {
     public userManager: UserManager;   
 
     constructor(data: userDataStruct, httpClient: HttpClient) {
-        super(httpClient);
+        super(undefined, httpClient);
         this.data = data;
         this.region = "us";
         this.clientID = this.data.key.clientID;
