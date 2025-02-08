@@ -1,6 +1,7 @@
 import { inject, Injectable, Type } from '@angular/core';
 import { AbstractExtension, ExtensionRegistration } from './abstract/abstract-extension'
 import { UserdataService } from '../services/userdata.service';
+import { APIConnection } from '../lib/apiconnection'
 import { extensions } from './app.extensions';
 
 
@@ -14,7 +15,7 @@ export class ExtensionManagerService {
 
   extensions: AbstractExtension[] = [];
   registrations: ExtensionRegistration[] = [];
-  connections: APIConnection[] = [];
+  connections: Map<string, APIConnection> = new Map();
 
   data: UserdataService = inject(UserdataService);
 

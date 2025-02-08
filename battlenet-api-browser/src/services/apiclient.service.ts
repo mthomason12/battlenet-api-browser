@@ -18,16 +18,26 @@ import { accountMounts } from '../model/account-mounts';
 import { inject, Injectable } from '@angular/core';
 import { ExtensionManagerService } from '../extensions/extension-manager.service';
 import { apiClientSettings } from './apiclientsettings';
+import { APIConnection } from '../lib/apiconnection';
+import { BlizzardAPIConnection } from './blizzardapi-connection';
 
 @Injectable({  providedIn: 'root',})
 export class apiClientService extends apiClient { 
 
   extMgr: ExtensionManagerService = inject(ExtensionManagerService);
   apiConnection?: APIConnection;
+  //list of available connection types
+  connections: Map<string,APIConnection> = new Map();
   settings?: apiClientSettings;
 
   constructor(){
     super();
+    //add the default connection
+    this.connections.set('_default',new BlizzardAPIConnection());
+    //load additional connections from Extension Manager Service
+    this.extMgr.connections.forEach((value, key)=>{
+      this.connections.set(key, value);
+    })
   }
 
   /**
@@ -35,7 +45,15 @@ export class apiClientService extends apiClient {
    */
   provideSettings(settings: apiClientSettings) {
     this.settings = settings;
-    //todo - resolve apiConnection and set it
+
+    //resolve chosen apiConnection and set it as active
+    if (this.connections.has(this.settings.connectionType!)) 
+      this.apiConnection = this.connections.get(this.settings.connectionType!);
+    else
+      this.apiConnection = this.connections.get('_default');
+    
+    //provide settings to the active connection
+    this.apiConnection?.provideSettings(settings);
   }
 
 //region OAuth Queries

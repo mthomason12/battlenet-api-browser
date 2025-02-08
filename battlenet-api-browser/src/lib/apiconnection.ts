@@ -1,9 +1,17 @@
+import { apiClientSettings } from "../services/apiclientsettings";
 
 /**
  * New forms of API connection (e.g. via a proxy, an SSH tunnel, or an encrypted IP stream) should
  * inherit from this.
  */
-abstract class APIConnection {
+export abstract class APIConnection {
+
+    settings?: apiClientSettings;
+
+    provideSettings(settings: apiClientSettings)
+    {
+        this.settings = settings;
+    }
 
     /**
      * Attempt to establish connection.  Return true if connection successfully 

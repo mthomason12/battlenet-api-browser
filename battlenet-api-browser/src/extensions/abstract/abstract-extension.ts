@@ -1,6 +1,7 @@
 import { Type } from "@angular/core";
 import { Route } from "@angular/router";
 import { topDataStruct } from "../../model/datastructs";
+import { APIConnection } from "../../lib/apiconnection";
 
 export abstract class AbstractExtension {
 
