@@ -51,7 +51,7 @@ export class apiClientService extends apiClient {
       this.apiConnection = this.connections.get(this.settings.connectionType!);
     else
       this.apiConnection = this.connections.get('_default');
-    
+
     //provide settings to the active connection
     this.apiConnection?.provideSettings(settings);
   }
@@ -1086,22 +1086,56 @@ export class apiClientService extends apiClient {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/hunter-pets`);
   }
 
-  //end region
+//end region
 
-  //region Character Media API
+//region Character Media API
 
   getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<any>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/character-media`);
   }
 
-  //end region
+//endregion
 
-  //region todo 
+//region Character Mythic Keystone Profile API
 
-  //character mythic keystone profile
-  //character professions
-  //character profile
+  getCharacterMythicKeystoneProfileIndex(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile`);
+  }
+
+  getCharacterMythicKeystoneSeasonDetails(realmSlug: string, characterName: string, seasonid: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile/season/${seasonid}`);
+  }
+
+//endregion
+
+//region Character Professions API
+
+  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/professions`);
+  }
+
+//endregion
+
+//region Character Profile API
+
+  getCharacterProfileSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}`);
+  }
+
+  getCharacterProfileStatus(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/status`);
+  }
+
+//endregion
+
+//region todo 
+
   //character pvp
   //character quests
   //character reputation
@@ -1110,14 +1144,14 @@ export class apiClientService extends apiClient {
   //character statistics
   //character titles
 
-  //endregion
+//endregion
 
-  //region Guilds
+//region Guilds
 
   //guild api
   
 
-  //endregion
+//endregion
 
 
 }
