@@ -1040,7 +1040,7 @@ isLoggingIn(): boolean
 //end region
 
 
-//WoW Token API
+//region WoW Token API
 
   getWoWTokenIndex(): Promise<any | undefined> 
   {
