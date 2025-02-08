@@ -62,19 +62,19 @@ export class apiClient {
     getClientSettings(): UserManagerSettings
     {
         return {
-        authority: 'https://oauth.battle.net',
-        client_id: this.clientID,
-        client_secret: this.clientSecret,
-        redirect_uri: window.location.origin+'/auth-callback',
-        post_logout_redirect_uri: window.location.origin+'/',
-        silent_redirect_uri: window.location.origin+'/silent-callback.html',
-        response_type:"code",
-        scope:"openid wow.profile",
-        client_authentication: 'client_secret_basic',
-        //filterProtocolClaims: true,
-        //loadUserInfo: true,
-        //automaticSilentRenew: true,
-        //popup_redirect_uri: window.location.origin+'/auth-callback',      
+            authority: 'https://oauth.battle.net',
+            client_id: this.clientID,
+            client_secret: this.clientSecret,
+            redirect_uri: window.location.origin+'/auth-callback',
+            post_logout_redirect_uri: window.location.origin+'/',
+            silent_redirect_uri: window.location.origin+'/silent-callback.html',
+            response_type:"code",
+            scope:"openid wow.profile",
+            client_authentication: 'client_secret_basic',
+            //filterProtocolClaims: true,
+            //loadUserInfo: true,
+            //automaticSilentRenew: true,
+            //popup_redirect_uri: window.location.origin+'/auth-callback',      
         };    
     }
 
