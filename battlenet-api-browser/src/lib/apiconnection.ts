@@ -14,6 +14,17 @@ export abstract class APIConnection {
     }
 
     /**
+     * Override for signin redirection processing
+     * @returns
+     */
+    async signinRedirect(): Promise<void>
+    {
+        return new Promise<void>((resolve)=>{
+            resolve();
+        });
+    }
+
+    /**
      * Get OAuth access token
      */
     abstract getAccessToken(): Promise<string>;
