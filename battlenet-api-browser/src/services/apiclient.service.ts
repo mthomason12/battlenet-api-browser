@@ -1141,8 +1141,24 @@ export class apiClientService extends apiClient {
   //character reputation
   //character soulbinds
   //character specializations
-  //character statistics
-  //character titles
+
+//endregion
+
+//region Character Statistics API
+
+  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/statistics`);
+  }
+
+//endregion
+
+//region Character Titles API
+
+  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<any>
+  {
+    return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/titles`);
+  }
 
 //endregion
 
