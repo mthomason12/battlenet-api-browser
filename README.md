@@ -18,9 +18,13 @@ Tested on Chrome (132.0.6834.110), Firefox (113.0.3), and Edge (132.0.2957.127) 
 
 Builds are triggered by going to the **battlenet-api-browser** directory and running:
 
-```npm run build``` for the webserver version (which will be output to the **dist** folder)
+```npm run build``` for the self-hosted version (which will be output to the **dist** folder), you'll need to put this onto a webserver to run it.
 
-```npm run build-electron``` for the Electron version (which will be output to the **out** folder)- this should automatically pick the Electron binary for the platform you're running on.
+```npm run build-electron``` for the Electron version (which will be output to the **out** folder)- this should automatically pick the Electron binary for the platform you're running on.  You can then run this as a local application.
+
+Or if you want to work on the live codebase:
+
+```ng serve``` to serve the Angular application, rebuilding live on file edits.
 
 #### Battle&#46;net Client Registration
 
