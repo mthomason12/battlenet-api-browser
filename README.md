@@ -16,6 +16,8 @@ This is a work in progress, many parts of the API are not implemented yet and on
 
 Tested on Chrome (132.0.6834.110), Firefox (113.0.3), and Edge (132.0.2957.127) running from a local webserver.
 
+Precomplied releases can be found at https://github.com/mthomason12/battlenet-api-browser/releases
+
 Builds are triggered by going to the **battlenet-api-browser** directory and running:
 
 ```npm run build``` for the self-hosted version (which will be output to the **dist** folder), you'll need to put this onto a webserver to run it.
