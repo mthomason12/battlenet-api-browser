@@ -144,7 +144,7 @@ export class apiClient {
 
      //#region Base queries
     
-      query<T = any>(apiEndpoint: string, params: string, options: QueryOptions = {}): Promise<T | undefined>
+      query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined>
       {
         return new Promise((resolve, reject)=>{
             var extraparams: string = "";
@@ -152,7 +152,7 @@ export class apiClient {
             {
                 extraparams = "&"+params;
             }    
-            this.blizzapi.query(apiEndpoint, options).then((value)=>{
+            this.blizzapi.query(apiEndpoint, {}).then((value)=>{
                 resolve(value as T);
             },(reason)=>{
                 reject(undefined);
@@ -160,31 +160,31 @@ export class apiClient {
         });
       }
     
-      queryStatic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      queryStatic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
       {
-        return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params, options);
+        return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params);
       }  
     
-      queryDynamic<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      queryDynamic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
       {
-        return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params, options);
+        return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params);
       }  
     
       /** 
        * Private profile query.  Needs to pass an oauth access token from the user's battle.net account
        */
-      queryProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      queryProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
       {
-        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
+        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
       }  
 
       /** 
        * Public profile query 
        * 
        */
-      queryPubProfile<T = any>(apiEndpoint: string, params: string = "", options: QueryOptions = {}): Promise<T | undefined>
+      queryPubProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
       {
-        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params, options);
+        return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
       }  
     
       //#region

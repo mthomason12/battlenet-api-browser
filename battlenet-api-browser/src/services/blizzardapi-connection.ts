@@ -1,6 +1,7 @@
 import { APIConnection } from "../lib/apiconnection";
 
 export class BlizzardAPIConnection extends APIConnection {
+
     override connect(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
