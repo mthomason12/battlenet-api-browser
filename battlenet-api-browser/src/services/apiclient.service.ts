@@ -5,7 +5,6 @@ import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 import { mediaDataStruct } from '../model/datastructs';
-import { UserInfo } from 'angular-oauth2-oidc';
 import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 import { accountHeirlooms } from '../model/account-heirlooms';
 import { accountProfileIndex } from '../model/account-characters';
@@ -19,7 +18,6 @@ import { ExtensionManagerService } from '../extensions/extension-manager.service
 import { apiClientSettings } from './apiclientsettings';
 import { APIConnection } from '../lib/apiconnection';
 import { BlizzardAPIConnection } from './blizzardapi-connection';
-import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -33,42 +31,25 @@ export class apiClientService  {
   connections: Map<string,APIConnection> = new Map();
   settings?: apiClientSettings;
 
+    staticNamespace: string = "static-us";
+    dynamicNamespace: string = "dynamic-us";
+    profileNamespace: string = "profile-us";
+    locale: string = "en_US";
+  
+    private data: UserdataService;
+    private router: Router;
 
-      clientID: string;
-      clientSecret: string;
-      accessToken: string = "";
-      userAccessTokenExpires: number = 0;
-      userAccessToken: string = "";
-      staticNamespace: string = "static-us";
-      dynamicNamespace: string = "dynamic-us";
-      profileNamespace: string = "profile-us";
-      locale: string = "en_US";
-    
-      private _loggedIn = false;
-      private _loggingIn = false;
-      
-      private _connected: boolean = false;
-    
-      public userManager: UserManager;
-      private data: UserdataService;
-      private router: Router;
-    
-      public connectedEvent = new EventEmitter<void>();
-      protected httpClient: HttpClient;
+    public connectedEvent = new EventEmitter<void>();
+
+    protected httpClient: HttpClient;
 
   constructor(){
     this.data = inject(UserdataService);
     this.router = inject(Router);
     this.httpClient = inject(HttpClient);
-    this.clientID = this.data.data.key.clientID;
-    this.clientSecret = this.data.data.key.clientSecret;
-
-    this.userManager = new UserManager(this.getClientSettings());
-
-    this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
 
     //add the default connection
-    this.connections.set('_default',new BlizzardAPIConnection(this.data.data));
+    this.connections.set('_default',new BlizzardAPIConnection(this.data.data, this.httpClient));
     //load additional connections from Extension Manager Service
     this.extMgr.connections.forEach((value, key)=>{
       this.connections.set(key, value);
@@ -91,7 +72,7 @@ export class apiClientService  {
     this.apiConnection?.provideSettings(settings);
 
     //auto-connect if appropriate
-    if (!this._loggingIn && this.data.data.settings.autoConnect) 
+    if (!this.apiConnection!.isLoggingIn() && this.data.data.settings.autoConnect) 
     {
         this.connect();
     }  
@@ -102,33 +83,13 @@ export class apiClientService  {
 
 async connect()
 {    
-    //get an access token
-    this.apiConnection!.getAccessToken().then((token)=>{
-      this.accessToken = token;
-      this._connected = true;  
+  this.apiConnection!.connect().then(()=>{
       sessionStorage.removeItem('is_logging_in');
-      this.connectedEvent.emit();       
+      if (this.apiConnection!.isConnected())
+        this.connectedEvent.emit();       
     });
 }
 
-getClientSettings(): UserManagerSettings
-{
-    return {
-        authority: 'https://oauth.battle.net',
-        client_id: this.clientID,
-        client_secret: this.clientSecret,
-        redirect_uri: window.location.origin+'/auth-callback',
-        post_logout_redirect_uri: window.location.origin+'/',
-        silent_redirect_uri: window.location.origin+'/silent-callback.html',
-        response_type:"code",
-        scope:"openid wow.profile",
-        client_authentication: 'client_secret_basic',
-        //filterProtocolClaims: true,
-        //loadUserInfo: true,
-        //automaticSilentRenew: true,
-        //popup_redirect_uri: window.location.origin+'/auth-callback',      
-    };    
-}
 
 async authenticate()
 {   
@@ -139,77 +100,33 @@ async authenticate()
 
 async signinRedirect()
 {
-    return this.userManager.signinRedirect();
+    return this.apiConnection!.signinRedirect();
 }
 
-async completeAuthentication(authcode: string, router: Router)
+completeAuthentication(authcode: string, router: Router)
 {
-    const storedURL = sessionStorage.getItem('page_before_login') as string;
-    sessionStorage.removeItem('page_before_login');  
-    this.userManager.signinCallback().finally(() => { 
-    this.userManager.getUser().then(
-        (user)=>{
-        this.userAccessToken = user!.access_token;
-        this.apiConnection?.setAccessToken(this.userAccessToken);
-        this._loggedIn = true;
-        this._loggingIn = false;
-        sessionStorage.removeItem('is_logging_in');
-        this._connected = true;
-        router.navigate([storedURL]);
-        });
-    });
+    this.apiConnection!.completeAuthentication(authcode, router);
 }
 
 
 isConnected(): boolean
 {
-    return this._connected;
+    return this.apiConnection!.isConnected();
 }
 
 isLoggedIn(): boolean
 {
-    return this._loggedIn;
+    return this.apiConnection!.isLoggedIn();
 }
 
 isLoggingIn(): boolean
 {
-    return this._loggingIn;
+    return this.apiConnection!.isLoggingIn();
 }
 
 //endregion
 
-//region OAuth Queries
 
-  /**
-   * Currently returns the following structure
-   * {
-   *   sub: string, the user's numeric ID as a string
-   *   id: number, the user's numeric ID
-   *   battletag: string - the user's battletag
-   * }
-   * @returns 
-   */
-  userInfo(): Promise<UserInfo>
-  {
-    return new Promise((resolve, reject)=>
-    {
-      this.httpClient.request('GET','https://oauth.battle.net/oauth/userinfo',{responseType:'json', headers: this.bearerAuth() }).subscribe(
-        (data)=>{
-          resolve(data as UserInfo);
-        }
-      );
-    });
-  }
-
-  /**
-   * Returns a header for bearer authentication
-   */
-  bearerAuth(): {[Header: string]: string}
-  {
-    return {'Authorization': 'Bearer '+this.userAccessToken};
-  }
-
-//endregion
 
 //region Base Queries
 

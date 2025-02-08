@@ -1,4 +1,6 @@
+import { Router } from "@angular/router";
 import { apiClientSettings } from "../services/apiclientsettings";
+import { HttpClient } from "@angular/common/http";
 
 /**
  * New forms of API connection (e.g. via a proxy, an SSH tunnel, or an encrypted IP stream) should
@@ -7,6 +9,38 @@ import { apiClientSettings } from "../services/apiclientsettings";
 export abstract class APIConnection {
 
     settings?: apiClientSettings;
+    protected httpClient: HttpClient;
+
+    protected _loggedIn = false;
+    protected _loggingIn = false;
+    protected _connected = false;
+
+    constructor (httpClient: HttpClient)
+    {
+        this.httpClient = httpClient;
+    }
+
+    isConnected(): boolean {
+        return this._connected;
+    }
+    
+    isLoggingIn(): boolean {
+        return this._loggingIn;
+    }
+
+    isLoggedIn(): boolean {
+        return this._loggedIn;
+    }
+
+    /**
+     * Override to perform any connection code necessary.
+     * @returns 
+     */
+    connect(): Promise<void>
+    {
+        return Promise.resolve();
+    }
+
 
     provideSettings(settings: apiClientSettings)
     {
@@ -17,23 +51,14 @@ export abstract class APIConnection {
      * Override for signin redirection processing
      * @returns
      */
-    async signinRedirect(): Promise<void>
+    signinRedirect(): Promise<void>
     {
         return new Promise<void>((resolve)=>{
             resolve();
         });
     }
 
-    /**
-     * Get OAuth access token
-     */
-    abstract getAccessToken(): Promise<string>;
-
-    /**
-     * Set OAuth access token (e.g. after authentication has provided a personal one)
-     * @param token 
-     */
-    abstract setAccessToken(token: string): void;
+    completeAuthentication(authcode: string, router: Router): void {}
 
     /**
      * Execute API call
