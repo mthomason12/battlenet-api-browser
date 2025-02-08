@@ -3,6 +3,7 @@ import { profileDataStruct } from './profile';
 import { publicDataStruct } from './publicdata';
 import { accountDataStruct } from './account';
 import { RecDB } from '../lib/recdb';
+import { apiClientSettings } from '../services/apiclientsettings';
 
 /**
  * All API data retrieved and stored in the application
@@ -69,18 +70,12 @@ export class appKeyStruct
   clientSecret: string = "";
 }
 
-export enum ConnectionType {
-  direct = 0, 
-  apiproxy = 1
-}
-
 export class settingsStruct
 {
   autoConnect: boolean = false;
   autoLogin: boolean = false;
-  proxyAddress: string = "";
-  connectionType: ConnectionType = ConnectionType.direct;
-}
+  api: apiClientSettings = new apiClientSettings();
+} 
 
 export class extensionsDataStruct
 {

@@ -45,6 +45,8 @@ export class AppComponent implements OnDestroy, OnInit {
   constructor(private apiCli: apiClientService, protected data: UserdataService, private router: Router)
   {
     this.apiClient = apiCli;
+    this.apiClient.provideSettings(data.data.settings.api);
+
     const media = inject(MediaMatcher);
 
     this._mobileQuery = media.matchMedia('(max-width: 700px)');

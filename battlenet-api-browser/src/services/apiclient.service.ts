@@ -15,13 +15,28 @@ import { regionData, regionIndex } from '../model/region';
 import { ReputationFactionData, ReputationFactionIndex, ReputationTierData, ReputationTierIndex } from '../model/reputation';
 import { accountPets } from '../model/account-pets';
 import { accountMounts } from '../model/account-mounts';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ExtensionManagerService } from '../extensions/extension-manager.service';
+import { apiClientSettings } from './apiclientsettings';
 
 @Injectable({  providedIn: 'root',})
 export class apiClientService extends apiClient { 
 
+  extMgr: ExtensionManagerService = inject(ExtensionManagerService);
+  apiConnection?: APIConnection;
+  settings?: apiClientSettings;
 
-export class apiClientService extends apiClient { 
+  constructor(){
+    super();
+  }
+
+  /**
+   * Provide the service with settings.  Typically done by the application using the service.
+   */
+  provideSettings(settings: apiClientSettings) {
+    this.settings = settings;
+    //todo - resolve apiConnection and set it
+  }
 
 //region OAuth Queries
 
