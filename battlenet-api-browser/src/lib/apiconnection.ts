@@ -14,15 +14,15 @@ export abstract class APIConnection {
     }
 
     /**
-     * Attempt to establish connection.  Return true if connection successfully 
-     * established, false if not.
+     * Get OAuth access token
      */
-    abstract connect(): Promise<boolean>;
+    abstract getAccessToken(): Promise<string>;
 
     /**
-     * Attempt battle.net authentication.  Return true if successful, false if not.
+     * Set OAuth access token (e.g. after authentication has provided a personal one)
+     * @param token 
      */
-    abstract authenticate(): Promise<boolean>;
+    abstract setAccessToken(token: string): void;
 
     /**
      * Execute API call

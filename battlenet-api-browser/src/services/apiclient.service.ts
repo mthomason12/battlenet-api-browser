@@ -19,7 +19,6 @@ import { ExtensionManagerService } from '../extensions/extension-manager.service
 import { apiClientSettings } from './apiclientsettings';
 import { APIConnection } from '../lib/apiconnection';
 import { BlizzardAPIConnection } from './blizzardapi-connection';
-import { BlizzAPI, RegionIdOrName } from 'blizzapi';
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
@@ -34,8 +33,6 @@ export class apiClientService  {
   connections: Map<string,APIConnection> = new Map();
   settings?: apiClientSettings;
 
-  region: RegionIdOrName;
-  blizzapi: BlizzAPI;
 
       clientID: string;
       clientSecret: string;
@@ -70,25 +67,13 @@ export class apiClientService  {
 
     this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
 
-    //auto-connect if appropriate
-    if (!this._loggingIn && this.data.data.settings.autoConnect) 
-    {
-        this.connect();
-    }  
-    this.region = "us";
-    this.blizzapi = new BlizzAPI({
-        region: this.region!,
-        clientId: this.data.data.key.clientID,
-        clientSecret: this.data.data.key.clientSecret
-    });  
     //add the default connection
-    this.connections.set('_default',new BlizzardAPIConnection());
+    this.connections.set('_default',new BlizzardAPIConnection(this.data.data));
     //load additional connections from Extension Manager Service
     this.extMgr.connections.forEach((value, key)=>{
       this.connections.set(key, value);
     })
   }
-
 
   /**
    * Provide the service with settings.  Typically done by the application using the service.
@@ -104,63 +89,25 @@ export class apiClientService  {
 
     //provide settings to the active connection
     this.apiConnection?.provideSettings(settings);
+
+    //auto-connect if appropriate
+    if (!this._loggingIn && this.data.data.settings.autoConnect) 
+    {
+        this.connect();
+    }  
   }
 
-//region Base Query
-
-query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined>
-{
-  return new Promise((resolve, reject)=>{
-      var extraparams: string = "";
-      if (params != "")
-      {
-          extraparams = "&"+params;
-      }    
-      this.blizzapi.query(apiEndpoint, {}).then((value)=>{
-          resolve(value as T);
-      },(reason)=>{
-          reject(undefined);
-      })
-  });
-}
-
-queryStatic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
-  {
-    return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params);
-  }  
-
-  queryDynamic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
-  {
-    return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params);
-  }  
-
-  /** 
-   * Private profile query.  Needs to pass an oauth access token from the user's battle.net account
-   */
-  queryProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
-  {
-    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
-  }  
-
-  /** 
-   * Public profile query 
-   * 
-   */
-  queryPubProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
-  {
-    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
-  }  
 
 //region base functionality
 
 async connect()
 {    
     //get an access token
-    this.blizzapi.getAccessToken().then((token)=>{
-    this.accessToken = token;
-    this._connected = true;  
-    sessionStorage.removeItem('is_logging_in');
-    this.connectedEvent.emit();       
+    this.apiConnection!.getAccessToken().then((token)=>{
+      this.accessToken = token;
+      this._connected = true;  
+      sessionStorage.removeItem('is_logging_in');
+      this.connectedEvent.emit();       
     });
 }
 
@@ -203,14 +150,7 @@ async completeAuthentication(authcode: string, router: Router)
     this.userManager.getUser().then(
         (user)=>{
         this.userAccessToken = user!.access_token;
-        //replace blizzapi with one using our new access token
-        this.blizzapi = new BlizzAPI({
-            region: this.region!,
-            clientId: this.data.data.key.clientID,
-            clientSecret: this.data.data.key.clientSecret,
-            accessToken: this.userAccessToken
-        });  
-        //this.userInfo();
+        this.apiConnection?.setAccessToken(this.userAccessToken);
         this._loggedIn = true;
         this._loggingIn = false;
         sessionStorage.removeItem('is_logging_in');
@@ -269,9 +209,57 @@ isLoggingIn(): boolean
     return {'Authorization': 'Bearer '+this.userAccessToken};
   }
 
-  //region
+//endregion
 
-  //#region Achievements API
+//region Base Queries
+
+  query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined>
+  {
+    return new Promise((resolve, reject)=>{
+        var extraparams: string = "";
+        if (params != "")
+        {
+            extraparams = "&"+params;
+        }    
+        this.apiConnection?.apiCall(apiEndpoint, params, {}).then((value)=>{
+            resolve(value as T);
+        },(reason)=>{
+            reject(undefined);
+        })
+    });
+  }
+
+  queryStatic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
+  {
+    return this.query<T>(apiEndpoint+"?namespace="+this.staticNamespace+'&locale='+this.locale, params);
+  }  
+
+  queryDynamic<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
+  {
+    return this.query<T>(apiEndpoint+"?namespace="+this.dynamicNamespace+'&locale='+this.locale, params);
+  }  
+
+  /** 
+   * Private profile query.  Needs to pass an oauth access token from the user's battle.net account
+   */
+  queryProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
+  {
+    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
+  }  
+
+  /** 
+   * Public profile query 
+   * 
+   */
+  queryPubProfile<T = any>(apiEndpoint: string, params: string = ""): Promise<T | undefined>
+  {
+    return this.query<T>(apiEndpoint+"?namespace="+this.profileNamespace+'&locale='+this.locale, params);
+  }  
+
+
+//endregion
+
+//#region Achievements API
 
   getAchievementIndex(): Promise<achievementsIndex| undefined>
   {
