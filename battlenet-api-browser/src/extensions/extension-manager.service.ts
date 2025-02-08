@@ -14,6 +14,7 @@ export class ExtensionManagerService {
 
   extensions: AbstractExtension[] = [];
   registrations: ExtensionRegistration[] = [];
+  connections: APIConnection[] = [];
 
   data: UserdataService = inject(UserdataService);
 
@@ -28,7 +29,6 @@ export class ExtensionManagerService {
     var newExt = new extension();
     this.extensions.push(newExt);
     this.registrations.push(newExt.getRegistration());
-
   }
 
 
