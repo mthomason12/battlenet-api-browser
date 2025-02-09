@@ -407,6 +407,63 @@ export interface hrefStruct
   href: string;
 }
 
+export interface regionedNameStruct  {
+  it_IT?: string,
+  ru_RU?: string,
+  en_GB?: string,
+  zh_TW?: string,
+  ko_KR?: string,
+  en_US?: string,
+  es_MX?: string,
+  pt_BR?: string,
+  es_ES?: string,
+  zh_CN?: string,
+  fr_FR?: string,
+  de_DE?: string
+}
+
+export interface weaponStruct {
+  damage: {
+    min_value: number,
+    max_value: number,
+    display_string: string,
+    damage_class: {
+      type: string,
+      name: string
+    }
+  },
+  attack_speed: {
+    value: number,
+    display_string: string,
+  },
+  dps: {
+    value: number,
+    display_string: string,
+  }
+}
+
+export interface itemStatStruct {
+  type: {
+    type: string,
+    name: string
+  },
+  value: number,
+  is_negated: boolean,
+  display: {
+    display_string: string,
+    color: rgbaColorStruct,
+  }
+}
+
+export type itemStatsStruct = itemStatStruct[];
+
+export interface rgbaColorStruct {
+  r: number,
+  g: number,
+  b: number,
+  a: number
+}
+
 export interface linksStruct
 {
   self: hrefStruct;
