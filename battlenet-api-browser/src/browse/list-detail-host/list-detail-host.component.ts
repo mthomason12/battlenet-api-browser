@@ -3,7 +3,7 @@ import { apiClientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
-import { IApiDataDoc, IMasterDetail } from '../../model/datastructs';
+import { IApiDataDoc } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import { GenericMasterComponent } from './generic-master/generic-master.componen
 import { GenericDetailComponent } from './generic-detail/generic-detail.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DataToolsComponent } from './data-tools/data-tools.component';
+import { IMasterDetail } from '../../model/dbdatastructs';
 
 enum ListDetailHostComponentMode
 {

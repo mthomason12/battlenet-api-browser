@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-import { IApiDataDoc, IMasterDetail } from '../../../model/datastructs';
+import { IApiDataDoc } from '../../../model/datastructs';
+import { IMasterDetail } from '../../../model/dbdatastructs';
 
 @Component({
   selector: 'app-abstract-detail',

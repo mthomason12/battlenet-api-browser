@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input } from '@angular/core';
-import { IApiIndexDoc, IIndexItem, IMasterDetail } from '../../../model/datastructs';
+import { IApiIndexDoc, IIndexItem } from '../../../model/datastructs';
 import { apiClientService } from '../../../services/apiclient.service';
+import { IMasterDetail } from '../../../model/dbdatastructs';
 
 @Component({
   selector: 'app-abstract-master',

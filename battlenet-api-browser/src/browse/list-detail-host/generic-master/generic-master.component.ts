@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ListDataItemComponent } from '../../../components/list-data-item/list-data-item.component';
-import { IMasterDetail } from '../../../model/datastructs';
+import { IMasterDetail } from '../../../model/dbdatastructs';
 
 
 @Component({

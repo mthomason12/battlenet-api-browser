@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IIndexItem, IMasterDetail } from '../../model/datastructs';
+import { IIndexItem } from '../../model/datastructs';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { IMasterDetail } from '../../model/dbdatastructs';
 
 @Component({
   selector: 'app-list-data-item',

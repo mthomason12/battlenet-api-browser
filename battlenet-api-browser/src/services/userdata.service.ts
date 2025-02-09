@@ -1,8 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _, {  } from 'lodash';
-import { IApiDataDoc, dataStruct, IMasterDetail, topDataStruct } from '../model/datastructs';
+import { IApiDataDoc, dataStruct, topDataStruct } from '../model/datastructs';
 import { appKeyStruct, extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
+import { IMasterDetail } from '../model/dbdatastructs';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
