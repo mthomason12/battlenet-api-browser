@@ -1,4 +1,4 @@
-import { RecDB, recID } from "../lib/recdb";
+import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
 import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
