@@ -344,6 +344,20 @@ export interface IApiIndexDoc extends IApiDataDoc
 {
 }
 
+export interface dbDataIndex<T> extends IApiIndexDoc
+{
+  items: T[];
+}
+
+export interface apiSearchResponse<T> 
+{
+  page: number;
+  pageSize: number;
+  maxPageSize: number;
+  pageCount: number;
+  results: T[];
+}
+
 export interface INamedItem 
 {
   getName(): string;

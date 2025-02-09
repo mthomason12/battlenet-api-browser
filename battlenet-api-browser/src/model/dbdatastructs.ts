@@ -1,7 +1,8 @@
+import { last } from 'lodash';
 import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
-import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem } from './datastructs';
+import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem, dbDataIndex, apiSearchResponse } from './datastructs';
 
 //#endregion
 //region dbData
@@ -352,23 +353,47 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
   }
 }
 
+//region dbDataNoIndex
 
 /**
  * dbData variant that has no downloadable index, and has to maintain its own
  * from the available records.
- * It is implied that a search function is available to find these records
+ * 
+ * It is implied that a search function is available to find these records.
+ *
+ * T1 is the "index" record returned from searching
+ * T2 is the full data record
  */
-export abstract class dbDataNoIndex<T extends IApiDataDoc> extends dbData<any, T> {
+export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataDoc> extends dbData<dbDataIndex<T1>, T2> {
 
-  override getIndex(api: apiClientService): Promise<any> {
+  index: dbDataIndex<T1> = {
+    items: [],
+    lastUpdate: Date.now()
+  }
+
+  searchItems = "items";
+
+  constructor(parent: dataStruct, recDB: RecDB)
+  {
+    super(parent, recDB);
+    this.itemsName = "items";
+  }
+
+  override getAPIIndex(api: apiClientService): Promise<any> {
     throw new Error("dbDataNoIndex unsupported function");
   }
 
-  override getDBIndex(): Promise<any> {
-    throw new Error("dbDataNoIndex unsupported function");
+  getSearch(api: apiClientService, searchParams:string): Promise<T1[] | undefined>
+  {
+    return new Promise((resolve)=>{
+      this.getAPISearch(api, searchParams, {}).then((result)=>{
+        resolve(result?.results);
+      })
+    })
+    
   }
 
-  abstract search(api: apiClientService, params: object): Promise<[T] | undefined>;
+  abstract getAPISearch(api: apiClientService, searchParams: string, params: object): Promise<apiSearchResponse<T1> | undefined>;
 
 }
 
