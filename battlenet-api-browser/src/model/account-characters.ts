@@ -1,4 +1,5 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, dbData, dbDataIndexOnly, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
+import { apiDataDoc, apiIndexDoc, dataStruct, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
+import { dbData, dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
 

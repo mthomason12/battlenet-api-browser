@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import FileSaver from 'file-saver';
 import { jsonIgnoreReplacer } from 'json-ignore';
-import { dbData } from '../../../model/datastructs';
+import { dbData } from '../../../model/dbdatastructs';
 
 @Component({
   selector: 'app-data-tools',

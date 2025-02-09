@@ -1,4 +1,5 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, dbDataIndexOnly, IIndexItem, keyStruct, mediaStruct, refStruct } from './datastructs';
+import { apiDataDoc, apiIndexDoc, dataStruct, IIndexItem, keyStruct, mediaStruct, refStruct } from './datastructs';
+import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 import { accountProfileSummaryLinks } from './account-characters';

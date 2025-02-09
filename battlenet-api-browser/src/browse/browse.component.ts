@@ -3,7 +3,8 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { apiDataDoc, dataDoc, dbData, IMasterDetail, INamedItem } from '../model/datastructs';
+import { apiDataDoc, dataDoc, IMasterDetail, INamedItem } from '../model/datastructs';
+import { dbData } from '../model/dbdatastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { apiClientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';

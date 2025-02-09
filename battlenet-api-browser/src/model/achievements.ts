@@ -1,4 +1,5 @@
-import { dataStruct, keyStruct, linksStruct, mediaStruct, mediaDataStruct, refStruct, dbData, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, mediaStruct, mediaDataStruct, refStruct, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
+import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 

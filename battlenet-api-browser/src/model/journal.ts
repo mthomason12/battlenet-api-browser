@@ -1,5 +1,6 @@
 import { apiClientService } from "../services/apiclient.service";
-import { apiDataDoc, apiIndexDoc, dataStruct, dbData, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
+import { apiDataDoc, apiIndexDoc, dataStruct, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
+import { dbData } from './dbdatastructs';
 import { RecDB } from "../lib/recdb";
 
 //region Journal Expansions 
