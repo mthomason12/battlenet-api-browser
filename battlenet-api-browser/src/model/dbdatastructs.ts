@@ -315,10 +315,11 @@ export abstract class dbData<T1 extends apiIndexDoc, T2 extends apiDataDoc> exte
 }
 //#endregion
 //region dbDataIndexOnly
+
+
 /**
  * dbData variant that *only* has an index, no records
  */
-
 export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, any> {
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, recDB);
@@ -350,12 +351,13 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
     throw new Error("dbDataIndexOnly unsupported function");
   }
 }
+
+
 /**
  * dbData variant that has no downloadable index, and has to maintain its own
  * from the available records.
- * It is implied that a search function is available
+ * It is implied that a search function is available to find these records
  */
-
 export abstract class dbDataNoIndex<T extends apiDataDoc> extends dbData<any, T> {
 
   override getIndex(api: apiClientService): Promise<any> {
@@ -366,7 +368,7 @@ export abstract class dbDataNoIndex<T extends apiDataDoc> extends dbData<any, T>
     throw new Error("dbDataNoIndex unsupported function");
   }
 
-  abstract search(api: apiClientService, params: object): Promise<T | undefined>;
+  abstract search(api: apiClientService, params: object): Promise<[T] | undefined>;
 
 }
 
