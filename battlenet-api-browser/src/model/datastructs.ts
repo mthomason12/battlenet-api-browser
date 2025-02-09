@@ -334,6 +334,16 @@ export abstract class dataDoc extends dataStruct
 
 //region Common Interfaces
 
+export interface IIndexItem
+{
+  id: recID;
+  name: string;
+}
+
+export interface apiIndexDoc extends apiDataDoc
+{
+}
+
 export interface INamedItem 
 {
   getName(): string;

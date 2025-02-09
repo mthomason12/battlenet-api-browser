@@ -1,7 +1,7 @@
 import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
-import { dataDoc, dataStruct, apiDataDoc, INamedItem } from './datastructs';
+import { dataDoc, dataStruct, apiDataDoc, INamedItem, apiIndexDoc, IIndexItem } from './datastructs';
 
 //#endregion
 //region dbData
@@ -400,14 +400,6 @@ export interface IMasterDetail extends apiDataDoc, INamedItem
   isItemLoaded(id: recID): boolean;  
 }
 
-export interface IIndexItem
-{
-  id: recID;
-  name: string;
-}
 
-export interface apiIndexDoc extends apiDataDoc
-{
-}
 
 
