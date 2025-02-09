@@ -689,6 +689,10 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
+  override getDBRecs(): Promise<any[]> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
   override getDBRecKeys(): Promise<recID[]> {
     return Promise.resolve([]);
   }
