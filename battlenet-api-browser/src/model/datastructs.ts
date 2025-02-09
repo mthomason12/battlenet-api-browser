@@ -700,6 +700,25 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
   override putDBRec(id: recID, rec: any): Promise<IDBValidKey> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
+}
+
+/**
+ * dbData variant that has no downloadable index, and has to maintain its own
+ * from the available records.
+ * It is implied that a search function is available
+ */
+export abstract class dbDataNoIndex<T extends apiDataDoc> extends dbData<any, T>
+{
+
+  override getIndex(api: apiClientService): Promise<any> {
+    throw new Error("dbDataNoIndex unsupported function");   
+  }
+
+  override getDBIndex(): Promise<any> {
+    throw new Error("dbDataNoIndex unsupported function");
+  }
+
+  abstract search(api: apiClientService, params: object): Promise<T | undefined>;
 
 
 
