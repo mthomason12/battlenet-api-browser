@@ -1,7 +1,7 @@
 import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
-import { dataDoc, dataStruct, apiDataDoc, INamedItem, apiIndexDoc, IIndexItem } from './datastructs';
+import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem } from './datastructs';
 
 //#endregion
 //region dbData
@@ -21,7 +21,7 @@ import { dataDoc, dataStruct, apiDataDoc, INamedItem, apiIndexDoc, IIndexItem } 
  * itemsName (used both as the "items" array property in the index and in the path )
  */
 
-export abstract class dbData<T1 extends apiIndexDoc, T2 extends apiDataDoc> extends dataDoc implements IMasterDetail {
+export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> extends dataDoc implements IMasterDetail {
   type: string = "items";
   /** the property of T1 that is an array of index items */
   itemsName: string = "items";
@@ -106,12 +106,12 @@ export abstract class dbData<T1 extends apiIndexDoc, T2 extends apiDataDoc> exte
    * @param rec
    * @returns
    */
-  getRecName(rec: apiDataDoc): string {
+  getRecName(rec: IApiDataDoc): string {
     return (rec as any).name;
   }
 
   /** translate index into array of IIndexItem */
-  getIndexItems(idx: apiIndexDoc): IIndexItem[] {
+  getIndexItems(idx: IApiIndexDoc): IIndexItem[] {
     var index = ((idx as any)[this.itemsName] as Array<IIndexItem>)
       .map((value, index, array) => { return this.mutateIndexItem(value); });
     index = index.sort((a, b) => { return this.indexCompare(a, b); });
@@ -320,14 +320,14 @@ export abstract class dbData<T1 extends apiIndexDoc, T2 extends apiDataDoc> exte
 /**
  * dbData variant that *only* has an index, no records
  */
-export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, any> {
+export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, any> {
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, recDB);
     this.crossLink = true;
   }
 
   //these functions shouldn't ever get called
-  override getAPIRec = function (apiClient: apiClientService, id: number): Promise<apiDataDoc> {
+  override getAPIRec = function (apiClient: apiClientService, id: number): Promise<IApiDataDoc> {
     throw new Error("dbDataIndexOnly unsupported function");
   };
 
@@ -358,7 +358,7 @@ export abstract class dbDataIndexOnly<T extends apiIndexDoc> extends dbData<T, a
  * from the available records.
  * It is implied that a search function is available to find these records
  */
-export abstract class dbDataNoIndex<T extends apiDataDoc> extends dbData<any, T> {
+export abstract class dbDataNoIndex<T extends IApiDataDoc> extends dbData<any, T> {
 
   override getIndex(api: apiClientService): Promise<any> {
     throw new Error("dbDataNoIndex unsupported function");
@@ -375,26 +375,26 @@ export abstract class dbDataNoIndex<T extends apiDataDoc> extends dbData<any, T>
 
 //region Interfaces
 
-export interface IMasterDetail extends apiDataDoc, INamedItem
+export interface IMasterDetail extends IApiDataDoc, INamedItem
 {
-  reload(api: apiClientService): Promise<apiIndexDoc>;
-  reloadItem(api: apiClientService, key: any): Promise<apiDataDoc>;
+  reload(api: apiClientService): Promise<IApiIndexDoc>;
+  reloadItem(api: apiClientService, key: any): Promise<IApiDataDoc>;
   _parent?: dataStruct;
   path(): string;
   crossLink: boolean;
-  getIndex(api: apiClientService): Promise<apiIndexDoc | undefined>
-  getIndexItems(idx: apiIndexDoc): IIndexItem[];
+  getIndex(api: apiClientService): Promise<IApiIndexDoc | undefined>
+  getIndexItems(idx: IApiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
   getIndexItemName(item: IIndexItem): string;
-  getRec(api: apiClientService,id: recID): Promise<apiIndexDoc | undefined>;
+  getRec(api: apiClientService,id: recID): Promise<IApiIndexDoc | undefined>;
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
-  getRecName(rec: apiDataDoc): string;
+  getRecName(rec: IApiDataDoc): string;
   hasData(): boolean;
   key: string;
   hideKey: boolean;
   stringKey: boolean;
   checkLoaded(api: apiClientService): void;
-  getLastUpdate(idx: apiIndexDoc): Date;
+  getLastUpdate(idx: IApiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
   export(): Promise<object>;
   isItemLoaded(id: recID): boolean;  

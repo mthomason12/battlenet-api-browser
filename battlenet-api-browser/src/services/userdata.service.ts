@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _, {  } from 'lodash';
-import { apiDataDoc, dataStruct, IMasterDetail, topDataStruct } from '../model/datastructs';
+import { IApiDataDoc, dataStruct, IMasterDetail, topDataStruct } from '../model/datastructs';
 import { appKeyStruct, extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 
@@ -25,13 +25,13 @@ export class UserdataService {
   /** reference to the current master-detail, folder, etc */
   private currentMaster?: dataStruct | IMasterDetail;
   /** reference to the current user-selected item */
-  private currentData?: apiDataDoc;
+  private currentData?: IApiDataDoc;
   /** whether we've finished loading */
   public loaded: boolean = false;
   /** Event triggered when data has finished loading */
   public dataLoadedEmitter: EventEmitter<void> = new EventEmitter();  
   /** Event triggered when user selection is changed */
-  public dataChangedEmitter: EventEmitter<{master: dataStruct | IMasterDetail, rec: apiDataDoc | undefined}> = new EventEmitter();
+  public dataChangedEmitter: EventEmitter<{master: dataStruct | IMasterDetail, rec: IApiDataDoc | undefined}> = new EventEmitter();
   /** Event triggered when current data is refreshed.  Typically called by external classes that affect the data */
   public dataRefreshedEmitter: EventEmitter<void> = new EventEmitter();
   /** Event triggered when application settings are changed */
@@ -171,7 +171,7 @@ export class UserdataService {
    * Set the current user-selected data struct
    * @param data 
    */
-  setCurrent(master: dataStruct | IMasterDetail, data: apiDataDoc | undefined)
+  setCurrent(master: dataStruct | IMasterDetail, data: IApiDataDoc | undefined)
   {
     //if either have changed, inform subscribers
     if ((this.currentMaster !== master) || (this.currentData !== data))
@@ -186,7 +186,7 @@ export class UserdataService {
    * Get the current user-selected data struct
    * @returns 
    */
-  getCurrent(): apiDataDoc
+  getCurrent(): IApiDataDoc
   {
     return this.currentData!;
   }

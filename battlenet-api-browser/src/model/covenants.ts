@@ -1,4 +1,4 @@
-import { dataStruct, linksStruct, refStruct, mediaStruct, mediaDataStruct, apiIndexDoc, apiDataDoc, IIndexItem, keyStruct } from './datastructs';
+import { dataStruct, linksStruct, refStruct, mediaStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc, IIndexItem, keyStruct } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -33,7 +33,7 @@ interface covenantSignatureAbility
   spell_tooltip: covenantSpellTooltip;
 }
 
-export interface covenantData extends apiDataDoc
+export interface covenantData extends IApiDataDoc
 {
   _links?: linksStruct;
   id: number;
@@ -52,7 +52,7 @@ interface covenantIndexItem extends IIndexItem
   key: keyStruct;
 }
 
-export interface covenantIndexData extends apiIndexDoc
+export interface covenantIndexData extends IApiIndexDoc
 {
   _links: linksStruct;
   covenants: covenantIndexItem[]
@@ -101,7 +101,7 @@ interface soulbindFollowerData
   name: string;
 }
 
-export interface soulbindData extends apiDataDoc
+export interface soulbindData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -112,7 +112,7 @@ export interface soulbindData extends apiDataDoc
   talent_tree: refStruct;
 }
 
-interface soulbindIndexData extends apiIndexDoc
+interface soulbindIndexData extends IApiIndexDoc
 {
   _links: linksStruct;
   soulbinds: refStruct[];

@@ -1,9 +1,9 @@
-import { dataStruct, linksStruct, hrefStruct, refStruct, apiIndexDoc, apiDataDoc, IIndexItem, factionStruct } from './datastructs';
+import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataDoc, IIndexItem, factionStruct } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
-export interface ReputationFactionData extends apiDataDoc {
+export interface ReputationFactionData extends IApiDataDoc {
     _links?: linksStruct;
     id: number;
     name: string;
@@ -19,7 +19,7 @@ export interface ReputationFactionData extends apiDataDoc {
 interface ReputationFactionIndexItem extends refStruct
 { }
 
-export interface ReputationFactionIndex extends apiIndexDoc {
+export interface ReputationFactionIndex extends IApiIndexDoc {
   _links: linksStruct;
   factions: ReputationFactionIndexItem[];
 }
@@ -57,7 +57,7 @@ interface ReputationTierTierData {
 }
 
 
-export interface ReputationTierData extends apiDataDoc {
+export interface ReputationTierData extends IApiDataDoc {
     _links?: linksStruct;
     id: number;
     tiers: ReputationTierTierData[];
@@ -67,7 +67,7 @@ export interface ReputationTierData extends apiDataDoc {
 interface ReputationTierIndexItem extends refStruct
 { }
 
-export interface ReputationTierIndex extends apiIndexDoc {
+export interface ReputationTierIndex extends IApiIndexDoc {
   _links: linksStruct;
   reputation_tiers: ReputationTierIndexItem[];
 }

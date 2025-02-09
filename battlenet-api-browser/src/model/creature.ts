@@ -1,11 +1,11 @@
-import { dataStruct, linksStruct, refStruct, keyStruct, mediaDataStruct, IIndexItem, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, linksStruct, refStruct, keyStruct, mediaDataStruct, IIndexItem, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
 //#region Creature Family
 
-export interface creatureFamilyData extends apiDataDoc
+export interface creatureFamilyData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -15,7 +15,7 @@ export interface creatureFamilyData extends apiDataDoc
   mediaData?: mediaDataStruct;  
 }
 
-export interface creatureFamilyIndex extends apiIndexDoc
+export interface creatureFamilyIndex extends IApiIndexDoc
 {
 }
 
@@ -57,7 +57,7 @@ export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatur
 
 //#region Creature Type
 
-export interface creatureTypeData extends apiDataDoc
+export interface creatureTypeData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -72,7 +72,7 @@ interface creatureTypeIndexEntry extends IIndexItem
   id: number;
 }
 
-export interface creatureTypeIndex extends apiIndexDoc
+export interface creatureTypeIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   achievements: creatureTypeIndexEntry;

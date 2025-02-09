@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-import { apiDataDoc, IMasterDetail } from '../../../model/datastructs';
+import { IApiDataDoc, IMasterDetail } from '../../../model/datastructs';
 
 @Component({
   selector: 'app-abstract-detail',
@@ -7,7 +7,7 @@ import { apiDataDoc, IMasterDetail } from '../../../model/datastructs';
   templateUrl: './abstract-detail.component.html',
   styleUrl: './abstract-detail.component.scss'
 })
-export abstract class AbstractDetailComponent<T extends apiDataDoc>
+export abstract class AbstractDetailComponent<T extends IApiDataDoc>
 {
   ref = inject(ChangeDetectorRef);
 

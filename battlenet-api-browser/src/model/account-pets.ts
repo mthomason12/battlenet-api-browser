@@ -1,4 +1,4 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, IIndexItem, keyStruct, mediaStruct, refStruct } from './datastructs';
+import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, keyStruct, mediaStruct, refStruct } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -9,7 +9,7 @@ interface qualityStruct {
     name: string;
 }
 
-interface accountPetsEntry extends apiDataDoc {
+interface accountPetsEntry extends IApiDataDoc {
     id: number;
     species: refStruct;
     level: number;
@@ -25,7 +25,7 @@ interface accountPetsEntry extends apiDataDoc {
     creature_display: mediaStruct;
 }
 
-export interface accountPets extends apiIndexDoc
+export interface accountPets extends IApiIndexDoc
 {
   _links: accountProfileSummaryLinks;
   pets: accountPetsEntry[];

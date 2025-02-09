@@ -1,15 +1,15 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
+import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 import { accountProfileSummaryLinks } from './account-characters';
 
 
-interface accountMountsEntry extends apiDataDoc {
+interface accountMountsEntry extends IApiDataDoc {
     mount: refStruct;
 }
 
-export interface accountMounts extends apiIndexDoc
+export interface accountMounts extends IApiIndexDoc
 {
   _links: accountProfileSummaryLinks;
   mounts: accountMountsEntry[]

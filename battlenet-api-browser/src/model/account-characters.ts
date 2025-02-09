@@ -1,4 +1,4 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
+import { IApiDataDoc, IApiIndexDoc, dataStruct, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
 import { dbData, dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
@@ -10,7 +10,7 @@ export interface accountProfileSummaryLinks extends linksStruct
   profile: hrefStruct;
 }
 
-export interface accountProfileCharacterData extends apiDataDoc
+export interface accountProfileCharacterData extends IApiDataDoc
 {
   level?: number;
   character?: hrefStruct;
@@ -29,7 +29,7 @@ interface accountProfileWoWAccountData extends IIndexItem
   characters: accountProfileCharacterData[];
 }
 
-export interface accountProfileIndex extends apiIndexDoc
+export interface accountProfileIndex extends IApiIndexDoc
 {
   _links: accountProfileSummaryLinks;
   id?: recID;

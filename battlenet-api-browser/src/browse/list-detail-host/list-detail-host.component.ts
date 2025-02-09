@@ -3,7 +3,7 @@ import { apiClientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
-import { apiDataDoc, IMasterDetail } from '../../model/datastructs';
+import { IApiDataDoc, IMasterDetail } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -69,7 +69,7 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
 
   //references to current master/detail data
   protected masterList?: IMasterDetail;
-  protected detailItem?: apiDataDoc;
+  protected detailItem?: IApiDataDoc;
 
   //inputs and outputs to pass to override components
   protected masterInputs: Record<string, unknown> | undefined

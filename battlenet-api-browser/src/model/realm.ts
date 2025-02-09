@@ -1,4 +1,4 @@
-import { dataStruct, keyStruct, linksStruct, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -16,7 +16,7 @@ interface realmRegion
   id: number;
 }
 
-export interface realmData extends apiDataDoc
+export interface realmData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -39,7 +39,7 @@ interface realmIndexEntry
   slug: string;
 }
 
-export interface realmIndex extends apiIndexDoc
+export interface realmIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   realms: realmIndexEntry[];

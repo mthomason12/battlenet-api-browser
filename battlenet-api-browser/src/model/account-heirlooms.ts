@@ -1,18 +1,18 @@
-import { apiDataDoc, apiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
+import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 import { accountProfileSummaryLinks } from './account-characters';
 
 
-interface accountHeirloomsEntry extends apiDataDoc {
+interface accountHeirloomsEntry extends IApiDataDoc {
     heirloom: refStruct;
     upgrade: {
         level: number;
     }
 }
 
-export interface accountHeirlooms extends apiIndexDoc
+export interface accountHeirlooms extends IApiIndexDoc
 {
   _links: accountProfileSummaryLinks;
   heirlooms: accountHeirloomsEntry[]

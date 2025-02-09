@@ -1,4 +1,4 @@
-import { dataStruct, keyStruct, linksStruct, apiIndexDoc, apiDataDoc, refStruct, mediaStruct, mediaDataStruct } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, IApiIndexDoc, IApiDataDoc, refStruct, mediaStruct, mediaDataStruct } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -11,7 +11,7 @@ interface petAbilityStruct
   required_level?: number;
 }
 
-export interface petData extends apiDataDoc
+export interface petData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -46,7 +46,7 @@ interface petsIndexEntry
   id: number;
 }
 
-export interface petsIndex extends apiIndexDoc
+export interface petsIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   pets: petsIndexEntry[];
@@ -86,7 +86,7 @@ export class petsDataDoc extends dbData<petsIndex, petData>
   }     
 }
 
-export interface petAbilityData extends apiDataDoc
+export interface petAbilityData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -108,7 +108,7 @@ interface petAbilityEntry
   id: number;
 }
 
-export interface petAbilityIndex extends apiIndexDoc
+export interface petAbilityIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   abilities: petAbilityEntry[];

@@ -1,4 +1,4 @@
-import { dataStruct, keyStruct, linksStruct, mediaStruct, mediaDataStruct, refStruct, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, mediaStruct, mediaDataStruct, refStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -40,7 +40,7 @@ interface achievementNextAchievement
   id: number;
 }
 
-export interface achievementData extends apiDataDoc
+export interface achievementData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -63,7 +63,7 @@ interface achievementIndexEntry extends IIndexItem
   id: number;
 }
 
-export interface achievementsIndex extends apiIndexDoc
+export interface achievementsIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   achievements: achievementIndexEntry;

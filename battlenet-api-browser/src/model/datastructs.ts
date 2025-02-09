@@ -10,7 +10,7 @@ import { dbData } from './dbdatastructs';
 /**
  * A generic data structure
  */
-export abstract class dataStruct implements apiDataDoc, INamedItem {
+export abstract class dataStruct implements IApiDataDoc, INamedItem {
   @jsonIgnore()
   _parent?: dataStruct;
   @jsonIgnore()
@@ -45,7 +45,7 @@ export abstract class dataStruct implements apiDataDoc, INamedItem {
    * Reload data from API
    * @param apiclient 
    */
-  async reload(_apiclient: apiClientService): Promise<apiDataDoc>
+  async reload(_apiclient: apiClientService): Promise<IApiDataDoc>
   {
     this.postProcess();
     return new Promise((resolve)=>{resolve(this)});
@@ -261,7 +261,7 @@ export abstract class dataDoc extends dataStruct
     return true;
   }  
 
-  override async reload(apiclient: apiClientService): Promise<apiDataDoc>
+  override async reload(apiclient: apiClientService): Promise<IApiDataDoc>
   {
     var ret = super.reload(apiclient);
     ret.then (
@@ -340,7 +340,7 @@ export interface IIndexItem
   name: string;
 }
 
-export interface apiIndexDoc extends apiDataDoc
+export interface IApiIndexDoc extends IApiDataDoc
 {
 }
 
@@ -349,7 +349,7 @@ export interface INamedItem
   getName(): string;
 }
 
-export interface apiDataDoc
+export interface IApiDataDoc
 {
   id?: recID;
   name?: string;

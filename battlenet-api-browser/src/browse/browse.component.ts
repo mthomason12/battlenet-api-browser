@@ -3,7 +3,7 @@ import { MatCardModule, MatCardFooter } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule, MatDialogClose, MatDialogContent, MatDialogActions, MatDialogTitle, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserdataService } from '../services/userdata.service';
-import { apiDataDoc, dataDoc, IMasterDetail, INamedItem } from '../model/datastructs';
+import { IApiDataDoc, dataDoc, IMasterDetail, INamedItem } from '../model/datastructs';
 import { dbData } from '../model/dbdatastructs';
 import { MatButtonModule } from '@angular/material/button';
 import { apiClientService } from '../services/apiclient.service';
@@ -30,7 +30,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   readonly dialog = inject(MatDialog);
   readonly jobQueue = inject(JobQueueService);
 
-  displayData?: apiDataDoc;
+  displayData?: IApiDataDoc;
   dataObject?: INamedItem;
   lastUpdate?: Date;
   canGetAll: boolean = false;
@@ -114,7 +114,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
   }
 
-  currentData(): apiDataDoc | undefined
+  currentData(): IApiDataDoc | undefined
   {
     return this.data.getCurrent();
   }

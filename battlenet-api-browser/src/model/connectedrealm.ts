@@ -1,4 +1,4 @@
-import { dataStruct, linksStruct, hrefStruct, refStruct, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
+import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -35,7 +35,7 @@ interface connectedRealmStatus
     name?: string;
 }
 
-export interface connectedRealmData extends apiDataDoc
+export interface connectedRealmData extends IApiDataDoc
 {
     _links?: linksStruct;
     id?: number;
@@ -51,7 +51,7 @@ interface connectedRealmIndexItem extends IIndexItem, hrefStruct
 {
 }
 
-export interface connectedRealmIndex extends apiIndexDoc
+export interface connectedRealmIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   realms: connectedRealmIndexItem[];

@@ -1,4 +1,4 @@
-import { dataStruct, keyStruct, linksStruct, factionStruct, refStruct, apiIndexDoc, apiDataDoc } from './datastructs';
+import { dataStruct, keyStruct, linksStruct, factionStruct, refStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
@@ -21,7 +21,7 @@ interface mountSourceStruct
   name: string;
 }
 
-export interface mountData extends apiDataDoc
+export interface mountData extends IApiDataDoc
 {
   _links: linksStruct;
   id: number;
@@ -41,7 +41,7 @@ interface mountIndexEntry
   id: number;
 }
 
-export interface mountsIndex extends apiIndexDoc
+export interface mountsIndex extends IApiIndexDoc
 {
   _links: linksStruct;
   mounts: mountIndexEntry;

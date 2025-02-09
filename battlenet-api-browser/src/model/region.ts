@@ -1,9 +1,9 @@
-import { dataStruct, linksStruct, hrefStruct, refStruct, apiIndexDoc, apiDataDoc, IIndexItem } from './datastructs';
+import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
 
-export interface regionData extends apiDataDoc {
+export interface regionData extends IApiDataDoc {
     _links?: linksStruct;
     id: number;
     name: string;
@@ -14,7 +14,7 @@ export interface regionData extends apiDataDoc {
 interface regionIndexItem extends IIndexItem, hrefStruct
 { }
 
-export interface regionIndex extends apiIndexDoc {
+export interface regionIndex extends IApiIndexDoc {
   _links: linksStruct;
   regions: regionIndexItem[];
 }

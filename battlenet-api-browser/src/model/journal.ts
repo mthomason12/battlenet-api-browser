@@ -1,17 +1,17 @@
 import { apiClientService } from "../services/apiclient.service";
-import { apiDataDoc, apiIndexDoc, dataStruct, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
+import { IApiDataDoc, IApiIndexDoc, dataStruct, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
 import { dbData } from './dbdatastructs';
 import { RecDB } from "../lib/recdb";
 
 //region Journal Expansions 
 
-export interface journalExpansionData extends apiDataDoc
+export interface journalExpansionData extends IApiDataDoc
 {
     _links?: linksStruct;
     dungeons: refStruct[];
 }
 
-export interface journalExpansionsIndex extends apiIndexDoc
+export interface journalExpansionsIndex extends IApiIndexDoc
 {
     _links: linksStruct;
     tiers: refStruct[];
@@ -71,7 +71,7 @@ interface journalEncounterMode {
   name?: string;
 }
 
-export interface journalEncounterData extends apiDataDoc
+export interface journalEncounterData extends IApiDataDoc
 {
     _links?: linksStruct;
     description?: string;
@@ -85,7 +85,7 @@ export interface journalEncounterData extends apiDataDoc
     modes: journalEncounterMode[]
 }
 
-export interface journalEncountersIndex extends apiIndexDoc {
+export interface journalEncountersIndex extends IApiIndexDoc {
     _links: linksStruct;
     encounters: refStruct[];
 }
@@ -117,7 +117,7 @@ override getAPIRec = function(apiClient: apiClientService, id: number): Promise<
 
 //region Journal Instances
 
-export interface journalInstanceData extends apiDataDoc
+export interface journalInstanceData extends IApiDataDoc
 {
     _links?: linksStruct;
     name: string;
@@ -133,7 +133,7 @@ export interface journalInstanceData extends apiDataDoc
     order_index: number;
 }
 
-export interface journalInstancesIndex extends apiIndexDoc {
+export interface journalInstancesIndex extends IApiIndexDoc {
     _links: linksStruct;
     Instances: refStruct[];
 }

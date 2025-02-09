@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input } from '@angular/core';
-import { apiIndexDoc, IIndexItem, IMasterDetail } from '../../../model/datastructs';
+import { IApiIndexDoc, IIndexItem, IMasterDetail } from '../../../model/datastructs';
 import { apiClientService } from '../../../services/apiclient.service';
 
 @Component({
@@ -13,7 +13,7 @@ export abstract class AbstractMasterComponent<T extends IMasterDetail> {
   ref = inject(ChangeDetectorRef);
   api = inject(apiClientService);
 
-  index?: apiIndexDoc;
+  index?: IApiIndexDoc;
   indexItems?: IIndexItem[];
 
   private _rec?: T;
