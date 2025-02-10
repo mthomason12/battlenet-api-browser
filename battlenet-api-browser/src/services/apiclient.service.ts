@@ -22,6 +22,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemIndexData, itemsDataDoc } from '../model/items';
+import { characterProfileData } from '../model/profile-characters';
 
 @Injectable({  providedIn: 'root',})
 export class apiClientService  { 
@@ -1220,7 +1221,7 @@ isLoggingIn(): boolean
 
 //region Character Profile API
 
-  getCharacterProfileSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterProfileSummary(realmSlug: string, characterName: string): Promise<characterProfileData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}`);
   }
