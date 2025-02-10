@@ -10,6 +10,7 @@ import { RecDB } from '../lib/recdb';
 import { petAbilitiesDataDoc, petsDataDoc } from './pets';
 import { regionsDataDoc } from './region';
 import { reputationFactionDataDoc, reputationTierDataDoc } from './reputation';
+import { itemsDataDoc } from './items';
 
 export class publicDataStruct extends topDataStruct
 {
@@ -19,6 +20,7 @@ export class publicDataStruct extends topDataStruct
   creatureFamiliesData: creatureFamiliesDataDoc;
   creatureTypesData: creatureTypesDataDoc;
   mountData: mountsDataDoc;
+  itemData: itemsDataDoc;
   pets: petsDataDoc;
   petAbilities: petAbilitiesDataDoc;
   realmData: realmsDataDoc;
@@ -48,7 +50,9 @@ export class publicDataStruct extends topDataStruct
       this.creatureTypesData = this.dbRegister(creatureTypesDataDoc)
     ] );
 
-    this.addFolder("Items");
+    this.addFolder("Items"), [
+      this.itemData = this.dbRegister(itemsDataDoc)
+    ]
 
     this.addFolder("Journal",[
       this.journalExpansionData = this.dbRegister(journalExpansionsDataDoc),
