@@ -50,9 +50,9 @@ export class publicDataStruct extends topDataStruct
       this.creatureTypesData = this.dbRegister(creatureTypesDataDoc)
     ] );
 
-    this.addFolder("Items"), [
+    this.addFolder("Items", [
       this.itemData = this.dbRegister(itemsDataDoc)
-    ]
+    ]);
 
     this.addFolder("Journal",[
       this.journalExpansionData = this.dbRegister(journalExpansionsDataDoc),
