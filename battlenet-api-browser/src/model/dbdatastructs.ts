@@ -378,11 +378,6 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
  */
 export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataDoc> extends dbData<dbDataIndex<T1>, T2> {
 
-  index: dbDataIndex<T1> = {
-    items: [],
-    lastUpdate: Date.now()
-  }
-
   searchItems = "items";
 
   constructor(parent: dataStruct, recDB: RecDB)
@@ -391,10 +386,37 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     this.itemsName = "items";
   }
 
-  override getAPIIndex(api: apiClientService): Promise<any> {
-    throw new Error("dbDataNoIndex unsupported function");
+
+  /**
+   * By ensuring we return an empty index if we can't find one, we should ensure
+   * getAPIIndex is never called.
+   */
+  override getDBIndex(): Promise<dbDataIndex<T1>> {
+    return new Promise((resolve, reject)=>{
+      super.getDBIndex().then ((idx)=>{
+        if (idx) {
+          resolve(idx);
+        } else {
+          resolve (this.emptyIndex());
+        }
+      })
+    })
   }
 
+  /**
+   * In theory, this should never be called, because getDBIndex will always return something
+   * @param api
+   */
+  override getAPIIndex(api: apiClientService): Promise<undefined> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  /**
+   * Perform a search using the provided API call
+   * @param api 
+   * @param searchParams 
+   * @returns 
+   */
   getSearch(api: apiClientService, searchParams:string): Promise<T1[] | undefined>
   {
     return new Promise((resolve)=>{
@@ -402,7 +424,29 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
         resolve(result?.results);
       })
     })
-    
+  }
+
+  /**
+   * Add items to the index
+   * @param items 
+   */
+  addIndexItems(items: T1[]) {
+    //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
+    this.getDBIndex().then((idx)=>{
+      //add the new items to the index
+      items.forEach((item)=>{
+        idx.items.push(item);
+      });
+      //save the index
+      this.putDBIndex(idx);
+    })
+  }
+
+  emptyIndex(): dbDataIndex<T1> {
+    return {
+      items: [],
+      lastUpdate: Date.now()
+    }
   }
 
   abstract getAPISearch(api: apiClientService, searchParams: string, params: object): Promise<apiSearchResponse<T1> | undefined>;
