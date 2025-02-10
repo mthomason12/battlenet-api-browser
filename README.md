@@ -4,6 +4,8 @@
 
 This is a work in progress, many parts of the API are not implemented yet and only have a placeholder folder icon.
 
+View the [changelog](CHANGELOG.md) for details on new releases
+
 ![screenshot of the Covenants API viewing the Kyrian covenant](doc/images/screenshot-kyrian.png)
 
 ## Requirements
