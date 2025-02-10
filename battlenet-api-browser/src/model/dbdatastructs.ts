@@ -125,6 +125,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     return index;
   }
 
+
   indexCompare(a: any, b: any) {
     var key: string = this.key;
     if (this.stringKey)
@@ -239,6 +240,11 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
         resolve(data?.data as T2);
       });
     });
+  }
+
+  clear(): Promise<void>
+  {
+    return this.recDB.clear(this.type);
   }
 
   /**
@@ -486,6 +492,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   _parent?: dataStruct;
   path(): string;
   crossLink: boolean;
+  clear(): Promise<void>;
   getIndex(api: apiClientService): Promise<IApiIndexDoc | undefined>
   getIndexItems(idx: IApiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;

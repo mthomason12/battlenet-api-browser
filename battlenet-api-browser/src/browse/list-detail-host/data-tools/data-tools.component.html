@@ -9,3 +9,21 @@
         </button>
     </mat-card-actions>
 </mat-card>
+@if (is_dbData()) {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Delete Data</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>This will delete all data of this type ({{dataType()}})</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button (click)="clearItem()">
+                <mat-icon>delete</mat-icon>
+                <span>Clear this data type</span>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+}
+
+

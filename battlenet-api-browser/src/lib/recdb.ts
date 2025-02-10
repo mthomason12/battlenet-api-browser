@@ -89,6 +89,17 @@ export class RecDB {
         });
     }
 
+    clear(type: string): Promise<void> {
+        return new Promise((resolve)=>{
+            //delete index
+            this.db!.delete(this._store, ['index', type]).then(()=>{
+                this.db!.delete(this._store, [type, ""]).then(()=>{
+                    resolve();
+                });
+            });
+        });
+    }
+
     delete(type: string, id: recID): Promise<void> {
         return this.db!.delete(this._store, [type, id]);
     }

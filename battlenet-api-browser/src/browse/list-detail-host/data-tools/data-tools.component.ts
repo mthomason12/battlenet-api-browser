@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, input, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,15 +6,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import FileSaver from 'file-saver';
 import { jsonIgnoreReplacer } from 'json-ignore';
 import { dbData } from '../../../model/dbdatastructs';
+import { dataStruct } from '../../../model/datastructs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-data-tools',
-  imports: [ MatIconModule, MatButtonModule, MatCardModule ],
+  imports: [ MatIconModule, MatButtonModule, MatCardModule, MatDialogModule ],
   templateUrl: './data-tools.component.html',
   styleUrl: './data-tools.component.scss'
 })
 export class DataToolsComponent {
   ref = inject(ChangeDetectorRef);
+
+  readonly dialog = inject(MatDialog);
 
   private _snackBar = inject( MatSnackBar );
 
@@ -45,6 +49,26 @@ export class DataToolsComponent {
     return JSON.parse(JSON.stringify(this.data, jsonIgnoreReplacer, 2));
   }
 
+  clearItem()
+  {
+    if (this.data instanceof dbData){
+      const dialogRef = this.dialog.open(ConfirmDeleteDialog);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.data.clear();
+        }
+      });
+    }
+  }
+
+  is_dbData(): boolean {
+    return (this.data instanceof dbData);
+  }
+
+  dataType(): string {
+    return (this.data as dataStruct).getName();
+  }
+
   exportJSON()
   {
     if (this.data instanceof dbData)
@@ -66,5 +90,13 @@ export class DataToolsComponent {
     this._snackBar.open("Data exported as "+fname, "", {duration:3000});
   }
 
-
 }
+
+@Component({
+  selector: 'confirm-delete-dialog',
+  templateUrl: 'confirm-delete-dialog.html',
+  imports: [MatDialogModule, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ConfirmDeleteDialog 
+{}
