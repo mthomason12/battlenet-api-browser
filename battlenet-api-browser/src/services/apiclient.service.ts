@@ -4,7 +4,7 @@ import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, Q
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
 import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
-import { mediaDataStruct } from '../model/datastructs';
+import { apiSearchResponse, mediaDataStruct } from '../model/datastructs';
 import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 import { accountHeirlooms } from '../model/account-heirlooms';
 import { accountProfileIndex } from '../model/account-characters';
@@ -21,6 +21,7 @@ import { BlizzardAPIConnection } from './blizzardapi-connection';
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { itemData, itemIndexData, itemsDataDoc } from '../model/items';
 
 @Injectable({  providedIn: 'root',})
 export class apiClientService  { 
@@ -375,12 +376,12 @@ isLoggingIn(): boolean
 
   //#region Item API
 
-  getItem(id: number): Promise<any| undefined>
+  getItem(id: number): Promise<itemData| undefined>
   {
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
-  getItemSearch(params: string): Promise<any| undefined>
+  getItemSearch(params: string): Promise<apiSearchResponse<itemIndexData>| undefined>
   {
     return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params}`);
   }        

@@ -3,7 +3,7 @@ import { apiClientService } from "../services/apiclient.service";
 import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
-interface itemData extends IApiDataDoc
+export interface itemData extends IApiDataDoc
 {
     _links: linksStruct
     id: number,
@@ -75,7 +75,7 @@ interface itemData extends IApiDataDoc
     appearances: refStruct[]
 }
 
-interface itemIndexData extends IApiIndexDoc
+export interface itemIndexData extends IApiIndexDoc
 {
     key: keyStruct;
     data: {
