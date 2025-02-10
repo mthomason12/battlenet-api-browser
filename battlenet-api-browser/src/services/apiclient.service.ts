@@ -152,7 +152,7 @@ isLoggingIn(): boolean
             resolve(value as T);
         },(reason)=>{
             reject(undefined);
-        })
+        }).catch (() => reject());
     });
   }
 

@@ -134,7 +134,12 @@ export class BlizzardAPIConnection extends APIConnection {
     }
 
     override apiCall<T = any>(apiEndpoint: string, params: string, options: object): Promise<T | undefined> {
-        return this.blizzapi.query(apiEndpoint, {}) as Promise <T | undefined>;
+        return new Promise<T | undefined>((resolve, reject)=>{
+            (this.blizzapi.query(apiEndpoint, {}) as Promise <T | undefined>).then ((result)=>{
+                resolve(result)
+            }).catch (() => resolve(undefined)); //return "undefined" if we encountered any problems.
+        })
+        
     }
 
 //region OAuth Queries
