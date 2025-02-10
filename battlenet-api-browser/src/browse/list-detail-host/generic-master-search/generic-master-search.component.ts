@@ -50,10 +50,11 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
           if (Array.isArray(result))
           {
             var res = result as Array<searchResult>;
-            var entries = res.filter((value)=>{
-              return value.is_checked === true;
-            }).map((value)=>{
-              return (value as searchResult).item;
+            var entries = res.flatMap((value)=>{
+              if (value.is_checked)
+                return [value.item];
+              else
+                return [];
             });
             this.data?.addIndexItems(entries);
           }
