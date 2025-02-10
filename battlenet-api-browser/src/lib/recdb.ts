@@ -107,10 +107,13 @@ export class RecDB {
     add(type: string, id: recID, data: object): Promise<IDBValidKey>
     {
         return new Promise<IDBValidKey>((resolve)=>{
-            this.delete(type, id).then(()=>{
-                var rec: RecDBRec = new RecDBRec(type, id, data);
-                resolve(this.db!.add(this._store, rec));
-            })
+            var rec: RecDBRec = new RecDBRec(type, id, data);
+            const tx = this.db!.transaction(this._store, "readwrite");
+            tx.store.delete([type, id]);
+            var addKey = tx.store.add(rec);
+            tx.done.then(()=>{
+                resolve(addKey);
+            });
         });
     }
 
