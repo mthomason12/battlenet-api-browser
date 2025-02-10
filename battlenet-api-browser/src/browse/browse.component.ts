@@ -72,7 +72,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   dataObjectIsLive(): boolean
   {
-    return (this.dataObject instanceof dbData);
+    if (this.dataObject instanceof dbData)
+      return (this.dataObject.canReload());
+
+    return false;
   }
 
   update() {
@@ -88,13 +91,15 @@ export class BrowseComponent implements OnInit, OnDestroy {
     {
       //we're looking at the master
       this.name = this.dataObject?.getName();
-      if (this.dataObjectIsLive())
-      {
+      if (this.dataObjectIsLive()) {
         (this.dataObject as IMasterDetail).getIndex(this.apiClient).then((index)=>{
           this.lastUpdate = new Date(index?.lastUpdate!);
         })      
-      } 
-      this.canGetAll = this.dataObjectIsLive();
+        this.canGetAll = (this.dataObject as IMasterDetail).canGetAllRecs();
+      } else {
+        this.canGetAll = false;
+      }
+      
     }
     
   }
