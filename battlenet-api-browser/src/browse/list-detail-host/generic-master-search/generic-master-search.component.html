@@ -1,0 +1,22 @@
+<!--- Master View ---->
+<div>
+    <mat-card>
+        <span>Search for:</span>
+        <mat-form-field>
+        <mat-label>Clearable input</mat-label>
+        <input matInput type="text" [(ngModel)]="searchText" (keydown.enter)="doSearch()">
+        @if (searchText) {
+            <button matSuffix mat-icon-button aria-label="Search" (click)="doSearch()">
+            <mat-icon>search</mat-icon>
+            </button>
+        }
+        </mat-form-field>
+    </mat-card>
+    <!--- Virtual scroller because there are THOUSANDS of entries --->
+    <cdk-virtual-scroll-viewport itemSize="36">
+        <ul>
+            <li *cdkVirtualFor="let item of indexItems"><app-list-data-item [item]="item" [parent]="data!" [key]="data!.key" [skipChange]="true" [hideKey]="data!.hideKey === true ? true : false" (clicked)="this.click(item)"/></li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</div>
+    
