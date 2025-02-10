@@ -59,6 +59,8 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
                 return [];
             });
             this.data?.addIndexItems(entries);
+            //tell the component we've changed the data
+            this.dataSet();
           }
         });
       })
@@ -95,5 +97,9 @@ export class SearchResultsDialog {
     return  { item: value, is_checked: false }
   })
 
+  update (checked: boolean, item: searchResult)
+  {
+    item.is_checked = checked;
+  }
 }
 

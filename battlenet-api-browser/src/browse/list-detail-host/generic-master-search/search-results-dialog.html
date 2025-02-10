@@ -2,7 +2,7 @@
 <mat-dialog-content>
     @for(item of results; track item.item.id)
     {
-        <mat-checkbox [checked]="item.is_checked">
+        <mat-checkbox [checked]="item.is_checked" (change)="update($event.checked, item)">
             {{item.item.id}} - {{item.item.name}}
         </mat-checkbox>
     }

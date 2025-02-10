@@ -484,7 +484,8 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     this.getDBIndex().then((idx)=>{
       //add the new items to the index
       items.forEach((item)=>{
-        idx.items.push(item);
+        if (idx.items.find((value)=>{ return value.id == item.id}))
+          idx.items.push(item);
       });
       //save the index
       this.putDBIndex(idx);
