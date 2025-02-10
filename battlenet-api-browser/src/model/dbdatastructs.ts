@@ -371,7 +371,8 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
  * dbData variant that has no downloadable index, and has to maintain its own
  * from the available records.
  * 
- * It is implied that a search function is available to find these records.
+ * It is implied that a search function is available to find these records, and that
+ * addIndexItems will be called to add selected results.
  *
  * T1 is the "index" record returned from searching
  * T2 is the full data record
