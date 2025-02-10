@@ -314,6 +314,13 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   }
 
   /**
+   * Override in subclasses that can add index items
+   * @param items
+   */
+  addIndexItems(items: IApiDataDoc[]): void
+  {}
+
+  /**
    * @inheritdoc
    */
   override myPath(): string {
@@ -446,7 +453,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * Add items to the index
    * @param items 
    */
-  addIndexItems(items: T1[]) {
+  override addIndexItems(items: T1[]) {
     //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
     this.getDBIndex().then((idx)=>{
       //add the new items to the index
@@ -486,6 +493,8 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getRec(api: apiClientService,id: recID): Promise<IApiIndexDoc | undefined>;
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: IApiDataDoc): string;
+  getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined>;
+  addIndexItems(items: IApiDataDoc[]): void;
   hasData(): boolean;
   hasSearch(): boolean;
   key: string;
