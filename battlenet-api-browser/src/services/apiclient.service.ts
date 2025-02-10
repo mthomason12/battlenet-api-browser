@@ -1231,15 +1231,64 @@ isLoggingIn(): boolean
 
 //endregion
 
-//region todo 
+//region Character PvP API
 
-  //character pvp
-  //character quests
-  //character reputation
-  //character soulbinds
-  //character specializations
+getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-bracket/${bracket}`);
+}
+
+getCharacterPvPSummary(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-summary`);
+}
 
 //endregion
+
+//region Character Quests API
+
+getCharacterQuests(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests`);
+}
+
+getCharacterCompletedQuests(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests/completed`);
+}
+
+//endregion
+
+//region Character Reputation API
+
+getCharacterReputationsSummary(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/reputations`);
+}
+
+//endregion
+
+
+//region Character Soulbinds API
+
+getCharacterSoulbinds(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/soulbinds`);
+}
+
+
+//endregion
+
+
+//region Character Specializations API
+
+getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
+{
+  return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/specializations`);
+}
+
+//endregion
+
 
 //region Character Statistics API
 
