@@ -40,9 +40,11 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   recKeys: recID[] = new Array();
   //_index: WeakRef<T1>;
   //_items: WeakMap<{id: recID},T2>;
+
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, 0, "");
     this.recDB = recDB;
+    this.isReloadable = true;
     //this._index = new WeakRef(undefined as unknown as T1);
     //this._items = new WeakMap();
   }
@@ -413,6 +415,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     super(parent, recDB);
     this.itemsName = "items";
     this.searchable = true;
+    this.isReloadable = false;
   }
 
 
@@ -437,6 +440,15 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * @param api
    */
   override getAPIIndex(api: apiClientService): Promise<undefined> {
+    throw new Error("dbDataIndexOnly unsupported function");
+  }
+
+  /**
+   * There is nothing to reload.  Throw an error if we got this far so we can trace how we got there.
+   * @param api 
+   * @returns 
+   */
+  override reload(api: apiClientService): Promise<dbDataIndex<T1>> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
@@ -511,6 +523,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   key: string;
   hideKey: boolean;
   stringKey: boolean;
+  canReload(): boolean;
   checkLoaded(api: apiClientService): void;
   getLastUpdate(idx: IApiIndexDoc): Date;
   isLoaded(): Promise<boolean>;

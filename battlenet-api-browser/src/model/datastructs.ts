@@ -239,11 +239,13 @@ export abstract class dataDoc extends dataStruct
   @jsonIgnore()
   needsAuth: boolean = false;
 
+  @jsonIgnore()
+  isReloadable: boolean = false;
+
   public get loaded() : boolean {
     return this.lastUpdate !== undefined;
   }
   
-
   constructor(parent: dataStruct, id: number, name: string)
   {
     super(parent);
@@ -272,11 +274,15 @@ export abstract class dataDoc extends dataStruct
     return ret; 
   }
 
+  canReload(): boolean {
+    return this.isReloadable;
+  }
+
   override checkLoaded(apiclient: apiClientService): Promise<void>
   {
     return new Promise((resolve)=>{
       this.isLoaded().then((res)=>{
-        if (res && apiclient.isConnected())
+        if (res && apiclient.isConnected() && this.canReload())
         {
           this.reload(apiclient).then(()=>{
             resolve();
