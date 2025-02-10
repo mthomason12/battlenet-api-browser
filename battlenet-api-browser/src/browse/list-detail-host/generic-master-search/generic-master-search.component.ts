@@ -47,8 +47,10 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
         });
         
         dialogRef.afterClosed().subscribe(result =>{
-          if (Array.isArray(result))
-          {
+          //clear the search box
+          this.searchText = "";
+          //
+          if (Array.isArray(result)) {
             var res = result as Array<searchResult>;
             var entries = res.flatMap((value)=>{
               if (value.is_checked)
