@@ -33,6 +33,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
+  protected searchable = false;
   indexCache?: WeakRef<T1>; //cached copy of the index doc
   //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
   crossLink: boolean = false;
@@ -97,6 +98,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
 
   override hasData(): boolean {
     return true;
+  }
+
+  hasSearch(): boolean {
+    return this.searchable;
   }
 
   override getName(): string {
@@ -300,6 +305,15 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   }
 
   /**
+   * Override in subclasses that can search
+   * @param api 
+   * @param searchParams 
+   */
+  getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined> {
+    return Promise.reject();
+  }
+
+  /**
    * @inheritdoc
    */
   override myPath(): string {
@@ -385,6 +399,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
   {
     super(parent, recDB);
     this.itemsName = "items";
+    this.searchable = true;
   }
 
 
@@ -418,7 +433,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * @param searchParams 
    * @returns 
    */
-  getSearch(api: apiClientService, searchParams:string): Promise<T1[] | undefined>
+  override getSearch(api: apiClientService, searchParams:string): Promise<T1[] | undefined>
   {
     return new Promise((resolve)=>{
       this.getAPISearch(api, searchParams, {}).then((result)=>{
@@ -472,6 +487,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: IApiDataDoc): string;
   hasData(): boolean;
+  hasSearch(): boolean;
   key: string;
   hideKey: boolean;
   stringKey: boolean;
