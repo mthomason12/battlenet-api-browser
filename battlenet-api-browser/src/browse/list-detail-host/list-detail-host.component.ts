@@ -12,6 +12,7 @@ import { GenericDetailComponent } from './generic-detail/generic-detail.componen
 import { MatTabsModule } from '@angular/material/tabs';
 import { DataToolsComponent } from './data-tools/data-tools.component';
 import { IMasterDetail } from '../../model/dbdatastructs';
+import { GenericMasterSearchComponent } from './generic-master-search/generic-master-search.component';
 
 enum ListDetailHostComponentMode
 {
@@ -190,7 +191,10 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     //load generic master components if needed
     if (!Object.hasOwn(this.data, "listComponent"))
     {
-      this.data.listComponent = GenericMasterComponent;
+      if (this.masterList!.hasSearch())
+        this.data.listComponent = GenericMasterSearchComponent;
+      else
+        this.data.listComponent = GenericMasterComponent;
     }
     this.ref.detectChanges(); 
   }
