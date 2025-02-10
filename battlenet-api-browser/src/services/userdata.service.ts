@@ -104,7 +104,6 @@ export class UserdataService {
       this.fixup();       
       this.loaded = true;
       console.log("Data loaded");      
-      console.dir(this.data.settings);
       //send a notification to any subscribers
       this.dataLoadedEmitter.emit();    
     });
