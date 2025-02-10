@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Search Results</h2>
+<mat-dialog-content>
+    <cdk-virtual-scroll-viewport itemSize="36">
+        <ul>
+            <li *cdkVirtualFor="let item of results">
+                <mat-checkbox [checked]="item.is_checked">
+                    {{item.item.id}} - {{item.item.name}}
+                </mat-checkbox>
+            </li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="results" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

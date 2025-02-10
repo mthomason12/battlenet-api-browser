@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ListDataItemComponent } from '../../../components/list-data-item/list-data-item.component';
@@ -10,6 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { IApiDataDoc } from '../../../model/datastructs';
 
 @Component({
   selector: 'app-generic-master-search',
@@ -32,9 +35,58 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
 
   searchText: string = "";
 
+  readonly dialog = inject(MatDialog);
+
   doSearch() {
     if (this.searchText.length > 0)
     {
+      this.data?.getSearch(this.api, this.searchText).then((results)=>{
+        const dialogRef = this.dialog.open(SearchResultsDialog, {
+          width: "90%",
+          data: {model: this.data, results: results}
+        });
+        
+        dialogRef.afterClosed().subscribe(result =>{
+          if (Array.isArray(result))
+          {
+            var entries = result.map((value)=>{
+              return (value as searchResult).item;
+            });
+            this.data?.addIndexItems(entries);
+          }
+        });
+      })
     }
   }
 }
+
+interface searchDialogData {
+  master: IMasterDetail,
+  results: IApiDataDoc[]
+}
+
+interface searchResult
+{
+  item: IApiDataDoc,
+  is_checked: boolean
+}
+
+@Component({
+  selector: 'search-results-dialog',
+  templateUrl: 'search-results-dialog.html',
+  imports: [
+    MatButtonModule, MatDialogContent, MatDialogActions, 
+    MatCheckboxModule, ScrollingModule,
+    MatDialogClose, MatDialogTitle, CommonModule
+  ],
+})
+export class SearchResultsDialog {
+  readonly data = inject<searchDialogData>(MAT_DIALOG_DATA);
+  readonly master: IMasterDetail = this.data.master;
+  readonly _results = model(this.data.results);
+  readonly results: searchResult[] = this._results().map((value)=>{
+    return  { item: value, is_checked: false }
+  })
+
+}
+
