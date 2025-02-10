@@ -208,6 +208,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     });
   }
 
+  canGetAllRecs(): boolean {
+    return true;
+  }
+
   getAllRecs(api: apiClientService, jobqueue: JobQueueService): Promise<void> {
     return new Promise<void>((resolve) => {
       this.getIndex(api).then((idx) => {
@@ -523,6 +527,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   key: string;
   hideKey: boolean;
   stringKey: boolean;
+  canGetAllRecs(): boolean;
   canReload(): boolean;
   checkLoaded(api: apiClientService): void;
   getLastUpdate(idx: IApiIndexDoc): Date;
