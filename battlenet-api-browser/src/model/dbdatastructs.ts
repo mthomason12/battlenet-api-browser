@@ -33,7 +33,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
-  protected searchable = false;
+  protected isSearchable = false;
   indexCache?: WeakRef<T1>; //cached copy of the index doc
   //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
   crossLink: boolean = false;
@@ -103,7 +103,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   }
 
   hasSearch(): boolean {
-    return this.searchable;
+    return this.isSearchable;
   }
 
   override getName(): string {
@@ -414,7 +414,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
   {
     super(parent, recDB);
     this.itemsName = "items";
-    this.searchable = true;
+    this.isSearchable = true;
     this.isReloadable = false;
   }
 
