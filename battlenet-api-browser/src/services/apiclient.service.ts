@@ -148,7 +148,7 @@ isLoggingIn(): boolean
         {
             extraparams = "&"+params;
         }    
-        this.apiConnection?.apiCall(apiEndpoint, params, {}).then((value)=>{
+        this.apiConnection?.apiCall(apiEndpoint+extraparams, "", {}).then((value)=>{
             resolve(value as T);
         },(reason)=>{
             reject(undefined);
@@ -382,7 +382,7 @@ isLoggingIn(): boolean
 
   getItemSearch(params: string): Promise<any| undefined>
   {
-    return this.queryStatic(`/data/wow/item/search?${params}`);
+    return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params}`);
   }        
 
   getItemMedia(id: number): Promise<mediaDataStruct| undefined>
