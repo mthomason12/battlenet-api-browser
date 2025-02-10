@@ -49,7 +49,10 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
         dialogRef.afterClosed().subscribe(result =>{
           if (Array.isArray(result))
           {
-            var entries = result.map((value)=>{
+            var res = result as Array<searchResult>;
+            var entries = res.filter((value)=>{
+              return value.is_checked === true;
+            }).map((value)=>{
               return (value as searchResult).item;
             });
             this.data?.addIndexItems(entries);
