@@ -292,6 +292,9 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    * @returns
    */
   putDBIndex(rec: T1): Promise<IDBValidKey> {
+    //update cache
+    this.indexCache = new WeakRef(rec);
+    //save to database
     return this.recDB.add('index', this.type, rec as object);
   }
 
@@ -329,8 +332,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    * Override in subclasses that can add index items
    * @param items
    */
-  addIndexItems(items: IApiDataDoc[]): void
-  {}
+  addIndexItems(items: IApiDataDoc[]): Promise<void>
+  {
+    return Promise.resolve();
+  }
 
   /**
    * @inheritdoc
@@ -479,17 +484,22 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * Add items to the index
    * @param items 
    */
-  override addIndexItems(items: T1[]) {
-    //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
-    this.getDBIndex().then((idx)=>{
-      //add the new items to the index
-      items.forEach((item)=>{
-        if (idx.items.find((value)=>{ return value.id == item.id}))
-          idx.items.push(item);
+  override addIndexItems(items: T1[]): Promise<void> {
+    return new Promise((resolve)=>{
+      //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
+      this.getDBIndex().then((idx)=>{
+        //add the new items to the index
+        items.forEach((item)=>{
+          //prevent duplicates
+          if (!idx.items.find((value)=>{ return value.id == item.id}))
+            idx.items.push(item);
+        });
+        //save the index
+        this.putDBIndex(idx).then(()=>{
+          resolve();
+        });
       });
-      //save the index
-      this.putDBIndex(idx);
-    })
+    });
   }
 
   emptyIndex(): dbDataIndex<T1> {
@@ -522,7 +532,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: IApiDataDoc): string;
   getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined>;
-  addIndexItems(items: IApiDataDoc[]): void;
+  addIndexItems(items: IApiDataDoc[]): Promise<void>;
   hasData(): boolean;
   hasSearch(): boolean;
   key: string;
