@@ -33,6 +33,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
+  indexCache?: WeakRef<T1>; //cached copy of the index doc
   //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
   crossLink: boolean = false;
   recKeys: recID[] = new Array();
@@ -155,16 +156,27 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
       this.getDBRecKeys().then((array) => {
         this.recKeys = array;
       });
-      this.getDBIndex().then((result) => {
-        if (result === undefined) {
-          resolve(this.reload(api));
-        }
-
-        else {
-          //use the result from the DB
-          resolve(result);
-        }
-      });
+      //use cached index if available
+      var idx = this.indexCache?.deref();
+      if (idx) {
+        resolve (idx);
+      }
+      else
+      {
+        this.getDBIndex().then((result) => {
+          if (result === undefined) {
+            this.reload(api).then((apiResult)=>{
+              this.indexCache = new WeakRef(apiResult);
+              resolve(apiResult);
+            })
+          }
+          else {
+            //use the result from the DB
+            this.indexCache = new WeakRef(result);
+            resolve(result);
+          }
+        });
+      };
     });
   }
 
