@@ -58,7 +58,7 @@ Currently everything is hard-coded to the US region
 
 ## Roadmap
 
-- Finish adding API endpoints
+- Finish adding viewers for each data type
 - Add a custom browse component for every type of data
 - JSON import (allowing backup/restore with JSON files)
 - Search function
