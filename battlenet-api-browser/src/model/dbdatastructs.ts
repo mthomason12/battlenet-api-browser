@@ -450,9 +450,13 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
   {
     return new Promise((resolve)=>{
       this.getAPISearch(api, searchParams, {}).then((result)=>{
-        resolve(result?.results);
+        resolve(this.postProcessSearchResults(result?.results!));
       })
     })
+  }
+
+  postProcessSearchResults(results: T1[]): T1[] {
+    return results;
   }
 
   /**

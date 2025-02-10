@@ -123,6 +123,14 @@ export class itemsDataDoc extends dbDataNoIndex<itemIndexData, itemData>
         this.title = "Items";
     }
 
+    override postProcessSearchResults(results: itemIndexData[]): itemIndexData[] {
+        return results.map((item)=>{
+            item.id = item.data.id;
+            item.name = item.data.name.en_US;
+            return item;
+        })
+    }
+
     override getAPISearch(api: apiClientService, searchParams:string, params: object): Promise<apiSearchResponse<itemIndexData> | undefined> {
         return api.getItemSearch(searchParams) as Promise<apiSearchResponse<itemIndexData>>;
     }

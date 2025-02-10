@@ -4,7 +4,7 @@ div.search-view {
     flex-direction: column;
 }
 
-cdk-virtual-scroll-viewport {
+cdk-virtual-scroll-viewport.mainlist {
     flex: 1;
 }
 
@@ -15,4 +15,8 @@ li {
 
 li a {
     height: 36px;
+}
+
+mat-checkbox {
+    display: block;
 }

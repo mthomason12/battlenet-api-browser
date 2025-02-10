@@ -77,6 +77,7 @@ interface searchResult
 @Component({
   selector: 'search-results-dialog',
   templateUrl: 'search-results-dialog.html',
+  styleUrl: './generic-master-search.component.scss',
   imports: [
     MatButtonModule, MatDialogContent, MatDialogActions, 
     MatCheckboxModule, ScrollingModule,
