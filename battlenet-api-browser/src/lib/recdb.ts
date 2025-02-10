@@ -93,7 +93,14 @@ export class RecDB {
         return new Promise((resolve)=>{
             //delete index
             this.db!.delete(this._store, ['index', type]).then(()=>{
-                this.db!.delete(this._store, [type, ""]).then(()=>{
+                const tx = this.db!.transaction(this._store, "readwrite");
+                const idx = tx.store.index("type");
+                var result = idx.openCursor(IDBKeyRange.only(type)).then (async (cursor)=>{
+                    while (cursor)
+                    {
+                        await cursor?.delete();
+                        cursor = await cursor.continue();
+                    }
                     resolve();
                 });
             });
