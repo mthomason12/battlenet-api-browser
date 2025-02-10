@@ -10,6 +10,30 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="mat-typography">
-  <app-root></app-root>
+  <app-root>
+    <div id="noangular" style="vertical-align:middle; text-align:center"></div>
+    <script>
+      //Display error for browsers that have javascript but are unable to render an angular application
+      setTimeout(()=>{
+        var noang = document.getElementById('noangular');
+        if (noang) {
+          noang.innerHTML="Loading... please wait"
+        }
+      }, 500);
+      //currently we display this if angular has not rendered app-root within 5 seconds.  Need to find a
+      //better way.
+      setTimeout(()=>{
+        var noang = document.getElementById('noangular');
+        if (noang) {
+          noang.innerHTML='<p>Sorry, it appears your browser cannot support this application.</p>'+
+            '<p>Compatible browsers include the latest '+
+            '<a href="https://getfirefox.com" target="_blank" rel="noopener">Firefox</a>, '+
+            '<a href="https://www.google.com/chrome" target="_blank" rel="noopener">Chrome</a>, and '+
+            '<a href="https://www.microsoft.com/edge" target="_blank" rel="noopener">Edge</a></p>'
+        }
+      }, 5000);      
+    </script>
+  </app-root>
+  <noscript>Sorry, this web application requires Javascript.</noscript>
 </body>
 </html>

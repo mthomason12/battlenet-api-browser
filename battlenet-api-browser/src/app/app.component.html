@@ -40,22 +40,31 @@
       </button> 
     </mat-menu>     
 </mat-toolbar>
-<mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" [opened]="true"  fixedTopGap="56">
-    <app-apitree></app-apitree>    
-  </mat-sidenav>
-  <mat-sidenav-content #content> 
-    @if (data.loaded) {
-      <router-outlet />
-    }
-    @else
-    {
-      <div class="loadingspinner">
-        <mat-spinner ></mat-spinner>
-      </div>      
-    }
-  </mat-sidenav-content>
-</mat-sidenav-container>
+
+  <mat-sidenav-container fullscreen [style.display]="hasIndexedDB() ? 'initial' : 'none'">
+      <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" [opened]="true"  fixedTopGap="56">
+        <app-apitree></app-apitree>    
+      </mat-sidenav>
+      <mat-sidenav-content #content> 
+        @if (data.loaded) {
+          <router-outlet />
+        }
+        @else
+        {
+          <div class="centered">
+            <mat-spinner ></mat-spinner>
+          </div>      
+        }
+      </mat-sidenav-content>
+  </mat-sidenav-container>
+  <div class="centered" [style.display]="hasIndexedDB() ? 'none' : 'initial'">
+    <p>Sorry, this web application requires a browser supporting IndexedDB.</p>
+    <p>Compatible browsers include the latest 
+      <a href="https://getfirefox.com" target="_blank" rel="noopener">Firefox</a>, 
+      <a href="https://www.google.com/chrome" target="_blank" rel="noopener">Chrome</a>, and 
+      <a href="https://www.microsoft.com/edge" target="_blank" rel="noopener">Edge</a>
+    </p>
+  </div>
 <mat-toolbar class="statusbar">
   <span>Background Jobs: {{jobQueue.execCount()}}/{{jobQueue.size()}}</span>
   <span class="spacer"></span>

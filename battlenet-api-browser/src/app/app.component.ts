@@ -1,4 +1,4 @@
-import { Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, model, OnDestroy, OnInit, signal, ViewChild, viewChild } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -140,6 +140,11 @@ export class AppComponent implements OnDestroy, OnInit {
     {
       this.statusMessage = "Unable to connect - check your settings from the top-right menu"
     }
+  }
+
+  hasIndexedDB()
+  {
+    return ('indexedDB' in window);
   }
 
 }
