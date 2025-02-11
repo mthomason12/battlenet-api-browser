@@ -34,6 +34,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   key: string = "id";
   stringKey: boolean = false;
   protected isSearchable = false;
+  protected indexRebuildable = false;
   indexCache?: WeakRef<T1>; //cached copy of the index doc
   //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
   crossLink: boolean = false;
@@ -106,6 +107,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     return this.isSearchable;
   }
 
+  canRebuildIndex(): boolean {
+    return this.indexRebuildable;
+  }
+
   override getName(): string {
     return this.title;
   }
@@ -136,6 +141,11 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     else
       return a[key] - b[key];
   }
+
+  /**
+   * Override in descendants that have their indexRebuildable set to true;
+   */
+  rebuildIndex(): void {}
 
   /**
    * Override in descendants to apply any necessary mutation to the index item
@@ -524,6 +534,9 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   path(): string;
   crossLink: boolean;
   clear(): Promise<void>;
+  canGetAllRecs(): boolean;
+  canReload(): boolean;
+  canRebuildIndex(): boolean;
   getIndex(api: apiClientService): Promise<IApiIndexDoc | undefined>
   getIndexItems(idx: IApiIndexDoc): IIndexItem[];
   getIndexItemPath(item: IIndexItem): string;
@@ -533,13 +546,12 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getRecName(rec: IApiDataDoc): string;
   getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined>;
   addIndexItems(items: IApiDataDoc[]): Promise<void>;
+  rebuildIndex(): void;
   hasData(): boolean;
   hasSearch(): boolean;
   key: string;
   hideKey: boolean;
   stringKey: boolean;
-  canGetAllRecs(): boolean;
-  canReload(): boolean;
   checkLoaded(api: apiClientService): void;
   getLastUpdate(idx: IApiIndexDoc): Date;
   isLoaded(): Promise<boolean>;
