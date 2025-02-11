@@ -9,22 +9,41 @@ export class APISearchParams {
         this.params = [];
     }
 
+    /**
+     * Add a new operation to the search
+     * @param field 
+     * @param values 
+     * @param operator 
+     * @returns 
+     */
     add(field: string, values: APISearchValues, operator: APISearchOperator = APISearchOperator.AND): APISearchParams
     {
         this.params.push(new APISearchOperation(field, values, operator));
         return this;
     }
 
+    /**
+     * Find the first operation for the specified field
+     * @param field 
+     * @returns 
+     */
     find(field: string): APISearchOperation | undefined
     {
         return this.params.find((item)=>{ return item.field === field });
     }
 
+    /**
+     * Convert to text for the API query string (without a leading ?)
+     * @returns 
+     */
     toQueryString(): string {
         return this.params.join("&");
     }
 }
 
+/**
+ * An individual operation (field - operator - value(s))
+ */
 class APISearchOperation {
 
     field: string;
@@ -68,7 +87,7 @@ class APISearchOperation {
 }
 
 enum APISearchOperator {
-    AND = 0,
+    AND = 0, //technically, this is an equals/like
     OR = 1,
     NOT = 2,
     RANGE = 3, 
