@@ -6,6 +6,7 @@
 - "Rebuild Index" item available on tools tab where applicable
 - Added Character Profiles database
 - Added a simple query cache
+- npm run electron-make-deb now makes a .deb on compatible Linux systems (note - this is currently untested)
 
 ##### Bug Fixes
 - Graceful error message if browser is unable to run Angular or doesn't have IndexedDB.

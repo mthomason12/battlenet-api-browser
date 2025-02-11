@@ -24,7 +24,7 @@ Builds are triggered by going to the **battlenet-api-browser** directory and run
 
 ```npm run build``` for the self-hosted version (which will be output to the **dist** folder), you'll need to put this onto a webserver to run it.
 
-```npm run build-electron``` for the Electron version (which will be output to the **out** folder)- this should automatically pick the Electron binary for the platform you're running on.  You can then run this as a local application.
+```npm run electron-build``` for the Electron version (which will be output to the **out** folder)- this should automatically pick the Electron binary for the platform you're running on.  You can then run this as a local application.
 
 Or if you want to work on the live codebase:
 
