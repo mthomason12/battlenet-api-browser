@@ -2,7 +2,7 @@
 
 [SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
-This is a work in progress, many parts of the API are not implemented yet and only have a placeholder folder icon.
+This is a work in progress, many parts of the API are not implemented yet and only have a placeholder folder icon.  
 
 View the [changelog](CHANGELOG.md) for details on new releases
 
@@ -34,16 +34,6 @@ Or if you want to work on the live codebase:
 
 ```ng serve``` to serve the Angular application, rebuilding live on file edits.
 
-#### Battle&#46;net Client Registration
-
-Note: You will need to provide your own Battle&#46;net API Key and secret. 
-You can get this from the [Battle.net Developer Portal](https://develop.battle.net/access/clients)
-
-When registering your client, you'll need to provide a redirect URL.  If running locally under the defaults, this will be http://localhost:4200/auth-callback
-
-Check "I do not have a service URL for this client"
-
-One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
 
 ## Usage
 
@@ -52,6 +42,17 @@ The vast majority of data is left as-is from the Battle.net API.
 However, some things are tweaked for usability, and some are combined.  
 
 For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 (if you want that, you can just call the API directly yourself ;) 
+
+### Battle&#46;net Client Registration
+
+You will need to provide your own Battle&#46;net API Key and secret. 
+You can get this from the [Battle.net Developer Portal](https://develop.battle.net/access/clients)
+
+When registering your client, you'll need to provide a redirect URL.  If running locally under the defaults, this will be http://localhost:4200/auth-callback
+
+Check "I do not have a service URL for this client"
+
+One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
 
 ## Known Issues
 
