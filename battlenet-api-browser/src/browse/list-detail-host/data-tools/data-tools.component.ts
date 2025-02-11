@@ -70,6 +70,17 @@ export class DataToolsComponent {
     return (this.data instanceof dbData);
   }
 
+  canRebuildIndex(): boolean {
+    if (this.is_dbData()) {
+      return (this.data as dbData<any,any>).canRebuildIndex();
+    }
+    return false;
+  }
+
+  rebuildIndex() {
+    (this.data as dbData<any,any>).rebuildIndex();
+  }
+
   dataType(): string {
     return (this.data as dataStruct).getName();
   }
