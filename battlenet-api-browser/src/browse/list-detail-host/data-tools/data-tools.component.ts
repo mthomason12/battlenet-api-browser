@@ -5,9 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import FileSaver from 'file-saver';
 import { jsonIgnoreReplacer } from 'json-ignore';
-import { dbData } from '../../../model/dbdatastructs';
+import { dbData, IMasterDetail } from '../../../model/dbdatastructs';
 import { dataStruct } from '../../../model/datastructs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { UserdataService } from '../../../services/userdata.service';
 
 @Component({
   selector: 'app-data-tools',
@@ -19,6 +20,7 @@ export class DataToolsComponent {
   ref = inject(ChangeDetectorRef);
 
   readonly dialog = inject(MatDialog);
+  readonly userData = inject(UserdataService);
 
   private _snackBar = inject( MatSnackBar );
 
@@ -55,7 +57,10 @@ export class DataToolsComponent {
       const dialogRef = this.dialog.open(ConfirmDeleteDialog);
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.data.clear();
+          var data = this.data as IMasterDetail;
+          data.clear().then ( () => {
+            this.userData.dataChangedEmitter.emit({ master:data, rec:undefined });
+          });
         }
       });
     }
