@@ -58,7 +58,7 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
               else
                 return [];
             });
-            this.data?.addIndexItems(entries).then(()=>{
+            this.data?.addIndexItems(this.api, entries).then(()=>{
               //tell the component we've changed the data
               this.dataSet();
             });
