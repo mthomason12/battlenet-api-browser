@@ -122,6 +122,7 @@ export class petAbilitiesDataDoc extends dbData<petAbilityIndex, petAbilityData>
     this.icon = "pets";
     this.itemsName = "abilities";
     this.type = "pet-abilities";
+    this.pathName = "pet-abilities";
     this.title = "Pet Abilities";
 }
 
@@ -146,8 +147,5 @@ export class petAbilitiesDataDoc extends dbData<petAbilityIndex, petAbilityData>
     })
   }     
 
-  override myPath(): string {
-    return "pet-abilities";
-  }
 
 }

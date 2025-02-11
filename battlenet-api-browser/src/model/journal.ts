@@ -25,6 +25,7 @@ export class journalExpansionsDataDoc extends dbData<journalExpansionsIndex, jou
     this.icon = "sports_esports";
     this.itemsName = "tiers";
     this.type = "journal-expansions";
+    this.pathName = "expansions";
     this.title = "Expansions";
 }
 
@@ -38,9 +39,6 @@ override getAPIRec = function(apiClient: apiClientService, id: number): Promise<
   return apiClient.getJournalExpansion(id) as Promise<journalExpansionData>;
 }
 
-  override myPath(): string {
-    return "expansions";
-  }  
 }
 
 //endregion

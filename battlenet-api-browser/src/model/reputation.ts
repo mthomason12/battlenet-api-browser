@@ -32,6 +32,7 @@ export class reputationFactionDataDoc extends dbData<ReputationFactionIndex, Rep
     this.itemsName = "factions";
     this.type="reputation-faction";
     this.title="Reputation Factions";
+    this.pathName = "reputation-factions";
   }
 
   override getAPIIndex = function(apiClient: apiClientService): Promise<ReputationFactionIndex> {
@@ -42,9 +43,6 @@ export class reputationFactionDataDoc extends dbData<ReputationFactionIndex, Rep
     return apiClient.getReputationFaction(id) as Promise<ReputationFactionData>;
   }
 
-  override myPath(): string {
-      return "reputation-factions";
-  }
 
 
 }
