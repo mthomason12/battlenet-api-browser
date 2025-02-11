@@ -4,14 +4,14 @@ import { profileCharactersDataDoc } from './profile-characters';
 
 export class profileDataStruct extends topDataStruct
 {
-  characterData: profileCharactersDataDoc;
+  characters: profileCharactersDataDoc;
 
   constructor(parent: dataStruct, recDB: RecDB)
   {
     super(parent, recDB);
   
     this.addFolder("Characters", [
-      this.characterData = this.dbRegister(profileCharactersDataDoc)
+      this.characters = this.dbRegister(profileCharactersDataDoc)
     ]);
 
     this.addFolder("Guilds");
