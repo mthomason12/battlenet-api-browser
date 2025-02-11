@@ -1,5 +1,6 @@
 import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
+import { APISearchParams } from "../services/apisearch";
 import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
@@ -139,7 +140,7 @@ export class itemsDataDoc extends dbDataNoIndex<itemSearchData, itemData, itemIn
         })
     }
 
-    override getAPISearch(api: apiClientService, searchParams:string, params: object): Promise<apiSearchResponse<itemSearchData> | undefined> {
+    override getAPISearch(api: apiClientService, searchParams:APISearchParams, params: object): Promise<apiSearchResponse<itemSearchData> | undefined> {
         return api.getItemSearch(searchParams) as Promise<apiSearchResponse<itemSearchData>>;
     }
 

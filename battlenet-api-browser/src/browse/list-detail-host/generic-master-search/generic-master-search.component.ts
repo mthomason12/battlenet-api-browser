@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { IApiDataDoc } from '../../../model/datastructs';
+import { APISearchParams } from '../../../services/apisearch';
 
 @Component({
   selector: 'app-generic-master-search',
@@ -40,7 +41,7 @@ export class GenericMasterSearchComponent extends AbstractMasterComponent<IMaste
   doSearch() {
     if (this.searchText.length > 0)
     {
-      this.data?.getSearch(this.api, this.searchText).then((results)=>{
+      this.data?.getSearch(this.api, new APISearchParams().add("",[this.searchText])).then((results)=>{
         const dialogRef = this.dialog.open(SearchResultsDialog, {
           width: "90%",
           data: {model: this.data, results: results}

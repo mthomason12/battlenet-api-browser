@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
 import { characterProfileData } from '../model/profile-characters';
+import { APISearchParams } from './apisearch';
 
 @Injectable({  providedIn: 'root',})
 export class apiClientService  { 
@@ -382,9 +383,9 @@ isLoggingIn(): boolean
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
-  getItemSearch(params: string): Promise<apiSearchResponse<itemSearchData>| undefined>
+  getItemSearch(params: APISearchParams): Promise<apiSearchResponse<itemSearchData>| undefined>
   {
-    return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params}`);
+    return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params.toQueryString()}`);
   }        
 
   getItemMedia(id: number): Promise<mediaDataStruct| undefined>

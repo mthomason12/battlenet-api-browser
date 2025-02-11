@@ -3,6 +3,7 @@ import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
 import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem, dbDataIndex, apiSearchResponse } from './datastructs';
+import { APISearchParams } from '../services/apisearch';
 
 //#endregion
 //region dbData
@@ -334,7 +335,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    * @param api 
    * @param searchParams 
    */
-  getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined> {
+  getSearch(api: apiClientService, searchParams:APISearchParams): Promise<IApiDataDoc[] | undefined> {
     return Promise.reject();
   }
 
@@ -478,7 +479,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * @param searchParams 
    * @returns 
    */
-  override getSearch(api: apiClientService, searchParams:string): Promise<T1[] | undefined>
+  override getSearch(api: apiClientService, searchParams:APISearchParams): Promise<T1[] | undefined>
   {
     return new Promise((resolve)=>{
       this.getAPISearch(api, searchParams, {}).then((result)=>{
@@ -545,7 +546,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     }
   }
 
-  abstract getAPISearch(api: apiClientService, searchParams: string, params: object): Promise<apiSearchResponse<T1> | undefined>;
+  abstract getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<T1> | undefined>;
 
 }
 
@@ -570,7 +571,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getRec(api: apiClientService,id: recID): Promise<IApiIndexDoc | undefined>;
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: IApiDataDoc): string;
-  getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined>;
+  getSearch(api: apiClientService, searchParams:APISearchParams): Promise<IApiDataDoc[] | undefined>;
   addIndexItems(api: apiClientService, items: IApiDataDoc[]): Promise<void>;
   rebuildIndex(): void;
   hasData(): boolean;
