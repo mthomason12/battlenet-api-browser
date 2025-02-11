@@ -1,7 +1,7 @@
 <!--- Master View ---->
 <div class="search-view">
     <mat-form-field>
-        <mat-label>Search</mat-label>
+        <mat-label>API search for new items to add</mat-label>
         <input matInput type="text" [(ngModel)]="searchText" (keydown.enter)="doSearch()">
         @if (searchText) {
             <button matSuffix mat-icon-button aria-label="Search" (click)="doSearch()">
