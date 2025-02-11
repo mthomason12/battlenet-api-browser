@@ -44,3 +44,12 @@ export function ObjToArray(obj: any): propertyData[]
       }
   });
 }
+
+
+/**
+ * Convert string into format usable as an API slug, by replacing spaces and underscores with hyphens and returning the result in lowercase
+ */
+export function Slugify(str: string): string {
+  const regex = /[_ ]/g;
+  return (str.replace(regex,"-").toLowerCase());
+}
