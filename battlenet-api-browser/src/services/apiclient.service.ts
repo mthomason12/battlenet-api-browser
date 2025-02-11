@@ -21,7 +21,7 @@ import { BlizzardAPIConnection } from './blizzardapi-connection';
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { itemData, itemIndexData, itemsDataDoc } from '../model/items';
+import { itemData, itemSearchData } from '../model/items';
 import { characterProfileData } from '../model/profile-characters';
 
 @Injectable({  providedIn: 'root',})
@@ -382,7 +382,7 @@ isLoggingIn(): boolean
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
-  getItemSearch(params: string): Promise<apiSearchResponse<itemIndexData>| undefined>
+  getItemSearch(params: string): Promise<apiSearchResponse<itemSearchData>| undefined>
   {
     return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params}`);
   }        

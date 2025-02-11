@@ -1,6 +1,6 @@
 import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
-import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
+import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 export interface itemData extends IApiDataDoc
@@ -75,7 +75,7 @@ export interface itemData extends IApiDataDoc
     appearances: refStruct[]
 }
 
-export interface itemIndexData extends IApiIndexDoc
+export interface itemSearchData extends IApiIndexDoc
 {
     key: keyStruct;
     data: {
@@ -112,7 +112,15 @@ export interface itemIndexData extends IApiIndexDoc
     }
 }
 
-export class itemsDataDoc extends dbDataNoIndex<itemIndexData, itemData>
+export interface itemIndexData extends IIndexItem{
+    id: number,
+    name: string,
+    quality: string,
+    is_equipable: boolean;
+    inventory_type: string
+}
+
+export class itemsDataDoc extends dbDataNoIndex<itemSearchData, itemData, itemIndexData>
 {
 
     constructor(parent: dataStruct, recDB: RecDB)
@@ -123,7 +131,7 @@ export class itemsDataDoc extends dbDataNoIndex<itemIndexData, itemData>
         this.title = "Items";
     }
 
-    override postProcessSearchResults(results: itemIndexData[]): itemIndexData[] {
+    override postProcessSearchResults(results: itemSearchData[]): itemSearchData[] {
         return results.map((item)=>{
             item.id = item.data.id;
             item.name = item.data.name.en_US;
@@ -131,12 +139,22 @@ export class itemsDataDoc extends dbDataNoIndex<itemIndexData, itemData>
         })
     }
 
-    override getAPISearch(api: apiClientService, searchParams:string, params: object): Promise<apiSearchResponse<itemIndexData> | undefined> {
-        return api.getItemSearch(searchParams) as Promise<apiSearchResponse<itemIndexData>>;
+    override getAPISearch(api: apiClientService, searchParams:string, params: object): Promise<apiSearchResponse<itemSearchData> | undefined> {
+        return api.getItemSearch(searchParams) as Promise<apiSearchResponse<itemSearchData>>;
     }
 
     override getAPIRec(api: apiClientService, id: number): Promise<itemData | undefined> {
         return api.getItem(id) as Promise<itemData>;
+    }
+
+    override makeIndexItem(item: itemData): itemIndexData {
+        return {
+            id: item.id,
+            name: item.name,
+            quality: item.quality.type,
+            is_equipable: item.is_equippable,
+            inventory_type: item.inventory_type.type
+        }
     }
     
 }

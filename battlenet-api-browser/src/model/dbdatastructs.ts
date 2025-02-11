@@ -342,7 +342,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    * Override in subclasses that can add index items
    * @param items
    */
-  addIndexItems(items: IApiDataDoc[]): Promise<void>
+  addIndexItems(api: apiClientService, items: IApiDataDoc[]): Promise<void>
   {
     return Promise.resolve();
   }
@@ -423,9 +423,10 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
  * addIndexItems will be called to add selected results.
  *
  * T1 is the "index" record returned from searching
- * T2 is the full data record
+ * T2 is the full data record, this could be the same as T1 if there's *only* a search function
+ * T3 is a reduced index record we construct from T1
  */
-export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataDoc> extends dbData<dbDataIndex<T1>, T2> {
+export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataDoc, T3 extends IIndexItem> extends dbData<dbDataIndex<T3>, T2> {
 
   searchItems = "items";
 
@@ -442,7 +443,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * By ensuring we return an empty index if we can't find one, we should ensure
    * getAPIIndex is never called.
    */
-  override getDBIndex(): Promise<dbDataIndex<T1>> {
+  override getDBIndex(): Promise<dbDataIndex<T3>> {
     return new Promise((resolve, reject)=>{
       super.getDBIndex().then ((idx)=>{
         if (idx) {
@@ -467,7 +468,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * @param api 
    * @returns 
    */
-  override reload(api: apiClientService): Promise<dbDataIndex<T1>> {
+  override reload(api: apiClientService): Promise<dbDataIndex<T3>> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
@@ -494,25 +495,50 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * Add items to the index
    * @param items 
    */
-  override addIndexItems(items: T1[]): Promise<void> {
+  override addIndexItems(api: apiClientService, items: T1[]): Promise<void> {
     return new Promise((resolve)=>{
       //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
       this.getDBIndex().then((idx)=>{
+        //array for storing promises
+        var jobs: Array<Promise<any>> = [];
         //add the new items to the index
         items.forEach((item)=>{
           //prevent duplicates
           if (!idx.items.find((value)=>{ return value.id == item.id}))
-            idx.items.push(item);
+          {
+            jobs.push(this.getRec(api, item.id!).then((rec)=>{
+              if (rec)
+                idx.items.push(this.makeIndexItem(rec));
+            }));
+          }
         });
         //save the index
-        this.putDBIndex(idx).then(()=>{
-          resolve();
-        });
+        Promise.allSettled(jobs).then(()=>{
+          this.putDBIndex(idx).then(()=>{
+            resolve();
+          });
+        })
       });
     });
   }
 
-  emptyIndex(): dbDataIndex<T1> {
+  /** Override in descendants to return a new index record T3 from a T1 */
+  abstract makeIndexItem(item: T2): T3;
+
+  /**
+   * Rebuild index by loading all (T3) records and turning them into (T2) index records
+   */
+  override rebuildIndex(): void {
+    this.getDBRecs().then((recs)=>{
+      var idx = this.emptyIndex();
+      recs.forEach((rec)=>{
+        idx.items.push(this.makeIndexItem(rec));
+      });
+      this.putDBIndex(idx);
+    })
+  }
+
+  emptyIndex(): dbDataIndex<T3> {
     return {
       items: [],
       lastUpdate: Date.now()
@@ -545,7 +571,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   getAllRecs(api: apiClientService, queue: JobQueueService): Promise<void>;
   getRecName(rec: IApiDataDoc): string;
   getSearch(api: apiClientService, searchParams:string): Promise<IApiDataDoc[] | undefined>;
-  addIndexItems(items: IApiDataDoc[]): Promise<void>;
+  addIndexItems(api: apiClientService, items: IApiDataDoc[]): Promise<void>;
   rebuildIndex(): void;
   hasData(): boolean;
   hasSearch(): boolean;
