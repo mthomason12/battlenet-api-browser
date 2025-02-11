@@ -2,7 +2,7 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 
@@ -59,7 +59,7 @@ export interface characterProfileData extends IApiDataDoc {
     name_search: string;
 }
 
-export interface characterProfileIndexData extends IIndexItem{
+export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
     _id: string;
     id: number,
     name: string;
@@ -84,6 +84,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         super(parent, recDB);
         this.icon = "group";
         this.type = "profile-characters";
+        this.pathName = "characters";
         this.title = "Characters";
         this.stringKey = true;
         this.key = "_id"; //override key because we're making our own from 
@@ -127,13 +128,16 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
     }
 
     /**
-     * There is no simple key-based API for retrieving characters
+     * Retrieve character by "id" (realm/name)
      * @param api 
      * @param id 
      * @returns 
      */
     override getAPIRec(api: apiClientService, id: string): Promise<characterProfileData | undefined> {
-        return Promise.reject();
+        var realm: string;
+        var character: string;
+        [realm,character] = id.split('/');
+        return api.getCharacterProfileSummary(realm, character);
     }
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
@@ -147,7 +151,8 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             level: item.level,
             active_spec: item.active_spec.name,
             realm: item.realm.name,
-            guild: item.guild.name
+            guild: item.guild.name,
+            lastUpdate: Date.now()
         }
     }
     

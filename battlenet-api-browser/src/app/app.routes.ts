@@ -11,6 +11,7 @@ import { RealmComponent } from '../browse/realm/realm.component';
 import { ConnectedRealmComponent } from '../browse/connected-realm/connected-realm.component';
 import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
 import { JournalExpansionComponent } from '../browse/journal-expansion/journal-expansion.component';
+import { CharacterMasterSearchComponent } from '../browse/list-detail-host/character-master-search/character-master-search.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -104,6 +105,10 @@ export const routes: Routes = [
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [
+            { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},
+            { path: 'characters/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowprofile","characters"], listComponent: CharacterMasterSearchComponent} 
+            },            
             { path: '**', children: [] }
         ]},       
         { path: '**', children: [] }

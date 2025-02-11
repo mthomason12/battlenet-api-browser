@@ -507,12 +507,15 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
         //add the new items to the index
         items.forEach((item)=>{
           //prevent duplicates
-          if (!idx.items.find((value)=>{ return value.id == item.id}))
+          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]}))
           {
-            jobs.push(this.getRec(api, item.id!).then((rec)=>{
-              if (rec)
-                idx.items.push(this.makeIndexItem(rec));
-            }));
+            var job = new Promise<void>(async(resolve, reject)=>{
+                var rec = await this.getRec(api, (item as any)[this.key])
+                if (rec)
+                  idx.items.push(this.makeIndexItem(rec));
+                resolve();
+            })
+            jobs.push(job);
           }
         });
         //save the index
