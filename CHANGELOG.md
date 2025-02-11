@@ -7,6 +7,7 @@
 - Added Character Profiles database
 - Added a simple query cache
 - npm run electron-make-deb now makes a .deb on compatible Linux systems (note - this is currently untested)
+- npm run electron-make-win now makes a Windows setup.exe (again, currently untested)
 
 ##### Bug Fixes
 - Graceful error message if browser is unable to run Angular or doesn't have IndexedDB.
