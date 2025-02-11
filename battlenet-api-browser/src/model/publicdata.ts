@@ -35,6 +35,7 @@ export class publicDataStruct extends topDataStruct
   constructor(parent: dataStruct, recDB: RecDB)
   {
     super(parent, recDB);
+    this.icon = "folder";
  
     this.addFolder("Achievements",[
       this.achievementData = this.dbRegister(achievementsDataDoc)
@@ -100,8 +101,6 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Titles");
 
     this.addFolder("Toys");
-
-    this.icon = "folder";
   }
 
   override getName(): string
