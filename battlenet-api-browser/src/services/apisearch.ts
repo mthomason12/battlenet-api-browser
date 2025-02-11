@@ -15,6 +15,10 @@ export class APISearchParams {
         return this;
     }
 
+    find(field: string): APISearchOperation | undefined
+    {
+        return this.params.find((item)=>{ return item.field === field });
+    }
 
     toQueryString(): string {
         return this.params.join("&");

@@ -72,7 +72,8 @@ export interface characterProfileIndexData extends IIndexItem{
 }
 
 /**
- * Use a dbDataNoIndex as there's no index, but we're going to use a different method to search
+ * Use a dbDataNoIndex as there's no index, but we're going to override search because we can only look for individual characters
+ * in the API.
  */
 export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, characterProfileData, characterProfileIndexData>
 {
@@ -90,14 +91,33 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
 
 
     /**
-     * There is no search available for characters
+     * We're going to use the getAPISearch method but fudge it so it interfaces via the usual searchParams, pulling out the realm
+     * and character slugs. Finally we return the character in apiSearchResponse format.
      * @param api 
      * @param searchParams 
      * @param params 
      * @returns 
      */
-    override getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<any> | undefined> {
-        return Promise.reject();
+    override getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<characterProfileData> | undefined> {
+        var realm: string = Slugify(searchParams.find('realm')?.values[0]!);
+        var character: string= Slugify(searchParams.find('character')?.values[0]!);
+        return new Promise((resolve, reject)=>{
+            if (realm && character) {
+            api.getCharacterProfileSummary(realm, character).then((result)=>{
+                resolve(this.fakeSearchResponse(result));
+            }); } else {
+                resolve(this.fakeSearchResponse(undefined));
+            }
+        });
+    }
+
+    fakeSearchResponse(result: characterProfileData|undefined): apiSearchResponse<characterProfileData>
+    {
+        return {
+            page: 1,
+            pageSize: result ? 1 : 0,
+            results: result ? [result] : []
+        }
     }
 
     /**

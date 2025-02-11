@@ -358,9 +358,9 @@ export interface dbDataIndex<T> extends IApiIndexDoc
 export interface apiSearchResponse<T> 
 {
   page: number;
-  pageSize: number;
-  maxPageSize: number;
-  pageCount: number;
+  pageSize?: number;
+  maxPageSize?: number;
+  pageCount?: number;
   results: T[];
 }
 
