@@ -2,7 +2,6 @@ import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
 import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
-import { itemIndexData, itemData } from "./items";
 
 
 export interface characterProfileData extends IApiDataDoc {
@@ -60,7 +59,7 @@ export interface characterProfileData extends IApiDataDoc {
 /**
  * Use a dbDataNoIndex as there's no index, but we're going to use a different method to search
  */
-export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, any>
+export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, any, any>
 {
 
     constructor(parent: dataStruct, recDB: RecDB)
@@ -92,8 +91,12 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
      * @param id 
      * @returns 
      */
-    override getAPIRec(api: apiClientService, id: number): Promise<itemData | undefined> {
+    override getAPIRec(api: apiClientService, id: number): Promise<characterProfileData | undefined> {
         return Promise.reject();
+    }
+
+    override makeIndexItem(item: any) {
+        throw new Error("Method not implemented.");
     }
     
 }
