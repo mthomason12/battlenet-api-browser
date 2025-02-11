@@ -25,6 +25,11 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterProfileData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 
+interface APIQuery{
+  apiEndpoint: string;
+  params: string;
+}
+
 @Injectable({  providedIn: 'root',})
 export class apiClientService  { 
 
@@ -45,6 +50,9 @@ export class apiClientService  {
     public connectedEvent = new EventEmitter<void>();
 
     protected httpClient: HttpClient;
+
+    //a simple weakmap cache to avoid repeat queries being sent
+    queryCache: WeakMap<APIQuery, object> = new WeakMap();
 
   constructor(){
     this.data = inject(UserdataService);
@@ -140,22 +148,31 @@ isLoggingIn(): boolean
 //endregion
 
 
-
 //region Base Queries
 
   query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined>
   {
     return new Promise((resolve, reject)=>{
-        var extraparams: string = "";
-        if (params != "")
+        //check the cache first
+        var cacheKey = {apiEndpoint: apiEndpoint, params: params};
+        var cacheResult = this.queryCache.get(cacheKey);
+        if (cacheResult) {
+          resolve(cacheResult as T);
+        }
+        else 
         {
-            extraparams = "&"+params;
-        }    
-        this.apiConnection?.apiCall(apiEndpoint+extraparams, "", {}).then((value)=>{
-            resolve(value as T);
-        },(reason)=>{
-            reject(undefined);
-        }).catch (() => reject());
+          var extraparams: string = "";
+          if (params != "")
+          {
+              extraparams = "&"+params;
+          }    
+          this.apiConnection?.apiCall(apiEndpoint+extraparams, "", {}).then((value)=>{
+              this.queryCache.set(cacheKey, value);
+              resolve(value as T);
+          },(reason)=>{
+              reject(undefined);
+          }).catch (() => reject());
+        }
     });
   }
 
