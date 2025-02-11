@@ -34,6 +34,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   hideKey: boolean = false;
   key: string = "id";
   stringKey: boolean = false;
+  pathName?: string = undefined;
   protected isSearchable = false;
   protected indexRebuildable = false;
   indexCache?: WeakRef<T1>; //cached copy of the index doc
@@ -352,7 +353,8 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    * @inheritdoc
    */
   override myPath(): string {
-    return this.itemsName.replaceAll('_', '-');
+    //use pathName if defined, otherwise return itemsName with underscores changed to hyphens
+    return this.pathName ? this.pathName : this.itemsName.replaceAll('_', '-');
   }
 
   /**
