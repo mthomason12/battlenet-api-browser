@@ -1,6 +1,8 @@
 import { RecDB } from "../lib/recdb";
+import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc } from "./datastructs";
+import { APISearchParams } from "../services/apisearch";
+import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 
@@ -56,10 +58,23 @@ export interface characterProfileData extends IApiDataDoc {
     name_search: string;
 }
 
+export interface characterProfileIndexData extends IIndexItem{
+    id: string;
+    _id: number,
+    name: string;
+    faction: string;
+    race: string;
+    character_class: string;
+    level: number;
+    active_spec: string;
+    realm: string;
+    guild: string;
+}
+
 /**
  * Use a dbDataNoIndex as there's no index, but we're going to use a different method to search
  */
-export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, any, any>
+export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, characterProfileData, characterProfileIndexData>
 {
 
     constructor(parent: dataStruct, recDB: RecDB)
@@ -81,7 +96,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
      * @param params 
      * @returns 
      */
-    override getAPISearch(api: apiClientService, searchParams:string, params: object): Promise<apiSearchResponse<any> | undefined> {
+    override getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<any> | undefined> {
         return Promise.reject();
     }
 
@@ -91,12 +106,23 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
      * @param id 
      * @returns 
      */
-    override getAPIRec(api: apiClientService, id: number): Promise<characterProfileData | undefined> {
+    override getAPIRec(api: apiClientService, id: string): Promise<characterProfileData | undefined> {
         return Promise.reject();
     }
 
-    override makeIndexItem(item: any) {
-        throw new Error("Method not implemented.");
+    override makeIndexItem(item: characterProfileData): characterProfileIndexData {
+        return {
+            id: item.realm.slug+'/'+Slugify(item.name),
+            _id: item.id,
+            name: item.name,
+            faction: item.faction.type,
+            race: item.race.name,
+            character_class: item.character_class.name,
+            level: item.level,
+            active_spec: item.active_spec.name,
+            realm: item.realm.name,
+            guild: item.guild.name
+        }
     }
     
 }
