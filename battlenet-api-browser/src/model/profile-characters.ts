@@ -8,6 +8,7 @@ import { dbDataNoIndex } from "./dbdatastructs";
 
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
+    _id: string;
     id: number;
     name: string;
     gender: genderStruct;
@@ -59,8 +60,8 @@ export interface characterProfileData extends IApiDataDoc {
 }
 
 export interface characterProfileIndexData extends IIndexItem{
-    id: string;
-    _id: number,
+    _id: string;
+    id: number,
     name: string;
     faction: string;
     race: string;
@@ -84,6 +85,8 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         this.icon = "group";
         this.type = "profile-characters";
         this.title = "Characters";
+        this.stringKey = true;
+        this.key = "_id"; //override key because we're making our own from 
         this.hideKey = true;
         //disable search as this requires a direct lookup
         this.isSearchable = false;
@@ -104,6 +107,9 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         return new Promise((resolve, reject)=>{
             if (realm && character) {
             api.getCharacterProfileSummary(realm, character).then((result)=>{
+                if (result) {
+                    result._id = result.realm.slug+'/'+Slugify(result.name);
+                }
                 resolve(this.fakeSearchResponse(result));
             }); } else {
                 resolve(this.fakeSearchResponse(undefined));
@@ -132,8 +138,8 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
         return {
-            id: item.realm.slug+'/'+Slugify(item.name),
-            _id: item.id,
+            _id: item.realm.slug+'/'+Slugify(item.name),
+            id: item.id,
             name: item.name,
             faction: item.faction.type,
             race: item.race.name,
