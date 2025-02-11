@@ -470,6 +470,14 @@ export interface rgbaColorStruct {
   a: number
 }
 
+/** used in Guild Activity API */
+export interface characterRef{
+  key: keyStruct;
+  id: number;
+  name: string;
+  realm: realmStruct;
+}
+
 export interface linksStruct
 {
   self: hrefStruct;
@@ -504,10 +512,14 @@ export interface idNameStruct
   name: string;
 }
 
-export interface refStruct
-{
+export interface refStruct {
   id: number;
   name: string;
+  key: keyStruct;
+}
+
+export interface idkeyStruct {
+  id: number;
   key: keyStruct;
 }
 
