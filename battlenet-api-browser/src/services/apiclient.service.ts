@@ -63,7 +63,7 @@ export class apiClientService  {
     this.connections.set('_default',new BlizzardAPIConnection(this.data.data, this.httpClient));
     //load additional connections from Extension Manager Service
     this.extMgr.connections.forEach((value, key)=>{
-      this.connections.set(key, value);
+      this.connections.set(key, new value.conn(this.data.data.getExtensionData(key), this.httpClient));
     })
 
     //subscribe to settings changed events
