@@ -3,7 +3,28 @@ import { AbstractExtension, ExtensionRegistration } from './abstract/abstract-ex
 import { UserdataService } from '../services/userdata.service';
 import { APIConnection } from '../lib/apiconnection'
 import { extensions } from './app.extensions';
+import { apiClientService } from '../services/apiclient.service';
 
+class ExtensionRecord{
+  ext: AbstractExtension;
+  registration: ExtensionRegistration;
+
+  constructor(ext: AbstractExtension, reg: ExtensionRegistration) {
+    this.ext = ext;
+    this.registration = reg;
+  }
+}
+
+class ConnectionRecord {
+  conn: Type<APIConnection>;
+  settings: Type<object>
+
+  constructor (conn: Type<APIConnection>, settings: Type<object>)
+  {
+    this.conn = conn;
+    this.settings = settings;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +34,8 @@ import { extensions } from './app.extensions';
  */
 export class ExtensionManagerService {
 
-  extensions: AbstractExtension[] = [];
-  registrations: ExtensionRegistration[] = [];
-  connections: Map<string, APIConnection> = new Map();
+  extensions: ExtensionRecord[] = [];
+  connections: Map<string, ConnectionRecord> = new Map();
 
   data: UserdataService = inject(UserdataService);
 
@@ -27,9 +47,16 @@ export class ExtensionManagerService {
   }
 
   load( extension: Type<AbstractExtension>) {
-    var newExt = new extension();
-    this.extensions.push(newExt);
-    this.registrations.push(newExt.getRegistration());
+    const newExt = new extension();
+    const reg = newExt.getRegistration();
+
+    //register the extension
+    this.extensions.push(new ExtensionRecord(newExt, reg));
+
+    //add connections
+    reg.connections?.forEach((conn)=>{
+      this.connections.set(conn.name, new ConnectionRecord(conn.class, conn.settingsComponent));
+    });
   }
 
 
