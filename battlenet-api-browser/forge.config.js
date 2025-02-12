@@ -4,6 +4,16 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    ignore: [
+      "^/.angular$",
+      "^/.vscode$",
+      "^/node_modules$",
+      "^/out$",
+      "^/public$",
+      "^/src$",
+      "^/.editorconfig$",
+      "^/tsconfig.*$"
+    ]
   },
   rebuildConfig: {
   },
@@ -14,7 +24,7 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
+      platforms: ['darwin','win32'],
     },
     {
       name: '@electron-forge/maker-deb',
