@@ -100,4 +100,11 @@ export class userDataStruct
   {
     this.apiData = new apiDataStruct(recDB);
   }
+
+  getExtensionData (name: string) {
+    if (!(name in this.extensions)) {
+      this.extensions[name] = {};
+    }
+    return this.extensions[name];
+  }
 }
