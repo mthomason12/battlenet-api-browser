@@ -203,4 +203,8 @@ export class UserdataService {
     return this.currentData!;
   }
 
+  getCurrentMasterDetail(): [dataStruct | IMasterDetail, IApiDataDoc] {
+    return [this.currentMaster!, this.currentData!];
+  }
+
 };

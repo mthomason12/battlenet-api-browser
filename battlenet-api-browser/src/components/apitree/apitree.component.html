@@ -19,13 +19,24 @@
 </mat-tree>
 
 <ng-template #entry let-node="node">
-  <a mat-button (click)="select(node)" [routerLink]="node.path()">
-    @if (node.hasData() && node.isPrivate())
-    {
-      <mat-icon>lock</mat-icon>
-    }
-    <mat-icon>{{node.icon}}</mat-icon>{{node.getName()}}
-  </a>
+  @if(node == dataService.getCurrentMasterDetail()[0])
+  {
+    <a mat-flat-button (click)="select(node)" [routerLink]="node.path()">
+      @if (node.hasData() && node.isPrivate())
+      {
+        <mat-icon>lock</mat-icon>
+      }
+      <mat-icon>{{node.icon}}</mat-icon>{{node.getName()}}
+    </a>
+  } @else {
+    <a mat-button (click)="select(node)" [routerLink]="node.path()">
+      @if (node.hasData() && node.isPrivate())
+      {
+        <mat-icon>lock</mat-icon>
+      }
+      <mat-icon>{{node.icon}}</mat-icon>{{node.getName()}}
+    </a>    
+  }
 </ng-template>
   
 
