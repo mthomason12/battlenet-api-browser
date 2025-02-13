@@ -1,4 +1,9 @@
-import { characterRef, factionStruct, hrefStruct, IApiDataDoc, idkeyStruct, keyStruct, linksStruct, mediaStruct, realmStruct, refStruct, rgbaColorStruct } from "./datastructs";
+import { RecDB } from "../lib/recdb";
+import { Slugify } from "../lib/utils";
+import { apiClientService } from "../services/apiclient.service";
+import { APISearchParams } from "../services/apisearch";
+import { apiSearchResponse, characterRef, dataStruct, factionStruct, hrefStruct, IApiDataDoc, IApiIndexDoc, idkeyStruct, IIndexItem, keyStruct, linksStruct, mediaStruct, realmStruct, refStruct, rgbaColorStruct } from "./datastructs";
+import { dbDataNoIndex } from "./dbdatastructs";
 
 interface guildRosterMemberStruct {
     character: {
@@ -118,6 +123,7 @@ interface guildCrestStruct {
 
 export interface guildProfileData extends IApiDataDoc {
     _links: linksStruct;
+    _id: string;
     id: number;
     name: string;
     faction: factionStruct;
@@ -130,4 +136,97 @@ export interface guildProfileData extends IApiDataDoc {
     created_timestamp: number;
     activity: hrefStruct;
     name_search: string;
+}
+
+export interface guildProfileIndexData extends IIndexItem, IApiIndexDoc {
+    _id: string;
+    id: number,
+    name: string;
+    faction: string;
+    achievement_points: number;
+    member_count: number;
+    realm: string;
+}
+
+/**
+ * Use a dbDataNoIndex as there's no index, but we're going to override search because we can only look for individual characters
+ * in the API.
+ */
+export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildProfileData, guildProfileIndexData>
+{
+
+    constructor(parent: dataStruct, recDB: RecDB)
+    {
+        super(parent, recDB);
+        this.icon = "security";
+        this.type = "profile-guilds";
+        this.pathName = "guilds";
+        this.title = "Guilds";
+        this.stringKey = true;
+        this.key = "_id"; //override key because we're making our own from 
+        this.hideKey = true;
+        //disable search as this requires a direct lookup
+        this.isSearchable = false;
+    }
+
+
+    /**
+     * We're going to use the getAPISearch method but fudge it so it interfaces via the usual searchParams, pulling out the realm
+     * and character slugs. Finally we return the character in apiSearchResponse format.
+     * @param api 
+     * @param searchParams 
+     * @param params 
+     * @returns 
+     */
+    override getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<guildProfileData> | undefined> {
+        var realm: string = Slugify(searchParams.find('realm')?.values[0]!);
+        var guild: string= Slugify(searchParams.find('guild')?.values[0]!);
+        return new Promise((resolve, reject)=>{
+            if (realm && guild) {
+            api.getGuild(realm, guild).then((result)=>{
+                if (result) {
+                    result._id = result.realm.slug+'/'+Slugify(result.name);
+                }
+                resolve(this.fakeSearchResponse(result));
+            }); } else {
+                resolve(this.fakeSearchResponse(undefined));
+            }
+        });
+    }
+
+    fakeSearchResponse(result: guildProfileData|undefined): apiSearchResponse<guildProfileData>
+    {
+        return {
+            page: 1,
+            pageSize: result ? 1 : 0,
+            results: result ? [result] : []
+        }
+    }
+
+    /**
+     * Retrieve character by "id" (realm/name)
+     * @param api 
+     * @param id 
+     * @returns 
+     */
+    override getAPIRec(api: apiClientService, id: string): Promise<guildProfileData | undefined> {
+        var realm: string;
+        var character: string;
+        [realm,character] = id.split('/');
+        return api.getGuild(realm, character);
+    }
+
+    override makeIndexItem(item: guildProfileData): guildProfileIndexData {
+        return {
+            _id: item.realm.slug+'/'+Slugify(item.name),
+            id: item.id,
+            name: item.name,
+            faction: item.faction.type,
+            realm: item.realm.name,
+            achievement_points: item.achievement_points,
+            member_count: item.member_count,
+            lastUpdate: Date.now()
+        }
+    }
+    
 }

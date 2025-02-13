@@ -1,0 +1,32 @@
+div.search-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+cdk-virtual-scroll-viewport.mainlist {
+    flex: 1;
+}
+
+li {
+    padding-bottom: 2pt;
+    list-style-type: none;
+}
+
+li a {
+    height: 36px;
+}
+
+mat-checkbox {
+    display: block;
+}
+
+div.form-fields {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    &>:not(:first-child)
+    {
+        flex:1;
+    }
+}

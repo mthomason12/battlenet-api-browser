@@ -12,6 +12,7 @@ import { ConnectedRealmComponent } from '../browse/connected-realm/connected-rea
 import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
 import { JournalExpansionComponent } from '../browse/journal-expansion/journal-expansion.component';
 import { CharacterMasterSearchComponent } from '../browse/list-detail-host/character-master-search/character-master-search.component';
+import { GuildMasterSearchComponent } from '../browse/list-detail-host/guild-master-search/guild-master-search.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -108,7 +109,11 @@ export const routes: Routes = [
             { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},
             { path: 'characters/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowprofile","characters"], listComponent: CharacterMasterSearchComponent} 
-            },            
+            },      
+            { path: 'guilds', redirectTo: 'guilds/', pathMatch: 'full'},
+            { path: 'guilds/:id', component: ListDetailHostComponent, 
+                data:{list: ["wowprofile","guilds"], listComponent: GuildMasterSearchComponent} 
+            },                        
             { path: '**', children: [] }
         ]},       
         { path: '**', children: [] }

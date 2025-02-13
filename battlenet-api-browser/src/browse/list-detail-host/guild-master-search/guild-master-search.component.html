@@ -1,0 +1,30 @@
+<!--- Master View ---->
+<div class="search-view">
+    <div class="form-fields">
+    <mat-form-field>
+        <mat-label>Realm</mat-label>
+        <mat-select [(value)]="lookupRealm">
+            @for (realm of realms; track realm.slug)
+            {
+                <mat-option value="{{realm.slug}}">{{realm.name}}</mat-option>
+            }
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Guild Name (must be exact)</mat-label>
+        <input matInput type="text" [(ngModel)]="lookupGuild" (keydown.enter)="doSearch()">
+        @if (lookupGuild) {
+            <button matSuffix mat-icon-button aria-label="Search" (click)="doSearch()">
+            <mat-icon>search</mat-icon>
+            </button>
+        }
+    </mat-form-field>
+    </div>
+    <!--- Virtual scroller because there are THOUSANDS of entries --->
+    <cdk-virtual-scroll-viewport class="mainlist" itemSize="36">
+        <ul>
+            <li *cdkVirtualFor="let item of indexItems"><app-list-data-item [item]="item" [parent]="data!" [key]="data!.key" [skipChange]="true" [hideKey]="data!.hideKey === true ? true : false" (clicked)="this.click(item)"/></li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</div>
+    
