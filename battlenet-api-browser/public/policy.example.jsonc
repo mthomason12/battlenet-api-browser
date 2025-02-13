@@ -1,0 +1,11 @@
+{
+    //policy.jsonc allows overriding settings with a policy file
+    "autoconnect": true,                //turn autoconnect on by default
+    "autologin": true,                  //turn autologin on by default
+    "disableSettings": true,            //disable settings menu option
+    "api": {
+        "connectionType": "_default",   //choose connection type
+        "disableSwitching": true,       //disable switching connection types
+        "disableSettings": true         //disable changing api connection settings
+    }
+}

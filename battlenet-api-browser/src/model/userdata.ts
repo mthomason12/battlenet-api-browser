@@ -74,6 +74,7 @@ export class settingsStruct
 {
   autoConnect: boolean = false;
   autoLogin: boolean = false;
+  disableSettings: boolean = false;
   api: apiClientSettings = new apiClientSettings();
 } 
 

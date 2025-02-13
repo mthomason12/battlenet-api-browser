@@ -42,7 +42,10 @@ export class AppComponent implements OnDestroy, OnInit {
 
   protected statusMessage: string = "";
 
+  protected hideSettings: boolean = false // hide the settings menu option if true
+
   private connectSubscription?: Subscription;
+  private loadedSubscription?: Subscription;
 
   constructor(private apiCli: apiClientService, protected data: UserdataService, private router: Router)
   {
@@ -60,9 +63,13 @@ export class AppComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
     this.connectSubscription?.unsubscribe();
+    this.loadedSubscription?.unsubscribe();
   }  
 
   ngOnInit(): void {
+    this.loadedSubscription = this.data.dataLoadedEmitter.subscribe(()=>{
+      this.hideSettings = this.data.data.settings.disableSettings;
+    });
     this.checkStatus();
     this.connectSubscription = this.apiCli.connectedEvent.subscribe(()=>{
       if (this.data.data.settings.autoLogin)
@@ -116,7 +123,6 @@ export class AppComponent implements OnDestroy, OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         //do nothing, we just discard the new temporary settings
-        console.log('The dialog was closed');
         if (Array.isArray(result)) {
           [this.data.data.settings, this.data.data.key]=(result);
           this.data.save();

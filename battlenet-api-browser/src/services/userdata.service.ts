@@ -4,6 +4,8 @@ import { IApiDataDoc, dataStruct, topDataStruct } from '../model/datastructs';
 import { appKeyStruct, extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 import { IMasterDetail } from '../model/dbdatastructs';
+import { HttpClient } from '@angular/common/http';
+import JSONC from 'tiny-jsonc';
 
 const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
@@ -43,7 +45,7 @@ export class UserdataService {
   /** Event triggered when refresh button is pressed */
   public refreshRequestEmitter: EventEmitter<void> = new EventEmitter();
 
-  constructor()
+  constructor(private http: HttpClient)
   {
     this.data = new userDataStruct(this.recDB);
 
@@ -92,7 +94,7 @@ export class UserdataService {
       {
         throw new Error("No data");
       } 
-      this.data.extensions = _.merge(this.data.extensions, json)       
+      this.data.extensions = _.merge(this.data.extensions, json)   
     }
     catch
     {
@@ -100,6 +102,24 @@ export class UserdataService {
       console.log("Extension data is corrupt or missing. Reinitializing with empty data.")   
       this.data.extensions = new extensionsDataStruct();           
     }
+    //attempt to load policy file
+    console.log("Loading policy");
+    const base = document.baseURI;
+    http.get(base+'policy.jsonc',{responseType:'text'}).subscribe({ 
+      next: (response) => {
+        //process the policy then finish initialization
+        this.implementPolicy(JSONC.parse(response));
+        this.finishInit();
+      },
+      error: (error) => {
+        //we got an error, so just finish initialization
+        this.finishInit();
+      }
+    });
+    //this.finishInit();
+  }
+
+  finishInit() {
     this.recDB.connect().then(()=>{
       this.fixup();       
       this.loaded = true;
@@ -107,6 +127,15 @@ export class UserdataService {
       //send a notification to any subscribers
       this.dataLoadedEmitter.emit();    
     });
+  }
+
+  /**
+   * Overwrite settings with policy
+   * @param policy 
+   */
+  implementPolicy(policy: object) {
+    console.log("Applying policy");
+    this.data.settings = _.merge(this.data.settings, policy);
   }
 
   /**

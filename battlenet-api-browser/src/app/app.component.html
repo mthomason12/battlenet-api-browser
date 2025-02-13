@@ -29,11 +29,14 @@
       <button mat-menu-item (click)="save()" [disabled]="!data.loaded" aria-label="Save option" type="button">
         <mat-icon>save</mat-icon>
         <span>Save</span>
-      </button>      
-      <button mat-menu-item (click)="settings()" aria-label="Settings option" type="button">
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
-      </button>
+      </button>     
+      @if (!hideSettings) 
+      {
+        <button mat-menu-item (click)="settings()" aria-label="Settings option" type="button">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      }
       <button mat-menu-item (click)="export()" aria-label="Export as JSON option" type="button">
         <mat-icon>file_download</mat-icon>
         <span>Export data as JSON</span>
