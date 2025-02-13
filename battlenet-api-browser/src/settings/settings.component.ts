@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input, OnInit, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserdataService } from '../services/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { apiClientService } from '../services/apiclient.service';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
+import { AbstractConnectionSettings } from '../extensions/abstract/abstract-connection-settings';
 
 @Component({
   selector: 'app-settings',
@@ -31,6 +32,10 @@ export class SettingsComponent implements OnInit{
   key = input.required<appKeyStruct>();
 
   connectionType: string = "";
+  connectionSettings?: Type<AbstractConnectionSettings>;
+  currentConnectionName: string = "";
+
+  protected settingsInputs: Record<string, unknown> | undefined
 
   constructor(protected userdata: UserdataService, protected extmgr: ExtensionManagerService, protected api: apiClientService) 
   {
@@ -38,11 +43,27 @@ export class SettingsComponent implements OnInit{
 
   ngOnInit(): void {
     this.connectionType = this.userdata.data.settings.api.connectionType!;
-    this.connectionType = this.connectionType ?? "_default";
+    if (this.connectionType !== "_default")
+      this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
+    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
+    console.dir(this.api.connections);
   }
 
   getConnections() {
     return this.api.connections;
+  }
+
+  currentConnection() {
+    return this.api.apiConnection;
+  }
+
+  changeConnection() {
+    this.userdata.data.settings.api.connectionType = this.connectionType;
+    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
+    this.settingsInputs = { 'settings': this.userdata.data.getExtensionData(this.connectionType)};
+    if (this.connectionType !== "_default")
+      this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
+    this.api.provideSettings(this.userdata.data.settings.api, true);
   }
 
 }

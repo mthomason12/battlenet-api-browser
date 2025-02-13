@@ -4,6 +4,7 @@ import { UserdataService } from '../services/userdata.service';
 import { APIConnection } from '../lib/apiconnection'
 import { extensions } from './app.extensions';
 import { apiClientService } from '../services/apiclient.service';
+import { AbstractConnectionSettings } from './abstract/abstract-connection-settings';
 
 class ExtensionRecord{
   ext: AbstractExtension;
@@ -17,9 +18,9 @@ class ExtensionRecord{
 
 class ConnectionRecord {
   conn: Type<APIConnection>;
-  settings: Type<object>
+  settings: Type<AbstractConnectionSettings>
 
-  constructor (conn: Type<APIConnection>, settings: Type<object>)
+  constructor (conn: Type<APIConnection>, settings: Type<AbstractConnectionSettings>)
   {
     this.conn = conn;
     this.settings = settings;
@@ -57,6 +58,10 @@ export class ExtensionManagerService {
     reg.connections?.forEach((conn)=>{
       this.connections.set(conn.name, new ConnectionRecord(conn.class, conn.settingsComponent));
     });
+  }
+
+  getConnection(conn: string): ConnectionRecord | undefined {
+    return this.connections.get(conn);
   }
 
 

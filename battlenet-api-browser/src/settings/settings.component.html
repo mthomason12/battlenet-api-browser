@@ -4,20 +4,20 @@
         {
             <mat-form-field>
                 <mat-label>Connection Type</mat-label>
-                <mat-select [(value)]="connectionType">
-                    @for (conn of getConnections() | keyvalue; track key) {
+                <mat-select [(value)]="connectionType" (valueChange)="changeConnection()">
+                    @for (conn of getConnections() | keyvalue; track conn.key) {
                         <mat-option [value]="conn.key">{{conn.value.getName()}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
         }
 
-        @if (connectionType == "_default") {
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-subtitle>API Key</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>       
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{currentConnectionName}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>       
+                @if (connectionType == "_default") {
                     <mat-form-field class="full-width">
                         <mat-label>Client ID</mat-label>
                         <input matInput type="text" title="Client ID" [(ngModel)]="key().clientID" />
@@ -38,9 +38,11 @@
                             <p>Specify your own intended use</p>
                         </mat-expansion-panel>
                     </mat-accordion>
-                </mat-card-content>
-            </mat-card>
-        }
+                } @else {
+                    <ng-container *ngComponentOutlet="connectionSettings!;inputs:settingsInputs" />
+                }
+            </mat-card-content>
+        </mat-card>
 
         <mat-card>
             <mat-card-header>

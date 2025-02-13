@@ -1,4 +1,4 @@
-import { Component, input } from "@angular/core";
+import { Component, Input, input } from "@angular/core";
 import { extensionDataStruct } from "../../model/userdata";
 
 @Component({
@@ -8,6 +8,16 @@ import { extensionDataStruct } from "../../model/userdata";
 })
 export class AbstractConnectionSettings {
 
-    settings = input.required<extensionDataStruct>();
+    _settings?: extensionDataStruct;
+
+    @Input()
+    set settings(value: extensionDataStruct){
+        this._settings = this.ensurePropertiesExist(value);
+    }
+
+    ensurePropertiesExist(value: extensionDataStruct): extensionDataStruct {
+        return value;
+    }
+
 
 }

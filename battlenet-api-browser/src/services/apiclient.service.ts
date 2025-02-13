@@ -76,20 +76,24 @@ export class apiClientService  {
   /**
    * Provide the service with settings.  Typically done by the application using the service.
    */
-  provideSettings(settings: apiClientSettings) {
+  provideSettings(settings: apiClientSettings, liveChange = false) {
     this.settings = settings;
 
     //resolve chosen apiConnection and set it as active
     if (this.connections.has(this.settings.connectionType!)) 
       this.apiConnection = this.connections.get(this.settings.connectionType!);
-    else
+    //use default if necessary
+    if (!this.apiConnection)
+    {
+      this.settings.connectionType = "_default";
       this.apiConnection = this.connections.get('_default');
+    }
 
     //provide settings to the active connection
     this.apiConnection?.provideSettings(settings);
 
     //auto-connect if appropriate
-    if (!this.apiConnection!.isLoggingIn() && this.data.data.settings.autoConnect) 
+    if (!this.apiConnection!.isLoggingIn() && this.data.data.settings.autoConnect && !liveChange) 
     {
         this.connect();
     }  
