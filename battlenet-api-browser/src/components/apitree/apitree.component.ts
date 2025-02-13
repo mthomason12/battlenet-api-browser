@@ -50,12 +50,36 @@ export class ApitreeComponent implements OnInit, OnDestroy{
     this.dataChangedSubscription?.unsubscribe();
   }
 
-  /** Recursively expand a node in the tree */
+  /**
+   * Recursively expand a node in the tree
+   * @param node 
+   */
   expandUpwards(node: dataStruct) {
-    this.tree()?.expand(node);
-    if (node._parent) {
-      this.expandUpwards(node._parent);
+    console.log("Looking for "+node.getName());
+    var anc = this.getAncestors(this.dataSource, node);
+    anc?.forEach((nod)=>{
+      this.tree()?.expand(nod);
+    })
+  }
+
+  /**
+   * Return array of ancestor nodes for a given node 
+   * @param array 
+   * @param name 
+   * @returns 
+   */
+  getAncestors(array: dataStruct[], node: dataStruct): dataStruct[] | undefined {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === node) {
+        return [array[i]];
+      }    
+      const a = this.getAncestors(array[i].children(), node);
+      if (a !== undefined) {
+        a?.unshift(array[i]);
+        return a;
+      }
     }
+    return undefined;
   }
 
   select(item: dataStruct)
