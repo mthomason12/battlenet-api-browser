@@ -27,7 +27,7 @@ export class BlizzardAPIConnection extends APIConnection {
     public userManager: UserManager;   
 
     constructor(data: userDataStruct, httpClient: HttpClient) {
-        super(undefined, httpClient);
+        super(undefined, httpClient,"Direct API Connection");
         this.data = data;
         this.region = "us";
         this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
