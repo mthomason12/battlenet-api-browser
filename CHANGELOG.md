@@ -2,6 +2,9 @@
 
 #### Current-Dev (awaiting release number)
 
+#### Upgrade Notes
+- Storage of API key has changed, if upgrading you'll need to re-input your Client ID and Secret.
+
 #### New Features
 - "Rebuild Index" item available on tools tab where applicable
 - Added Character Profiles database
@@ -10,7 +13,7 @@
 - Settings allows changing connection type if additional types are available (requires extensions)
 - npm run electron-make-deb now makes a .deb on compatible Linux systems (note - this is currently untested)
 - npm run electron-make-win now makes a Windows setup.exe (again, currently untested)
-- policy.jsonc can be used to override settings
+- policy.jsonc can be used to override settings and disable parts of the settings UI at runtime. See public/policy.example.jsonc for commented example
 
 ##### Bug Fixes
 - Graceful error message if browser is unable to run Angular or doesn't have IndexedDB.
