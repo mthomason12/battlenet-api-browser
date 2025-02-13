@@ -18,7 +18,7 @@ td.mat-column-name {
 }
 
 .character-button {
-    width:100%;
+    width:100%;  
     @include mat.button-overrides((
         filled-container-color: #333333,
         filled-label-text-size: 120%,
