@@ -6,6 +6,8 @@
 - "Rebuild Index" item available on tools tab where applicable
 - Added Character Profiles database
 - Added a simple query cache
+- Extension support (partial)
+- Settings allows changing connection type if additional types are available (requires extensions)
 - npm run electron-make-deb now makes a .deb on compatible Linux systems (note - this is currently untested)
 - npm run electron-make-win now makes a Windows setup.exe (again, currently untested)
 - policy.jsonc can be used to override settings

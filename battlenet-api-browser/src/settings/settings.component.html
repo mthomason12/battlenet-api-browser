@@ -1,32 +1,49 @@
 <mat-card>
     <mat-card-content>
+        @if(api.connections.size > 1)
+        {
+            <mat-form-field>
+                <mat-label>Connection Type</mat-label>
+                <mat-select [(value)]="connectionType" (valueChange)="changeConnection()">
+                    @for (conn of getConnections() | keyvalue; track conn.key) {
+                        <mat-option [value]="conn.key">{{conn.value.getName()}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        }
+
         <mat-card>
             <mat-card-header>
-                <mat-card-subtitle>API Key</mat-card-subtitle>
+                <mat-card-subtitle>{{currentConnectionName}}</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
-                <mat-form-field class="full-width">
-                    <mat-label>Client ID</mat-label>
-                    <input matInput type="text" title="Client ID" [(ngModel)]="key().clientID" />
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <mat-label>Client Secret</mat-label>
-                    <input matInput type="text" title="Client Secret" [(ngModel)]="key().clientSecret" />
-                </mat-form-field>
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-description> How to obtain a client ID and secret </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p>You will need to obtain your own client ID and secret from <a href="https://develop.battle.net/access/" rel="noopener noreferrer" target="_blank">https://develop.battle.net/access/</a></p>
-                        <p>Make up your own client name</p>
-                        <p>Set redirect URL to https://localhost:4200</p>
-                        <p>There is no service URL - check "I do not have a service URL for this client"</p>
-                        <p>Specify your own intended use</p>
-                    </mat-expansion-panel>
-                  </mat-accordion>
+            <mat-card-content>       
+                @if (connectionType == "_default") {
+                    <mat-form-field class="full-width">
+                        <mat-label>Client ID</mat-label>
+                        <input matInput type="text" title="Client ID" [(ngModel)]="key().clientID" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Client Secret</mat-label>
+                        <input matInput type="text" title="Client Secret" [(ngModel)]="key().clientSecret" />
+                    </mat-form-field>       
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-description> How to obtain a client ID and secret </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>You will need to obtain your own client ID and secret from <a href="https://develop.battle.net/access/" rel="noopener noreferrer" target="_blank">https://develop.battle.net/access/</a></p>
+                            <p>Make up your own client name</p>
+                            <p>Set redirect URL to https://localhost:4200</p>
+                            <p>There is no service URL - check "I do not have a service URL for this client"</p>
+                            <p>Specify your own intended use</p>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                } @else {
+                    <ng-container *ngComponentOutlet="connectionSettings!;inputs:settingsInputs" />
+                }
             </mat-card-content>
         </mat-card>
+
         <mat-card>
             <mat-card-header>
                 <mat-card-subtitle>Preferences</mat-card-subtitle>

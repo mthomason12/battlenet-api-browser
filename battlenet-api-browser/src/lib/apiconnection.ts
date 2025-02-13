@@ -15,10 +15,13 @@ export abstract class APIConnection {
     protected _loggingIn = false;
     protected _connected = false;
 
-    constructor (settings: apiClientSettings | undefined, httpClient: HttpClient)
+    protected _name: string = "Unnamed Connection";
+
+    constructor (settings: apiClientSettings | undefined, httpClient: HttpClient, name: string)
     {
         this.settings = settings;
         this.httpClient = httpClient;
+        this._name = name;
     }
 
     isConnected(): boolean {
@@ -31,6 +34,10 @@ export abstract class APIConnection {
 
     isLoggedIn(): boolean {
         return this._loggedIn;
+    }
+
+    getName(): string {
+        return this._name;
     }
 
     /**

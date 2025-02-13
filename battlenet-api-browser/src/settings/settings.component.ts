@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserdataService } from '../services/userdata.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,22 +10,60 @@ import { MatRadioModule } from '@angular/material/radio';
 import { appKeyStruct, settingsStruct } from '../model/userdata';
 import { MatCardModule } from '@angular/material/card';
 import _ from 'lodash';
+import { ExtensionManagerService } from '../extensions/extension-manager.service';
+import { apiClientService } from '../services/apiclient.service';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { AbstractConnectionSettings } from '../extensions/abstract/abstract-connection-settings';
 
 @Component({
   selector: 'app-settings',
   imports: [ FormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, 
-    MatExpansionModule, MatAccordion, MatCheckboxModule, MatCardModule, MatRadioModule ],
+    MatExpansionModule, MatAccordion, MatCheckboxModule, MatCardModule, MatRadioModule, 
+    MatTabsModule, MatSelectModule, CommonModule ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'
 })
 
-export class SettingsComponent {
+export class SettingsComponent implements OnInit{
 
   settings = input.required<settingsStruct>();
   key = input.required<appKeyStruct>();
 
-  constructor(protected userdata: UserdataService)
+  connectionType: string = "";
+  connectionSettings?: Type<AbstractConnectionSettings>;
+  currentConnectionName: string = "";
+
+  protected settingsInputs: Record<string, unknown> | undefined
+
+  constructor(protected userdata: UserdataService, protected extmgr: ExtensionManagerService, protected api: apiClientService) 
   {
+  }
+
+  ngOnInit(): void {
+    this.connectionType = this.userdata.data.settings.api.connectionType!;
+    if (this.connectionType !== "_default")
+      this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
+    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
+    console.dir(this.api.connections);
+  }
+
+  getConnections() {
+    return this.api.connections;
+  }
+
+  currentConnection() {
+    return this.api.apiConnection;
+  }
+
+  changeConnection() {
+    this.userdata.data.settings.api.connectionType = this.connectionType;
+    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
+    this.settingsInputs = { 'settings': this.userdata.data.getExtensionData(this.connectionType)};
+    if (this.connectionType !== "_default")
+      this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
+    this.api.provideSettings(this.userdata.data.settings.api, true);
   }
 
 }
