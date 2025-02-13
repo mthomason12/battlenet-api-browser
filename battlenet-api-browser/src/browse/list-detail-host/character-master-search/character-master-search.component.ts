@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
 import { IMasterDetail } from '../../../model/dbdatastructs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
