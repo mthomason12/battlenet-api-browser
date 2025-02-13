@@ -24,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
 import { characterProfileData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
+import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
 interface APIQuery{
   apiEndpoint: string;
@@ -1334,7 +1335,21 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
 
 //region Guilds
 
-  //guild api
+getGuild(realmSlug: string, guildName: string): Promise<guildProfileData | undefined> {
+  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}`);
+}
+
+getGuildActivity(realmSlug: string, guildName: string): Promise<guildActivityData | undefined> {
+  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/activity`);
+}
+
+getGuildAchievements(realmSlug: string, guildName: string): Promise<guildAchievementData | undefined> {
+  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/achievements`);
+}
+
+getGuildRoster(realmSlug: string, guildName: string): Promise<guildRosterData | undefined> {
+  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/roster`);
+}
   
 
 //endregion
