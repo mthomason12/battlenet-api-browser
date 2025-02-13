@@ -1336,19 +1336,19 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
 //region Guilds
 
 getGuild(realmSlug: string, guildName: string): Promise<guildProfileData | undefined> {
-  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}`);
+  return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}`);
 }
 
 getGuildActivity(realmSlug: string, guildName: string): Promise<guildActivityData | undefined> {
-  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/activity`);
+  return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/activity`);
 }
 
 getGuildAchievements(realmSlug: string, guildName: string): Promise<guildAchievementData | undefined> {
-  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/achievements`);
+  return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/achievements`);
 }
 
 getGuildRoster(realmSlug: string, guildName: string): Promise<guildRosterData | undefined> {
-  return this.queryPubProfile(`/profile/wow/guild/${realmSlug}/${guildName}/roster`);
+  return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/roster`);
 }
   
 
