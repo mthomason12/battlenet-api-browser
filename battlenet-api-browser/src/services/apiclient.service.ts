@@ -60,10 +60,10 @@ export class apiClientService  {
     this.httpClient = inject(HttpClient);
 
     //add the default connection
-    this.connections.set('_default',new BlizzardAPIConnection(this.data.data, this.httpClient));
+    this.connections.set('_default',new BlizzardAPIConnection(this.data.data.settings.getConnectionSettings("_default"), this.httpClient));
     //load additional connections from Extension Manager Service
     this.extMgr.connections.forEach((value, key)=>{
-      this.connections.set(key, new value.conn(this.data.data.getExtensionData(key), this.httpClient));
+      this.connections.set(key, new value.conn(this.data.data.settings.getConnectionSettings(key), this.httpClient));
     })
 
     //subscribe to settings changed events
@@ -90,10 +90,10 @@ export class apiClientService  {
     }
 
     //provide settings to the active connection
-    this.apiConnection?.provideSettings(settings);
+    this.apiConnection?.provideSettings(this.data.data.settings.getConnectionSettings(this.settings.connectionType!));
 
     //auto-connect if appropriate
-    if (!this.apiConnection!.isLoggingIn() && this.data.data.settings.autoConnect && !liveChange) 
+    if (!this.apiConnection!.isLoggingIn() && this.data.data.settings.autoConnect && !liveChange && this.canConnect()) 
     {
         this.connect();
     }  

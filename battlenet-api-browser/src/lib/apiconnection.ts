@@ -1,6 +1,7 @@
 import { Router } from "@angular/router";
 import { apiClientSettings } from "../services/apiclientsettings";
 import { HttpClient } from "@angular/common/http";
+import { extensionDataStruct } from "../model/userdata";
 
 /**
  * New forms of API connection (e.g. via a proxy, an SSH tunnel, or an encrypted IP stream) should
@@ -8,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
  */
 export abstract class APIConnection {
 
-    settings?: apiClientSettings;
+    settings: extensionDataStruct;
     protected httpClient: HttpClient;
 
     protected _loggedIn = false;
@@ -17,7 +18,7 @@ export abstract class APIConnection {
 
     protected _name: string = "Unnamed Connection";
 
-    constructor (settings: apiClientSettings | undefined, httpClient: HttpClient, name: string)
+    constructor (settings: extensionDataStruct, httpClient: HttpClient, name: string)
     {
         this.settings = settings;
         this.httpClient = httpClient;
@@ -54,23 +55,26 @@ export abstract class APIConnection {
      * Should reject the promise if connection is not possible.
      * @returns 
      */
-    connect(): Promise<void>
-    {
+    connect(): Promise<void> {
         return Promise.resolve();
     }
 
 
-    provideSettings(settings: apiClientSettings)
-    {
-        this.settings = settings;
+    provideSettings(extSettings: extensionDataStruct): void{
+        this.settings = extSettings;
+        this.settingsChanged();
+    }
+
+    /** Override in descendants to do whatever needs doing if settings have been changed */
+    settingsChanged(): void {
+
     }
 
     /**
      * Override for signin redirection processing
      * @returns
      */
-    signinRedirect(): Promise<void>
-    {
+    signinRedirect(): Promise<void> {
         return new Promise<void>((resolve)=>{
             resolve();
         });

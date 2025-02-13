@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { appKeyStruct, settingsStruct } from '../model/userdata';
+import { appKeyStruct, extensionDataStruct, settingsStruct } from '../model/userdata';
 import { MatCardModule } from '@angular/material/card';
 import _ from 'lodash';
 import { ExtensionManagerService } from '../extensions/extension-manager.service';
@@ -29,11 +29,12 @@ import { AbstractConnectionSettings } from '../extensions/abstract/abstract-conn
 export class SettingsComponent implements OnInit{
 
   settings = input.required<settingsStruct>();
-  key = input.required<appKeyStruct>();
 
   connectionType: string = "";
+  connectionName: string = "";
   connectionSettings?: Type<AbstractConnectionSettings>;
-  currentConnectionName: string = "";
+
+  defaultSettings?: extensionDataStruct;
 
   protected settingsInputs: Record<string, unknown> | undefined
 
@@ -42,11 +43,15 @@ export class SettingsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.connectionType = this.userdata.data.settings.api.connectionType!;
+    console.dir(this.settings());    
+    this.defaultSettings = this.settings().getConnectionSettings("_default");    
+    //prepare defaults
+    this.defaultSettings['clientID'] = this.defaultSettings['clientID'] ?? '';
+    this.defaultSettings['clientSecret'] = this.defaultSettings['clientSecret'] ?? '';
+    this.connectionType = this.settings().api.connectionType ?? '_default';
     if (this.connectionType !== "_default")
       this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
-    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
-    console.dir(this.api.connections);
+    this.connectionName = this.api.connections.get(this.connectionType)!.getName();
   }
 
   getConnections() {
@@ -58,12 +63,12 @@ export class SettingsComponent implements OnInit{
   }
 
   changeConnection() {
-    this.userdata.data.settings.api.connectionType = this.connectionType;
-    this.currentConnectionName = this.api.connections.get(this.connectionType)!.getName();
-    this.settingsInputs = { 'settings': this.userdata.data.getExtensionData(this.connectionType)};
+    this.settings().api.connectionType = this.connectionType;
+    this.connectionType = this.settings().api.connectionType ?? '_default';
+    this.settingsInputs = { 'settings': this.settings().getConnectionSettings(this.connectionType)};
     if (this.connectionType !== "_default")
       this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
-    this.api.provideSettings(this.userdata.data.settings.api, true);
+    this.connectionName = this.api.connections.get(this.connectionType)!.getName();    
   }
 
 }

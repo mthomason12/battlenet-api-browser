@@ -7,7 +7,6 @@ import { IMasterDetail } from '../model/dbdatastructs';
 import { HttpClient } from '@angular/common/http';
 import JSONC from 'tiny-jsonc';
 
-const dataItem: string = 'battlenet-api-data';
 const settingsItem: string = 'battlenet-api-settings';
 const extDataItem: string = 'battlenet-api-extdata';
 
@@ -19,6 +18,7 @@ interface dataCacheKey {
 @Injectable({  providedIn: 'root',})
 /**
  * Service to hold and maintain data in application
+ * todo - migrate settings and extdata into recdb
  */
 export class UserdataService {
   /** mutable data held that can be loaded/saved */
@@ -67,24 +67,7 @@ export class UserdataService {
       //initialize with blank data if corrupt or missing
       console.log("Settings are corrupt or missing. Reinitializing with empty data.")   
       this.data.settings = new settingsStruct();        
-    }     
-    try
-    {         
-      console.log("Loading application key");
-      //load app keys from LocalStorage      
-      json = JSON.parse(localStorage.getItem(dataItem)!);
-      if (json === null) 
-      {
-        throw new Error("No data");
-      } 
-      this.data.key = _.merge(this.data.key, json)       
-    }
-    catch
-    {
-      //initialize with blank data if corrupt or missing
-      console.log("User data is corrupt or missing. Reinitializing with empty data.")   
-      this.data.key = new appKeyStruct();         
-    }
+    }    
     try 
     {
       console.log("Loading extension data");
@@ -144,8 +127,8 @@ export class UserdataService {
   save(): Promise<void>
   {
     return new Promise((resolve, reject)=>{
-      localStorage.setItem(dataItem, JSON.stringify(this.data.key));
       localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
+      localStorage.setItem(extDataItem, JSON.stringify(this.data.extensions));
       //save to indexedDB
       var saveList: Promise<any>[] = new Array(); 
       console.log("Data saved");      

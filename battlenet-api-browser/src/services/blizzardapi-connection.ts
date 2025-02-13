@@ -1,6 +1,6 @@
 import { BlizzAPI, RegionIdOrName, ResponseError } from "blizzapi";
 import { APIConnection } from "../lib/apiconnection";
-import { userDataStruct } from "../model/userdata";
+import { extensionDataStruct, userDataStruct } from "../model/userdata";
 import { Router } from "@angular/router";
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserInfo } from "angular-oauth2-oidc";
@@ -14,7 +14,6 @@ export class BlizzardAPIConnection extends APIConnection {
 
     blizzapi: BlizzAPI;
     region: RegionIdOrName;
-    data: userDataStruct;
 
     clientID: string;
     clientSecret: string;
@@ -26,19 +25,18 @@ export class BlizzardAPIConnection extends APIConnection {
 
     public userManager: UserManager;   
 
-    constructor(data: userDataStruct, httpClient: HttpClient) {
-        super(undefined, httpClient,"Direct API Connection");
-        this.data = data;
+    constructor(settings: extensionDataStruct, httpClient: HttpClient) {
+        super(settings, httpClient,"Direct API Connection");
         this.region = "us";
         this._loggingIn = sessionStorage.getItem('is_logging_in') === '1' ? true : false;
 
-        this.clientID = this.data.key.clientID;
-        this.clientSecret = this.data.key.clientSecret;
+        this.clientID = this.settings['clientID'] ?? "";
+        this.clientSecret = this.settings['clientSecret'] ?? "";
 
         this.blizzapi = new BlizzAPI({
             region: this.region!,
-            clientId: this.data.key.clientID,
-            clientSecret: this.data.key.clientSecret
+            clientId: this.clientID,
+            clientSecret: this.clientSecret
         });  
         this.userManager = new UserManager(this.getClientSettings()); 
     
@@ -65,7 +63,7 @@ export class BlizzardAPIConnection extends APIConnection {
     }
 
     override canConnect(): boolean {
-        return (this.clientID !=="" && this.clientSecret !== "")
+        return (this.settings['clientID'] !=="" && this.settings['clientSecret'] !== "")
     }
 
     override connect(): Promise<void> {
@@ -80,18 +78,18 @@ export class BlizzardAPIConnection extends APIConnection {
         });
     }
 
-    override provideSettings(settings: apiClientSettings)
+    override provideSettings(extSettings: extensionDataStruct)
     {
-        super.provideSettings(settings);
+        super.provideSettings(extSettings);
 
         //reinitialize everything affected by a settings changed
-        this.clientID = this.data.key.clientID;
-        this.clientSecret = this.data.key.clientSecret;
+        this.clientID = this.settings['clientID'] ?? "";
+        this.clientSecret = this.settings['clientSecret'] ?? "";
 
         this.blizzapi = new BlizzAPI({
             region: this.region!,
-            clientId: this.data.key.clientID,
-            clientSecret: this.data.key.clientSecret
+            clientId: this.clientID,
+            clientSecret: this.clientSecret
         });  
         
         this.userManager = new UserManager(this.getClientSettings()); 
@@ -127,8 +125,8 @@ export class BlizzardAPIConnection extends APIConnection {
         //replace blizzapi with one using our new access token
         this.blizzapi = new BlizzAPI({
             region: this.region!,
-            clientId: this.data.key.clientID,
-            clientSecret: this.data.key.clientSecret,
+            clientId: this.clientID,
+            clientSecret: this.clientSecret,
             accessToken: token
         });  
     }

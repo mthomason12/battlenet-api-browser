@@ -76,6 +76,35 @@ export class settingsStruct
   autoLogin: boolean = false;
   disableSettings: boolean = false;
   api: apiClientSettings = new apiClientSettings();
+  //per-extension settings
+  extensions: extensionsDataStruct = new extensionsDataStruct;
+  //per-connection settings
+  connections: extensionsDataStruct = new extensionsDataStruct;  
+
+  /**
+   * Get the extension settings for a named extension
+   * @param name 
+   * @returns 
+   */
+  getExtensionSettings (name: string): extensionDataStruct {
+    if (!(name in this.extensions)) {
+      this.extensions[name] = {};
+    }
+    return this.extensions[name];
+  }  
+
+  /**
+   * Get the connection settings for a named connection
+   * @param name 
+   * @returns 
+   */
+  getConnectionSettings (name: string): extensionDataStruct {
+    if (!(name in this.connections)) {
+      this.connections[name] = {};
+    }
+    return this.connections[name];
+  }
+
 } 
 
 export interface extensionDataStruct {
@@ -92,7 +121,6 @@ export class extensionsDataStruct
  */
 export class userDataStruct
 {
-  key: appKeyStruct = new appKeyStruct();
   settings: settingsStruct = new settingsStruct();
   extensions: extensionsDataStruct = new extensionsDataStruct();
   apiData: apiDataStruct;
@@ -102,10 +130,16 @@ export class userDataStruct
     this.apiData = new apiDataStruct(recDB);
   }
 
-  getExtensionData (name: string) {
+  /**
+   * Get the extension data for a named extension
+   * @param name 
+   * @returns 
+   */
+  getExtensionData (name: string): extensionDataStruct {
     if (!(name in this.extensions)) {
       this.extensions[name] = {};
     }
     return this.extensions[name];
   }
+
 }

@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <mat-tab-group>
-            <mat-tab title="Connection">
+            <mat-tab label="Connection">
                 @if((api.connections.size > 1) && !userdata.data.settings.api.disableSwitching) {
                     <mat-form-field>
                         <mat-label>Connection Type</mat-label>
@@ -15,17 +15,17 @@
                 @if(!userdata.data.settings.api.disableSettings) {
                     <mat-card>
                         <mat-card-header>
-                            <mat-card-subtitle>{{currentConnectionName}}</mat-card-subtitle>
+                            <mat-card-subtitle>{{connectionName}}</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-content>       
                             @if (connectionType == "_default") {
                                 <mat-form-field class="full-width">
                                     <mat-label>Client ID</mat-label>
-                                    <input matInput type="text" title="Client ID" [(ngModel)]="key().clientID" />
+                                    <input matInput type="text" title="Client ID" [(ngModel)]="defaultSettings!['clientID']" />
                                 </mat-form-field>
                                 <mat-form-field class="full-width">
                                     <mat-label>Client Secret</mat-label>
-                                    <input matInput type="text" title="Client Secret" [(ngModel)]="key().clientSecret" />
+                                    <input matInput type="text" title="Client Secret" [(ngModel)]="defaultSettings!['clientSecret']" />
                                 </mat-form-field>       
                                 <mat-accordion>
                                     <mat-expansion-panel>

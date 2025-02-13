@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>Settings</h2>
 <mat-dialog-content>
-    <app-settings [settings]="settings()" [key]="key()"></app-settings>
+    <app-settings [settings]="settings()"></app-settings>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="[settings(),key()]" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="[settings()]" cdkFocusInitial>Ok</button>
 </mat-dialog-actions>

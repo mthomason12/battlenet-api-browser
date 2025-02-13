@@ -19,6 +19,7 @@ import { JobQueueService } from '../services/jobqueue.service';
 import { appKeyStruct, settingsStruct } from '../model/userdata';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from '../settings/settings.component';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -113,19 +114,19 @@ export class AppComponent implements OnDestroy, OnInit {
 
   settings()
   {
-      var tempSettings: settingsStruct = structuredClone(this.data.data.settings);
-      var tempKey: appKeyStruct = structuredClone(this.data.data.key);
+      var tempSettings: settingsStruct = _.cloneDeep(this.data.data.settings);
 
       const dialogRef = this.dialog.open(SettingsDialog, {
         width: "90%",
-        data: {settings: tempSettings, key: tempKey}
+        data: {settings: tempSettings}
       });
 
       dialogRef.afterClosed().subscribe(result => {
         //do nothing, we just discard the new temporary settings
         if (Array.isArray(result)) {
-          [this.data.data.settings, this.data.data.key]=(result);
+          [this.data.data.settings]=(result);
           this.data.save();
+          this.apiCli.provideSettings(this.data.data.settings.api, true);
           this.data.settingsChangedEmitter.emit();
         }
         this.checkStatus();
@@ -173,7 +174,6 @@ export class SettingsDialog {
   readonly dialogRef = inject(MatDialogRef<SettingsDialog>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   readonly settings = model(this.data.settings);
-  readonly key = model(this.data.key);  
 
   onNoClick(): void {
     this.dialogRef.close();

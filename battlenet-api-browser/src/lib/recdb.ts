@@ -37,7 +37,7 @@ export class RecDB {
         var store = this._store;
         return new Promise<IDBPDatabase>((resolve, reject)=>{
             console.log("Opening RecDB "+this._dbName+"/"+this._store);
-            openDB(this._dbName,5, {
+            openDB(this._dbName,6, {
                 upgrade(db, oldversion, newversion, transaction) {
                     //upgrade to version 2
                     if (oldversion < 2)
@@ -48,16 +48,22 @@ export class RecDB {
                     }
                     //upgrade to version 3
                     if (oldversion < 3)
-                        {
-                            //add an index on "name" (it might not exist, but that's fine)
-                            transaction.objectStore(store).createIndex('name','data.name');
-                        }
+                    {
+                        //add an index on "name" (it might not exist, but that's fine)
+                        transaction.objectStore(store).createIndex('name','data.name');
+                    }
                     //upgrade to version 5
                     if (oldversion < 5)
-                        {
-                            //add an index on "lastUpdate" (it might not exist, but that's fine)
-                            transaction.objectStore(store).createIndex('lastUpdate','data.lastUpdate');
-                        }                        
+                    {
+                        //add an index on "lastUpdate" (it might not exist, but that's fine)
+                        transaction.objectStore(store).createIndex('lastUpdate','data.lastUpdate');
+                    }                        
+                    //upgrade to version 6
+                    if (oldversion < 6)
+                    {
+                        //add a settings table
+                        db.createObjectStore("settings",{keyPath: ['id']})
+                    }
                 }
             }).then((db) => { 
                 this.db = db; 
