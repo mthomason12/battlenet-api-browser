@@ -3,7 +3,7 @@
         <mat-tab-group>
             <mat-tab label="Connection">
                 @if((api.connections.size > 1) && !userdata.data.settings.api.disableSwitching) {
-                    <mat-form-field>
+                    <mat-form-field class="full-width">
                         <mat-label>Connection Type</mat-label>
                         <mat-select [(value)]="connectionType" (valueChange)="changeConnection()">
                             @for (conn of getConnections() | keyvalue; track conn.key) {

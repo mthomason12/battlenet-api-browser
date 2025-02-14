@@ -49,6 +49,7 @@ export class SettingsComponent implements OnInit{
     this.defaultSettings['clientID'] = this.defaultSettings['clientID'] ?? '';
     this.defaultSettings['clientSecret'] = this.defaultSettings['clientSecret'] ?? '';
     this.connectionType = this.settings().api.connectionType ?? '_default';
+    this.settingsInputs = { 'settings': this.settings().getConnectionSettings(this.connectionType)};
     if (this.connectionType !== "_default")
       this.connectionSettings=this.extmgr.getConnection(this.connectionType)!.settings;
     this.connectionName = this.api.connections.get(this.connectionType)!.getName();
