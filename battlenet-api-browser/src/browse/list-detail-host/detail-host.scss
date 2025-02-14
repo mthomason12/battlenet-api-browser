@@ -1,0 +1,27 @@
+/** should be @use-ed in all "detail" child components **/
+
+:host {
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+mat-tab-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    div.tab-content {
+        position:absolute;
+        display:block;
+        height:100%;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+    }
+}
