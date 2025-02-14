@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _, {  } from 'lodash';
 import { IApiDataDoc, dataStruct, topDataStruct } from '../model/datastructs';
-import { appKeyStruct, extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
+import { extensionsDataStruct, settingsStruct, userDataStruct } from '../model/userdata';
 import { RecDB } from '../lib/recdb';
 import { IMasterDetail } from '../model/dbdatastructs';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ interface dataCacheKey {
   type: string;
   id: string;
 }
+
 
 @Injectable({  providedIn: 'root',})
 /**
@@ -108,7 +109,9 @@ export class UserdataService {
       this.loaded = true;
       console.log("Data loaded");      
       //send a notification to any subscribers
-      this.dataLoadedEmitter.emit();    
+      this.dataLoadedEmitter.emit();  
+      // Global variable to allow easy console access, and possibly for external Javascript addons later... 
+      (window as any)['userData'] = this;  
     });
   }
 
