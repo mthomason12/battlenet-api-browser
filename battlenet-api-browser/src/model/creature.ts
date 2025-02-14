@@ -27,7 +27,7 @@ export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatur
     super(parent, recDB);
     this.icon = "pets";      
     this.itemsName = "creature_families";
-    this.type = "creature_families";
+    this.type = "creature-families";
     this.title = "Creature Families";
   }
 
@@ -85,7 +85,7 @@ export class creatureTypesDataDoc extends dbData<creatureTypeIndex, creatureType
     super(parent, recDB);
     this.icon = "cruelty_free";
     this.itemsName = "creature_types";
-    this.type = "creature_types";
+    this.type = "creature-types";
     this.title = "Creature Types";
   }
 

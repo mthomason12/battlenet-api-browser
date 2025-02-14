@@ -38,38 +38,38 @@ export class publicDataStruct extends topDataStruct
     this.icon = "folder";
  
     this.addFolder("Achievements",[
-      this.achievementData = this.dbRegister(achievementsDataDoc)
+      this.achievementData = this.Register(achievementsDataDoc)
     ]);
 
     this.addFolder("Covenants", [
-      this.covenantData = this.dbRegister(covenantsDataDoc),
-      this.soulbindsData = this.dbRegister(soulbindsDataDoc)
+      this.covenantData = this.Register(covenantsDataDoc),
+      this.soulbindsData = this.Register(soulbindsDataDoc)
     ]);
 
     this.addFolder("Creatures",[
-      this.creatureFamiliesData = this.dbRegister(creatureFamiliesDataDoc),
-      this.creatureTypesData = this.dbRegister(creatureTypesDataDoc)
+      this.creatureFamiliesData = this.Register(creatureFamiliesDataDoc),
+      this.creatureTypesData = this.Register(creatureTypesDataDoc)
     ] );
 
     this.addFolder("Items", [
-      this.itemData = this.dbRegister(itemsDataDoc)
+      this.itemData = this.Register(itemsDataDoc)
     ]);
 
     this.addFolder("Journal",[
-      this.journalExpansionData = this.dbRegister(journalExpansionsDataDoc),
-      this.journalEncounterData = this.dbRegister(journalEncountersDataDoc),
-      this.journalInstanceData = this.dbRegister(journalInstancesDataDoc)
+      this.journalExpansionData = this.Register(journalExpansionsDataDoc),
+      this.journalEncounterData = this.Register(journalEncountersDataDoc),
+      this.journalInstanceData = this.Register(journalInstancesDataDoc)
     ]);
 
     this.addFolder("Mythic Keystones");
 
     this.addFolder("Mounts",[
-      this.mountData = this.dbRegister(mountsDataDoc)
+      this.mountData = this.Register(mountsDataDoc)
     ]);
 
     this.addFolder("Pets",[
-      this.pets = this.dbRegister(petsDataDoc),
-      this.petAbilities = this.dbRegister(petAbilitiesDataDoc)
+      this.pets = this.Register(petsDataDoc),
+      this.petAbilities = this.Register(petAbilitiesDataDoc)
     ]);
 
     this.addFolder("Playables");
@@ -81,17 +81,17 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Quests");
 
     this.addFolder("Realms",[
-      this.realmData = this.dbRegister(realmsDataDoc),
-      this.connectedRealmData = this.dbRegister(connectedRealmsDataDoc)
+      this.realmData = this.Register(realmsDataDoc),
+      this.connectedRealmData = this.Register(connectedRealmsDataDoc)
     ]);
 
     this.addFolder("Regions",[
-      this.regionData = this.dbRegister(regionsDataDoc)
+      this.regionData = this.Register(regionsDataDoc)
     ])
 
     this.addFolder("Reputations",[
-      this.reputationFactions = this.dbRegister(reputationFactionDataDoc),
-      this.reputationTiers = this.dbRegister(reputationTierDataDoc)
+      this.reputationFactions = this.Register(reputationFactionDataDoc),
+      this.reputationTiers = this.Register(reputationTierDataDoc)
     ]);
 
     this.addFolder("Spells");

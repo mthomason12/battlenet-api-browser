@@ -3,7 +3,7 @@ import { apiClientService } from '../../services/apiclient.service';
 import { Subscription } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UserdataService } from '../../services/userdata.service';
-import { IApiDataDoc } from '../../model/datastructs';
+import { IApiDataDoc, topDataStruct } from '../../model/datastructs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -146,9 +146,11 @@ export class ListDetailHostComponent implements OnInit, OnDestroy {
     this.id = undefined;
     var idstr = this.route.snapshot.paramMap.get('id');
 
-    //find reference from string passed in route data
+    //find reference from string array passed in route data
     this.data = this.route.snapshot.data as ListDetailHostComponentData;
-    this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
+    const section = this.getValueByKey(this.data.list[0], this.userData.data.apiData) as topDataStruct;
+    this.masterList = section.getData(this.data.list[1]);
+    //this.masterList = this.getValueByKey(this.data.list, this.userData.data.apiData);
     
     if (this.masterList!.stringKey)
     {

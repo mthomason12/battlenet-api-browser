@@ -5,20 +5,18 @@ import { profileGuildDataDoc } from './profile-guild';
 
 export class profileDataStruct extends topDataStruct
 {
-  characters: profileCharactersDataDoc;
-  guilds: profileGuildDataDoc;
 
   constructor(parent: dataStruct, recDB: RecDB)
   {
     super(parent, recDB);
   
     this.addFolder("Characters", [
-      this.characters = this.dbRegister(profileCharactersDataDoc),
+      this.Register(profileCharactersDataDoc),
 
     ]);
 
     this.addFolder("Guilds",[
-      this.guilds = this.dbRegister(profileGuildDataDoc)
+      this.Register(profileGuildDataDoc)
     ]);
 
     this.icon = "folder";

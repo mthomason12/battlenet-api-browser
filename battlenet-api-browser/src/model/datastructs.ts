@@ -169,7 +169,6 @@ interface dbDataRef {
  */
 export abstract class topDataStruct extends dataStruct
 {
-  dbData: dbDataRef[] = Array(); //TODO - remove and migrate to data
   data: Map<string, dbDataRef> = new Map();
   folders: dataFolder[] = Array();
   recDB: RecDB;
@@ -181,27 +180,14 @@ export abstract class topDataStruct extends dataStruct
   }
 
   /**
-   * Register a new-style data structure, which loads records on demand
-   * TODO - remove this and migrate to Register
-   * @param typeref
-   * @returns 
-   */
-  dbRegister<T extends dbData<any,any>>(typeref: { new(...args : any[]):T}): T
-  {
-    var struct = {ref: new typeref(this, this.recDB), type:typeref};
-    this.dbData.push(struct);
-    return struct.ref;
-  }  
-
-  /**
    * Register a data structure.
    * @param typeref
    * @returns 
    */
-  Register<T extends dbData<any,any>>(name: string, typeref: { new(...args : any[]):T}): T
+  Register<T extends dbData<any,any>>(typeref: { new(...args : any[]):T}): T
   {
     var struct = {ref: new typeref(this, this.recDB), type:typeref};
-    this.data.set(name, struct);
+    this.data.set(struct.ref.type, struct);
     return struct.ref;
   }  
 
@@ -220,14 +206,14 @@ export abstract class topDataStruct extends dataStruct
   }   
 
   override postFixup(): void {
-    this.dbData.forEach((item)=>{item.ref.fixup(this)});
+    this.data.forEach((item)=>{item.ref.fixup(this)});
   }
 
   export(): Promise<object> {
     return new Promise((resolve)=>{
       var exportOb: any = {};
       var promises: Promise<any>[] = [];
-      this.dbData.forEach((data)=>{
+      this.data.forEach((data)=>{
         var dataref = data.ref as any as dbData<any,any>;
         promises.push(new Promise<void>((resolveInner)=>{
           dataref.export().then((ob)=>{

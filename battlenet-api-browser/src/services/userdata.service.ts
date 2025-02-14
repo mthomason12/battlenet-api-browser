@@ -132,9 +132,7 @@ export class UserdataService {
     return new Promise((resolve, reject)=>{
       localStorage.setItem(settingsItem, JSON.stringify(this.data.settings));    
       localStorage.setItem(extDataItem, JSON.stringify(this.data.extensions));
-      //save to indexedDB
-      var saveList: Promise<any>[] = new Array(); 
-      console.log("Data saved");      
+      console.log("Settings Data saved");      
       resolve();      
     });
   }
