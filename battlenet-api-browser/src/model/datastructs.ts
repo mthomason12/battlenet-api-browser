@@ -159,12 +159,18 @@ export class dataFolder extends dataStruct
 
 //#region topDataStruct
 
+interface dbDataRef {
+  ref: dbData<any,any>, 
+  type: any
+}
+
 /**
  * a datastruct at the top level, responsible for loading and saving its contents
  */
 export abstract class topDataStruct extends dataStruct
 {
-  dbData: {ref: dbData<any,any>, type: any}[] = Array();
+  dbData: dbDataRef[] = Array();
+  data: Map<string, dbDataRef> = new Map();
   folders: dataFolder[] = Array();
   recDB: RecDB;
 
@@ -185,6 +191,22 @@ export abstract class topDataStruct extends dataStruct
     this.dbData.push(struct);
     return struct.ref;
   }  
+
+  /**
+   * Register a data structure.
+   * @param typeref
+   * @returns 
+   */
+  Register<T extends dbData<any,any>>(name: string, typeref: { new(...args : any[]):T}): T
+  {
+    var struct = {ref: new typeref(this, this.recDB), type:typeref};
+    this.data.set(name, struct);
+    return struct.ref;
+  }  
+
+  getData<T extends dbData<any,any> = dbData<any,any>>(name: string): T | undefined {
+    return this.data.get(name)?.ref as T;
+  }
 
   addFolder(name: string, members: dataStruct[] = [], icon: string = 'folder')
   {
