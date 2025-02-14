@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { IApiDataDoc } from '../../../model/datastructs';
 import { IMasterDetail } from '../../../model/dbdatastructs';
 
@@ -8,8 +8,9 @@ import { IMasterDetail } from '../../../model/dbdatastructs';
   templateUrl: './abstract-detail.component.html',
   styleUrl: './abstract-detail.component.scss'
 })
-export abstract class AbstractDetailComponent<T extends IApiDataDoc>
+export abstract class AbstractDetailComponent<T extends IApiDataDoc> implements OnInit
 {
+
   ref = inject(ChangeDetectorRef);
 
   private _rec?: T;
@@ -37,9 +38,18 @@ export abstract class AbstractDetailComponent<T extends IApiDataDoc>
     this.ref.detectChanges();
   }  
 
-  /** called when data input is set */
+  /** 
+   * called when data input is set 
+   */
   dataSet()
   {
   }
+
+  /**
+   *  Override on descendants if needed 
+   */
+  ngOnInit(): void {
+  }
+
 
 }

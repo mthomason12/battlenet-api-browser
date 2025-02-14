@@ -1,3 +1,19 @@
- <!---- Detail View ---->
- <app-object-table [dataSource]="data"></app-object-table>
-
+<!---- Detail View ---->
+@if (extraData.size > 0) {
+    <mat-tab-group>
+        <mat-tab label="main">
+            <ng-template matTabContent>
+                <app-object-table [dataSource]="mainData"></app-object-table>
+            </ng-template>
+        </mat-tab>
+        @for (item of extraData | keyvalue; track item.key) {
+            <mat-tab label="{{item.key}}">
+                <ng-template matTabContent>
+                    <app-object-table [dataSource]="item.value"></app-object-table>
+                </ng-template>
+            </mat-tab>
+        }
+    </mat-tab-group>
+} @else {
+    <app-object-table [dataSource]="data"></app-object-table>
+}
