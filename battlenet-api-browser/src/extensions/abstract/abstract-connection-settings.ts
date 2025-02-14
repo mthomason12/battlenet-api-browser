@@ -1,5 +1,5 @@
 import { Component, Input, input } from "@angular/core";
-import { extensionDataStruct } from "../../model/userdata";
+import { extensionDataStruct, extensionsDataStruct } from "../../model/userdata";
 
 @Component({
     selector: 'app-abstract-connection-settings',
@@ -9,14 +9,23 @@ import { extensionDataStruct } from "../../model/userdata";
 export class AbstractConnectionSettings {
 
     _settings?: extensionDataStruct;
+    _hasSettings: boolean = false;
 
-    @Input()
+    @Input({required: true})
     set settings(value: extensionDataStruct){
-        this._settings = this.ensurePropertiesExist(value);
+        this._settings = value;
+        this.ensurePropertiesExist(value);
+        this._hasSettings = true;
+    }
+    get settings():extensionsDataStruct {
+        return this._settings!;
     }
 
-    ensurePropertiesExist(value: extensionDataStruct): extensionDataStruct {
-        return value;
+    ensurePropertiesExist(value: extensionDataStruct) {
+    }
+
+    hasSettings() {
+        return this._hasSettings;
     }
 
 
