@@ -512,7 +512,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
             var job = new Promise<void>(async(resolve, reject)=>{
                 var rec = await this.getRec(api, (item as any)[this.key])
                 if (rec)
-                  idx.items.push(this.makeIndexItem(rec));
+                idx.items.push(this.makeIndexItem(rec));
                 resolve();
             })
             jobs.push(job);

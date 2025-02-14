@@ -12,7 +12,7 @@ export interface creatureFamilyData extends IApiDataDoc
   name: string;
   specialization: refStruct;
   media: keyStruct;
-  mediaData?: mediaDataStruct;  
+  $mediaData?: mediaDataStruct;  
 }
 
 export interface creatureFamilyIndex extends IApiIndexDoc
@@ -45,7 +45,7 @@ export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatur
   {
     return new Promise((resolve)=>{
       apiClient.getCreatureFamilyMedia(apiRec.id)?.then((data: any) => {
-        apiRec.mediaData = data;
+        apiRec.$mediaData = data;
         resolve();
       });
     })    

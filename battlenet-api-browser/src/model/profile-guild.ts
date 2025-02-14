@@ -190,7 +190,7 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
             if (realm && guild) {
             api.getGuild(realm, guild).then((result)=>{
                 if (result) {
-                    result._id = result.realm.slug+'/'+Slugify(result.name);
+                    result._id = Slugify(result.name)+'@'+result.realm.slug;
                 }
                 resolve(this.fakeSearchResponse(result));
             }); } else {
@@ -234,14 +234,14 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
      */
     override getAPIRec(api: apiClientService, id: string): Promise<guildProfileData | undefined> {
         var realm: string;
-        var character: string;
-        [realm,character] = id.split('/');
-        return api.getGuild(realm, character);
+        var guild: string;
+        [guild,realm] = id.split('@');
+        return api.getGuild(realm, guild);
     }
 
     override makeIndexItem(item: guildProfileData): guildProfileIndexData {
         return {
-            _id: item.realm.slug+'/'+Slugify(item.name),
+            _id: Slugify(item.name)+'@'+item.realm.slug,
             id: item.id,
             name: item.name,
             faction: item.faction.type,

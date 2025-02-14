@@ -36,7 +36,7 @@ export interface petData extends IApiDataDoc
   creature: refStruct;
   is_random_creature_display: boolean;
   media: mediaStruct;
-  mediaData: mediaDataStruct;
+  $mediaData: mediaDataStruct;
 }
 
 interface petsIndexEntry
@@ -78,7 +78,7 @@ export class petsDataDoc extends dbData<petsIndex, petData>
     return new Promise((resolve)=>{
       apiClient.getPetMedia(apiRec.id)?.then(
         (data: any) => {
-          apiRec.mediaData = data;
+          apiRec.$mediaData = data;
           resolve();
         });
     })

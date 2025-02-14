@@ -109,7 +109,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             if (realm && character) {
             api.getCharacterProfileSummary(realm, character).then((result)=>{
                 if (result) {
-                    result._id = result.realm.slug+'/'+Slugify(result.name);
+                    result._id = Slugify(result.name)+'@'+result.realm.slug;
                 }
                 resolve(this.fakeSearchResponse(result));
             }); } else {
@@ -136,13 +136,13 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
     override getAPIRec(api: apiClientService, id: string): Promise<characterProfileData | undefined> {
         var realm: string;
         var character: string;
-        [realm,character] = id.split('/');
+        [character,realm] = id.split('@');
         return api.getCharacterProfileSummary(realm, character);
     }
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
         return {
-            _id: item.realm.slug+'/'+Slugify(item.name),
+            _id: Slugify(item.name)+'@'+item.realm.slug,
             id: item.id,
             name: item.name,
             faction: item.faction.type,

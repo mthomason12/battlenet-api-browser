@@ -44,7 +44,7 @@ export interface covenantData extends IApiDataDoc
   soulbinds?: refStruct[];
   renown_rewards?: covenantRenownReward[];
   media?: mediaStruct;
-  mediaData?: mediaDataStruct;
+  $mediaData?: mediaDataStruct;
 }
 
 interface covenantIndexItem extends IIndexItem
@@ -72,7 +72,7 @@ export class covenantsDataDoc extends dbData<covenantIndexData, covenantData>
   override getAPIExtra(apiClient: apiClientService, apiRec: covenantData): Promise<void> {
     return new Promise((resolve)=>{
       apiClient.getCovenantMedia(apiRec.id)?.then((data: any) => {
-        apiRec.mediaData = data;
+        apiRec.$mediaData = data;
         resolve();
       });
     })

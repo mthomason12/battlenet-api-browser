@@ -53,7 +53,7 @@ export interface achievementData extends IApiDataDoc
   next_achievement?: achievementNextAchievement;
   media?: mediaStruct;
   display_order?: number;
-  mediaData?: mediaDataStruct;
+  $mediaData?: mediaDataStruct;
 }
 
 interface achievementIndexEntry extends IIndexItem
@@ -95,7 +95,7 @@ export class achievementsDataDoc extends dbData<achievementsIndex, achievementDa
     return new Promise((resolve)=>{
       apiClient.getAchievementMedia(apiRec.id)?.then(
         (data: any) => {
-          apiRec.mediaData = data;
+          apiRec.$mediaData = data;
           resolve();
         });
     })
