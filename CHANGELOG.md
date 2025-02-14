@@ -20,6 +20,7 @@
 - Graceful error message if browser is unable to run Angular or doesn't have IndexedDB.
 - Records now delete properly when using the tools "clear this data type" button.
 - API 404s no longer hang jobs in the job queue.
+- Rendering of tables within tables in "(Data)" view has been reduced to reduce complexity hanging browsers
 
 #### v0.2d
 
