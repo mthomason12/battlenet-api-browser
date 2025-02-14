@@ -135,8 +135,8 @@ export interface guildProfileData extends IApiDataDoc {
     created_timestamp: number;
     activity: hrefStruct;
     name_search: string;
-    //extra data we're appending
-    _id: string;
+    //extra data we're appending to the API record
+    $id: string;
     $activityData?: guildActivityData;
     $achievementData?: guildAchievementData;
     $rosterData?: guildRosterData;
@@ -144,13 +144,13 @@ export interface guildProfileData extends IApiDataDoc {
 }
 
 export interface guildProfileIndexData extends IIndexItem, IApiIndexDoc {
-    _id: string;
     id: number,
     name: string;
     faction: string;
     achievement_points: number;
     member_count: number;
     realm: string;
+    $id: string;    
 }
 
 /**
@@ -168,7 +168,7 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
         this.pathName = "guilds";
         this.title = "Guilds";
         this.stringKey = true;
-        this.key = "_id"; //override key because we're making our own from 
+        this.key = "$id"; //override key because we're making our own from 
         this.hideKey = true;
         //disable search as this requires a direct lookup
         this.isSearchable = false;
@@ -190,7 +190,7 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
             if (realm && guild) {
             api.getGuild(realm, guild).then((result)=>{
                 if (result) {
-                    result._id = Slugify(result.name)+'@'+result.realm.slug;
+                    result.$id = Slugify(result.name)+'@'+result.realm.slug;
                 }
                 resolve(this.fakeSearchResponse(result));
             }); } else {
@@ -241,7 +241,7 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
 
     override makeIndexItem(item: guildProfileData): guildProfileIndexData {
         return {
-            _id: Slugify(item.name)+'@'+item.realm.slug,
+            $id: Slugify(item.name)+'@'+item.realm.slug,
             id: item.id,
             name: item.name,
             faction: item.faction.type,

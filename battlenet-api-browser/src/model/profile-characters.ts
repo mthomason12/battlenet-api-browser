@@ -8,7 +8,6 @@ import { dbDataNoIndex } from "./dbdatastructs";
 
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
-    _id: string;
     id: number;
     name: string;
     gender: genderStruct;
@@ -57,10 +56,11 @@ export interface characterProfileData extends IApiDataDoc {
         soulbinds: hrefStruct;
     }
     name_search: string;
+    //additional data we've added to the API
+    $id: string;
 }
 
 export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
-    _id: string;
     id: number,
     name: string;
     faction: string;
@@ -70,6 +70,7 @@ export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
     active_spec: string;
     realm: string;
     guild: string;
+    $id: string;    
 }
 
 /**
@@ -87,7 +88,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         this.pathName = "characters";
         this.title = "Characters";
         this.stringKey = true;
-        this.key = "_id"; //override key because we're making our own from 
+        this.key = "$id"; //override key because we're making our own from 
         this.hideKey = true;
         //disable search as this requires a direct lookup
         this.isSearchable = false;
@@ -109,7 +110,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             if (realm && character) {
             api.getCharacterProfileSummary(realm, character).then((result)=>{
                 if (result) {
-                    result._id = Slugify(result.name)+'@'+result.realm.slug;
+                    result.$id = Slugify(result.name)+'@'+result.realm.slug;
                 }
                 resolve(this.fakeSearchResponse(result));
             }); } else {
@@ -142,7 +143,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
         return {
-            _id: Slugify(item.name)+'@'+item.realm.slug,
+            $id: Slugify(item.name)+'@'+item.realm.slug,
             id: item.id,
             name: item.name,
             faction: item.faction.type,
