@@ -169,7 +169,7 @@ interface dbDataRef {
  */
 export abstract class topDataStruct extends dataStruct
 {
-  dbData: dbDataRef[] = Array();
+  dbData: dbDataRef[] = Array(); //TODO - remove and migrate to data
   data: Map<string, dbDataRef> = new Map();
   folders: dataFolder[] = Array();
   recDB: RecDB;
@@ -182,6 +182,7 @@ export abstract class topDataStruct extends dataStruct
 
   /**
    * Register a new-style data structure, which loads records on demand
+   * TODO - remove this and migrate to Register
    * @param typeref
    * @returns 
    */
