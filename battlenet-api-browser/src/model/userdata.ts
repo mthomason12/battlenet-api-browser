@@ -40,8 +40,8 @@ export class apiDataStruct extends dataStruct
   {
     return super.children().concat([
       this.wowpublic, 
-      this.wowaccount,
-      this.wowprofile
+      this.wowprofile,
+      this.wowaccount      
     ]);
   }
 
