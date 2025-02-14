@@ -123,7 +123,6 @@ interface guildCrestStruct {
 
 export interface guildProfileData extends IApiDataDoc {
     _links: linksStruct;
-    _id: string;
     id: number;
     name: string;
     faction: factionStruct;
@@ -136,6 +135,12 @@ export interface guildProfileData extends IApiDataDoc {
     created_timestamp: number;
     activity: hrefStruct;
     name_search: string;
+    //extra data we're appending
+    _id: string;
+    $activityData?: guildActivityData;
+    $achievementData?: guildAchievementData;
+    $rosterData?: guildRosterData;
+
 }
 
 export interface guildProfileIndexData extends IIndexItem, IApiIndexDoc {
@@ -201,6 +206,24 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
             pageSize: result ? 1 : 0,
             results: result ? [result] : []
         }
+    }
+
+    override getAPIExtra(apiClient: apiClientService, apiRec: guildProfileData): Promise<void> {
+        return new Promise((resolve)=>{
+            Promise.allSettled([
+                apiClient.getGuildAchievements(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$achievementData = data;
+                  }),
+                  apiClient.getGuildActivity(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$activityData = data;
+                  }),                  
+                  apiClient.getGuildRoster(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$rosterData = data;
+                  }),      
+            ]).then(()=>{
+                resolve();
+            })
+        });
     }
 
     /**
