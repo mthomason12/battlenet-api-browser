@@ -1,4 +1,6 @@
 import { IDBPDatabase, openDB } from 'idb';
+import { Dexie } from 'dexie';
+import { importDB, exportDB } from 'dexie-export-import';
 
 export class RecDBRec {
     type: string;
@@ -127,6 +129,26 @@ export class RecDB {
             tx.done.then(()=>{
                 resolve(addKey);
             });
+        });
+    }
+
+    export(): Promise<Blob> {
+        return new Promise((resolve)=>{
+            new Dexie(this._dbName).open().then((db)=>{
+                db.export().then((exp)=>{
+                    resolve(exp);
+                })
+            });
+        });
+    }
+
+    import(data: Blob): Promise<void> {
+        return new Promise((resolve)=>{
+            new Dexie(this._dbName).open().then((db)=>{
+                db.import(data).then(()=>{
+                    resolve();
+                });
+            })
         });
     }
 
