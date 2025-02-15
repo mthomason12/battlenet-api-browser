@@ -15,6 +15,7 @@ mat-tab-group {
     display: flex;
     flex-direction: column;
     flex: 1;
+    height:100%;
     div.tab-content {
         position:absolute;
         display:block;
