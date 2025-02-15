@@ -27,17 +27,17 @@ jobs:
     - name: Build    
       run: npm run github-make-release
       working-directory: battlenet-api-browser
-    - name: get-npm-version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@v1.3.1
+    - name: Get version from package.json
+      id: get-version
+      uses: beaconbrigade/package-json-version@v0.3.2
       with:
         path: battlenet-api-browser     
     - name: Upload web zip to release
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
-        name: Battlenet API Browser (Web) ${{ steps.package-version.outputs.current-version}}
-        tag: ${{ steps.package-version.outputs.current-version}}-web
+        name: Battlenet API Browser (Web) ${{ steps.get-version.outputs.version }}
+        tag: ${{ steps.get-version.outputs.version }}-web
         body: Check CHANGELOG for changes
         prerelease: true
         allowUpdates: true
@@ -46,8 +46,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe"
-        name: Battlenet API Browser (Windows x64) ${{ steps.package-version.outputs.current-version}}
-        tag: ${{ steps.package-version.outputs.current-version}}-win32-x64
+        name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
+        tag: ${{ steps.get-version.outputs.version }}-win32-x64
         body: Check CHANGELOG for changes
         prerelease: true
         allowUpdates: true        
