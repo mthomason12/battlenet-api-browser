@@ -22,7 +22,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1225,12 +1225,12 @@ isLoggingIn(): boolean
 
 //region Character Mythic Keystone Profile API
 
-  getCharacterMythicKeystoneProfileIndex(realmSlug: string, characterName: string): Promise<any>
+  getCharacterMythicKeystoneProfileIndex(realmSlug: string, characterName: string): Promise<characterMythicKeystoneSummaryData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile`);
   }
 
-  getCharacterMythicKeystoneSeasonDetails(realmSlug: string, characterName: string, seasonid: string): Promise<any>
+  getCharacterMythicKeystoneSeasonDetails(realmSlug: string, characterName: string, seasonid: number): Promise<characterMythicKeystoneSeasonData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile/season/${seasonid}`);
   }

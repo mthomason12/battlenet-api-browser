@@ -330,6 +330,24 @@ export interface characterMediaData {
     }[];
 }
 
+export interface characterMythicKeystoneSummaryData {
+    links: linksStruct;
+    current_period: {
+        period: idkeyStruct;
+    }
+    seasons: idkeyStruct[];
+    character: characterRef;
+    current_mythic_rating: {
+        color: rgbaColorStruct;
+        rating: number;
+    }
+}
+
+export interface  characterMythicKeystoneSeasonData {
+    $id: number;
+
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -398,7 +416,11 @@ export interface characterProfileData extends IApiDataDoc {
     $equipmentData: characterEquipmentData;
     //hunter pets
     $hunterPetsData: characterHunterPetsData;
+    //media
     $mediaData: characterMediaData;
+    //mythic keystones
+    $mythicKeystoneData: characterMythicKeystoneSummaryData;
+    $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
 }
 
 
@@ -512,7 +534,17 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                 }),
                 apiClient.getCharacterMediaSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mediaData = data;
-                }),                
+                }),     
+                apiClient.getCharacterMythicKeystoneProfileIndex(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$mythicKeystoneData = data;
+                    //get each season
+                    apiRec.$mythicKeystoneSeasons = new Array();
+                    apiRec.$mythicKeystoneData.seasons.forEach((season)=>{
+                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: any) => {
+                            apiRec.$mythicKeystoneSeasons.push(data)
+                        })
+                    })
+                }),                                
 
             ]).then(()=>{
                 resolve();
