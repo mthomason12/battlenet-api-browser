@@ -343,9 +343,36 @@ export interface characterMythicKeystoneSummaryData {
     }
 }
 
+interface characterMythicKeystoneRunMember {
+    character: characterRef;
+    specialization: refStruct;
+    race: refStruct;
+    equipped_item_level: number;
+}
+
+interface characterMythicKeystoneRun {
+    completed_timestamp: number;
+    duration: number;
+    keystone_level: number;
+    keystone_affixes: refStruct[];
+    members: characterMythicKeystoneRunMember[];
+    dungeon: refStruct;
+    is_completed_within_time: boolean;
+    mythic_rating: {
+        color: rgbaColorStruct;
+        rating: number;
+    }
+    map_rating: {
+        color: rgbaColorStruct;
+        rating: number;
+    }    
+}
+
 export interface  characterMythicKeystoneSeasonData {
     $id: number;
-
+    links: linksStruct;
+    season: idkeyStruct;
+    best_runs: characterMythicKeystoneRun[];
 }
 
 export interface characterProfileData extends IApiDataDoc {
