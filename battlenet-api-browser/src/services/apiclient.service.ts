@@ -22,7 +22,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterProfileData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterHeirloomData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1129,44 +1129,48 @@ isLoggingIn(): boolean
 
 //#endregion
 
-//region Character Collections API
+//region Character Achievements API
 
-  getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<characterAchievementSummaryData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements`);
   }
 
-  getCharacterAchievementsStatistics(realmSlug: string, characterName: string): Promise<any>
+  getCharacterAchievementsStatistics(realmSlug: string, characterName: string): Promise<characterAchievementStatisticsData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements/statistics`);
   }
 
-  getCharacterAppearance(realmSlug: string, characterName: string): Promise<any>
+//region Character Appearance API  
+
+  getCharacterAppearanceSummary(realmSlug: string, characterName: string): Promise<characterAppearanceSummaryData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/appearance`);
   }
 
-  getCharacterHeirlooms(realmSlug: string, characterName: string): Promise<any>
+//region Character Collections API  
+
+  getCharacterHeirlooms(realmSlug: string, characterName: string): Promise<characterHeirloomData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/heirlooms`);
   }
 
-  getCharacterMounts(realmSlug: string, characterName: string): Promise<any>
+  getCharacterMounts(realmSlug: string, characterName: string): Promise<characterMountData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/mounts`);
   }
 
-  getCharacterPets(realmSlug: string, characterName: string): Promise<any>
+  getCharacterPets(realmSlug: string, characterName: string): Promise<characterPetData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/pets`);
   }
 
-  getCharacterToys(realmSlug: string, characterName: string): Promise<any>
+  getCharacterToys(realmSlug: string, characterName: string): Promise<characterToyData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/toys`);
   }
 
-  getCharacterTransmogs(realmSlug: string, characterName: string): Promise<any>
+  getCharacterTransmogs(realmSlug: string, characterName: string): Promise<characterTransmogData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
   }
@@ -1180,12 +1184,12 @@ isLoggingIn(): boolean
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters`);
   }
 
-  getCharacterDungeons(realmSlug: string, characterName: string): Promise<any>
+  getCharacterDungeons(realmSlug: string, characterName: string): Promise<characterDungeonData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/dungeons`);
   }
 
-  getCharacterRaids(realmSlug: string, characterName: string): Promise<any>
+  getCharacterRaids(realmSlug: string, characterName: string): Promise<characterRaidData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/raids`);
   }

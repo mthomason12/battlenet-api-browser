@@ -2,8 +2,199 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
+import { guildCrestStruct } from "./profile-guild";
+
+interface characterAchievementCriteria {
+    id: number;
+    is_completed: boolean;
+    child_criteria?: characterAchievementCriteria[];
+}
+
+interface characterAchievementItem {
+    id: number;
+    achievement: refStruct;
+    criteria: characterAchievementCriteria
+    completed_timestamp: number;
+}
+
+export interface characterAchievementSummaryData {
+    _links: linksStruct;
+    total_quantity: number;
+    total_points: number;
+    achievements: characterAchievementItem[];
+    character: characterRef;
+    statistics: hrefStruct;
+}
+
+interface characterAchievementStatisticsCategory {
+    id: number;
+    name: string;
+    sub_categories?: characterAchievementStatisticsCategory[];
+}
+
+interface characterAchievementStatisticItem {
+    id: number;
+    name: string;
+    last_updated_timestamp: number;
+    quantity: number;
+}
+
+export interface characterAchievementStatisticsData {
+    _links: linksStruct;    
+    character: characterRef;
+    statistics: characterAchievementStatisticItem[];
+    categories: characterAchievementStatisticsCategory[];
+
+}
+
+interface characterAppearanceItem {
+    id: number;
+    slot: {
+        type: string;
+        name: string;
+    }
+    enchant: number;
+    item_appearance_modifier_id: number;
+    internal_slot_id: number;
+    subclass: number;
+}
+
+interface characterCustomizationItem {
+    option: idNameStruct;
+    choice: {
+        id: number;
+        name?: string;
+        display_order: number;
+    }
+}
+
+export interface characterAppearanceSummaryData {
+    _links: linksStruct;
+    character: characterRef;
+    playable_race: refStruct;
+    playable_class: refStruct;
+    active_spec: refStruct;
+    gender: genderStruct;
+    faction: factionStruct;
+    guild_crest: guildCrestStruct;
+    items: characterAppearanceItem[];
+    customizations: characterCustomizationItem[];
+}
+
+interface characterHeirloomItem {
+    heirloom: refStruct;
+    upgrade: {
+        level: number;
+    }
+}
+
+export interface characterHeirloomData {
+    _links: linksStruct;
+    heirlooms: characterHeirloomItem[];
+}
+
+interface characterMountItem {
+    mount: refStruct;
+    is_useable: boolean;
+    is_favorite?: boolean;
+}
+
+export interface characterMountData {
+    _links: linksStruct;
+    mounts: characterMountItem[];
+}
+
+interface characterPetItem {
+    species: refStruct;
+    level: number;
+    quality: {
+        type: string;
+        name: string;
+    }
+    stats: {
+        breed_id: number;
+        health: number;
+        power: number;
+        speed: number;
+    }
+    name: string;
+    creature_display: idkeyStruct;
+    is_favorite?: boolean;
+    id: number;
+}
+
+export interface characterPetData {
+    _links: linksStruct;
+    pets: characterPetItem[];
+}
+
+interface characterToyItem {
+    toy: refStruct;
+    is_favorite?: boolean;
+}
+
+export interface characterToyData {
+    _links: linksStruct;
+    toys: characterToyItem[];
+}
+
+interface characterTransmogSlot {
+    slot: {
+        type: string;
+        name: string;
+    }
+    appearances: refStruct;
+}
+
+export interface characterTransmogData {
+    _links: linksStruct;
+    appearance_sets: refStruct[];
+    slots: characterTransmogSlot[];
+}
+
+interface characterDungeonEncounterItem {
+    encounter: refStruct;
+    completed_count: number;
+    last_kill_timestamp: number;
+}
+
+interface characterDungeonModeItem {
+    difficulty: {
+        type: string;
+        name: string;
+    }
+    status: {
+        type: string;
+        name: string;
+    }    
+    progress: {
+        completed_count: number;
+        total_count: number;
+        encounters: characterDungeonEncounterItem[];
+    }
+}
+
+interface characterDungeonInstanceItem {
+    instance: refStruct;
+    modes: characterDungeonModeItem[];
+}
+
+interface characterDungeonExpansionItem {
+    expansion: refStruct;
+    instances: characterDungeonInstanceItem[];
+}
+
+export interface characterDungeonData {
+    _links: linksStruct;
+    expansions: characterDungeonExpansionItem[];
+}
+
+export interface characterRaidData {
+    _links: linksStruct;
+    expansions: characterDungeonExpansionItem[];
+}
 
 
 export interface characterProfileData extends IApiDataDoc {
@@ -58,6 +249,18 @@ export interface characterProfileData extends IApiDataDoc {
     name_search: string;
     //additional data we've added to the API
     $id: string;
+    $achievementData: characterAchievementSummaryData;
+    $statisticsData: characterAchievementStatisticsData;
+    $appearanceData: characterAppearanceSummaryData;
+    //collections    
+    $heirloomData: characterHeirloomData;
+    $mountData: characterMountData;
+    $petData: characterPetData;
+    $toyData: characterToyData;
+    $transmogData: characterTransmogData;
+    //encounters
+    $dungeonData: characterDungeonData;
+    $raidData: characterRaidData;
 }
 
 export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
@@ -127,6 +330,45 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             results: result ? [result] : []
         }
     }
+
+    override getAPIExtra(apiClient: apiClientService, apiRec: characterProfileData): Promise<void> {
+        return new Promise((resolve)=>{
+            Promise.allSettled([
+                apiClient.getCharacterAchievementsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$achievementData = data;
+                }),
+                apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$statisticsData = data;
+                }),                
+                apiClient.getCharacterAppearanceSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$appearanceData = data;
+                }),
+                apiClient.getCharacterHeirlooms(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$heirloomData = data;
+                }),  
+                apiClient.getCharacterMounts(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$mountData = data;
+                }),  
+                apiClient.getCharacterPets(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$petData = data;
+                }),  
+                apiClient.getCharacterToys(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$toyData = data;
+                }),      
+                apiClient.getCharacterTransmogs(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$transmogData = data;
+                }),            
+                apiClient.getCharacterDungeons(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$dungeonData = data;
+                }),              
+                apiClient.getCharacterRaids(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$raidData = data;
+                }),                                                                                                              
+            ]).then(()=>{
+                resolve();
+            })
+        });
+    }    
 
     /**
      * Retrieve character by "id" (realm/name)

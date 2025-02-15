@@ -95,7 +95,7 @@ export interface guildActivityData {
 }
 
 
-interface guildCrestStruct {
+export interface guildCrestStruct {
     emblem: {
         id: number;
         media: mediaStruct;
