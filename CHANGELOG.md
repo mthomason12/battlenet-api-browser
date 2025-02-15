@@ -2,7 +2,7 @@
 
 #### Current-Dev (awaiting release number)
 
-#### v0.3.3-dev
+#### v0.3.4-dev
 
 - Added build-zip and github-make-release scripts.
 

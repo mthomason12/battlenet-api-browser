@@ -27,13 +27,14 @@ jobs:
     - name: Build    
       run: npm run github-make-release
       working-directory: battlenet-api-browser
-    - name: Upload web binary to release
-      uses: svenstaro/upload-release-action@v2     
+    - name: Upload web zip to release
+      uses: ncipollo/release-action@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: battlenet-api-browser/out/make/zip/web/battlenet-api-browser_*
-        asset_name: Battlenet API Browser (Web)
+        artifacts: "release.tar.gz,foo/*.txt"
+        bodyFile: "body.md"    
+        asset_name: Battlenet API Browser (Web) ${{ github.ref }}
         tag: ${{ github.ref }}
-        overwrite: true
         prerelease: true
+        allowUpdates: true
+
     
