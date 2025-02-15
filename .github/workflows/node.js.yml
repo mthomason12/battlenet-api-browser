@@ -18,8 +18,7 @@ jobs:
 #            artifact_name: mything
 #            asset_name: Battle.net API Browser - linux-amd64
           - os: windows-latest
-            artifact_name: "battlenet-api-browser-0.3.0-dev Setup.exe"
-            asset_name: Battle.net API Browser - Windows x64
+
          
 
     steps:
@@ -30,11 +29,19 @@ jobs:
     - name: Upload web zip to release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "release.tar.gz,foo/*.txt"
-        bodyFile: "body.md"    
+        artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
         asset_name: Battlenet API Browser (Web) ${{ github.ref }}
         tag: ${{ github.ref }}
         prerelease: true
         allowUpdates: true
+    - name: Upload windows setup.exe to release
+      if: runner.os == 'windows-latest'
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe"
+        asset_name: Battlenet API Browser (Windows x64) ${{ github.ref }}
+        tag: ${{ github.ref }}
+        prerelease: true
+        allowUpdates: true        
 
     
