@@ -1262,12 +1262,12 @@ isLoggingIn(): boolean
 
 //region Character PvP API
 
-getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string)
+getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-bracket/${bracket}`);
 }
 
-getCharacterPvPSummary(realmSlug: string, characterName: string)
+getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-summary`);
 }
@@ -1276,12 +1276,12 @@ getCharacterPvPSummary(realmSlug: string, characterName: string)
 
 //region Character Quests API
 
-getCharacterQuests(realmSlug: string, characterName: string)
+getCharacterQuests(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests`);
 }
 
-getCharacterCompletedQuests(realmSlug: string, characterName: string)
+getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests/completed`);
 }
@@ -1290,7 +1290,7 @@ getCharacterCompletedQuests(realmSlug: string, characterName: string)
 
 //region Character Reputation API
 
-getCharacterReputationsSummary(realmSlug: string, characterName: string)
+getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/reputations`);
 }
@@ -1300,7 +1300,7 @@ getCharacterReputationsSummary(realmSlug: string, characterName: string)
 
 //region Character Soulbinds API
 
-getCharacterSoulbinds(realmSlug: string, characterName: string)
+getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/soulbinds`);
 }
@@ -1311,7 +1311,7 @@ getCharacterSoulbinds(realmSlug: string, characterName: string)
 
 //region Character Specializations API
 
-getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
+getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<any>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/specializations`);
 }
