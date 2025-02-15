@@ -7,6 +7,18 @@
         "name": "Launch Edge against localhost",
         "url": "http://localhost:4200",
         "webRoot": "${workspaceFolder}/battlenet-api-browser"
+      },
+      {
+        "name": "Debug Electron Process",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/battlenet-api-browser",
+        "runtimeExecutable": "${workspaceFolder}/battlenet-api-browser/node_modules/.bin/electron",
+        "windows": {
+          "runtimeExecutable": "${workspaceFolder}/battlenet-api-browser/node_modules/.bin/electron.cmd"
+        },
+        "args" : ["."],
+        "outputCapture": "std"
       }
     ]
   }

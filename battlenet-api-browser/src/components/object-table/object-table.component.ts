@@ -45,20 +45,13 @@ export class ObjectTableComponent implements OnInit {
 
     flattenObj(ob: any): any {
  
-      // The object which contains the
-      // final result
       let result:any = {};
    
-      // loop through the object "ob"
+      // loop through object
       for (const i in ob) {
    
-          // We check the type of the i using
-          // typeof() function and recursively
-          // call the function again
-          if (Array.isArray(ob))
-          {
-            result[i] = this.flattenObj((ob as any)[i]);
-          } else if ((typeof ob[i]) === 'object') {
+          // check value type and deal with appropriately
+          if ((typeof ob[i]) === 'object') {
               const temp = this.flattenObj(ob[i]);
               for (const j in temp) {
    
@@ -67,7 +60,6 @@ export class ObjectTableComponent implements OnInit {
               }
           } 
    
-          // Else store ob[i] in result directly
           else {
               result[i] = ob[i];
           }

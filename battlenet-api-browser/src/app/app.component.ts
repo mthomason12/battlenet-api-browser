@@ -81,6 +81,13 @@ export class AppComponent implements OnDestroy, OnInit {
         }
       }
     }); 
+    //catch authentication if redirected to root.  The web app uses /auth-callback, but
+    //the Electron app redirects that right back here.
+    let params = new URL(document.location.toString()).searchParams;
+    if (params.has('code') && params.has('state')) {
+      console.log("Authenticating from the root");
+      this.apiCli.completeAuthentication(params.get('code')!, this.router);
+    }
   }
 
   connect()

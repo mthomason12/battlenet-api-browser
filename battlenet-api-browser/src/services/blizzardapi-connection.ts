@@ -1,11 +1,11 @@
-import { BlizzAPI, RegionIdOrName, ResponseError } from "blizzapi";
+import { BlizzAPI, RegionIdOrName } from "blizzapi";
 import { APIConnection } from "../lib/apiconnection";
-import { extensionDataStruct, userDataStruct } from "../model/userdata";
+import { extensionDataStruct } from "../model/userdata";
 import { Router } from "@angular/router";
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserInfo } from "angular-oauth2-oidc";
 import { HttpClient } from "@angular/common/http";
-import { apiClientSettings } from "./apiclientsettings";
+import { isElectron } from "../lib/utils";
 
 /**
  * Handles Client ID/Secret, OAuth, and HTTP calls to Battle.net API
@@ -43,23 +43,30 @@ export class BlizzardAPIConnection extends APIConnection {
     }
 
 
-    getClientSettings(): UserManagerSettings
-    {
+    getClientSettings(): UserManagerSettings {
         return {
             authority: 'https://oauth.battle.net',
             client_id: this.clientID,
             client_secret: this.clientSecret,
-            redirect_uri: window.location.origin+'/auth-callback',
+            redirect_uri: this.getRedirectURI(),
             post_logout_redirect_uri: window.location.origin+'/',
             silent_redirect_uri: window.location.origin+'/silent-callback.html',
             response_type:"code",
             scope:"openid wow.profile",
-            client_authentication: 'client_secret_basic',
+            client_authentication: "client_secret_basic",
             //filterProtocolClaims: true,
             //loadUserInfo: true,
             //automaticSilentRenew: true,
             //popup_redirect_uri: window.location.origin+'/auth-callback',      
-        };    
+        };  
+    }
+
+    getRedirectURI(): string {
+        if (isElectron()) {
+            return 'http://localhost:4200/auth-callback';
+        }
+        else
+            return window.location.origin+'/auth-callback';
     }
 
     override canConnect(): boolean {

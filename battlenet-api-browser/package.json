@@ -1,6 +1,6 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.0.0",
+  "version": "0.3.0d",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "main": "main.js",
@@ -53,7 +53,7 @@
     "@angular/build": "^19.1.6",
     "@angular/cli": "^19.1.6",
     "@angular/compiler-cli": "^19.1.5",
-    "@electron-forge/cli": "^7.6.0",
+    "@electron-forge/cli": "^7.6.1",
     "@electron-forge/maker-deb": "^7.6.0",
     "@electron-forge/maker-rpm": "^7.6.0",
     "@electron-forge/maker-squirrel": "^7.6.0",

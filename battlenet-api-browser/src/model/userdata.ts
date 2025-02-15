@@ -40,8 +40,8 @@ export class apiDataStruct extends dataStruct
   {
     return super.children().concat([
       this.wowpublic, 
-      this.wowaccount,
-      this.wowprofile
+      this.wowprofile,
+      this.wowaccount      
     ]);
   }
 
@@ -128,6 +128,18 @@ export class userDataStruct
   constructor (recDB: RecDB)
   {
     this.apiData = new apiDataStruct(recDB);
+  }
+
+  /**
+   * Returns an object suitable for use in the console, specifically userdata.service's 
+   * buildConsoleInterface
+   */
+  buildConsoleInterface() {
+    return {
+      settings: this.settings,
+      extensions: this.extensions,
+      apiData: this.apiData
+    }
   }
 
   /**

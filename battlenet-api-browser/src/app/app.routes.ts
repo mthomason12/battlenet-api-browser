@@ -20,60 +20,60 @@ export const routes: Routes = [
         { path: 'account', children: [           
             { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},               
             { path: 'characters/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowaccount","characters"], listPages: [
+                data:{list: ["wowaccount","account-characters"], listPages: [
                     { title: 'Table', component: CharacterTableComponent }
                 ]} 
             },
             { path: 'heirlooms', component: ListDetailHostComponent,
-                data:{ list: ["wowaccount","heirlooms"] } 
+                data:{ list: ["wowaccount","account-heirlooms"] } 
             },
             { path: 'mounts', component: ListDetailHostComponent,
-                data:{ list: ["wowaccount","mounts"] } 
+                data:{ list: ["wowaccount","account-mounts"] } 
             },
             { path: 'pets',  component: ListDetailHostComponent, 
-                data:{list: ["wowaccount","pets"]} 
+                data:{list: ["wowaccount","account-pets"]} 
             },    
         ]},
         { path: 'public', children: [
             { path: 'achievements', redirectTo: 'achievements/', pathMatch: 'full'},
             { path: 'achievements/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","achievementData"], detailComponent: AchievementComponent} 
+                data:{list: ["wowpublic","achievements"], detailComponent: AchievementComponent} 
             },
             { path: 'connected-realms', redirectTo: 'connected-realms/', pathMatch: 'full'},               
             { path: 'connected-realms/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","connectedRealmData"], detailComponent: ConnectedRealmComponent} 
+                data:{list: ["wowpublic","connected-realms"], detailComponent: ConnectedRealmComponent} 
             },       
             { path: 'covenants', redirectTo: 'covenants/', pathMatch: 'full'},               
             { path: 'covenants/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","covenantData"], detailComponent: CovenantComponent} 
+                data:{list: ["wowpublic","covenants"], detailComponent: CovenantComponent} 
             }, 
             { path: 'creature-families', redirectTo: 'creature-families/', pathMatch: 'full'},                
             { path: 'creature-families/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","creatureFamiliesData"], detailComponent: CreatureFamilyComponent} 
+                data:{list: ["wowpublic","creature-families"], detailComponent: CreatureFamilyComponent} 
             },  
             { path: 'creature-types', redirectTo: 'creature-types/', pathMatch: 'full'}, 
             { path: 'creature-types/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","creatureTypesData"], detailComponent: CreatureTypeComponent} 
+                data:{list: ["wowpublic","creature-types"], detailComponent: CreatureTypeComponent} 
             }, 
             { path: 'encounters', redirectTo: 'encounters/', pathMatch: 'full'},               
             { path: 'encounters/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","journalEncounterData"] } 
+                data:{list: ["wowpublic","journal-encounters"] } 
             },   
             { path: 'expansions', redirectTo: 'expansions/', pathMatch: 'full'},               
             { path: 'expansions/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","journalExpansionData"], detailComponent: JournalExpansionComponent} 
+                data:{list: ["wowpublic","journal-expansions"], detailComponent: JournalExpansionComponent} 
             },          
             { path: 'instances', redirectTo: 'instances/', pathMatch: 'full'},               
             { path: 'instances/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","journalInstanceData"] } 
+                data:{list: ["wowpublic","journal-instances"] } 
             },         
             { path: 'items', redirectTo: 'items/', pathMatch: 'full'},               
             { path: 'items/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","itemData"] } 
+                data:{list: ["wowpublic","items"] } 
             },   
             { path: 'mounts', redirectTo: 'mounts/', pathMatch: 'full'}, 
             { path: 'mounts/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","mountData"]} 
+                data:{list: ["wowpublic","mounts"]} 
             },      
             { path: 'pets', redirectTo: 'pets/', pathMatch: 'full'}, 
             { path: 'pets/:id', component: ListDetailHostComponent, 
@@ -81,38 +81,38 @@ export const routes: Routes = [
             },      
             { path: 'pet-abilities', redirectTo: 'pet-abilities/', pathMatch: 'full'}, 
             { path: 'pet-abilities/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","petAbilities"]} 
+                data:{list: ["wowpublic","pet-abilities"]} 
             },                                              
             { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
             { path: 'realms/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","realmData"], detailComponent: RealmComponent, hideKey: true} 
+                data:{list: ["wowpublic","realms"], detailComponent: RealmComponent, hideKey: true} 
             },  
             { path: 'regions', redirectTo: 'regions/', pathMatch: 'full'},   
             { path: 'regions/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","regionData"] } 
+                data:{list: ["wowpublic","region"] } 
             },       
             { path: 'reputation-factions', redirectTo: 'reputation-factions/', pathMatch: 'full'},   
             { path: 'reputation-factions/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","reputationFactions"] } 
+                data:{list: ["wowpublic","reputation-faction"] } 
             },  
             { path: 'reputation-tiers', redirectTo: 'reputation-tiers/', pathMatch: 'full'},   
             { path: 'reputation-tiers/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","reputationTiers"] } 
+                data:{list: ["wowpublic","reputation-tier"] } 
             },                                      
             { path: 'soulbinds', redirectTo: 'soulbinds/', pathMatch: 'full'},   
             { path: 'soulbinds/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowpublic","soulbindsData"], detailComponent: SoulbindComponent} 
+                data:{list: ["wowpublic","soulbinds"], detailComponent: SoulbindComponent} 
             },
             { path: '**', children: [] }
         ]},
         { path: 'profile', children: [
             { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},
             { path: 'characters/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowprofile","characters"], listComponent: CharacterMasterSearchComponent} 
+                data:{list: ["wowprofile","profile-characters"], listComponent: CharacterMasterSearchComponent} 
             },      
             { path: 'guilds', redirectTo: 'guilds/', pathMatch: 'full'},
             { path: 'guilds/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowprofile","guilds"], listComponent: GuildMasterSearchComponent} 
+                data:{list: ["wowprofile","profile-guilds"], listComponent: GuildMasterSearchComponent} 
             },                        
             { path: '**', children: [] }
         ]},       

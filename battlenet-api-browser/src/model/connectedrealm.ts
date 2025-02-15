@@ -64,7 +64,7 @@ export class connectedRealmsDataDoc extends dbData<connectedRealmIndex, connecte
     super(parent, recDB);
     this.icon = "hub";
     this.itemsName = "connected_realms";
-    this.type="connected_realms";
+    this.type="connected-realms";
     this.title="Connected Realms";
   }
 
