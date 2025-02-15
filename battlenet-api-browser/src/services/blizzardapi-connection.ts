@@ -1,11 +1,10 @@
-import { BlizzAPI, RegionIdOrName, ResponseError } from "blizzapi";
+import { BlizzAPI, RegionIdOrName } from "blizzapi";
 import { APIConnection } from "../lib/apiconnection";
-import { extensionDataStruct, userDataStruct } from "../model/userdata";
+import { extensionDataStruct } from "../model/userdata";
 import { Router } from "@angular/router";
 import { UserManager, UserManagerSettings } from "oidc-client-ts";
 import { UserInfo } from "angular-oauth2-oidc";
 import { HttpClient } from "@angular/common/http";
-import { apiClientSettings } from "./apiclientsettings";
 
 /**
  * Handles Client ID/Secret, OAuth, and HTTP calls to Battle.net API
