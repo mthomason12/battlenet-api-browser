@@ -1,7 +1,7 @@
 const { app, BrowserWindow, protocol } = require('electron/main')
 const fs = require('node:fs');
 const path = require('node:path');
-const url = require('node:url');
+const url = require('url');
 
 let win;
 
@@ -25,6 +25,22 @@ const createWindow = () => {
    */
   win.webContents.on('did-fail-load', () => { 
     win.loadURL(absRoot); 
+  });
+
+
+  /**
+   * Catch redirect events from oauth
+   */
+  win.webContents.on('will-redirect', (event)=>{
+    if (event.url.startsWith("http:")) {
+      //console.log("intercepting redirect "+event.url);
+      event.preventDefault();  
+      const thisUrl = new URL(event.url);
+      const params = new URLSearchParams(thisUrl.search);   
+      const code = params.get('code');
+      const state = params.get('state');
+      win.loadURL(absRoot+"?code="+code+"&state="+state); 
+    }
   });
 
   /**
@@ -53,26 +69,13 @@ app.on('activate', () => {
   }
 })
 
+
+
 /**
  * When application is ready, open the main window and set up our http interceptor
  */
 app.whenReady().then(() => {
   createWindow();
-
-  /** 
-   * Catch HTTP requests and redirect them back to the local file root.
-   * This is used to catch calls to the oauth callback (http://localhost:4200/)
-   */
-  protocol.handle('http', (request) => {
-    console.log("Handling HTTP");
-    return new Response('<h1>Redirecting...</h1>',{
-      headers: { 
-        'content-type': 'text/html',
-        'location': url.pathToFileURL(absRoot)
-      },
-      status: 301
-    });
-  });
 })
 
 

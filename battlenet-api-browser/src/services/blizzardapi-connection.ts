@@ -63,7 +63,7 @@ export class BlizzardAPIConnection extends APIConnection {
 
     getRedirectURI(): string {
         if (isElectron()) {
-            return 'http://localhost:4200/?auth-callback=true'
+            return 'http://localhost:4200/auth-callback';
         }
         else
             return window.location.origin+'/auth-callback';
