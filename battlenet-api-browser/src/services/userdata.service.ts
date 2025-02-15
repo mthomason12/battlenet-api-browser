@@ -110,9 +110,17 @@ export class UserdataService {
       console.log("Data loaded");      
       //send a notification to any subscribers
       this.dataLoadedEmitter.emit();  
-      // Global variable to allow easy console access, and possibly for external Javascript addons later... 
-      (window as any)['userData'] = this;  
+      this.buildConsoleInterface();
     });
+  }
+
+  buildConsoleInterface() {
+    // Global variable to allow easy console interaction, and possibly for external Javascript addons later... 
+    var consoleObject = { 
+      recDB: this.recDB
+    };
+    consoleObject = {...consoleObject, ...this.data.buildConsoleInterface() };
+    (window as any)['bna'] = consoleObject;
   }
 
   /**

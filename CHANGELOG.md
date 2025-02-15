@@ -9,6 +9,7 @@
 - Added Character Profiles data
 - Added Guild Profiles data
 - Added a simple query cache
+- The command "bna" can now be used in the browser console for debugging purposes
 - Extension support (partial)
 - "Rebuild Index" item available on tools tab where applicable
 - Settings allows changing connection type if additional types are available (requires extensions)

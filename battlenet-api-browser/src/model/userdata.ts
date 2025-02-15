@@ -131,6 +131,18 @@ export class userDataStruct
   }
 
   /**
+   * Returns an object suitable for use in the console, specifically userdata.service's 
+   * buildConsoleInterface
+   */
+  buildConsoleInterface() {
+    return {
+      settings: this.settings,
+      extensions: this.extensions,
+      apiData: this.apiData
+    }
+  }
+
+  /**
    * Get the extension data for a named extension
    * @param name 
    * @returns 
