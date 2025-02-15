@@ -33,7 +33,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
   displayData?: IApiDataDoc;
   dataObject?: INamedItem;
   lastUpdate?: Date;
-  canGetAll: boolean = false;
+  getAllable: boolean = false;
+  reloadable: boolean = false;
 
   name?: string;
 
@@ -72,20 +73,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   dataObjectIsLive(): boolean
   {
-    if (this.dataObject instanceof dbData)
-      return (this.dataObject.canReload());
-
-    return false;
+    return (this.dataObject instanceof dbData)
   }
 
   update() {
     if (this.displayData !== undefined)
     {
       //we're looking at the detail
-      if (this.dataObjectIsLive())
+      if (this.dataObjectIsLive()) {
         this.name = (this.dataObject as IMasterDetail).getRecName(this.displayData);
+        this.reloadable = (this.dataObject as IMasterDetail).canReloadItems();
+      } else {
+        this.reloadable = false;
+      }
       this.lastUpdate = new Date(this.displayData!.lastUpdate!);
-      this.canGetAll = false;
+      this.getAllable = false;
     }
     else
     {
@@ -95,9 +97,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
         (this.dataObject as IMasterDetail).getIndex(this.apiClient).then((index)=>{
           this.lastUpdate = new Date(index?.lastUpdate!);
         })      
-        this.canGetAll = (this.dataObject as IMasterDetail).canGetAllRecs();
+        this.reloadable = (this.dataObject as IMasterDetail).canReload()
+        this.getAllable = (this.dataObject as IMasterDetail).canGetAllRecs();
       } else {
-        this.canGetAll = false;
+        this.getAllable = false;
+        this.reloadable = false;
       }
       
     }
@@ -126,7 +130,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   getAll()
   {
-    if (this.canGetAll)
+    if (this.getAllable)
     {
       (this.dataObject as IMasterDetail).getAllRecs(this.apiClient, this.jobQueue);
     }

@@ -48,6 +48,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     super(parent, 0, "");
     this.recDB = recDB;
     this.isReloadable = true;
+    this.isItemReloadable = true;
     //this._index = new WeakRef(undefined as unknown as T1);
     //this._items = new WeakMap();
   }
@@ -388,6 +389,7 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, recDB);
     this.crossLink = true;
+    this.isItemReloadable = false;
   }
 
   //these functions shouldn't ever get called
@@ -568,6 +570,7 @@ export interface IMasterDetail extends IApiDataDoc, INamedItem
   clear(): Promise<void>;
   canGetAllRecs(): boolean;
   canReload(): boolean;
+  canReloadItems(): boolean;
   canRebuildIndex(): boolean;
   getIndex(api: apiClientService): Promise<IApiIndexDoc | undefined>
   getIndexItems(idx: IApiIndexDoc): IIndexItem[];

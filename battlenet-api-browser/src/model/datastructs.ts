@@ -251,6 +251,9 @@ export abstract class dataDoc extends dataStruct
   @jsonIgnore()
   isReloadable: boolean = false;
 
+  @jsonIgnore()
+  isItemReloadable: boolean = false;
+
   public get loaded() : boolean {
     return this.lastUpdate !== undefined;
   }
@@ -285,6 +288,10 @@ export abstract class dataDoc extends dataStruct
 
   canReload(): boolean {
     return this.isReloadable;
+  }
+
+  canReloadItems(): boolean {
+    return this.isItemReloadable;
   }
 
   override checkLoaded(apiclient: apiClientService): Promise<void>
