@@ -305,6 +305,31 @@ export interface characterEquipmentData {
     equipped_items: characterEquippedItem[];
 }
 
+interface characterHunterPetItem {
+    id: number;
+    name: string;
+    level: number;
+    creature: refStruct;
+    slot: number;
+    creature_display: idkeyStruct;
+
+}
+
+export interface characterHunterPetsData {
+    _links: linksStruct;
+    character:characterRef;
+    hunter_pets: characterHunterPetItem[];
+}
+
+export interface characterMediaData {
+    _links: linksStruct;
+    character:characterRef;
+    assets: {
+        key: string;
+        value: string;
+    }[];
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -371,6 +396,9 @@ export interface characterProfileData extends IApiDataDoc {
     $raidData: characterRaidData;
     //equipment
     $equipmentData: characterEquipmentData;
+    //hunter pets
+    $hunterPetsData: characterHunterPetsData;
+    $mediaData: characterMediaData;
 }
 
 
@@ -478,7 +506,14 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                 }),     
                 apiClient.getCharacterEquipmentSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$equipmentData = data;
-                }),                                                                                                                              
+                }),       
+                apiClient.getCharacterHunterPetsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$hunterPetsData = data;
+                }),
+                apiClient.getCharacterMediaSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$mediaData = data;
+                }),                
+
             ]).then(()=>{
                 resolve();
             })

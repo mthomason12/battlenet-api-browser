@@ -22,7 +22,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1207,7 +1207,7 @@ isLoggingIn(): boolean
 
   //region Character Hunter Pets API
 
-  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<characterHunterPetsData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/hunter-pets`);
   }
@@ -1216,7 +1216,7 @@ isLoggingIn(): boolean
 
 //region Character Media API
 
-  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<characterMediaData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/character-media`);
   }
