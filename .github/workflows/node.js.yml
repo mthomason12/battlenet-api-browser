@@ -36,7 +36,7 @@ jobs:
         prerelease: true
         allowUpdates: true
     - name: Upload windows setup.exe to release
-      if: runner.os == 'windows-latest'
+      if: runner.os == 'Windows'
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe"
