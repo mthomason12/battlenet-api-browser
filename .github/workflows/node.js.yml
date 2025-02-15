@@ -38,7 +38,7 @@ jobs:
         artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
         name: Battlenet API Browser (Web) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-web
-        body: Check CHANGELOG for changes
+        body: Version for hosting on a webserver.  Check CHANGELOG for changes
         prerelease: true
         allowUpdates: true
     - name: Upload windows setup.exe to release
@@ -48,7 +48,7 @@ jobs:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe"
         name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-win32-x64
-        body: Check CHANGELOG for changes
+        body: A packaged Electron version for Windows x64
         prerelease: true
         allowUpdates: true        
 
