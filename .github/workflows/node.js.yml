@@ -16,8 +16,6 @@ jobs:
       matrix:
         include:
 #          - os: ubuntu-latest
-#            artifact_name: mything
-#            asset_name: Battle.net API Browser - linux-amd64
           - os: windows-latest
 
          
