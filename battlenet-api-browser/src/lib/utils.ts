@@ -58,9 +58,5 @@ export function Slugify(str: string): string {
  * Detect if we're running under electron.
  */
 export function isElectron(): boolean {
-  // Renderer process
-  if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
-      return true;
-  }
-  return false;
+  return (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) 
 }
