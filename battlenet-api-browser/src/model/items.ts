@@ -1,7 +1,7 @@
 import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
+import { apiSearchResponse, dataStruct, hrefStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, itemStatsStruct, keyStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 export interface itemData extends IApiDataDoc
@@ -61,6 +61,10 @@ export interface itemData extends IApiDataDoc
             level?: {
                 value: number,
                 display_string: string
+            }
+            playable_classes?: {
+                links: hrefStruct;
+                display_string: string;
             }
         },
         level?: {

@@ -22,7 +22,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterHeirloomData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterMountData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1198,7 +1198,7 @@ isLoggingIn(): boolean
 
   //region Character Equipment API
 
-  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<characterEquipmentData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/equipment`);
   }

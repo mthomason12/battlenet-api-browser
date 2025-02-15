@@ -2,7 +2,7 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 import { guildCrestStruct } from "./profile-guild";
 
@@ -196,6 +196,114 @@ export interface characterRaidData {
     expansions: characterDungeonExpansionItem[];
 }
 
+interface characterEquippedItemSocket {
+    socket_type: {
+        name: string;
+        type: string;
+    }
+    item: refStruct;
+    display_string: string;
+    media: mediaStruct;
+}
+
+interface characterEquippedItemStat {
+    type: {
+        name: string;
+        type: string;
+    }
+    value: number;
+    display: {
+        display_string: string;
+        color: rgbaColorStruct;
+    }
+}
+
+interface characterEquippedItem {
+    item: refStruct;
+    sockets: characterEquippedItemSocket[];
+    slot: {
+        name: string;
+        type: string;
+    }
+    quantity: number;
+    context: number;
+    bonus_list: number[];
+    quality: {
+        name: string;
+        type: string;
+    }
+    name: string;
+    modified_appearance_id: number;
+    media: mediaStruct;
+    item_class: refStruct;
+    item_subclass: refStruct;
+    inventory_type: {
+        name: string;
+        type: string;
+    }
+    binding: {
+        name: string;
+        type: string;
+    }
+    armor: {
+        value: number;
+        display: {
+            display_string: string;
+            color: rgbaColorStruct;
+        }
+    }
+    stats: characterEquippedItemStat[];
+    sell_price?: {
+        value: number;
+        display_strings: {
+            header: string;
+            gold: string; //yes, these ARE strings here
+            silver: string;
+            copper: string;
+        }
+    }
+    requirements?: {
+        level?: {
+            value: number,
+            display_string: string
+        }
+        playable_classes?: {
+            links: hrefStruct;
+            display_string: string;
+        }
+    }
+    set?: {
+        item_set: refStruct;
+        items: {
+            item: refStruct;
+            is_equipped?: boolean;
+        }[];
+        effects: {
+            display_string: string;
+            required_count: number;
+            is_active: boolean;
+        }[];
+    }
+    level: {
+        value: number;
+        display_string: string;
+    }
+    transmog: {
+        item: refStruct;
+        display_string: string;
+        item_modified_appearance_id: number;
+    }
+    durability: {
+        value: number;
+        display_string: string;
+    }    
+}
+
+export interface characterEquipmentData {
+    _links: linksStruct;
+    character:characterRef;
+    equipped_items: characterEquippedItem[];
+}
 
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
@@ -261,7 +369,11 @@ export interface characterProfileData extends IApiDataDoc {
     //encounters
     $dungeonData: characterDungeonData;
     $raidData: characterRaidData;
+    //equipment
+    $equipmentData: characterEquipmentData;
 }
+
+
 
 export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
     id: number,
@@ -363,7 +475,10 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                 }),              
                 apiClient.getCharacterRaids(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$raidData = data;
-                }),                                                                                                              
+                }),     
+                apiClient.getCharacterEquipmentSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$equipmentData = data;
+                }),                                                                                                                              
             ]).then(()=>{
                 resolve();
             })
