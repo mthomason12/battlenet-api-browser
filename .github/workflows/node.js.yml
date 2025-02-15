@@ -1,0 +1,38 @@
+name: Node.js CI
+
+on:
+  push:
+     tags:
+       - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: mything
+            asset_name: Battle.net API Browser - linux-amd64
+          - os: windows-latest
+            artifact_name: "battlenet-api-browser-0.3.0-dev Setup.exe"
+            asset_name: Battle.net API Browser - Windows x64
+         
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build    
+      run: npm run github-make-release
+    - name: Upload web binary to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: out/make/zip/web/battlenet-api-browser_*
+        asset_name: mything
+        tag: ${{ github.ref }}
+        overwrite: true
+        prerelease: true
+    
