@@ -53,3 +53,14 @@ export function Slugify(str: string): string {
   const regex = /[_ ]/g;
   return (str.replace(regex,"-").toLowerCase());
 }
+
+/**
+ * Detect if we're running under electron.
+ */
+export function isElectron(): boolean {
+  // Renderer process
+  if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
+      return true;
+  }
+  return false;
+}
