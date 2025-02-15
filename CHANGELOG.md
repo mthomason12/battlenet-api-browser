@@ -1,14 +1,18 @@
-## Changelog
+### Changelog
 
 #### Current-Dev (awaiting release number)
-(todo)
 
-#### v0.3d
+
+- Added build-zip and github-make-release scripts.
+
+#### v0.3-dev
 
 ##### Upgrade Notes
+
 - Storage of API key has changed, if upgrading you'll need to re-input your Client ID and Secret.
 
 ##### New Features
+
 - Added Character Profiles data
 - Added Guild Profiles data
 - Added a simple query cache
@@ -21,17 +25,20 @@
 - policy.jsonc can be used to override settings and disable parts of the settings UI at runtime. See public/policy.example.jsonc for commented example
 
 ##### Bug Fixes
+
 - Graceful error message if browser is unable to run Angular or doesn't have IndexedDB.
 - Records now delete properly when using the tools "clear this data type" button.
 - API 404s no longer hang jobs in the job queue.
 - Rendering of tables within tables in "(Data)" view has been reduced to reduce complexity hanging browsers
 - OAuth now works properly on Electron
 
-#### v0.2d
+#### v0.2-dev
 
 ##### New features
+
 - Added items database.  New items can be added to the local items table by running searches.
 - Indexes for each data type are now cached.
 
-#### v0.1d
+#### v0.1-dev
+
 Initial in-development preview

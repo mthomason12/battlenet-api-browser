@@ -1,13 +1,13 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.3.0d",
+  "version": "0.3.0-dev",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",
-    "electron-build": "npm install && ng build && electron-forge package",
+    "electron-build": "npm install && ng build && electron-forge package ",
     "electron-make-zip": "npm install && ng build && electron-forge make --targets @electron-forge/maker-zip",
     "electron-make-deb": "npm install && ng build && electron-forge make --targets @electron-forge/maker-deb",
     "electron-make-win": "npm install && ng build && electron-forge make --targets @electron-forge/maker-squirrel",
@@ -16,7 +16,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "make": "electron-forge make",
-    "update": "npm update"
+    "update": "npm update",
+    "github-make-release": "ng build && electron-forge package && npm run build-zip",
+    "build-zip": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web"
   },
   "private": true,
   "dependencies": {
@@ -77,6 +79,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "mkdirp": "^3.0.1",
+    "npm-build-zip": "^1.0.4",
     "ts-node": "^10.9.2",
     "typescript": "~5.6.2",
     "vite": "^6.0.9",
