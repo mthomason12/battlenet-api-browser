@@ -2,6 +2,7 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
+import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 import { guildCrestStruct } from "./profile-guild";
@@ -499,19 +500,10 @@ export interface characterSoulbindData {
     }[]
 }
 
-interface characterSpecializationSpellTooltip {
-    spell: refStruct;
-    description: string;
-    cast_time?: string;
-    power_cost?: string;
-    range?: string;
-    cooldown?: string;
-}
-
 interface characterSpecializationPVPTalent {
     selected: {
         talent: refStruct;
-        spell_tooltip: characterSpecializationSpellTooltip;
+        spell_tooltip: spellTooltip;
     }
     slot_number: number;
 }
@@ -524,7 +516,7 @@ interface characterSpecializationLoadout {
         rank: number;
         tooltip?: {
             talent: refStruct;
-            spell_tooltip: characterSpecializationSpellTooltip;
+            spell_tooltip: spellTooltip;
         }
     }
 }
