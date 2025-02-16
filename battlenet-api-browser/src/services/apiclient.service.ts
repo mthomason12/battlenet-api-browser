@@ -25,7 +25,7 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
-          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1293,7 +1293,7 @@ getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<c
 
 //region Character Reputation API
 
-getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<any>
+getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<characterReputationData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/reputations`);
 }
@@ -1303,7 +1303,7 @@ getCharacterReputationsSummary(realmSlug: string, characterName: string): Promis
 
 //region Character Soulbinds API
 
-getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<any>
+getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<characterSoulbindData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/soulbinds`);
 }

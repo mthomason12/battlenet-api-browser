@@ -446,6 +446,59 @@ export interface characterQuestCompletedData {
     quests: refStruct[];
 }
 
+export interface characterReputationData {
+    _links: linksStruct;
+    character: characterRef;
+    reputations: {
+        faction: refStruct;
+        standing: {
+            raw: number;
+            value: number;
+            max: number;
+            tier?: number;
+            name: string;
+            renown_level?: number;
+        }
+        paragon?: {
+            raw: number;
+            value: number;
+            max: number;
+        }
+    }[]
+}
+
+interface characterSoulbindTrait {
+    trait: refStruct;
+    tier: number;
+    display_order: number;
+}
+
+interface characterSoulbindConduitSocket{
+    conduit_socket: {
+        type: {
+            name: string;
+            type: string;
+        }
+        socket: {
+            conduit: refStruct;
+        }
+        rank: number;
+    }
+    tier: number;
+    display_order: number;
+}
+
+export interface characterSoulbindData {
+    _links: linksStruct;
+    character: characterRef;
+    chosen_covenant: refStruct;
+    renown_level: number;
+    soulbinds: {
+        soulbind: refStruct;
+        traits: (characterSoulbindTrait | characterSoulbindConduitSocket)[]
+    }[]
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -499,7 +552,7 @@ export interface characterProfileData extends IApiDataDoc {
     //additional data we've added to the API
     $id: string;
     $achievementData: characterAchievementSummaryData;
-    $statisticsData: characterAchievementStatisticsData;
+    $achievementStatisticsData: characterAchievementStatisticsData;
     $appearanceData: characterAppearanceSummaryData;
     //collections    
     $heirloomData: characterHeirloomData;
@@ -527,6 +580,10 @@ export interface characterProfileData extends IApiDataDoc {
     //quests
     $questData: characterQuestData;
     $questCompletedData: characterQuestCompletedData;
+    //reputations
+    $reputationData: characterReputationData;
+    //soulbinds
+    $soulbindData: characterSoulbindData;
 }
 
 
@@ -606,7 +663,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     apiRec.$achievementData = data;
                 }),
                 apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$statisticsData = data;
+                    apiRec.$achievementStatisticsData = data;
                 }),                
                 apiClient.getCharacterAppearanceSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$appearanceData = data;
@@ -676,6 +733,12 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                 apiClient.getCharacterCompletedQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$questCompletedData = data!;
                 }),                             
+                apiClient.getCharacterReputationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$reputationData = data!;
+                }), 
+                apiClient.getCharacterSoulbinds(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$soulbindData = data!;
+                }), 
 
             ]).then(()=>{
                 resolve();
