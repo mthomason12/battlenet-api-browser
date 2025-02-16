@@ -1,21 +1,20 @@
-import { dataStruct, linksStruct, refStruct, keyStruct, mediaDataStruct, IIndexItem, IApiIndexDoc, IApiDataDoc } from './datastructs';
+import { dataStruct, linksStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
+import { APICreatureFamiliesIndex, APICreatureFamily, APICreatureType, APICreatureTypesIndex } from './api/creature';
+import { refStruct } from './api/shared';
 
 //#region Creature Family
 
-export interface creatureFamilyData extends IApiDataDoc
+export interface creatureFamilyData extends APICreatureFamily, IApiDataDoc
 {
-  _links: linksStruct;
   id: number;
   name: string;
-  specialization: refStruct;
-  media: keyStruct;
   $mediaData?: mediaDataStruct;  
 }
 
-export interface creatureFamilyIndex extends IApiIndexDoc
+export interface creatureFamilyIndex extends APICreatureFamiliesIndex, IApiIndexDoc
 {
 }
 
@@ -57,25 +56,13 @@ export class creatureFamiliesDataDoc extends dbData<creatureFamilyIndex, creatur
 
 //#region Creature Type
 
-export interface creatureTypeData extends IApiDataDoc
+export interface creatureTypeData extends APICreatureType, IApiDataDoc
 {
-  _links: linksStruct;
   id: number;
   name: string;
 }
 
-
-interface creatureTypeIndexEntry extends IIndexItem
-{
-  key: keyStruct;
-  name: string;
-  id: number;
-}
-
-export interface creatureTypeIndex extends IApiIndexDoc
-{
-  _links: linksStruct;
-  achievements: creatureTypeIndexEntry;
+export interface creatureTypeIndex extends APICreatureTypesIndex, IApiIndexDoc {
 }
 
 export class creatureTypesDataDoc extends dbData<creatureTypeIndex, creatureTypeData>

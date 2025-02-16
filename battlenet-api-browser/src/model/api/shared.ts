@@ -62,6 +62,9 @@ export interface positionStruct {
     facing: number;
 }
 
+/**
+ * Media reference - id and key
+ */
 export interface mediaStruct {
     key: hrefStruct;
     id: number;
