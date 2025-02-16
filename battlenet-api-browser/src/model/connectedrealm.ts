@@ -2,59 +2,17 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
+import { APIConnectedRealmsIndex, APIConnectedRealmItem } from './api/connected-realm';
 
-interface connectedRealmType
-{
-    type?: string;
-    name?: string;
-}
 
-interface connectedRealmRealm
-{
-    id?: number;
-    region?: refStruct;
-    connected_realm?: hrefStruct;
-    name?: string;
-    category?: string;
-    locale?: string;
-    timezone?: string;
-    type?: connectedRealmType;
-    is_tournament?: boolean;
-    slug?: string;
-}
-
-interface connectedRealmPopulation
-{
-    type?: string;
-    name?: string;
-}
-
-interface connectedRealmStatus
-{
-    type?: string;
-    name?: string;
-}
-
-export interface connectedRealmData extends IApiDataDoc
-{
-    _links?: linksStruct;
-    id?: number;
-    has_queue?: boolean;
-    status?: connectedRealmStatus;
-    population?: connectedRealmPopulation;
-    realms?: connectedRealmRealm[];
-    mythic_leaderboards?: hrefStruct;
-    auctions?: hrefStruct;
+export interface connectedRealmData extends APIConnectedRealmItem, IApiDataDoc {
 }
 
 interface connectedRealmIndexItem extends IIndexItem, hrefStruct
 {
 }
 
-export interface connectedRealmIndex extends IApiIndexDoc
-{
-  _links: linksStruct;
-  realms: connectedRealmIndexItem[];
+export interface connectedRealmIndex extends IApiIndexDoc, APIConnectedRealmsIndex {
 }
 
 export class connectedRealmsDataDoc extends dbData<connectedRealmIndex, connectedRealmData>

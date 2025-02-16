@@ -1,0 +1,57 @@
+/**
+ * Connected Realm API Return Types
+ */
+
+import { hrefStruct, linksStruct, refStruct } from "./shared";
+
+
+/**
+ * Connected Realms Index
+ * /data/wow/connected-realm/index
+ * 
+ */
+export interface APIConnectedRealmsIndex {
+    _links: linksStruct;
+    connected_realms: refStruct[];
+}
+
+
+/**
+ * Connected Realm
+ * /data/wow/connected-realm/{connectedRealmId}
+ */
+export interface APIConnectedRealm {
+    _links: linksStruct;
+    id: number;
+    has_queue?: boolean;
+    status?: {
+        type?: string;
+        name?: string;
+    }
+    population?: {
+        type?: string;
+        name?: string;
+    }
+    realms?: APIConnectedRealmItem[];
+    mythic_leaderboards?: hrefStruct;
+    auctions?: hrefStruct;
+}
+
+/**
+ * Individual realm from @see APIConnectedRealm
+ */
+export interface APIConnectedRealmItem
+{
+    region: refStruct;
+    connected_realm: hrefStruct;
+    name: string;
+    category?: string;
+    locale?: string;
+    timezone?: string;
+    type?: {
+        type?: string;
+        name?: string;
+    }
+    is_tournament?: boolean;
+    slug: string;
+}
