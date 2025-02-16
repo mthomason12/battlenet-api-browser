@@ -2,6 +2,7 @@
  * Various shared data structures from throughout the API
  */
 
+
 export interface linksStruct {
     self: hrefStruct;
     user?: hrefStruct;
@@ -88,4 +89,31 @@ export interface spellTooltip {
     power_cost?: string;
     range?: string;
     cooldown?: string;
+}
+
+export interface regionedNameStruct  {
+    it_IT?: string,
+    ru_RU?: string,
+    en_GB?: string,
+    zh_TW?: string,
+    ko_KR?: string,
+    en_US?: string,
+    es_MX?: string,
+    pt_BR?: string,
+    es_ES?: string,
+    zh_CN?: string,
+    fr_FR?: string,
+    de_DE?: string
+}
+
+export interface APISearch {
+    page: number;
+    pageSize: number;
+    maxPageSize: number;
+    pageCount: number;
+    results: APISearchResult[];
+}
+
+export interface APISearchResult {
+    key: hrefStruct;
 }

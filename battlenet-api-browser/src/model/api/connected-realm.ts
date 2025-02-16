@@ -2,7 +2,7 @@
  * Connected Realm API Return Types
  */
 
-import { hrefStruct, linksStruct, refStruct } from "./shared";
+import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "./shared";
 
 
 /**
@@ -53,4 +53,45 @@ export interface APIConnectedRealmItem {
     }
     is_tournament?: boolean;
     slug: string;
+}
+
+/**
+ * Connected Realm Search
+ * /data/wow/search/connected-realm
+ */
+export interface APIConnectedRealmSearch extends APISearch {
+    results: APIConnectedRealmSearchItem[];
+}
+
+export interface APIConnectedRealmSearchItem  extends APISearchResult {
+    data: {
+        realms: {
+            is_tournament: boolean;
+            timezone: string;
+            name: regionedNameStruct;
+            id: number;
+            region: {
+                name: regionedNameStruct;
+                id: number;
+            }
+            category: regionedNameStruct;
+            locale: string;
+            type: {
+                name: regionedNameStruct;
+                type: string;
+            }
+            slug: string;
+        }[]
+        id: number;
+        has_queue: boolean;
+        status: {
+            name: regionedNameStruct;
+            type: string;
+        }
+        population: {
+            name: regionedNameStruct;
+            type: string;
+        }        
+
+    }
 }
