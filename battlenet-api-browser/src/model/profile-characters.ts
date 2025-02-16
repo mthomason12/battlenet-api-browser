@@ -639,12 +639,21 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                         })
                     })
                 }), 
-                apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$professionData = data;
+                apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$professionData = data!;
                 }), 
-                apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$pvpData = data;
-                    //todo - get brackets
+                apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$pvpData = data!;
+                    apiRec.$pvpData.brackets.forEach((bracket)=>{
+                        //extract the bracket name from bracket.href
+                        //e.g from "https://us.api.blizzard.com/profile/wow/character/wyrmrest-accord/gregmex/pvp-bracket/3v3?namespace=profile-us"
+                        const regex = /\/([\w\d]*)\?/;
+                        const matches = regex.exec(bracket.href);
+                        const bracketName = matches![1];  //e.g "3v3"
+                        apiClient.getCharacterPvPBracketStatistics(apiRec.realm.slug,Slugify(apiRec.name_search), bracketName)?.then((data)=>{
+                            apiRec.$pvpBrackets.push(data!);
+                        });                   
+                    })
                 }),                                
 
             ]).then(()=>{
