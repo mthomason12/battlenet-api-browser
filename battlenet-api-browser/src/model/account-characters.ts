@@ -1,42 +1,17 @@
-import { IApiDataDoc, IApiIndexDoc, dataStruct, factionStruct, genderStruct, hrefStruct, IIndexItem, linksStruct, realmStruct, refStruct } from './datastructs';
+import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
+import { APIAccountProfileCharacter, APIAccountProfileSummary } from './api/account-profile';
 
 
-export interface accountProfileSummaryLinks extends linksStruct
+export interface accountProfileIndex extends APIAccountProfileSummary, IApiIndexDoc
 {
-  user: hrefStruct;
-  profile: hrefStruct;
-}
-
-export interface accountProfileCharacterData extends IApiDataDoc
-{
-  level?: number;
-  character?: hrefStruct;
-  protected_character?: hrefStruct;
-  account?: number;
-  realm?: realmStruct;
-  playable_class?: refStruct;
-  playable_race?: refStruct;
-  gender?: genderStruct;
-  faction?: factionStruct;
-}
-
-interface accountProfileWoWAccountData extends IIndexItem
-{
-  id: number;
-  characters: accountProfileCharacterData[];
-}
-
-export interface accountProfileIndex extends IApiIndexDoc
-{
-  _links: accountProfileSummaryLinks;
   id?: recID;
-  wow_accounts: accountProfileWoWAccountData[];
-  characters?: accountProfileCharacterData[];
+  characters?: APIAccountProfileCharacter[];
 }
 
+//todo - also pull the protected character profile summary
 
 export class accountCharsDataDoc extends dbDataIndexOnly<accountProfileIndex>
 {
@@ -73,14 +48,14 @@ export class accountCharsDataDoc extends dbDataIndexOnly<accountProfileIndex>
     });
   }
 
-  override indexCompare(a: accountProfileCharacterData, b: accountProfileCharacterData)
+  override indexCompare(a: APIAccountProfileCharacter, b: APIAccountProfileCharacter)
   {
     return ('' + a.name).localeCompare(b.name!); 
   }
 
   override getIndexItemName(item: IIndexItem): string
   {
-    const itm = (item as accountProfileCharacterData);
+    const itm = (item as APIAccountProfileCharacter);
     return `${item.name} - L${itm.level} ${itm.playable_race?.name} ${itm.playable_class?.name} (${itm.realm?.name})`;
   }
 

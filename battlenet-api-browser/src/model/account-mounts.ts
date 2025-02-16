@@ -1,20 +1,12 @@
-import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
+import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { accountProfileSummaryLinks } from './account-characters';
+import { APIAccountMount, APIAccountMountsCollectionSummary } from './api/account-profile';
 
 
-interface accountMountsEntry extends IApiDataDoc {
-    mount: refStruct;
+export interface accountMounts extends APIAccountMountsCollectionSummary, IApiIndexDoc {
 }
-
-export interface accountMounts extends IApiIndexDoc
-{
-  _links: accountProfileSummaryLinks;
-  mounts: accountMountsEntry[]
-}
-
 
 export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts>
 {
@@ -38,7 +30,7 @@ export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts>
 
     override getIndexItemName(item: IIndexItem): string
     {
-        const itm = (item as accountMountsEntry);
+        const itm = (item as APIAccountMount);
         return `${itm.mount.id}: ${itm.mount.name}`;
     }
 }

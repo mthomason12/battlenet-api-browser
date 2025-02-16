@@ -164,7 +164,7 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   }
 
   getIndexItemName(item: IIndexItem): string {
-    return item.name;
+    return item.name!;
   }
 
   /**

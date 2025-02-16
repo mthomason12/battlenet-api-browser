@@ -1,23 +1,12 @@
-import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, refStruct } from './datastructs';
+import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { accountProfileSummaryLinks } from './account-characters';
+import { APIAccountHeirloom, APIAccountHeirloomsCollectionSummary } from './api/account-profile';
 
 
-interface accountHeirloomsEntry extends IApiDataDoc {
-    heirloom: refStruct;
-    upgrade: {
-        level: number;
-    }
+export interface accountHeirlooms extends APIAccountHeirloomsCollectionSummary, IApiIndexDoc {
 }
-
-export interface accountHeirlooms extends IApiIndexDoc
-{
-  _links: accountProfileSummaryLinks;
-  heirlooms: accountHeirloomsEntry[]
-}
-
 
 export class accountHeirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
 {
@@ -41,7 +30,7 @@ export class accountHeirloomsDataDoc extends dbDataIndexOnly<accountHeirlooms>
 
     override getIndexItemName(item: IIndexItem): string
     {
-        const itm = (item as accountHeirloomsEntry);
+        const itm = item as APIAccountHeirloom;
         return `${itm.heirloom.name} (Upgrade ${itm.upgrade.level})`;
     }
 }

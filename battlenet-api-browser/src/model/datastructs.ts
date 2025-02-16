@@ -358,8 +358,8 @@ export abstract class dataDoc extends dataStruct
 
 export interface IIndexItem
 {
-  id: recID;
-  name: string;
+  id?: recID;
+  name?: string;
 }
 
 export interface IApiIndexDoc extends IApiDataDoc
@@ -486,7 +486,6 @@ export interface rgbaColorStruct {
   a: number
 }
 
-/** used in Guild Activity API */
 export interface characterRef{
   key: keyStruct;
   id: number;

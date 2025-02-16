@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AbstractMasterComponent } from '../abstract-master/abstract-master.component';
-import { accountProfileCharacterData, accountCharsDataDoc } from '../../../model/account-characters';
+import { accountCharsDataDoc } from '../../../model/account-characters';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,8 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import '../../../lib/utils';
-import { transform } from 'lodash';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { APIAccountProfileCharacter } from '../../../model/api/account-profile';
 
 interface charRow {
   name: string;
@@ -56,7 +56,7 @@ export class CharacterTableComponent extends AbstractMasterComponent<accountChar
   override processData(): void {
     //data has been set, lets clone over what we need
     var source = new MatTableDataSource<charRow>();
-    (this.indexItems! as accountProfileCharacterData[]).forEach((item)=>{
+    (this.indexItems! as APIAccountProfileCharacter[]).forEach((item)=>{
       source.data.push(
         {
           name: item.name!,
