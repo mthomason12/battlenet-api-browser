@@ -22,7 +22,10 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
+          characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
+          characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
+          characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1239,7 +1242,7 @@ isLoggingIn(): boolean
 
 //region Character Professions API
 
-  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<characterProfessionData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/professions`);
   }

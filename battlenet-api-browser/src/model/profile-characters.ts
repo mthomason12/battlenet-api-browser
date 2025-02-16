@@ -368,11 +368,31 @@ interface characterMythicKeystoneRun {
     }    
 }
 
-export interface  characterMythicKeystoneSeasonData {
+export interface characterMythicKeystoneSeasonData {
     $id: number;
     links: linksStruct;
     season: idkeyStruct;
     best_runs: characterMythicKeystoneRun[];
+}
+
+interface characterProfession {
+    profession: refStruct;
+    tiers: {
+        skill_points: number;
+        max_skill_points: number;
+        tier: idNameStruct;
+        known_recipes: refStruct;
+    }[];
+    specialization?: {
+        name: string;
+    }
+}
+
+export interface characterProfessionData {
+    links: linksStruct;
+    character: characterRef;
+    primaries: characterProfession[];
+    secondaries : characterProfession[];
 }
 
 export interface characterProfileData extends IApiDataDoc {
@@ -448,6 +468,8 @@ export interface characterProfileData extends IApiDataDoc {
     //mythic keystones
     $mythicKeystoneData: characterMythicKeystoneSummaryData;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
+    //professions
+    $professionData: characterProfessionData;
 }
 
 
@@ -567,10 +589,16 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     //get each season
                     apiRec.$mythicKeystoneSeasons = new Array();
                     apiRec.$mythicKeystoneData.seasons.forEach((season)=>{
-                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: any) => {
-                            apiRec.$mythicKeystoneSeasons.push(data)
+                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: characterMythicKeystoneSeasonData | undefined) => {
+                            if (data) {
+                                data.$id - data.season.id;
+                                apiRec.$mythicKeystoneSeasons.push(data);
+                            }
                         })
                     })
+                }), 
+                apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$professionData = data;
                 }),                                
 
             ]).then(()=>{
