@@ -25,7 +25,7 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
-          characterProfileData, characterPVPBracketData, characterPVPData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1279,12 +1279,12 @@ getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<charac
 
 //region Character Quests API
 
-getCharacterQuests(realmSlug: string, characterName: string): Promise<any>
+getCharacterQuests(realmSlug: string, characterName: string): Promise<characterQuestData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests`);
 }
 
-getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<any>
+getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<characterQuestCompletedData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests/completed`);
 }

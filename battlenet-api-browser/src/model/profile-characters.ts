@@ -434,6 +434,18 @@ export interface characterPVPBracketData {
     }
 }
 
+export interface characterQuestData {
+    _links: linksStruct;
+    character: characterRef;
+    in_progress: refStruct[];
+}
+
+export interface characterQuestCompletedData {
+    _links: linksStruct;
+    character: characterRef;
+    quests: refStruct[];
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -512,6 +524,9 @@ export interface characterProfileData extends IApiDataDoc {
     //pvp
     $pvpData: characterPVPData;
     $pvpBrackets: characterPVPBracketData[];
+    //quests
+    $questData: characterQuestData;
+    $questCompletedData: characterQuestCompletedData;
 }
 
 
@@ -654,7 +669,13 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                             apiRec.$pvpBrackets.push(data!);
                         });                   
                     })
-                }),                                
+                }),   
+                apiClient.getCharacterQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$questData = data!;
+                }),        
+                apiClient.getCharacterCompletedQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$questCompletedData = data!;
+                }),                             
 
             ]).then(()=>{
                 resolve();
