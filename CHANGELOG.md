@@ -2,6 +2,11 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.28-dev
+
+- Use correct path to release body file on github actions
+- Extract numerous API interfaces to separate official and application interfaces
+
 #### v0.3.27-dev
 
 - Add -web to end of webserver zip filename
