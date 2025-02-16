@@ -1,6 +1,6 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.3.17-dev",
+  "version": "0.3.18-dev",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "github-make-release-Linux": "npm ci && ng build && electron-forge make && ls -R out ",
     "github-make-release-Windows": "npm ci && ng build && electron-forge make && npm run build-zip && ls -R out",
     "github-make-release-macOS": "npm ci && ng build && electron-forge make && ls -R out",
-    "build-zip": "npm run build-zip-web && npm run build-zip-linux",
+    "build-zip": "npm run build-zip-web",
     "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web"
   },
   "private": true,
