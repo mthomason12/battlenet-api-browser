@@ -2,9 +2,20 @@
 
 #### Current-Dev (awaiting release number)
 
+
+#### v0.3.10-dev
+
+- Added preliminary build scripts for Linux and OSX
+
+##### New Features
+
+- Added all remaining data to Character Profiles
+
+
 #### v0.3.9-dev
 
 - Added build-zip and github-make-release scripts.
+
 
 #### v0.3-dev
 
@@ -33,12 +44,14 @@
 - Rendering of tables within tables in "(Data)" view has been reduced to reduce complexity hanging browsers
 - OAuth now works properly on Electron
 
+
 #### v0.2-dev
 
 ##### New features
 
 - Added items database.  New items can be added to the local items table by running searches.
 - Indexes for each data type are now cached.
+
 
 #### v0.1-dev
 
