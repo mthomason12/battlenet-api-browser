@@ -395,6 +395,45 @@ export interface characterProfessionData {
     secondaries : characterProfession[];
 }
 
+export interface characterPVPData {
+    _links: linksStruct;
+    brackets: hrefStruct[];
+    honor_level: number;
+    pvp_map_statistics: {
+        world_map: idNameStruct;
+        match_statistics: {
+            played: number;
+            won: number;
+            lost: number;
+        }
+    }[];
+    honorable_kills: number;
+    character: characterRef;
+}
+
+export interface characterPVPBracketData {
+    _links: linksStruct;
+    character: characterRef;
+    faction: factionStruct;
+    bracket: {
+        id: number;
+        type: string;
+    }
+    rating: number;
+    season: idkeyStruct;
+    tier: idkeyStruct;
+    season_match_statistics: {
+        played: number;
+        won: number;
+        lost: number;
+    };
+    weekly_match_statistics: {
+        played: number;
+        won: number;
+        lost: number;
+    }
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -470,6 +509,9 @@ export interface characterProfileData extends IApiDataDoc {
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
     //professions
     $professionData: characterProfessionData;
+    //pvp
+    $pvpData: characterPVPData;
+    $pvpBrackets: characterPVPBracketData[];
 }
 
 
@@ -599,6 +641,10 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                 }), 
                 apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$professionData = data;
+                }), 
+                apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                    apiRec.$pvpData = data;
+                    //todo - get brackets
                 }),                                
 
             ]).then(()=>{

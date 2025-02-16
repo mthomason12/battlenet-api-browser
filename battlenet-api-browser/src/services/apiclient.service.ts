@@ -25,7 +25,7 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
-          characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+          characterProfileData, characterPVPBracketData, characterPVPData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1265,12 +1265,12 @@ isLoggingIn(): boolean
 
 //region Character PvP API
 
-getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<any>
+getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<characterPVPBracketData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-bracket/${bracket}`);
 }
 
-getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<any>
+getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<characterPVPData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-summary`);
 }
