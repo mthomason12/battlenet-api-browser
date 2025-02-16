@@ -18,7 +18,14 @@
     "make": "electron-forge make",
     "update": "npm update",
     "github-make-release": "npm ci && ng build && electron-forge make && npm run build-zip",
-    "build-zip": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web"
+    "github-make-release-Linux":"npm ci && ng build && electron-forge make && npm run build-zip-linux",
+    "github-make-release-Windows":"npm ci && ng build && electron-forge make && npm run build-zip-windows",
+    "github-make-release-macOS":"npm ci && ng build && electron-forge make && npm run build-zip-osx",
+    "build-zip": "npm run build-zip-web && npm run build-zip-linux",
+    "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web",
+    "build-zip-linux": "mkdirp out/make/zip/linux && npm-build-zip --source=out/battlenet-api-browser-linux-x64 --destination=out/make/zip/linux",
+    "build-zip-windows": "mkdirp out/make/zip/windows && npm-build-zip --source=out/battlenet-api-browser-windows-x64 --destination=out/make/zip/windows",
+    "build-zip-osx": "mkdirp out/make/zip/osx && npm-build-zip --source=out/battlenet-api-browser* --destination=out/make/zip/osx"
   },
   "private": true,
   "dependencies": {
