@@ -12,14 +12,14 @@ import { hrefStruct, idNameStruct, linksStruct, mediaStruct, refStruct, spellToo
  * 
  */
 export interface APICovenantIndex {
-    _links: linksStruct;
-    covenants: APICovenantItem[]
+  _links: linksStruct;
+  covenants: APICovenantItem[];
 }
 
 export interface APICovenantItem {
-    id: number;
-    name: string;
-    key: hrefStruct;
+  id: number;
+  name: string;
+  key: hrefStruct;
 }
 
 /**
