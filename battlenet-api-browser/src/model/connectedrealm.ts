@@ -1,8 +1,8 @@
-import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from './datastructs';
+import { dataStruct, hrefStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIConnectedRealmsIndex, APIConnectedRealmItem, APIConnectedRealm } from './api/connected-realm';
+import { APIConnectedRealmsIndex, APIConnectedRealm } from './api/connected-realm';
 
 
 export interface connectedRealmData extends APIConnectedRealm, IApiDataDoc {
@@ -10,8 +10,7 @@ export interface connectedRealmData extends APIConnectedRealm, IApiDataDoc {
   name: string;
 }
 
-interface connectedRealmIndexItem extends IIndexItem, hrefStruct
-{
+interface connectedRealmIndexItem extends IIndexItem, hrefStruct {
 }
 
 export interface connectedRealmIndex extends IApiIndexDoc, APIConnectedRealmsIndex {
