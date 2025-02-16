@@ -30,6 +30,7 @@ import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/connect
 import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/item';
 import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/creature';
 import { APIAuctions, APICommodities } from '../model/api/auction-house';
+import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/journal';
 
 interface APIQuery{
   apiEndpoint: string;
@@ -483,42 +484,42 @@ isLoggingIn(): boolean
 
   //region Journal API
 
-  getJournalExpansionsIndex(): Promise<journalExpansionsIndex| undefined>
+  getJournalExpansionsIndex(): Promise<APIJournalExpansionsIndex | undefined>
   {
     return this.queryStatic(`/data/wow/journal-expansion/index`);
   }
 
-  getJournalExpansion(id: number): Promise<journalExpansionData| undefined>
+  getJournalExpansion(id: number): Promise<APIJournalExpansion | undefined>
   {
     return this.queryStatic(`/data/wow/journal-expansion/${id}`);
   }
 
-  getJournalEncountersIndex(): Promise<any| undefined>
+  getJournalEncountersIndex(): Promise<APIJournalEncountersIndex| undefined>
   {
     return this.queryStatic(`/data/wow/journal-encounter/index`);
   }
 
-  getJournalEncounter(id: number): Promise<any| undefined>
+  getJournalEncounter(id: number): Promise<APIJournalEncounter | undefined>
   {
     return this.queryStatic(`/data/wow/journal-encounter/${id}`);
   }
 
-  getJournalEncounterSearch(params: string): Promise<any| undefined>
+  getJournalEncounterSearch(params: string): Promise<apiSearchResponse<APIJournalEncounterSearchItem> | undefined>
   {
     return this.queryStatic(`/data/wow/search/journal-encounter?params=${params}`);
   }
 
-  getJournalInstancesIndex(): Promise<any| undefined>
+  getJournalInstancesIndex(): Promise<APIJournalInstancesIndex | undefined>
   {
     return this.queryStatic(`/data/wow/journal-instance/index`);
   }
 
-  getJournalInstance(id: number): Promise<any| undefined>
+  getJournalInstance(id: number): Promise<APIJournalInstance| undefined>
   {
     return this.queryStatic(`/data/wow/journal-instance/${id}`);
   }
 
-  getJournalInstanceMedia(id: number): Promise<mediaDataStruct| undefined>
+  getJournalInstanceMedia(id: number): Promise<APIJournalInstanceMedia | undefined>
   {
     return this.queryStatic(`/data/wow/media/journal-instance/${id}`);
   }

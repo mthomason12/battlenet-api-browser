@@ -88,7 +88,7 @@ export interface spellTooltip {
     cooldown?: string;
 }
 
-export interface regionedNameStruct  {
+export interface regionedNameStruct {
     it_IT?: string,
     ru_RU?: string,
     en_GB?: string,
@@ -109,8 +109,8 @@ export interface weaponStruct {
         max_value: number,
         display_string: string,
         damage_class: {
-        type: string,
-        name: string
+            type: string,
+            name: string
         }
     },
     attack_speed: {
@@ -122,7 +122,7 @@ export interface weaponStruct {
         display_string: string,
     }
 }
-  
+
 export interface itemStatStruct {
     type: {
         type: string,
@@ -137,10 +137,10 @@ export interface itemStatStruct {
 }
 
 export interface rgbaColorStruct {
-  r: number,
-  g: number,
-  b: number,
-  a: number
+    r: number,
+    g: number,
+    b: number,
+    a: number
 }
 
 
