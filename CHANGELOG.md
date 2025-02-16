@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.22-dev
+
+- Removed per-os tags from github release uploads.
+
 #### v0.3.21-dev
 
 - Added RPM build for Github

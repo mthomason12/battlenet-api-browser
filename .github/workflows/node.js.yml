@@ -48,7 +48,6 @@ jobs:
       with:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/windows/*.zip"
         name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
-        tag: ${{ steps.get-version.outputs.version }}-win32-x64
         body: Standalone Electron versions for Windows x64
         prerelease: true
         allowUpdates: true 
@@ -58,7 +57,6 @@ jobs:
       with:
         artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
         name: Battlenet API Browser (Linux x64) ${{ steps.get-version.outputs.version }}
-        tag: ${{ steps.get-version.outputs.version }}-linux
         body: Standalone Electron versions for Linux
         prerelease: true
         allowUpdates: true        
@@ -68,7 +66,6 @@ jobs:
       with:
         artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
         name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
-        tag: ${{ steps.get-version.outputs.version }}-osx-m1
         body: Standalone Electron versions for OSX (M1)
         prerelease: true
         allowUpdates: true 
@@ -78,7 +75,6 @@ jobs:
       with:
         artifacts: "-api-browser/out/make/zip/darwin/*.zip"
         name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
-        tag: ${{ steps.get-version.outputs.version }}-osx-intel
         body: Standalone Electron versions for OSX (Intel)
         prerelease: true
         allowUpdates: true 
