@@ -1,9 +1,7 @@
 import { achievementData, achievementsIndex } from '../model/achievements';
-import { creatureFamilyData, creatureFamilyIndex, creatureTypeData, creatureTypeIndex } from '../model/creature';
 import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
 import { realmData, realmIndex } from '../model/realm';
 import { mountData, mountsIndex } from '../model/mounts';
-import { connectedRealmData, connectedRealmIndex } from '../model/connectedrealm';
 import { apiSearchResponse, mediaDataStruct } from '../model/datastructs';
 import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 import { accountHeirlooms } from '../model/account-heirlooms';
@@ -21,7 +19,6 @@ import { BlizzardAPIConnection } from './blizzardapi-connection';
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
@@ -30,6 +27,9 @@ import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/achievements';
 import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/connected-realm';
+import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/item';
+import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/creature';
+import { APIAuctions, APICommodities } from '../model/api/auction-house';
 
 interface APIQuery{
   apiEndpoint: string;
@@ -247,12 +247,12 @@ isLoggingIn(): boolean
 
   //#region Auctions API
 
-  getAuctions(connectedRealmID: number): Promise<any| undefined>
+  getAuctions(connectedRealmID: number): Promise<APIAuctions| undefined>
   {
     return this.queryStatic(`/data/wow/connected-realm/auctions/${connectedRealmID}`);
   } 
 
-  getCommodities(): Promise<any| undefined>
+  getCommodities(): Promise<APICommodities| undefined>
   {
     return this.queryStatic(`/data/wow/auctions/commodities`);
   }   
@@ -333,37 +333,37 @@ isLoggingIn(): boolean
 
   //#region Creature API
 
-  getCreature(id: number): Promise<any| undefined>
+  getCreature(id: number): Promise<APICreature| undefined>
   {
     return this.queryStatic(`/data/wow/creature/${id}`);
   }  
 
-  getCreatureDisplayMedia(displayId: number): Promise<mediaDataStruct| undefined>
+  getCreatureDisplayMedia(displayId: number): Promise<APICreatureDisplayMedia| undefined>
   {
     return this.queryStatic(`/data/wow/media/creature-display/${displayId}`);
   }    
 
-  getCreatureFamilyIndex(): Promise<creatureFamilyIndex| undefined>
+  getCreatureFamilyIndex(): Promise<APICreatureFamiliesIndex| undefined>
   {
     return this.queryStatic(`/data/wow/creature-family/index`);
   }    
 
-  getCreatureFamily(id: number): Promise<creatureFamilyData| undefined>
+  getCreatureFamily(id: number): Promise<APICreatureFamily| undefined>
   {
     return this.queryStatic(`/data/wow/creature-family/${id}`);
   }      
 
-  getCreatureFamilyMedia(id: number): Promise<mediaDataStruct| undefined>
+  getCreatureFamilyMedia(id: number): Promise<APICreatureFamilyMedia| undefined>
   {
     return this.queryStatic(`/data/wow/media/creature-family/${id}`);
   }      
 
-  getCreatureTypesIndex(): Promise<creatureTypeIndex| undefined>
+  getCreatureTypesIndex(): Promise<APICreatureTypesIndex| undefined>
   {
     return this.queryStatic(`/data/wow/creature-type/index`);
   }      
 
-  getCreatureType(id: number): Promise<creatureTypeData| undefined>
+  getCreatureType(id: number): Promise<APICreatureType| undefined>
   {
     return this.queryStatic(`/data/wow/creature-type/${id}`);
   }    
@@ -405,42 +405,42 @@ isLoggingIn(): boolean
 
   //#region Item API
 
-  getItem(id: number): Promise<itemData| undefined>
+  getItem(id: number): Promise<APIItem| undefined>
   {
     return this.queryStatic(`/data/wow/item/${id}`);
   }      
 
-  getItemSearch(params: APISearchParams): Promise<apiSearchResponse<itemSearchData>| undefined>
+  getItemSearch(params: APISearchParams): Promise<apiSearchResponse<APIItemSearchItem>| undefined>
   {
     return this.queryStatic(`/data/wow/search/item`,`name.en_US=${params.toQueryString()}`);
   }        
 
-  getItemMedia(id: number): Promise<mediaDataStruct| undefined>
+  getItemMedia(id: number): Promise<APIItemMedia| undefined>
   {
     return this.queryStatic(`/data/wow/media/item/${id}`);
   }    
 
-  getItemClassesIndex(): Promise<any| undefined>
+  getItemClassesIndex(): Promise<APIItemClassesIndex| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/index`);
   }    
 
-  getItemClass(id: number): Promise<any| undefined>
+  getItemClass(id: number): Promise<APIItemClass| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/${id}`);
   }       
 
-  getItemSetsIndex(): Promise<any| undefined>
+  getItemSetsIndex(): Promise<APIItemSetsIndex| undefined>
   {
     return this.queryStatic(`/data/wow/item-set/index`);
   }    
 
-  getItemSet(id: number): Promise<any| undefined>
+  getItemSet(id: number): Promise<APIItemSet| undefined>
   {
     return this.queryStatic(`/data/wow/item-set/${id}`);
   }       
   
-  getItemSubclass(id: number, subid: number): Promise<any| undefined>
+  getItemSubclass(id: number, subid: number): Promise<APIItemSubclass| undefined>
   {
     return this.queryStatic(`/data/wow/item-class/${id}/item-subclass/${subid}`);
   }     

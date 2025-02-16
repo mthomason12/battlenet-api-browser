@@ -14,6 +14,9 @@ export interface idNameStruct {
     name: string;
 }
 
+/**
+ * A very common structure, typically used when needing a reference to something of another type
+ */
 export interface refStruct {
     id: number;
     name: string;
