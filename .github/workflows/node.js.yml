@@ -41,6 +41,6 @@ jobs:
       with:
         artifacts: ${{matrix.artifacts}}
         name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes        
+        bodyfile: release-body.md
         prerelease: true
         allowUpdates: true

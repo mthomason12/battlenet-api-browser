@@ -1,0 +1,22 @@
+Check CHANGELOG for recent changes.
+
+##### Webserver Version
+
+- battlenet-api-browser-(version)-web.zip - Web version zipfile
+
+##### Windows
+
+- battlenet-api-browser-(version)-Setup.exe - Windows x64 Setup.exe installer
+- battlenet-api-browser-win32-x64(version).zip - Windows x64 zip no-installer 
+
+##### Linux
+
+- battlenet-api-browser-(version).x86_64.rpm - Linux x64 RPM installer
+- battlenet-api-browser-(version)_amd64.deb - Linux x64 DEB installer
+- battlenet-api-browser-(version)linux-x64.zip - Linux x64 zip no-installer
+
+##### Mac OSX
+
+- battlenet-api-browser-(version)darwin-m2.zip - Mac OSX M2 zipfile no-installer
+- battlenet-api-browser-(version)darwin-x64.zip - Mac OSX Intel zipfile no-installer
+

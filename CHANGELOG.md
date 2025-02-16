@@ -2,6 +2,11 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.26-dev
+
+- Add -web to end of webserver zip filename
+- Remove electron-forge zip maker, manually zip on windows
+
 #### v0.3.25-dev
 
 - Simplify github action file

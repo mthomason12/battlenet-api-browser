@@ -1,6 +1,6 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.3.25-dev",
+  "version": "0.3.26-dev",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "license": "MIT",
@@ -20,14 +20,15 @@
     "update": "npm update",
     "github-make-release": "npm ci && ng build && electron-forge make && npm run build-zip",
     "github-make-release-ubuntu-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-linux && ls -R out ",
-    "github-make-release-windows-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip && ls -R out",
+    "github-make-release-windows-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-web && npm run build-zip-windows && ls -R out",
     "github-make-release-macos-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-macOS && ls -R out ",
     "github-make-release-macos-13": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-macOSi && ls -R out ",    
     "build-zip": "npm run build-zip-web",
-    "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web",
-    "build-zip-linux": "mkdirp out/make/zip/linux && npm-build-zip --source=out/battlenet-api-browser-linux-x64 --destination=out/make/zip/linux --name=linux-x64",
-    "build-zip-macOS": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-arm64 --destination=out/make/zip/darwin --name=darwin-m2",
-    "build-zip-macOSi": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-x64 --destination=out/make/zip/darwin --name=darwin-x64"    
+    "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web --name=-web",
+    "build-zip-windows": "mkdirp out/make/zip/windows && npm-build-zip --source=out/battlenet-api-browser-win32-x64 --destination=out/make/zip/windows --name=-win-x64",    
+    "build-zip-linux": "mkdirp out/make/zip/linux && npm-build-zip --source=out/battlenet-api-browser-linux-x64 --destination=out/make/zip/linux --name=-linux-x64",
+    "build-zip-macOS": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-arm64 --destination=out/make/zip/darwin --name=-darwin-m2",
+    "build-zip-macOSi": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-x64 --destination=out/make/zip/darwin --name=-darwin-x64"    
  
   },
   "private": true,
