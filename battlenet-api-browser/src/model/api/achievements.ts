@@ -14,6 +14,8 @@ export interface APIAchievementsIndex {
     achievements: refStruct[];
 }
 
+//region Achievement
+
 /**
  * Achievement
  * /data/wow/achievement/{achievementId}
@@ -56,6 +58,8 @@ interface achievementChildCriteria {
     achievement?: refStruct;
 }
 
+//region Achievement Media
+
 /**
  * Achievement Media
  * /data/wow/media/achievement/{achievementId}
@@ -63,6 +67,7 @@ interface achievementChildCriteria {
 export interface APIAchievementMedia extends mediaDataStruct {
 }
 
+//region Achievement Categories
 
 /**
  * Achievement Categories Index

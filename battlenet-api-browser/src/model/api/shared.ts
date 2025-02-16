@@ -81,12 +81,11 @@ export interface assetStruct {
     file_data_id: number;
 }
 
-export interface spellTooltip
-{
-  spell: refStruct;
-  description: string;
-  cast_time?: string;
-  power_cost?: string;  
-  range?: string;
-  cooldown?: string;
+export interface spellTooltip {
+    spell: refStruct;
+    description: string;
+    cast_time?: string;
+    power_cost?: string;
+    range?: string;
+    cooldown?: string;
 }

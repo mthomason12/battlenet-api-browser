@@ -4,6 +4,9 @@ import { hrefStruct, linksStruct } from "./shared";
  * Auction House API Return Types
  */
 
+
+//region Auctions
+
 /**
  * Auctions
  * /data/wow/connected-realm/{connectedRealmId}/auctions
@@ -33,6 +36,8 @@ export interface APIAuctionsItem {
     quantity: number;
     time_left: string;
 }
+
+//region Commodities
 
 /**
  * Commodities

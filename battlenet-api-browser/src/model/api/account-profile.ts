@@ -7,6 +7,8 @@ import {
  * Account Profile API Return Types
  */
 
+//region Account Profile Summary
+
 /**
  * Individual character from @see APIAccountProfileSummary
  */
@@ -38,6 +40,8 @@ export interface APIAccountProfileSummary {
     }[]
 }
 
+//region Protected Character Profile Summary
+
 /**
  * Protected Character Profile Summary
  * /profile/user/wow/protected-character/realmID/
@@ -65,6 +69,8 @@ export interface APIProtectedCharacterProfileSummary {
     wow_account: number;
 }
 
+//region Account Collections Index
+
 /**
  * Account Collections Index
  * /profile/user/wow/collections
@@ -80,6 +86,7 @@ export interface APIAccountCollectionsIndex {
     transmogs: hrefStruct;
 }
 
+//region Account Heirlooms
 
 /**
  * Individual Heirloom from @see APIAccountHeirloomsCollectionSummary
@@ -102,6 +109,8 @@ export interface APIAccountHeirloomsCollectionSummary {
     heirlooms: APIAccountHeirloom[]
 }
 
+//region Account Mounts
+
 /**
  * Individual Mount from  @see APIAccountMountsCollectionSummary
  */
@@ -119,6 +128,8 @@ export interface APIAccountMountsCollectionSummary {
     _links: linksStruct;
     mounts: APIAccountMount[];
 }
+
+//region Account Pets
 
 /**
  * Individual pet from @see APIAccountPetsCollectionSummary
@@ -154,6 +165,8 @@ export interface APIAccountPetsCollectionSummary {
     unlocked_battle_pet_slots: number;
 }
 
+//region Account Toys
+
 /**
  * Individual item from @see APIAccountToysCollectionSummary
  */
@@ -170,6 +183,8 @@ export interface APIAccountToysCollectionSummary {
     _links: linksStruct;
     toys: APIAccountToy[];
 }
+
+//region Account Transmog
 
 /**
  * Individual item from @see APIAccountTransmogCollectionSummary
