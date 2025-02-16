@@ -499,6 +499,49 @@ export interface characterSoulbindData {
     }[]
 }
 
+interface characterSpecializationSpellTooltip {
+    spell: refStruct;
+    description: string;
+    cast_time?: string;
+    power_cost?: string;
+    range?: string;
+    cooldown?: string;
+}
+
+interface characterSpecializationPVPTalent {
+    selected: {
+        talent: refStruct;
+        spell_tooltip: characterSpecializationSpellTooltip;
+    }
+    slot_number: number;
+}
+
+interface characterSpecializationLoadout {
+    is_active: boolean;
+    talent_loadout_code: string;
+    selected_class_talents: {
+        id: number;
+        rank: number;
+        tooltip?: {
+            talent: refStruct;
+            spell_tooltip: characterSpecializationSpellTooltip;
+        }
+    }
+}
+
+export interface characterSpecializationData {
+    _links: linksStruct;
+    specializations: {
+        specialization: refStruct;
+        glyphs?: refStruct[];
+        pvp_talent_slots?: characterSpecializationPVPTalent[];
+        loadouts: characterSpecializationLoadout[];
+    }[]
+    active_specialization: refStruct;
+    character: characterRef;
+    active_hero_talent_tree: refStruct;
+}
+
 export interface characterProfileData extends IApiDataDoc {
     _links: linksStruct;
     id: number;
@@ -551,11 +594,11 @@ export interface characterProfileData extends IApiDataDoc {
     name_search: string;
     //additional data we've added to the API
     $id: string;
-    $achievementData: characterAchievementSummaryData;
-    $achievementStatisticsData: characterAchievementStatisticsData;
+    $achievements: characterAchievementSummaryData;
+    $achievementStatistics: characterAchievementStatisticsData;
     $appearanceData: characterAppearanceSummaryData;
     //collections    
-    $heirloomData: characterHeirloomData;
+    $heirlooms: characterHeirloomData;
     $mountData: characterMountData;
     $petData: characterPetData;
     $toyData: characterToyData;
@@ -564,26 +607,28 @@ export interface characterProfileData extends IApiDataDoc {
     $dungeonData: characterDungeonData;
     $raidData: characterRaidData;
     //equipment
-    $equipmentData: characterEquipmentData;
+    $equipment: characterEquipmentData;
     //hunter pets
-    $hunterPetsData: characterHunterPetsData;
+    $hunterPets: characterHunterPetsData;
     //media
     $mediaData: characterMediaData;
     //mythic keystones
     $mythicKeystoneData: characterMythicKeystoneSummaryData;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
     //professions
-    $professionData: characterProfessionData;
+    $professions: characterProfessionData;
     //pvp
     $pvpData: characterPVPData;
     $pvpBrackets: characterPVPBracketData[];
     //quests
-    $questData: characterQuestData;
-    $questCompletedData: characterQuestCompletedData;
+    $quests: characterQuestData;
+    $questsCompleted: characterQuestCompletedData;
     //reputations
-    $reputationData: characterReputationData;
+    $reputation: characterReputationData;
     //soulbinds
-    $soulbindData: characterSoulbindData;
+    $soulbinds: characterSoulbindData;
+    //specializations
+    $specializations: characterSpecializationData;
 }
 
 
@@ -660,16 +705,16 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         return new Promise((resolve)=>{
             Promise.allSettled([
                 apiClient.getCharacterAchievementsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$achievementData = data;
+                    apiRec.$achievements = data;
                 }),
                 apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$achievementStatisticsData = data;
+                    apiRec.$achievementStatistics = data;
                 }),                
                 apiClient.getCharacterAppearanceSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$appearanceData = data;
                 }),
                 apiClient.getCharacterHeirlooms(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$heirloomData = data;
+                    apiRec.$heirlooms = data;
                 }),  
                 apiClient.getCharacterMounts(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mountData = data;
@@ -690,10 +735,10 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     apiRec.$raidData = data;
                 }),     
                 apiClient.getCharacterEquipmentSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$equipmentData = data;
+                    apiRec.$equipment = data;
                 }),       
                 apiClient.getCharacterHunterPetsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$hunterPetsData = data;
+                    apiRec.$hunterPets = data;
                 }),
                 apiClient.getCharacterMediaSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mediaData = data;
@@ -712,7 +757,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     })
                 }), 
                 apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
-                    apiRec.$professionData = data!;
+                    apiRec.$professions = data!;
                 }), 
                 apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$pvpData = data!;
@@ -728,17 +773,20 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     })
                 }),   
                 apiClient.getCharacterQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
-                    apiRec.$questData = data!;
+                    apiRec.$quests = data!;
                 }),        
                 apiClient.getCharacterCompletedQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
-                    apiRec.$questCompletedData = data!;
+                    apiRec.$questsCompleted = data!;
                 }),                             
                 apiClient.getCharacterReputationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
-                    apiRec.$reputationData = data!;
+                    apiRec.$reputation = data!;
                 }), 
                 apiClient.getCharacterSoulbinds(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
-                    apiRec.$soulbindData = data!;
-                }), 
+                    apiRec.$soulbinds = data!;
+                }),
+                apiClient.getCharacterSpecializationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$specializations = data!;
+                }),                 
 
             ]).then(()=>{
                 resolve();

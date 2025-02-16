@@ -25,7 +25,7 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
-          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterToyData, characterTransmogData } from '../model/profile-characters';
+          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1314,7 +1314,7 @@ getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<charact
 
 //region Character Specializations API
 
-getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<any>
+getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<characterSpecializationData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/specializations`);
 }
