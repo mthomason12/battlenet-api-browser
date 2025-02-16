@@ -28,6 +28,8 @@ import { characterAchievementStatisticsData, characterAchievementSummaryData, ch
           characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
+import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/achievements';
+import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/connected-realm';
 
 interface APIQuery{
   apiEndpoint: string;
@@ -216,27 +218,27 @@ isLoggingIn(): boolean
 
 //#region Achievements API
 
-  getAchievementIndex(): Promise<achievementsIndex| undefined>
+  getAchievementIndex(): Promise<APIAchievementsIndex | undefined>
   {
     return this.queryStatic<achievementsIndex>('/data/wow/achievement/index');
   }
 
-  getAchievement(id: number): Promise<achievementData| undefined>
+  getAchievement(id: number): Promise<APIAchievement | undefined>
   {
     return this.queryStatic<achievementData>(`/data/wow/achievement/${id}`);
   }
 
-  getAchievementMedia(id: number): Promise<mediaDataStruct| undefined>
+  getAchievementMedia(id: number): Promise<APIAchievementMedia| undefined>
   {
     return this.queryStatic(`/data/wow/media/achievement/${id}`);
   }
 
-  getAchievementCategoryIndex(): Promise<any| undefined>
+  getAchievementCategoryIndex(): Promise<APIAchievementCategoriesIndex| undefined>
   {
     return this.queryStatic('/data/wow/achievement-category/index');
   }
 
-  getAchievementCategory(id: number): Promise<any| undefined>
+  getAchievementCategory(id: number): Promise<APIAchievementCategory| undefined>
   {
     return this.queryStatic(`/data/wow/achievement-category/${id}`);
   }  
@@ -278,12 +280,12 @@ isLoggingIn(): boolean
 
   //#region Connected Realm API
 
-  getConnectedRealmsIndex(): Promise<connectedRealmIndex| undefined>
+  getConnectedRealmsIndex(): Promise<APIConnectedRealmsIndex| undefined>
   {
     return this.queryDynamic('/data/wow/connected-realm/index');
   }  
 
-  getConnectedRealm(id: number): Promise<connectedRealmData| undefined>
+  getConnectedRealm(id: number): Promise<APIConnectedRealm| undefined>
   {
     return this.queryDynamic(`/data/wow/connected-realm/${id}`);
   }    
