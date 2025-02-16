@@ -2,7 +2,7 @@
 
 #### Current-Dev (awaiting release number)
 
-#### v0.3.22-dev
+#### v0.3.23-dev
 
 - Removed per-os tags from github release uploads.
 

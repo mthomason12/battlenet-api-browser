@@ -38,7 +38,6 @@ jobs:
       with:
         artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
         name: Battlenet API Browser (Web) ${{ steps.get-version.outputs.version }}
-        tag: ${{ steps.get-version.outputs.version }}-web
         body: Version for hosting on a webserver.  Check CHANGELOG for changes
         prerelease: true
         allowUpdates: true
@@ -46,7 +45,7 @@ jobs:
       if: runner.os == 'Windows'
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/windows/*.zip"
+        artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/win32/x64/*.zip"
         name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
         body: Standalone Electron versions for Windows x64
         prerelease: true
