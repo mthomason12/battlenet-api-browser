@@ -25,7 +25,7 @@ import { itemData, itemSearchData } from '../model/items';
 import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
           characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
           characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
-          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterToyData, characterTransmogData } from '../model/profile-characters';
+          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1324,7 +1324,7 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Pr
 
 //region Character Statistics API
 
-  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<characterStatisticsData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/statistics`);
   }
@@ -1333,7 +1333,7 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Pr
 
 //region Character Titles API
 
-  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<characterTitleData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/titles`);
   }
