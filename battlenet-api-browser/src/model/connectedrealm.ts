@@ -2,10 +2,12 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIConnectedRealmsIndex, APIConnectedRealmItem } from './api/connected-realm';
+import { APIConnectedRealmsIndex, APIConnectedRealmItem, APIConnectedRealm } from './api/connected-realm';
 
 
-export interface connectedRealmData extends APIConnectedRealmItem, IApiDataDoc {
+export interface connectedRealmData extends APIConnectedRealm, IApiDataDoc {
+  id: number;
+  name: string;
 }
 
 interface connectedRealmIndexItem extends IIndexItem, hrefStruct
