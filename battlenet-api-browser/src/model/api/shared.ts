@@ -67,3 +67,20 @@ export interface mediaStruct
   key: hrefStruct;
   id: number;
 }
+
+/**
+ * This is fairly standard across the API in "$thing Media" API calls
+ */
+export interface mediaDataStruct
+{
+  _links: linksStruct;
+  assets: assetStruct[];
+  id: number;
+}
+
+export interface assetStruct
+{
+  key: string;
+  value: string;
+  file_data_id: number;
+}
