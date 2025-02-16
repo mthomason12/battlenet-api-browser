@@ -40,8 +40,7 @@ export interface APIConnectedRealm {
 /**
  * Individual realm from @see APIConnectedRealm
  */
-export interface APIConnectedRealmItem
-{
+export interface APIConnectedRealmItem {
     region: refStruct;
     connected_realm: hrefStruct;
     name: string;

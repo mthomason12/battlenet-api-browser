@@ -8,8 +8,7 @@ export interface linksStruct {
     profile?: hrefStruct;
 }
 
-export interface idNameStruct
-{
+export interface idNameStruct {
     id: number;
     name: string;
 }
@@ -46,7 +45,7 @@ export interface hrefStruct {
     href: string;
 }
 
-export interface characterRef{
+export interface characterRef {
     key: hrefStruct;
     id: number;
     name: string;
@@ -62,25 +61,22 @@ export interface positionStruct {
     facing: number;
 }
 
-export interface mediaStruct
-{
-  key: hrefStruct;
-  id: number;
+export interface mediaStruct {
+    key: hrefStruct;
+    id: number;
 }
 
 /**
  * This is fairly standard across the API in "$thing Media" API calls
  */
-export interface mediaDataStruct
-{
-  _links: linksStruct;
-  assets: assetStruct[];
-  id: number;
+export interface mediaDataStruct {
+    _links: linksStruct;
+    assets: assetStruct[];
+    id: number;
 }
 
-export interface assetStruct
-{
-  key: string;
-  value: string;
-  file_data_id: number;
+export interface assetStruct {
+    key: string;
+    value: string;
+    file_data_id: number;
 }

@@ -42,19 +42,18 @@ export interface APIAchievement {
  * Part of APIAchievement
  */
 interface achievementOperator {
-  type: string; //known values: AND, COMPLETE_AT_LEAST
-  name: string; 
+    type: string; //known values: AND, COMPLETE_AT_LEAST
+    name: string;
 }
 
 /**
  * Part of APIAchievement
  */
-interface achievementChildCriteria
-{
-  id: number;
-  description?: string;
-  amount?: number;
-  achievement?: refStruct;
+interface achievementChildCriteria {
+    id: number;
+    description?: string;
+    amount?: number;
+    achievement?: refStruct;
 }
 
 /**
@@ -93,7 +92,7 @@ export interface APIAchievementCategory {
         horde: {
             quantity: number;
             points: number;
-        }        
+        }
     }
     display_order: number;
 }

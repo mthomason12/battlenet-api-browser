@@ -1,4 +1,4 @@
-import { hrefStruct, linksStruct, mediaDataStruct, mediaStruct, refStruct } from "./shared";
+import { hrefStruct, linksStruct } from "./shared";
 
 /**
  * Auction House API Return Types
@@ -10,9 +10,9 @@ import { hrefStruct, linksStruct, mediaDataStruct, mediaStruct, refStruct } from
  * 
  */
 export interface APIAuctions {
-   _links: linksStruct;
-   connected_realm: hrefStruct;
-   auctions: APIAuctionsItem[];
+    _links: linksStruct;
+    connected_realm: hrefStruct;
+    auctions: APIAuctionsItem[];
 }
 
 /**
@@ -24,7 +24,7 @@ export interface APIAuctionsItem {
         id: number;
         context: number;
         bonus_lists?: number[];
-        modifiers?:{
+        modifiers?: {
             type: number;
             value: number;
         }[];
@@ -41,5 +41,5 @@ export interface APIAuctionsItem {
  * This currently appears to be broken, returning a truncated result
  */
 export interface APICommodities {
-    
+
 }

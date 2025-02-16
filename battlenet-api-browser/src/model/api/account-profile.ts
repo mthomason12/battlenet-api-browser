@@ -1,16 +1,18 @@
-import { characterRef, factionStruct, genderStruct, hrefStruct, linksStruct, mediaStruct, positionStruct, 
-    realmStruct, refStruct } from "./shared";
+import {
+    characterRef, factionStruct, genderStruct, hrefStruct, linksStruct, mediaStruct, positionStruct,
+    realmStruct, refStruct
+} from "./shared";
 
 /**
  * Account Profile API Return Types
  */
-         
+
 /**
  * Individual character from @see APIAccountProfileSummary
  */
 export interface APIAccountProfileCharacter {
     id?: number;
-    name?: string;        
+    name?: string;
     level?: number;
     character?: hrefStruct;
     protected_character?: hrefStruct;
@@ -31,8 +33,8 @@ export interface APIAccountProfileCharacter {
 export interface APIAccountProfileSummary {
     _links: linksStruct;
     wow_accounts: {
-            id: number;
-            characters: APIAccountProfileCharacter[];
+        id: number;
+        characters: APIAccountProfileCharacter[];
     }[]
 }
 
@@ -114,10 +116,10 @@ export interface APIAccountMount {
  * This is specific to the currently logged-in user's bnet account
  */
 export interface APIAccountMountsCollectionSummary {
-  _links: linksStruct;
-  mounts: APIAccountMount[];
+    _links: linksStruct;
+    mounts: APIAccountMount[];
 }
- 
+
 /**
  * Individual pet from @see APIAccountPetsCollectionSummary
  */
