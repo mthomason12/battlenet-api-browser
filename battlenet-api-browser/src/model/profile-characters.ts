@@ -368,11 +368,294 @@ interface characterMythicKeystoneRun {
     }    
 }
 
-export interface  characterMythicKeystoneSeasonData {
+export interface characterMythicKeystoneSeasonData {
     $id: number;
     links: linksStruct;
     season: idkeyStruct;
     best_runs: characterMythicKeystoneRun[];
+}
+
+interface characterProfession {
+    profession: refStruct;
+    tiers: {
+        skill_points: number;
+        max_skill_points: number;
+        tier: idNameStruct;
+        known_recipes: refStruct;
+    }[];
+    specialization?: {
+        name: string;
+    }
+}
+
+export interface characterProfessionData {
+    links: linksStruct;
+    character: characterRef;
+    primaries: characterProfession[];
+    secondaries : characterProfession[];
+}
+
+export interface characterPVPData {
+    _links: linksStruct;
+    brackets: hrefStruct[];
+    honor_level: number;
+    pvp_map_statistics: {
+        world_map: idNameStruct;
+        match_statistics: {
+            played: number;
+            won: number;
+            lost: number;
+        }
+    }[];
+    honorable_kills: number;
+    character: characterRef;
+}
+
+export interface characterPVPBracketData {
+    _links: linksStruct;
+    character: characterRef;
+    faction: factionStruct;
+    bracket: {
+        id: number;
+        type: string;
+    }
+    rating: number;
+    season: idkeyStruct;
+    tier: idkeyStruct;
+    season_match_statistics: {
+        played: number;
+        won: number;
+        lost: number;
+    };
+    weekly_match_statistics: {
+        played: number;
+        won: number;
+        lost: number;
+    }
+}
+
+export interface characterQuestData {
+    _links: linksStruct;
+    character: characterRef;
+    in_progress: refStruct[];
+}
+
+export interface characterQuestCompletedData {
+    _links: linksStruct;
+    character: characterRef;
+    quests: refStruct[];
+}
+
+export interface characterReputationData {
+    _links: linksStruct;
+    character: characterRef;
+    reputations: {
+        faction: refStruct;
+        standing: {
+            raw: number;
+            value: number;
+            max: number;
+            tier?: number;
+            name: string;
+            renown_level?: number;
+        }
+        paragon?: {
+            raw: number;
+            value: number;
+            max: number;
+        }
+    }[]
+}
+
+interface characterSoulbindTrait {
+    trait: refStruct;
+    tier: number;
+    display_order: number;
+}
+
+interface characterSoulbindConduitSocket{
+    conduit_socket: {
+        type: {
+            name: string;
+            type: string;
+        }
+        socket: {
+            conduit: refStruct;
+        }
+        rank: number;
+    }
+    tier: number;
+    display_order: number;
+}
+
+export interface characterSoulbindData {
+    _links: linksStruct;
+    character: characterRef;
+    chosen_covenant: refStruct;
+    renown_level: number;
+    soulbinds: {
+        soulbind: refStruct;
+        traits: (characterSoulbindTrait | characterSoulbindConduitSocket)[]
+    }[]
+}
+
+interface characterSpecializationSpellTooltip {
+    spell: refStruct;
+    description: string;
+    cast_time?: string;
+    power_cost?: string;
+    range?: string;
+    cooldown?: string;
+}
+
+interface characterSpecializationPVPTalent {
+    selected: {
+        talent: refStruct;
+        spell_tooltip: characterSpecializationSpellTooltip;
+    }
+    slot_number: number;
+}
+
+interface characterSpecializationLoadout {
+    is_active: boolean;
+    talent_loadout_code: string;
+    selected_class_talents: {
+        id: number;
+        rank: number;
+        tooltip?: {
+            talent: refStruct;
+            spell_tooltip: characterSpecializationSpellTooltip;
+        }
+    }
+}
+
+export interface characterSpecializationData {
+    _links: linksStruct;
+    specializations: {
+        specialization: refStruct;
+        glyphs?: refStruct[];
+        pvp_talent_slots?: characterSpecializationPVPTalent[];
+        loadouts: characterSpecializationLoadout[];
+    }[]
+    active_specialization: refStruct;
+    character: characterRef;
+    active_hero_talent_tree: refStruct;
+}
+
+export interface characterStatisticsData {
+    _links: linksStruct;
+    health: number;
+    power: number;
+    power_type: refStruct;
+    speed: {
+        rating: number;
+        rating_bonus: number;
+    }
+    strength: {
+        base: number;
+        effective: number;
+    }
+    agility: {
+        base: number;
+        effective: number;
+    }
+    intellect: {
+        base: number;
+        effective: number;
+    }
+    stamina: {
+        base: number;
+        effective: number;
+    }
+    melee_crit: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    melee_haste: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    mastery: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    bonus_armor: number;
+    lifesteal: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    versatility: number;
+    versatility_damage_done_bonus: number;
+    versatility_healing_done_bonus: number;
+    versatility_damage_taken_bonus: number;
+    avoidance: {
+        rating: number;
+        rating_bonus: number;
+    }
+    attack_power: number;
+    main_hand_damage_min: number;
+    main_hand_damage_max: number;
+    main_hand_speed: number;
+    main_hand_dps: number;
+    off_hand_damage_min: number;
+    off_hand_damage_max: number;
+    off_hand_speed: number;
+    off_hand_dps: number;
+    spell_power: number;
+    spell_penetration: number;
+    spell_crit: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    mana_regen: number;
+    mana_regen_combat: number;
+    armor: {
+        base: number;
+        effective: number;
+    }
+    dodge: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    parry: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    block: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    ranged_crit: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    ranged_haste: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    spell_haste: {
+        rating: number;
+        rating_bonus: number;
+        value: number;
+    }
+    character: characterRef;
+}
+
+export interface characterTitleData {
+    _links: linksStruct;
+    character: characterRef;
+    active_title?: refStruct;
+    titles: refStruct[];
 }
 
 export interface characterProfileData extends IApiDataDoc {
@@ -427,11 +710,11 @@ export interface characterProfileData extends IApiDataDoc {
     name_search: string;
     //additional data we've added to the API
     $id: string;
-    $achievementData: characterAchievementSummaryData;
-    $statisticsData: characterAchievementStatisticsData;
+    $achievements: characterAchievementSummaryData;
+    $achievementStatistics: characterAchievementStatisticsData;
     $appearanceData: characterAppearanceSummaryData;
     //collections    
-    $heirloomData: characterHeirloomData;
+    $heirlooms: characterHeirloomData;
     $mountData: characterMountData;
     $petData: characterPetData;
     $toyData: characterToyData;
@@ -440,14 +723,32 @@ export interface characterProfileData extends IApiDataDoc {
     $dungeonData: characterDungeonData;
     $raidData: characterRaidData;
     //equipment
-    $equipmentData: characterEquipmentData;
+    $equipment: characterEquipmentData;
     //hunter pets
-    $hunterPetsData: characterHunterPetsData;
+    $hunterPets: characterHunterPetsData;
     //media
     $mediaData: characterMediaData;
     //mythic keystones
     $mythicKeystoneData: characterMythicKeystoneSummaryData;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
+    //professions
+    $professions: characterProfessionData;
+    //pvp
+    $pvpData: characterPVPData;
+    $pvpBrackets: characterPVPBracketData[];
+    //quests
+    $quests: characterQuestData;
+    $questsCompleted: characterQuestCompletedData;
+    //reputations
+    $reputation: characterReputationData;
+    //soulbinds
+    $soulbinds: characterSoulbindData;
+    //specializations
+    $specializations: characterSpecializationData;
+    //statistics
+    $statistics: characterStatisticsData;
+    //titles
+    $titles: characterTitleData;
 }
 
 
@@ -524,16 +825,16 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         return new Promise((resolve)=>{
             Promise.allSettled([
                 apiClient.getCharacterAchievementsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$achievementData = data;
+                    apiRec.$achievements = data;
                 }),
                 apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$statisticsData = data;
+                    apiRec.$achievementStatistics = data;
                 }),                
                 apiClient.getCharacterAppearanceSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$appearanceData = data;
                 }),
                 apiClient.getCharacterHeirlooms(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$heirloomData = data;
+                    apiRec.$heirlooms = data;
                 }),  
                 apiClient.getCharacterMounts(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mountData = data;
@@ -554,10 +855,10 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     apiRec.$raidData = data;
                 }),     
                 apiClient.getCharacterEquipmentSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$equipmentData = data;
+                    apiRec.$equipment = data;
                 }),       
                 apiClient.getCharacterHunterPetsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
-                    apiRec.$hunterPetsData = data;
+                    apiRec.$hunterPets = data;
                 }),
                 apiClient.getCharacterMediaSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mediaData = data;
@@ -567,12 +868,51 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     //get each season
                     apiRec.$mythicKeystoneSeasons = new Array();
                     apiRec.$mythicKeystoneData.seasons.forEach((season)=>{
-                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: any) => {
-                            apiRec.$mythicKeystoneSeasons.push(data)
+                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: characterMythicKeystoneSeasonData | undefined) => {
+                            if (data) {
+                                data.$id - data.season.id;
+                                apiRec.$mythicKeystoneSeasons.push(data);
+                            }
                         })
                     })
-                }),                                
-
+                }), 
+                apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$professions = data!;
+                }), 
+                apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$pvpData = data!;
+                    apiRec.$pvpData.brackets.forEach((bracket)=>{
+                        //extract the bracket name from bracket.href
+                        //e.g from "https://us.api.blizzard.com/profile/wow/character/wyrmrest-accord/gregmex/pvp-bracket/3v3?namespace=profile-us"
+                        const regex = /\/([\w\d]*)\?/;
+                        const matches = regex.exec(bracket.href);
+                        const bracketName = matches![1];  //e.g "3v3"
+                        apiClient.getCharacterPvPBracketStatistics(apiRec.realm.slug,Slugify(apiRec.name_search), bracketName)?.then((data)=>{
+                            apiRec.$pvpBrackets.push(data!);
+                        });                   
+                    })
+                }),   
+                apiClient.getCharacterQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$quests = data!;
+                }),        
+                apiClient.getCharacterCompletedQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$questsCompleted = data!;
+                }),                             
+                apiClient.getCharacterReputationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$reputation = data!;
+                }), 
+                apiClient.getCharacterSoulbinds(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$soulbinds = data!;
+                }),
+                apiClient.getCharacterSpecializationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$specializations = data!;
+                }),                 
+                apiClient.getCharacterStatisticsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$statistics = data!;
+                }),                 
+                apiClient.getCharacterTitlesSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                    apiRec.$titles = data!;
+                })
             ]).then(()=>{
                 resolve();
             })

@@ -22,7 +22,10 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { itemData, itemSearchData } from '../model/items';
-import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfileData, characterRaidData, characterToyData, characterTransmogData } from '../model/profile-characters';
+import { characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData, 
+          characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData, 
+          characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData, 
+          characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData, characterToyData, characterTransmogData } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 
@@ -1239,7 +1242,7 @@ isLoggingIn(): boolean
 
 //region Character Professions API
 
-  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<characterProfessionData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/professions`);
   }
@@ -1262,12 +1265,12 @@ isLoggingIn(): boolean
 
 //region Character PvP API
 
-getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string)
+getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<characterPVPBracketData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-bracket/${bracket}`);
 }
 
-getCharacterPvPSummary(realmSlug: string, characterName: string)
+getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<characterPVPData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-summary`);
 }
@@ -1276,12 +1279,12 @@ getCharacterPvPSummary(realmSlug: string, characterName: string)
 
 //region Character Quests API
 
-getCharacterQuests(realmSlug: string, characterName: string)
+getCharacterQuests(realmSlug: string, characterName: string): Promise<characterQuestData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests`);
 }
 
-getCharacterCompletedQuests(realmSlug: string, characterName: string)
+getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<characterQuestCompletedData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests/completed`);
 }
@@ -1290,7 +1293,7 @@ getCharacterCompletedQuests(realmSlug: string, characterName: string)
 
 //region Character Reputation API
 
-getCharacterReputationsSummary(realmSlug: string, characterName: string)
+getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<characterReputationData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/reputations`);
 }
@@ -1300,7 +1303,7 @@ getCharacterReputationsSummary(realmSlug: string, characterName: string)
 
 //region Character Soulbinds API
 
-getCharacterSoulbinds(realmSlug: string, characterName: string)
+getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<characterSoulbindData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/soulbinds`);
 }
@@ -1311,7 +1314,7 @@ getCharacterSoulbinds(realmSlug: string, characterName: string)
 
 //region Character Specializations API
 
-getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
+getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<characterSpecializationData | undefined>
 {
   return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/specializations`);
 }
@@ -1321,7 +1324,7 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
 
 //region Character Statistics API
 
-  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<characterStatisticsData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/statistics`);
   }
@@ -1330,7 +1333,7 @@ getCharacterSpecializationsSummary(realmSlug: string, characterName: string)
 
 //region Character Titles API
 
-  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<any>
+  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<characterTitleData | undefined>
   {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/titles`);
   }
