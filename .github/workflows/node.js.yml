@@ -56,7 +56,7 @@ jobs:
       if: runner.os == 'Linux'
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/*.deb, battlenet-api-browser/out/make/rpm/*.rpm"
+        artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
         name: Battlenet API Browser (Linux x64) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-linux
         body: Standalone Electron versions for Linux
