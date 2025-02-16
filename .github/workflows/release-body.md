@@ -1,5 +1,7 @@
 Check CHANGELOG for recent changes.
 
+The following versions should all be present, as long as there isn't an error with the automated build:
+
 ##### Webserver Version
 
 - battlenet-api-browser-(version)-web.zip - Web version zipfile
@@ -7,7 +9,8 @@ Check CHANGELOG for recent changes.
 ##### Windows
 
 - battlenet-api-browser-(version)-Setup.exe - Windows x64 Setup.exe installer
-- battlenet-api-browser-win32-x64(version).zip - Windows x64 zip no-installer 
+- battlenet-api-browser-(version)-full.nupkg - Windows x64 nupkg installer
+- battlenet-api-browser-(version)-win-x64.zip - Windows x64 zip no-installer 
 
 ##### Linux
 
@@ -17,6 +20,6 @@ Check CHANGELOG for recent changes.
 
 ##### Mac OSX
 
-- battlenet-api-browser-(version)darwin-m2.zip - Mac OSX M2 zipfile no-installer
-- battlenet-api-browser-(version)darwin-x64.zip - Mac OSX Intel zipfile no-installer
+- battlenet-api-browser-(version).darwin-m2.zip - Mac OSX M2 zipfile no-installer
+- battlenet-api-browser-(version).darwin-x64.zip - Mac OSX Intel zipfile no-installer
 

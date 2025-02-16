@@ -18,7 +18,7 @@ jobs:
           - os: ubuntu-latest
             artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
           - os: windows-latest
-            artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/win32/x64/*.zip,battlenet-api-browser/out/make/zip/web/*.zip"
+            artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/squirrel.windows/x64/*.nupkg,battlenet-api-browser/out/make/zip/windows/*.zip,battlenet-api-browser/out/make/zip/web/*.zip"
           - os: macos-13
             artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
           - os: macos-latest
