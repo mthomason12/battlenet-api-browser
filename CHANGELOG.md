@@ -2,6 +2,8 @@
 
 #### Current-Dev (awaiting release number)
 
+- A Windows .nupkg release should now be automatically built.
+
 #### v0.3.28-dev
 
 - Use correct path to release body file on github actions
