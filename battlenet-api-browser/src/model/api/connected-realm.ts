@@ -41,6 +41,7 @@ export interface APIConnectedRealm {
  * Individual realm from @see APIConnectedRealm
  */
 export interface APIConnectedRealmItem {
+    id: number;
     region: refStruct;
     connected_realm: hrefStruct;
     name: string;
