@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.12-dev
+
+- Added RPM build for Github
+- Added license to package.json for Github's Linux RPM builder.
 
 #### v0.3.10-dev
 

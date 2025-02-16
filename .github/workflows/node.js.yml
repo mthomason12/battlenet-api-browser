@@ -49,27 +49,27 @@ jobs:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/windows/*.zip"
         name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-win32-x64
-        body: A packaged Electron version for Windows x64
+        body: Standalone Electron versions for Windows x64
         prerelease: true
         allowUpdates: true 
-    - name: Upload linux .deb and .zip to release
+    - name: Upload linux .deb, .rpm, and .zip to release
       if: runner.os == 'Linux'
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "-api-browser/out/make/zip/linux/*.zip"
+        artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/*.deb, battlenet-api-browser/out/make/rpm/*.rpm"
         name: Battlenet API Browser (Linux x64) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-linux
-        body: Electron versions for Linux
+        body: Standalone Electron versions for Linux
         prerelease: true
         allowUpdates: true        
     - name: Upload osx-m1 .zip to release
       if: matrix.os == 'macos-latest'
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "-api-browser/out/make/zip/darwin/*.zip"
+        artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
         name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-osx-m1
-        body: Electron versions for OSX (M1)
+        body: Standalone Electron versions for OSX (M1)
         prerelease: true
         allowUpdates: true 
     - name: Upload osx-intel .zip to release
@@ -79,6 +79,6 @@ jobs:
         artifacts: "-api-browser/out/make/zip/darwin/*.zip"
         name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
         tag: ${{ steps.get-version.outputs.version }}-osx-intel
-        body: Electron versions for OSX (Intel)
+        body: Standalone Electron versions for OSX (Intel)
         prerelease: true
         allowUpdates: true 
