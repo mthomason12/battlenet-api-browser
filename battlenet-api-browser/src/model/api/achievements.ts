@@ -1,4 +1,4 @@
-import { linksStruct, mediaDataStruct, mediaStruct, refStruct } from "./shared";
+import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "./shared";
 
 /**
  * Achievement API Return Types
@@ -64,7 +64,7 @@ interface achievementChildCriteria {
  * Achievement Media
  * /data/wow/media/achievement/{achievementId}
  */
-export interface APIAchievementMedia extends mediaDataStruct {
+export interface APIAchievementMedia extends APIMediaStruct {
 }
 
 //region Achievement Categories

@@ -70,15 +70,6 @@ export interface mediaStruct {
     id: number;
 }
 
-/**
- * This is fairly standard across the API in "$thing Media" API calls
- */
-export interface mediaDataStruct {
-    _links: linksStruct;
-    assets: assetStruct[];
-    id: number;
-}
-
 export interface assetStruct {
     key: string;
     value: string;
@@ -109,6 +100,59 @@ export interface regionedNameStruct  {
     de_DE?: string
 }
 
+export interface weaponStruct {
+    damage: {
+        min_value: number,
+        max_value: number,
+        display_string: string,
+        damage_class: {
+        type: string,
+        name: string
+        }
+    },
+    attack_speed: {
+        value: number,
+        display_string: string,
+    },
+    dps: {
+        value: number,
+        display_string: string,
+    }
+}
+  
+export interface itemStatStruct {
+    type: {
+        type: string,
+        name: string
+    },
+    value: number,
+    is_negated: boolean,
+    display: {
+        display_string: string,
+        color: rgbaColorStruct,
+    }
+}
+
+export interface rgbaColorStruct {
+  r: number,
+  g: number,
+  b: number,
+  a: number
+}
+
+
+/**
+ * This is fairly standard across the API in "$thing Media" API calls
+ */
+export interface APIMediaStruct {
+    _links: linksStruct;
+    assets: assetStruct[];
+    id: number;
+}
+
+/**
+ * Most search APIs include these fields
+ */
 export interface APISearch {
     page: number;
     pageSize: number;
@@ -117,6 +161,9 @@ export interface APISearch {
     results: APISearchResult[];
 }
 
+/**
+ * Standard field across search results
+ */
 export interface APISearchResult {
     key: hrefStruct;
 }

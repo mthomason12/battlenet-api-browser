@@ -2,7 +2,7 @@
  * Creature API Return Types
  */
 
-import { APISearch, APISearchResult, assetStruct, idkeyStruct, linksStruct, mediaDataStruct, mediaStruct, refStruct, regionedNameStruct } from "./shared";
+import { APISearch, APISearchResult, assetStruct, idkeyStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct } from "./shared";
 
 //region Creature
 
@@ -94,7 +94,7 @@ export interface APICreatureFamily {
  * Creature Family Media
  * /data/wow/media/creature-family/{creatureFamilyId}
  */
-export interface APICreatureFamilyMedia extends mediaDataStruct {    
+export interface APICreatureFamilyMedia extends APIMediaStruct {    
 }
 
 //region Creature Types
