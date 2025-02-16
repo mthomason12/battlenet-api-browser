@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build    
-      run: npm run github-make-release-${{runner.os}}
+      run: npm run github-make-release-${{matrix.os}}
       working-directory: battlenet-api-browser
     - name: Get version from package.json
       id: get-version
