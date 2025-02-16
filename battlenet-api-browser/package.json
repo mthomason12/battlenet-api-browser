@@ -1,6 +1,6 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.3.14-dev",
+  "version": "0.3.15-dev",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "build-zip": "npm run build-zip-web && npm run build-zip-linux",
     "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web",
     "build-zip-linux": "mkdirp out/make/zip/linux && npm-build-zip --source=out/battlenet-api-browser-linux-x64 --destination=out/make/zip/linux",
-    "build-zip-windows": "mkdirp out/make/zip/windows && npm-build-zip --source=out/battlenet-api-browser-windows-x64 --destination=out/make/zip/windows",
+    "build-zip-windows": "mkdirp out/make/zip/windows && npm-build-zip --source=out/battlenet-api-browser-windows-x64 --destination=out/make/zip/windows"
   },
   "private": true,
   "dependencies": {
