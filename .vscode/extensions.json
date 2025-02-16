@@ -1,6 +1,6 @@
 {
     "recommendations": [
         "pkief.material-icon-theme",
-        "minhthai.vscode-todo-parser"
+        "timohuennebeck.minimalist-to-do-manager"
     ]
 }
