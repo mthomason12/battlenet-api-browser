@@ -1,0 +1,9 @@
+{
+    "name": "battlenet-api-types",
+    "version": "0.0.1-dev",
+    "author": "Matt Thomason <matt@warpedcore.net>",
+    "description": "Types for Battle.net API",
+    "scripts": {
+        "build-docs": "npx typedoc --entryPointStrategy Expand . "
+    }
+}
