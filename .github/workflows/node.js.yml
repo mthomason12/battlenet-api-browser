@@ -37,8 +37,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
-        name: Battlenet API Browser (Web) ${{ steps.get-version.outputs.version }}
-        body: Version for hosting on a webserver.  Check CHANGELOG for changes
+        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
+        body: Check CHANGELOG for changes
         prerelease: true
         allowUpdates: true
     - name: Upload windows setup.exe and .zip to release
@@ -46,8 +46,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/win32/x64/*.zip"
-        name: Battlenet API Browser (Windows x64) ${{ steps.get-version.outputs.version }}
-        body: Standalone Electron versions for Windows x64
+        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
+        body: Check CHANGELOG for changes        
         prerelease: true
         allowUpdates: true 
     - name: Upload linux .deb, .rpm, and .zip to release
@@ -55,8 +55,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
-        name: Battlenet API Browser (Linux x64) ${{ steps.get-version.outputs.version }}
-        body: Standalone Electron versions for Linux
+        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
+        body: Check CHANGELOG for changes        
         prerelease: true
         allowUpdates: true        
     - name: Upload osx-m1 .zip to release
@@ -64,8 +64,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
-        name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
-        body: Standalone Electron versions for OSX (M1)
+        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
+        body: Check CHANGELOG for changes        
         prerelease: true
         allowUpdates: true 
     - name: Upload osx-intel .zip to release
@@ -73,7 +73,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "-api-browser/out/make/zip/darwin/*.zip"
-        name: Battlenet API Browser (OSX) ${{ steps.get-version.outputs.version }}
-        body: Standalone Electron versions for OSX (Intel)
+        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
+        body: Check CHANGELOG for changes        
         prerelease: true
         allowUpdates: true 

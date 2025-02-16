@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.24-dev
+
+- Fix github release tagging and body text
+
 #### v0.3.23-dev
 
 - Removed per-os tags from github release uploads.
