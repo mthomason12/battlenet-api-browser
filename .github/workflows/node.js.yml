@@ -16,9 +16,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
           - os: windows-latest
+            artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/win32/x64/*.zip,battlenet-api-browser/out/make/zip/web/*.zip"
           - os: macos-13
+            artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
           - os: macos-latest
+            artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
 
          
 
@@ -32,48 +36,11 @@ jobs:
       uses: beaconbrigade/package-json-version@v0.3.2
       with:
         path: battlenet-api-browser     
-    - name: Upload web zip to release
-      if: runner.os == 'Windows'
+    - name: Upload releases
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "battlenet-api-browser/out/make/zip/web/*.zip"
+        artifacts: ${{matrix.artifacts}}
         name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes
+        body: Check CHANGELOG for changes        
         prerelease: true
         allowUpdates: true
-    - name: Upload windows setup.exe and .zip to release
-      if: runner.os == 'Windows'
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "battlenet-api-browser/out/make/squirrel.windows/x64/*.exe,battlenet-api-browser/out/make/zip/win32/x64/*.zip"
-        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes        
-        prerelease: true
-        allowUpdates: true 
-    - name: Upload linux .deb, .rpm, and .zip to release
-      if: runner.os == 'Linux'
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "battlenet-api-browser/out/make/zip/linux/*.zip, battlenet-api-browser/out/make/deb/x64/*.deb, battlenet-api-browser/out/make/rpm/x64/*.rpm"
-        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes        
-        prerelease: true
-        allowUpdates: true        
-    - name: Upload osx-m1 .zip to release
-      if: matrix.os == 'macos-latest'
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "battlenet-api-browser/out/make/zip/darwin/*.zip"
-        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes        
-        prerelease: true
-        allowUpdates: true 
-    - name: Upload osx-intel .zip to release
-      if: matrix.os == 'macos-13'
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "-api-browser/out/make/zip/darwin/*.zip"
-        name: Battlenet API Browser ${{ steps.get-version.outputs.version }}
-        body: Check CHANGELOG for changes        
-        prerelease: true
-        allowUpdates: true 

@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.25-dev
+
+- Simplify github action file
+
 #### v0.3.24-dev
 
 - Fix github release tagging and body text
