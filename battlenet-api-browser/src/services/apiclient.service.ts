@@ -7,9 +7,6 @@ import { BlizzardAPIConnection } from './blizzardapi-connection';
 import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {
-  characterStatisticsData, characterTitleData
-} from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
 import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/gamedata/achievements';
@@ -41,6 +38,8 @@ import { APICharacterCompletedQuests, APICharacterQuests } from '../model/api/pr
 import { APICharacterReputationsSummary } from '../model/api/profile/character-reputations';
 import { APICharacterSoulbinds } from '../model/api/profile/character-soulbinds';
 import { APICharacterSpecializationsSummary } from '../model/api/profile/character-specializations';
+import { APICharacterStatisticsSummary } from '../model/api/profile/character-statistics';
+import { APICharacterTitles } from '../model/api/profile/character-titles';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1143,7 +1142,7 @@ export class apiClientService {
 
   //region Character Statistics API
 
-  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<characterStatisticsData | undefined> {
+  getCharacterStatisticsSummary(realmSlug: string, characterName: string): Promise<APICharacterStatisticsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/statistics`);
   }
 
@@ -1151,7 +1150,7 @@ export class apiClientService {
 
   //region Character Titles API
 
-  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<characterTitleData | undefined> {
+  getCharacterTitlesSummary(realmSlug: string, characterName: string): Promise<APICharacterTitles | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/titles`);
   }
 
