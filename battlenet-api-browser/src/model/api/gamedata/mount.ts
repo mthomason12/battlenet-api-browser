@@ -25,28 +25,22 @@ export interface APIMount {
     name?: string;
     description?: string;
     creature_displays?: mountDisplaysStruct[];
-    source?: mountSourceStruct;
+    source?: {
+      type: string;
+      name: string;
+    };
     faction?: factionStruct;
-    requirements?: mountRequirementsStruct;
+    requirements?: {
+      faction?: factionStruct;
+      classes?: refStruct[];
+    };
     should_exclude_if_uncollected?: boolean;
 }
 
-interface mountRequirementsStruct
-{
-  faction?: factionStruct;
-  classes?: refStruct[];
-}
-
-interface mountDisplaysStruct
+export interface mountDisplaysStruct
 {
   key: hrefStruct;
   id: number;
-}
-
-interface mountSourceStruct
-{
-  type: string;
-  name: string;
 }
 
 /**

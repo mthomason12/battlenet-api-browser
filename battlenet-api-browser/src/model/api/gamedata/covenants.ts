@@ -33,29 +33,23 @@ export interface APICovenant
   id: number;
   name: string;
   description?: string;
-  signature_ability?: covenantSignatureAbility;
+  signature_ability?: {
+    id: number;
+    spell_tooltip: spellTooltip;
+  };
   class_abilities?: covenantClassAbility[];
   soulbinds?: refStruct[];
-  renown_rewards?: covenantRenownReward[];
+  renown_rewards?: {
+    level: number;
+    reward: refStruct;
+  }[];
   media?: mediaStruct;
 }
 
-interface covenantClassAbility
+export interface covenantClassAbility
 {
   id: number;
   playable_class: refStruct;
-  spell_tooltip: spellTooltip;
-}
-
-interface covenantRenownReward
-{
-  level: number;
-  reward: refStruct;
-}
-
-interface covenantSignatureAbility
-{
-  id: number;
   spell_tooltip: spellTooltip;
 }
 

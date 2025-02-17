@@ -4,6 +4,10 @@
     "author": "Matt Thomason <matt@warpedcore.net>",
     "description": "Types for Battle.net API",
     "scripts": {
-        "build-docs": "npx typedoc --entryPointStrategy Expand . "
+        "build-docs": "npx typedoc --entryPointStrategy Expand gamedata private-profile profile shared.ts --excludeExternals --externalPattern \"**/node_modules/**\""
+    },
+    "devDependencies": {
+        "typedoc": "^0.27.7",
+        "typedoc-plugin-not-exported": "^0.1.6"
     }
 }

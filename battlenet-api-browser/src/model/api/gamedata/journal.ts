@@ -47,38 +47,32 @@ export interface APIJournalEncounter {
     id: number;
     name: string;
     description?: string;
-    creatures: journalEncounterCreature[];
-    items: journalEncounterItem[];
+    creatures: {
+        id?: number;
+        name?: string;
+        creature_display?: mediaStruct;
+    };
+    items: {
+        id?: number;
+        item?: refStruct;
+    };
     sections: journalEncounterSection[];
     instance: refStruct;
     category: {
         type: string;
     };
-    modes: journalEncounterMode[]
+    modes: {
+        type?: string;
+        name?: string;
+    }[]
 }
 
-interface journalEncounterCreature {
-    id?: number;
-    name?: string;
-    creature_display?: mediaStruct;
-}
-
-interface journalEncounterItem {
-    id?: number;
-    item?: refStruct;
-}
-
-interface journalEncounterSection {
+export interface journalEncounterSection {
     id?: number;
     title?: string;
     body_text?: string;
     sections?: journalEncounterSection[];
     creature_display?: mediaStruct;
-}
-
-interface journalEncounterMode {
-    type?: string;
-    name?: string;
 }
 
 /**
@@ -96,38 +90,32 @@ export interface APIJournalEncounterSearchItem extends APISearchResult {
             name: regionedNameStruct;
             id: number;
         }
-        modes: journalEncounterSearchMode[];
-        creatures: journalEncounterSearchCreature[];
+        modes: {
+            type: string;
+            name: regionedNameStruct;
+        };
+        creatures: {
+            id: number;
+            name: regionedNameStruct;
+            creature_display?: mediaStruct;
+        };
         id: number;
         name: regionedNameStruct;
         category: {
             type: string;
         }
-        items: journalEncounterSearchItem[];
+        items: {
+            item: {
+                name: regionedNameStruct;
+                id: number;
+            }
+            id: number;
+        }
         sections: journalEncounterSearchSection[];
     }
 }
 
-interface journalEncounterSearchMode {
-    type: string;
-    name: regionedNameStruct;
-}
-
-interface journalEncounterSearchCreature {
-    id: number;
-    name: regionedNameStruct;
-    creature_display?: mediaStruct;
-}
-
-interface journalEncounterSearchItem {
-    item: {
-        name: regionedNameStruct;
-        id: number;
-    }
-    id: number;
-}
-
-interface journalEncounterSearchSection {
+export interface journalEncounterSearchSection {
     id: number;
     title: regionedNameStruct;
     sections: journalEncounterSearchSection[];

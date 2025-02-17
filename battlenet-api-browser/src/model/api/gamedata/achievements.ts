@@ -32,7 +32,10 @@ export interface APIAchievement {
         id: number;
         description?: string;
         amount?: number;
-        operator?: achievementOperator;
+        operator?: {
+            type: string; //known values: AND, COMPLETE_AT_LEAST
+            name: string;
+        }
         child_criteria?: achievementChildCriteria[];
     }
     next_achievement?: refStruct;
@@ -40,18 +43,11 @@ export interface APIAchievement {
     display_order?: number;
 }
 
-/**
- * Part of APIAchievement
- */
-interface achievementOperator {
-    type: string; //known values: AND, COMPLETE_AT_LEAST
-    name: string;
-}
 
 /**
  * Part of APIAchievement
  */
-interface achievementChildCriteria {
+export interface achievementChildCriteria {
     id: number;
     description?: string;
     amount?: number;

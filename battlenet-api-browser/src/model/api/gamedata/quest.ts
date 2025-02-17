@@ -38,17 +38,16 @@ export interface APIQuest {
         items?: {
             choice_of?: QuestRewardItem[];
         };
-        reputations?: QuestRewardReputation[];
+        reputations?: {
+            reward: refStruct;
+            value: number;
+        }[];
         money?: moneyStruct;
     };
 }
 
-interface QuestRewardReputation {
-    reward: refStruct;
-    value: number;
-}
 
-interface QuestRewardItem {
+export interface QuestRewardItem {
     item?: refStruct;
     requirements?: {
         playable_specializations: refStruct[]; 

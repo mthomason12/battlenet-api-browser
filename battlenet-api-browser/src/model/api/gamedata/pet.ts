@@ -7,16 +7,6 @@ import { APIMediaStruct, linksStruct, mediaStruct, refStruct } from "../shared";
 //region Pets
 
 /**
- * Pets Index
- * /data/wow/pet/index
- */
-export interface APIPetIndex {
-    _links: linksStruct;
-    mounts: refStruct[];
-}
-
-
-/**
  * Pet
  * /data/wow/pet/{{petId}}
  */
@@ -35,7 +25,11 @@ export interface APIPet {
     is_battlepet: boolean;
     is_alliance_only: boolean;
     is_horde_only: boolean;
-    abilities: petAbilityStruct[];
+    abilities: {
+        ability: refStruct;
+        slot: number;
+        required_level?: number;
+    }[];
     source: {
         type: string;
         name: string;
@@ -44,12 +38,6 @@ export interface APIPet {
     creature: refStruct;
     is_random_creature_display: boolean;
     media: mediaStruct;
-}
-
-interface petAbilityStruct {
-    ability: refStruct;
-    slot: number;
-    required_level?: number;
 }
 
 /**
