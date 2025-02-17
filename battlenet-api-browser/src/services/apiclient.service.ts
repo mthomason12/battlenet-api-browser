@@ -36,7 +36,7 @@ import { APICharacterEquipmentSummary } from '../model/api/profile/character-equ
 import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hunter-pets';
 import { APICharacterMediaSummary } from '../model/api/profile/character-media';
 import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from '../model/api/profile/character-mythic-keystone-profile';
-import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/private-profile/account-profile';
+import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/profile/account-profile';
 
 interface APIQuery {
   apiEndpoint: string;

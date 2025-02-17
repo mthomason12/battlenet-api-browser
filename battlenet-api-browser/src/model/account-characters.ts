@@ -2,7 +2,7 @@ import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB, recID } from '../lib/recdb';
-import { APIAccountProfileCharacter, APIAccountProfileSummary } from './api/private-profile/account-profile';
+import { APIAccountProfileCharacter, APIAccountProfileSummary } from './api/profile/account-profile';
 
 
 export interface accountProfileIndex extends APIAccountProfileSummary, IApiIndexDoc

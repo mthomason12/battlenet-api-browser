@@ -2,7 +2,7 @@ import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, keyStruct, mediaStru
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAccountPet, APIAccountPetsCollectionSummary } from './api/private-profile/account-profile';
+import { APIAccountPet, APIAccountPetsCollectionSummary } from './api/profile/account-profile';
 
 
 export interface accountPets extends APIAccountPetsCollectionSummary, IApiIndexDoc {

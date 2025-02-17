@@ -2,7 +2,7 @@ import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAccountMount, APIAccountMountsCollectionSummary } from './api/private-profile/account-profile';
+import { APIAccountMount, APIAccountMountsCollectionSummary } from './api/profile/account-profile';
 
 
 export interface accountMounts extends APIAccountMountsCollectionSummary, IApiIndexDoc {

@@ -2,7 +2,7 @@ import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAccountHeirloom, APIAccountHeirloomsCollectionSummary } from './api/private-profile/account-profile';
+import { APIAccountHeirloom, APIAccountHeirloomsCollectionSummary } from './api/profile/account-profile';
 
 
 export interface accountHeirlooms extends APIAccountHeirloomsCollectionSummary, IApiIndexDoc {

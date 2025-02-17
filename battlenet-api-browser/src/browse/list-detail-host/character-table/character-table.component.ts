@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import '../../../lib/utils';
 import { MatButtonModule } from '@angular/material/button';
-import { APIAccountProfileCharacter } from '../../../model/api/private-profile/account-profile';
+import { APIAccountProfileCharacter } from '../../../model/api/profile/account-profile';
 
 interface charRow {
   name: string;

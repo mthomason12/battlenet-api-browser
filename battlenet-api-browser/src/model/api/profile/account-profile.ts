@@ -1,6 +1,10 @@
 
 /**
  * Account Profile API Return Types
+ * 
+ * IMPORTANT: These all require a valid OAuth token from the user's Battle.net login, 
+ * and return data specific to the that user's account.
+ * 
  * @module
  */
 
