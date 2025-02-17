@@ -2,6 +2,9 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.3.29-dev
+
+- Fix Electron path bug.
 - A Windows .nupkg release should now be automatically built.
 
 #### v0.3.28-dev
