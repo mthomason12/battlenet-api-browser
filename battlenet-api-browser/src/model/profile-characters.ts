@@ -10,9 +10,11 @@ import { APICharacterEquipmentSummary } from "./api/profile/character-equipment"
 import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
 import { APICharacterMediaSummary } from "./api/profile/character-media";
 import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from "./api/profile/character-mythic-keystone-profile";
+import { APICharacterProfessionsSummary } from "./api/profile/character-profession";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
+import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from "./api/profile/character-pvp";
 import { spellTooltip } from "./api/shared";
-import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, refStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 
@@ -20,64 +22,7 @@ export interface characterMythicKeystoneSeasonData extends APICharacterMythicKey
     $id: number;
 }
 
-interface characterProfession {
-    profession: refStruct;
-    tiers: {
-        skill_points: number;
-        max_skill_points: number;
-        tier: idNameStruct;
-        known_recipes: refStruct;
-    }[];
-    specialization?: {
-        name: string;
-    }
-}
 
-export interface characterProfessionData {
-    links: linksStruct;
-    character: characterRef;
-    primaries: characterProfession[];
-    secondaries: characterProfession[];
-}
-
-export interface characterPVPData {
-    _links: linksStruct;
-    brackets: hrefStruct[];
-    honor_level: number;
-    pvp_map_statistics: {
-        world_map: idNameStruct;
-        match_statistics: {
-            played: number;
-            won: number;
-            lost: number;
-        }
-    }[];
-    honorable_kills: number;
-    character: characterRef;
-}
-
-export interface characterPVPBracketData {
-    _links: linksStruct;
-    character: characterRef;
-    faction: factionStruct;
-    bracket: {
-        id: number;
-        type: string;
-    }
-    rating: number;
-    season: idkeyStruct;
-    tier: idkeyStruct;
-    season_match_statistics: {
-        played: number;
-        won: number;
-        lost: number;
-    };
-    weekly_match_statistics: {
-        played: number;
-        won: number;
-        lost: number;
-    }
-}
 
 export interface characterQuestData {
     _links: linksStruct;
@@ -321,10 +266,10 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     $mythicKeystoneData: APICharacterMythicKeystoneProfileIndex;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
     //professions
-    $professions: characterProfessionData;
+    $professions: APICharacterProfessionsSummary;
     //pvp
-    $pvpData: characterPVPData;
-    $pvpBrackets: characterPVPBracketData[];
+    $pvpData: APICharacterPvPSummary;
+    $pvpBrackets: APICharacterPvPBracketStatistics[];
     //quests
     $quests: characterQuestData;
     $questsCompleted: characterQuestCompletedData;

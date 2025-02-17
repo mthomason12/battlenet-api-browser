@@ -8,8 +8,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterProfessionData,
-  characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
+  characterQuestCompletedData, characterQuestData, 
   characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
@@ -37,6 +36,8 @@ import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hu
 import { APICharacterMediaSummary } from '../model/api/profile/character-media';
 import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from '../model/api/profile/character-mythic-keystone-profile';
 import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/profile/account-profile';
+import { APICharacterProfessionsSummary } from '../model/api/profile/character-profession';
+import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from '../model/api/profile/character-pvp';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1067,7 +1068,7 @@ export class apiClientService {
 
   //region Character Professions API
 
-  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<characterProfessionData | undefined> {
+  getCharacterProfessionSummary(realmSlug: string, characterName: string): Promise<APICharacterProfessionsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/professions`);
   }
 
@@ -1087,11 +1088,11 @@ export class apiClientService {
 
   //region Character PvP API
 
-  getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<characterPVPBracketData | undefined> {
+  getCharacterPvPBracketStatistics(realmSlug: string, characterName: string, bracket: string): Promise<APICharacterPvPBracketStatistics | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-bracket/${bracket}`);
   }
 
-  getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<characterPVPData | undefined> {
+  getCharacterPvPSummary(realmSlug: string, characterName: string): Promise<APICharacterPvPSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/pvp-summary`);
   }
 
