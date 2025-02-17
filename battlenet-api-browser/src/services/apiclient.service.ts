@@ -12,7 +12,6 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterMediaData,
   characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterProfessionData,
   characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
   characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
@@ -39,6 +38,7 @@ import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSum
 import { APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids } from '../model/api/profile/character-encounters';
 import { APICharacterEquipmentSummary } from '../model/api/profile/character-equipment';
 import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hunter-pets';
+import { APICharacterMediaSummary } from '../model/api/profile/character-media';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1049,7 +1049,7 @@ export class apiClientService {
 
   //region Character Media API
 
-  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<characterMediaData | undefined> {
+  getCharacterMediaSummary(realmSlug: string, characterName: string): Promise<APICharacterMediaSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/character-media`);
   }
 

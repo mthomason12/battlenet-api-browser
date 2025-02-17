@@ -8,20 +8,12 @@ import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSum
 import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character-encounters";
 import { APICharacterEquipmentSummary } from "./api/profile/character-equipment";
 import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
+import { APICharacterMediaSummary } from "./api/profile/character-media";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
-
-export interface characterMediaData {
-    _links: linksStruct;
-    character: characterRef;
-    assets: {
-        key: string;
-        value: string;
-    }[];
-}
 
 export interface characterMythicKeystoneSummaryData {
     links: linksStruct;
@@ -364,7 +356,7 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     //hunter pets
     $hunterPets: APICharacterHunterPetsSummary;
     //media
-    $mediaData: characterMediaData;
+    $mediaData: APICharacterMediaSummary;
     //mythic keystones
     $mythicKeystoneData: characterMythicKeystoneSummaryData;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
