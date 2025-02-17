@@ -4,7 +4,7 @@
     "author": "Matt Thomason <matt@warpedcore.net>",
     "description": "Types for Battle.net API",
     "exports": {
-        ".": "./shared.ts",
+        "./shared/shared.ts": "./shared.ts",
         "./gamedata/*.ts": "./gamedata/*.ts",
         "./profile/*.ts": "./profile/*.ts",
         "./private-profile/*.ts": "./private-profile/*.ts"
