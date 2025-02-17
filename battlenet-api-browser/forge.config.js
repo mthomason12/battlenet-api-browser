@@ -4,16 +4,35 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    ignore: [
-      "^/.angular$",
-      "^/.vscode$",
-      "^/node_modules$",
-      "^/out$",
-      "^/public$",
-      "^/src$",
-      "^/.editorconfig$",
-      "^/tsconfig.*$"
-    ]
+    ignore: (filepath) => {
+      const checks = [
+        "/.angular",
+        "/.vscode",
+        "/out",
+        "/public",
+        "/src",
+        "/.editorconfig",
+        "/tsconfig"
+      ];
+      const whitelist = [
+        'node_modules/electron-squirrel-startup',
+        'node_modules/debug',
+        'node_modules/ms',
+      ]
+      var ignored = false;
+
+      checks.forEach((check)=>{
+        if (filepath.startsWith(check))
+          ignored = true;
+      });
+
+      whitelist.forEach((check)=>{
+        if (filepath.includes(check))
+          ignored = false;
+      });
+
+      return ignored;
+    }
   },
   rebuildConfig: {
   },
@@ -53,4 +72,14 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  /*hooks: {
+    postPackage: async (forgeConfig, options) => {
+      options.outputPaths.forEach((outpath)=>{
+        console.info('Replacing archive in :', path.join(outpath, resources));
+        copyFileSync('out/app.asar',path.join(outpath, resources));
+      });
+    }
+  }*/
 };
+
+
