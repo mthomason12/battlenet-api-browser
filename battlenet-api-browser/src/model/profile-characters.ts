@@ -9,55 +9,15 @@ import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character
 import { APICharacterEquipmentSummary } from "./api/profile/character-equipment";
 import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
 import { APICharacterMediaSummary } from "./api/profile/character-media";
+import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from "./api/profile/character-mythic-keystone-profile";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
-import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 
-export interface characterMythicKeystoneSummaryData {
-    links: linksStruct;
-    current_period: {
-        period: idkeyStruct;
-    }
-    seasons: idkeyStruct[];
-    character: characterRef;
-    current_mythic_rating: {
-        color: rgbaColorStruct;
-        rating: number;
-    }
-}
-
-interface characterMythicKeystoneRunMember {
-    character: characterRef;
-    specialization: refStruct;
-    race: refStruct;
-    equipped_item_level: number;
-}
-
-interface characterMythicKeystoneRun {
-    completed_timestamp: number;
-    duration: number;
-    keystone_level: number;
-    keystone_affixes: refStruct[];
-    members: characterMythicKeystoneRunMember[];
-    dungeon: refStruct;
-    is_completed_within_time: boolean;
-    mythic_rating: {
-        color: rgbaColorStruct;
-        rating: number;
-    }
-    map_rating: {
-        color: rgbaColorStruct;
-        rating: number;
-    }
-}
-
-export interface characterMythicKeystoneSeasonData {
+export interface characterMythicKeystoneSeasonData extends APICharacterMythicKeystoneSeasonDetails {
     $id: number;
-    links: linksStruct;
-    season: idkeyStruct;
-    best_runs: characterMythicKeystoneRun[];
 }
 
 interface characterProfession {
@@ -358,7 +318,7 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     //media
     $mediaData: APICharacterMediaSummary;
     //mythic keystones
-    $mythicKeystoneData: characterMythicKeystoneSummaryData;
+    $mythicKeystoneData: APICharacterMythicKeystoneProfileIndex;
     $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
     //professions
     $professions: characterProfessionData;

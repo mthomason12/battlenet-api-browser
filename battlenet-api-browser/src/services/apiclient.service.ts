@@ -1,8 +1,4 @@
 import { apiSearchResponse, mediaDataStruct } from '../model/datastructs';
-import { accountHeirlooms } from '../model/account-heirlooms';
-import { accountProfileIndex } from '../model/account-characters';
-import { accountPets } from '../model/account-pets';
-import { accountMounts } from '../model/account-mounts';
 import { EventEmitter, inject, Injectable } from '@angular/core';
 import { ExtensionManagerService } from '../extensions/extension-manager.service';
 import { apiClientSettings } from './apiclientsettings';
@@ -12,7 +8,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterProfessionData,
+  characterProfessionData,
   characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
   characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
@@ -39,6 +35,8 @@ import { APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids 
 import { APICharacterEquipmentSummary } from '../model/api/profile/character-equipment';
 import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hunter-pets';
 import { APICharacterMediaSummary } from '../model/api/profile/character-media';
+import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from '../model/api/profile/character-mythic-keystone-profile';
+import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/private-profile/account-profile';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -941,35 +939,35 @@ export class apiClientService {
 
   //#region Account Profile API
 
-  getAccountProfileSummary(): Promise<any> {
+  getAccountProfileSummary(): Promise<APIAccountProfileSummary | undefined> {
     return this.queryProfile(`/profile/user/wow`);
   }
 
-  getProtectedCharacterProfileSummary(characterId: number, realmId: number): Promise<accountProfileIndex | undefined> {
+  getProtectedCharacterProfileSummary(characterId: number, realmId: number): Promise<APIProtectedCharacterProfileSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/protected-character/${realmId}-${characterId}`);
   }
 
-  getAccountCollectionsIndex(): Promise<any> {
+  getAccountCollectionsIndex(): Promise<APIAccountCollectionsIndex | undefined> {
     return this.queryProfile(`/profile/user/wow/collections`);
   }
 
-  getAccountHeirloomsCollectionsSummary(): Promise<accountHeirlooms | undefined> {
+  getAccountHeirloomsCollectionsSummary(): Promise<APIAccountHeirloomsCollectionSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/collections/heirlooms`);
   }
 
-  getAccountMountsCollectionsSummary(): Promise<accountMounts | undefined> {
+  getAccountMountsCollectionsSummary(): Promise<APIAccountMountsCollectionSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/collections/mounts`);
   }
 
-  getAccountPetsCollectionsSummary(): Promise<accountPets | undefined> {
+  getAccountPetsCollectionsSummary(): Promise<APIAccountPetsCollectionSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/collections/pets`);
   }
 
-  getAccountToysCollectionsSummary(): Promise<any> {
+  getAccountToysCollectionsSummary(): Promise<APIAccountToysCollectionSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/collections/toys`);
   }
 
-  getAccountTransmogCollectionsSummary(): Promise<any> {
+  getAccountTransmogCollectionsSummary(): Promise<APIAccountTransmogCollectionSummary | undefined> {
     return this.queryProfile(`/profile/user/wow/collections/transmogs`);
   }
 
@@ -1057,11 +1055,11 @@ export class apiClientService {
 
   //region Character Mythic Keystone Profile API
 
-  getCharacterMythicKeystoneProfileIndex(realmSlug: string, characterName: string): Promise<characterMythicKeystoneSummaryData | undefined> {
+  getCharacterMythicKeystoneProfileIndex(realmSlug: string, characterName: string): Promise<APICharacterMythicKeystoneProfileIndex | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile`);
   }
 
-  getCharacterMythicKeystoneSeasonDetails(realmSlug: string, characterName: string, seasonid: number): Promise<characterMythicKeystoneSeasonData | undefined> {
+  getCharacterMythicKeystoneSeasonDetails(realmSlug: string, characterName: string, seasonid: number): Promise<APICharacterMythicKeystoneSeasonDetails | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/mythic-keystone-profile/season/${seasonid}`);
   }
 
