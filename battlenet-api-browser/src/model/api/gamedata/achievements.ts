@@ -1,10 +1,10 @@
-import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "../shared";
-
 /**
  * Achievement API Return Types
  * @module
  */
 
+
+import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "../shared";
 
 /**
  * Achievements Index

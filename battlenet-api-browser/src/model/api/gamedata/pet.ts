@@ -1,5 +1,6 @@
 /**
  * Pet API Return Types
+ * @module
  */
 
 import { APIMediaStruct, linksStruct, mediaStruct, refStruct } from "../shared";

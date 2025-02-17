@@ -1,5 +1,6 @@
 /**
  * Mount API Return Types
+ * @module
  */
 
 import { APISearch, APISearchResult, factionStruct, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "../shared";

@@ -1,5 +1,6 @@
 /**
  * Reputation API Return Types
+ * @module
  */
 
 import { factionStruct, hrefStruct, linksStruct, refStruct } from "../shared";

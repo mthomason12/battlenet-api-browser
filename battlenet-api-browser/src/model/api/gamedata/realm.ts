@@ -1,5 +1,6 @@
 /**
  * Realm API Return Types
+ * @module
  */
 
 import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "../shared";

@@ -1,5 +1,6 @@
 /**
  * Journal API Return Types
+ * @module
  */
 
 import { APIMediaStruct, APISearch, APISearchResult, idNameStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct } from "../shared";

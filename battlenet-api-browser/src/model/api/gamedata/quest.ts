@@ -1,5 +1,6 @@
 /**
  * Quest API Return Types
+ * @module
  */
 
 import { factionStruct, hrefStruct, linksStruct, moneyStruct, refStruct } from "../shared";

@@ -1,5 +1,6 @@
 /**
  * Creature API Return Types
+ * @module
  */
 
 import { APISearch, APISearchResult, assetStruct, idkeyStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct } from "../shared";

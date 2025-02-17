@@ -1,8 +1,9 @@
 /**
  * Media Search API Return Types
+ * @module
  */
 
-import { APISearch, APISearchResult, assetStruct, mediaStruct } from "../shared";
+import { APISearch, APISearchResult, assetStruct } from "../shared";
 
 /**
  * Media Search

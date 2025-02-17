@@ -1,5 +1,6 @@
 /**
  * Region API Return Types
+ * @module
  */
 
 import { hrefStruct, linksStruct } from "../shared";

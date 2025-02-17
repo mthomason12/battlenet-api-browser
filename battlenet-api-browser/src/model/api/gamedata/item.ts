@@ -1,5 +1,6 @@
 /**
  * Item API Return Types
+ * @module
  */
 
 import { APISearch, APISearchResult, hrefStruct, itemStatStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "../shared"
