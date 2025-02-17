@@ -6,8 +6,7 @@
     "exports": {
         "./shared/shared.ts": "./shared.ts",
         "./gamedata/*.ts": "./gamedata/*.ts",
-        "./profile/*.ts": "./profile/*.ts",
-        "./private-profile/*.ts": "./private-profile/*.ts"
+        "./profile/*.ts": "./profile/*.ts"
     },
     "scripts": {
         "build-docs": "npx typedoc --excludeExternals --externalPattern \"./node_modules/**\""
