@@ -2,53 +2,18 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
+import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 import { guildCrestStruct } from "./profile-guild";
 
-interface characterAchievementCriteria {
-    id: number;
-    is_completed: boolean;
-    child_criteria?: characterAchievementCriteria[];
+
+export interface characterAchievementSummaryData extends APICharacterAchievementsSummary {
 }
 
-interface characterAchievementItem {
-    id: number;
-    achievement: refStruct;
-    criteria: characterAchievementCriteria
-    completed_timestamp: number;
-}
-
-export interface characterAchievementSummaryData {
-    _links: linksStruct;
-    total_quantity: number;
-    total_points: number;
-    achievements: characterAchievementItem[];
-    character: characterRef;
-    statistics: hrefStruct;
-}
-
-interface characterAchievementStatisticsCategory {
-    id: number;
-    name: string;
-    sub_categories?: characterAchievementStatisticsCategory[];
-}
-
-interface characterAchievementStatisticItem {
-    id: number;
-    name: string;
-    last_updated_timestamp: number;
-    quantity: number;
-}
-
-export interface characterAchievementStatisticsData {
-    _links: linksStruct;    
-    character: characterRef;
-    statistics: characterAchievementStatisticItem[];
-    categories: characterAchievementStatisticsCategory[];
-
+export interface characterAchievementStatisticsData extends APICharacterAchievementsStatistics {
 }
 
 interface characterAppearanceItem {
@@ -748,9 +713,9 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             if (realm && character) {
             api.getCharacterProfileSummary(realm, character).then((result)=>{
                 if (result) {
-                    result.$id = Slugify(result.name)+'@'+result.realm.slug;
+                    (result as characterProfileData).$id = Slugify(result.name)+'@'+result.realm.slug;
                 }
-                resolve(this.fakeSearchResponse(result));
+                resolve(this.fakeSearchResponse(result as characterProfileData));
             }); } else {
                 resolve(this.fakeSearchResponse(undefined));
             }
@@ -874,7 +839,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         var realm: string;
         var character: string;
         [character,realm] = id.split('@');
-        return api.getCharacterProfileSummary(realm, character);
+        return (api.getCharacterProfileSummary(realm, character) as Promise<characterProfileData>);
     }
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {

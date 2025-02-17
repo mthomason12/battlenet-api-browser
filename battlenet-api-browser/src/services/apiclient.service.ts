@@ -33,6 +33,7 @@ import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
 import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from '../model/api/gamedata/quest';
 import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from '../model/api/gamedata/reputation';
 import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/api/profile/character-profile';
+import { APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -971,7 +972,7 @@ export class apiClientService {
 
   //region Character Achievements API
 
-  getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<characterAchievementSummaryData | undefined> {
+  getCharacterAchievementsSummary(realmSlug: string, characterName: string): Promise<APICharacterAchievementsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements`);
   }
 
@@ -1075,7 +1076,7 @@ export class apiClientService {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}`);
   }
 
-  getCharacterProfileStatus(realmSlug: string, characterName: string): Promise<APICharacterProfileStatus> {
+  getCharacterProfileStatus(realmSlug: string, characterName: string): Promise<APICharacterProfileStatus | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/status`);
   }
 
