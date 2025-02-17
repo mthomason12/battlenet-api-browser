@@ -2,6 +2,7 @@ const { app, BrowserWindow, protocol } = require('electron/main')
 const fs = require('node:fs');
 const path = require('node:path');
 const url = require('url');
+const started = require('electron-squirrel-startup');
 
 let win;
 
@@ -11,7 +12,7 @@ const absRoot = path.resolve(rootFile);
 console.log("absFile: "+absRoot);
 
 //quit if this is a squirrel startup event
-if (require('electron-squirrel-startup')) app.quit();
+if (started) app.quit();
 
 /**
  * createWindow function to create our main window
