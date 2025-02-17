@@ -33,7 +33,8 @@ import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
 import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from '../model/api/gamedata/quest';
 import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from '../model/api/gamedata/reputation';
 import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/api/profile/character-profile';
-import { APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
+import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
+import { APICharacterAppearanceSummary } from '../model/api/profile/character-appearance';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -976,13 +977,13 @@ export class apiClientService {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements`);
   }
 
-  getCharacterAchievementsStatistics(realmSlug: string, characterName: string): Promise<characterAchievementStatisticsData | undefined> {
+  getCharacterAchievementsStatistics(realmSlug: string, characterName: string): Promise<APICharacterAchievementsStatistics | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/achievements/statistics`);
   }
 
   //region Character Appearance API  
 
-  getCharacterAppearanceSummary(realmSlug: string, characterName: string): Promise<characterAppearanceSummaryData | undefined> {
+  getCharacterAppearanceSummary(realmSlug: string, characterName: string): Promise<APICharacterAppearanceSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/appearance`);
   }
 

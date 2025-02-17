@@ -20,6 +20,31 @@ export interface genderStruct {
     name: string;
 }
 
+export interface guildCrestStruct {
+    emblem: {
+        id: number;
+        media: mediaStruct;
+        color: {
+            id: number;
+            rgba: rgbaColorStruct;
+        }
+    };
+    border: {
+        id: number;
+        media: mediaStruct;
+        color: {
+            id: number;
+            rgba: rgbaColorStruct;
+        }
+    };
+    background: {
+        color: {
+            id: number,
+            rgba: rgbaColorStruct;
+        }
+    };
+}
+
 export interface hrefStruct {
     href: string;
 }

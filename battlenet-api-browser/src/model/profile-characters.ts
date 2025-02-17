@@ -3,11 +3,11 @@ import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
+import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
-import { guildCrestStruct } from "./profile-guild";
 
 
 export interface characterAchievementSummaryData extends APICharacterAchievementsSummary {
@@ -16,38 +16,7 @@ export interface characterAchievementSummaryData extends APICharacterAchievement
 export interface characterAchievementStatisticsData extends APICharacterAchievementsStatistics {
 }
 
-interface characterAppearanceItem {
-    id: number;
-    slot: {
-        type: string;
-        name: string;
-    }
-    enchant: number;
-    item_appearance_modifier_id: number;
-    internal_slot_id: number;
-    subclass: number;
-}
-
-interface characterCustomizationItem {
-    option: idNameStruct;
-    choice: {
-        id: number;
-        name?: string;
-        display_order: number;
-    }
-}
-
-export interface characterAppearanceSummaryData {
-    _links: linksStruct;
-    character: characterRef;
-    playable_race: refStruct;
-    playable_class: refStruct;
-    active_spec: refStruct;
-    gender: genderStruct;
-    faction: factionStruct;
-    guild_crest: guildCrestStruct;
-    items: characterAppearanceItem[];
-    customizations: characterCustomizationItem[];
+export interface characterAppearanceSummaryData extends APICharacterAppearanceSummary {
 }
 
 interface characterHeirloomItem {
