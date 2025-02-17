@@ -14,6 +14,9 @@ export interface APIRealmsIndex
   realms: APIRealmsIndexEntry[];
 }
 
+/**
+ * Individual index entry from @see APIRealmsIndex
+ */
 export interface APIRealmsIndexEntry extends refStruct
 {
   slug: string;
