@@ -31,6 +31,8 @@ import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearch
 import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/creature';
 import { APIAuctions, APICommodities } from '../model/api/auction-house';
 import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/journal';
+import { APIMediaSearch } from '../model/api/media-search';
+import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/mount';
 
 interface APIQuery{
   apiEndpoint: string;
@@ -529,7 +531,7 @@ isLoggingIn(): boolean
 
   //region Media Search API
 
-  getMediaSearch(params: string): Promise<any| undefined>
+  getMediaSearch(params: string): Promise<APIMediaSearch| undefined>
   {
     return this.queryStatic(`/data/wow/search/media?params=${params}`);
   } 
@@ -569,17 +571,17 @@ isLoggingIn(): boolean
 
   //region Mount API
 
-  getMountIndex(): Promise<mountsIndex| undefined>
+  getMountIndex(): Promise<APIMountIndex| undefined>
   {
     return this.queryStatic(`/data/wow/mount/index`);
   }
 
-  getMount(id: number): Promise<mountData| undefined>
+  getMount(id: number): Promise<APIMount| undefined>
   {
     return this.queryStatic(`/data/wow/mount/${id}`);
   }
 
-  getMountSearch(params: string): Promise<any| undefined>
+  getMountSearch(params: string): Promise<APIMountSearch | undefined>
   {
     return this.queryStatic(`/data/wow/search/mount?params=${params}`);
   }
