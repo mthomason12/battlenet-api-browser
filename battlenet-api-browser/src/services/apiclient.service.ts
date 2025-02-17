@@ -32,6 +32,7 @@ import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/gamedata/
 import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
 import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from '../model/api/gamedata/quest';
 import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from '../model/api/gamedata/reputation';
+import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/api/profile/character-profile';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1070,11 +1071,11 @@ export class apiClientService {
 
   //region Character Profile API
 
-  getCharacterProfileSummary(realmSlug: string, characterName: string): Promise<characterProfileData | undefined> {
+  getCharacterProfileSummary(realmSlug: string, characterName: string): Promise<APICharacterProfileSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}`);
   }
 
-  getCharacterProfileStatus(realmSlug: string, characterName: string): Promise<any> {
+  getCharacterProfileStatus(realmSlug: string, characterName: string): Promise<APICharacterProfileStatus> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/status`);
   }
 

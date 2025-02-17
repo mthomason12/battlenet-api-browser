@@ -2,8 +2,9 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
+import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
-import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, realmStruct, keyStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
+import { dataStruct, apiSearchResponse, linksStruct, genderStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 import { guildCrestStruct } from "./profile-guild";
 
@@ -650,56 +651,9 @@ export interface characterTitleData {
     titles: refStruct[];
 }
 
-export interface characterProfileData extends IApiDataDoc {
-    _links: linksStruct;
+export interface characterProfileData extends APICharacterProfileSummary, IApiDataDoc {
     id: number;
     name: string;
-    gender: genderStruct;
-    faction: factionStruct;
-    race: refStruct;
-    character_class: refStruct;
-    active_spec: refStruct;
-    realm: realmStruct;
-    guild: {
-        key: keyStruct;
-        name: string;
-        id: number;
-        realm: realmStruct;
-        faction: factionStruct;
-    };
-    level: number;
-    experience: number;
-    achievement_points: number;
-    achievements: hrefStruct;
-    titles: hrefStruct;
-    pvp_summary: hrefStruct;
-    encounters: hrefStruct;
-    media: hrefStruct;
-    specializations: hrefStruct;
-    statistics: hrefStruct;
-    mythic_keystone_profile: hrefStruct;
-    equipment: hrefStruct;
-    appearance: hrefStruct;
-    collections: hrefStruct;    
-    reputations: hrefStruct;
-    quests: hrefStruct;
-    achievements_statistics: hrefStruct;
-    professions: hrefStruct;
-    last_login_timestamp: number;
-    average_item_level: number;
-    equipped_item_level: number;
-    active_title: {
-        key: keyStruct;
-        name: string;
-        id: number;
-        display_string: string;
-    }
-    covenant_progress: {
-        chosen_covenant: refStruct;
-        renown_level: number;
-        soulbinds: hrefStruct;
-    }
-    name_search: string;
     //additional data we've added to the API
     $id: string;
     $achievements: characterAchievementSummaryData;
@@ -742,7 +696,6 @@ export interface characterProfileData extends IApiDataDoc {
     //titles
     $titles: characterTitleData;
 }
-
 
 
 export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
