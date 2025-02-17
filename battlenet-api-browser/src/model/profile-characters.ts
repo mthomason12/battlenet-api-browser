@@ -4,91 +4,11 @@ import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
 import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
+import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from "./api/profile/character-collections";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
-
-
-export interface characterAchievementSummaryData extends APICharacterAchievementsSummary {
-}
-
-export interface characterAchievementStatisticsData extends APICharacterAchievementsStatistics {
-}
-
-export interface characterAppearanceSummaryData extends APICharacterAppearanceSummary {
-}
-
-interface characterHeirloomItem {
-    heirloom: refStruct;
-    upgrade: {
-        level: number;
-    }
-}
-
-export interface characterHeirloomData {
-    _links: linksStruct;
-    heirlooms: characterHeirloomItem[];
-}
-
-interface characterMountItem {
-    mount: refStruct;
-    is_useable: boolean;
-    is_favorite?: boolean;
-}
-
-export interface characterMountData {
-    _links: linksStruct;
-    mounts: characterMountItem[];
-}
-
-interface characterPetItem {
-    species: refStruct;
-    level: number;
-    quality: {
-        type: string;
-        name: string;
-    }
-    stats: {
-        breed_id: number;
-        health: number;
-        power: number;
-        speed: number;
-    }
-    name: string;
-    creature_display: idkeyStruct;
-    is_favorite?: boolean;
-    id: number;
-}
-
-export interface characterPetData {
-    _links: linksStruct;
-    pets: characterPetItem[];
-}
-
-interface characterToyItem {
-    toy: refStruct;
-    is_favorite?: boolean;
-}
-
-export interface characterToyData {
-    _links: linksStruct;
-    toys: characterToyItem[];
-}
-
-interface characterTransmogSlot {
-    slot: {
-        type: string;
-        name: string;
-    }
-    appearances: refStruct;
-}
-
-export interface characterTransmogData {
-    _links: linksStruct;
-    appearance_sets: refStruct[];
-    slots: characterTransmogSlot[];
-}
 
 interface characterDungeonEncounterItem {
     encounter: refStruct;
@@ -590,15 +510,15 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     name: string;
     //additional data we've added to the API
     $id: string;
-    $achievements: characterAchievementSummaryData;
-    $achievementStatistics: characterAchievementStatisticsData;
-    $appearanceData: characterAppearanceSummaryData;
+    $achievements: APICharacterAchievementsSummary;
+    $achievementStatistics: APICharacterAchievementsStatistics;
+    $appearanceData: APICharacterAppearanceSummary;
     //collections    
-    $heirlooms: characterHeirloomData;
-    $mountData: characterMountData;
-    $petData: characterPetData;
-    $toyData: characterToyData;
-    $transmogData: characterTransmogData;
+    $heirlooms: APICharacterHeirloomsCollectionSummary;
+    $mountData: APICharacterMountsCollectionSummary;
+    $petData: APICharacterPetsCollectionSummary;
+    $toyData: APICharacterToysCollectionSummary;
+    $transmogData: APICharacterTransmogCollectionSummary;
     //encounters
     $dungeonData: characterDungeonData;
     $raidData: characterRaidData;

@@ -35,6 +35,7 @@ import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, API
 import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/api/profile/character-profile';
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
 import { APICharacterAppearanceSummary } from '../model/api/profile/character-appearance';
+import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from '../model/api/profile/character-collections';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -989,23 +990,23 @@ export class apiClientService {
 
   //region Character Collections API  
 
-  getCharacterHeirlooms(realmSlug: string, characterName: string): Promise<characterHeirloomData | undefined> {
+  getCharacterHeirlooms(realmSlug: string, characterName: string): Promise<APICharacterHeirloomsCollectionSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/heirlooms`);
   }
 
-  getCharacterMounts(realmSlug: string, characterName: string): Promise<characterMountData | undefined> {
+  getCharacterMounts(realmSlug: string, characterName: string): Promise<APICharacterMountsCollectionSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/mounts`);
   }
 
-  getCharacterPets(realmSlug: string, characterName: string): Promise<characterPetData | undefined> {
+  getCharacterPets(realmSlug: string, characterName: string): Promise<APICharacterPetsCollectionSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/pets`);
   }
 
-  getCharacterToys(realmSlug: string, characterName: string): Promise<characterToyData | undefined> {
+  getCharacterToys(realmSlug: string, characterName: string): Promise<APICharacterToysCollectionSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/toys`);
   }
 
-  getCharacterTransmogs(realmSlug: string, characterName: string): Promise<characterTransmogData | undefined> {
+  getCharacterTransmogs(realmSlug: string, characterName: string): Promise<APICharacterTransmogCollectionSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/collections/transmogs`);
   }
 
