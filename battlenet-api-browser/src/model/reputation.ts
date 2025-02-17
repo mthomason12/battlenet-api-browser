@@ -2,26 +2,22 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
+import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from './api/gamedata/reputation';
 
-export interface ReputationFactionData extends IApiDataDoc {
-    _links?: linksStruct;
-    id: number;
-    name: string;
-    description: string;
-    reputation_tiers: {
-        key: hrefStruct;
-        name?: string;
-        id: number;
-    }
-    player_faction?: factionStruct;
+export interface ReputationFactionData extends APIReputationFaction, IApiDataDoc {
+  _links?: linksStruct;
+  id: number;
+  name: string;
+  description: string;
+  reputation_tiers: {
+      key: hrefStruct;
+      name?: string;
+      id: number;
+  }
+  player_faction?: factionStruct;
 }
 
-interface ReputationFactionIndexItem extends refStruct
-{ }
-
-export interface ReputationFactionIndex extends IApiIndexDoc {
-  _links: linksStruct;
-  factions: ReputationFactionIndexItem[];
+export interface ReputationFactionIndex extends APIReputationFactionIndex, IApiIndexDoc {
 }
 
 export class reputationFactionDataDoc extends dbData<ReputationFactionIndex, ReputationFactionData> 
@@ -43,31 +39,15 @@ export class reputationFactionDataDoc extends dbData<ReputationFactionIndex, Rep
     return apiClient.getReputationFaction(id) as Promise<ReputationFactionData>;
   }
 
-
-
-}
-
-interface ReputationTierTierData {
-    name: string;
-    min_value: number;
-    max_number: number;
-    id: number;
 }
 
 
-export interface ReputationTierData extends IApiDataDoc {
-    _links?: linksStruct;
-    id: number;
-    tiers: ReputationTierTierData[];
-    faction: refStruct;
+export interface ReputationTierData extends APIReputationTier, IApiDataDoc {
+  id: number;
 }
 
-interface ReputationTierIndexItem extends refStruct
-{ }
 
-export interface ReputationTierIndex extends IApiIndexDoc {
-  _links: linksStruct;
-  reputation_tiers: ReputationTierIndexItem[];
+export interface ReputationTierIndex extends APIReputationTierIndex, IApiIndexDoc {
 }
 
 export class reputationTierDataDoc extends dbData<ReputationTierIndex, ReputationTierData> 
