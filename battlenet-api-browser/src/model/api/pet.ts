@@ -99,7 +99,7 @@ export interface APIPetAbility {
 }
 
 /**
- * Pet Media
+ * Pet Ability Media
  * /data/wow/media/pet-ability/{{petAbilityId}}
  */
 export interface APIPetAbilityMedia extends APIMediaStruct {
