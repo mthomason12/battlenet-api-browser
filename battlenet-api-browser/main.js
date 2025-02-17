@@ -24,7 +24,7 @@ const createWindow = () => {
    * and redirect them to the index
    */
   win.webContents.on('did-fail-load', () => { 
-    win.loadURL(absRoot); 
+    win.loadFile(rootFile); 
   });
 
 
@@ -39,14 +39,14 @@ const createWindow = () => {
       const params = new URLSearchParams(thisUrl.search);   
       const code = params.get('code');
       const state = params.get('state');
-      win.loadURL(absRoot+"?code="+code+"&state="+state); 
+      win.loadFile(rootFile, {query : {code: code, state:state}}); 
     }
   });
 
   /**
    * Begin by loading our index file
    */
-  win.loadFile(absRoot);
+  win.loadFile(rootFile);
 }
 
 /**
