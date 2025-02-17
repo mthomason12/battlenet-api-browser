@@ -104,7 +104,7 @@ interface characterDungeonModeItem {
     status: {
         type: string;
         name: string;
-    }    
+    }
     progress: {
         completed_count: number;
         total_count: number;
@@ -232,12 +232,12 @@ interface characterEquippedItem {
     durability: {
         value: number;
         display_string: string;
-    }    
+    }
 }
 
 export interface characterEquipmentData {
     _links: linksStruct;
-    character:characterRef;
+    character: characterRef;
     equipped_items: characterEquippedItem[];
 }
 
@@ -253,13 +253,13 @@ interface characterHunterPetItem {
 
 export interface characterHunterPetsData {
     _links: linksStruct;
-    character:characterRef;
+    character: characterRef;
     hunter_pets: characterHunterPetItem[];
 }
 
 export interface characterMediaData {
     _links: linksStruct;
-    character:characterRef;
+    character: characterRef;
     assets: {
         key: string;
         value: string;
@@ -301,7 +301,7 @@ interface characterMythicKeystoneRun {
     map_rating: {
         color: rgbaColorStruct;
         rating: number;
-    }    
+    }
 }
 
 export interface characterMythicKeystoneSeasonData {
@@ -328,7 +328,7 @@ export interface characterProfessionData {
     links: linksStruct;
     character: characterRef;
     primaries: characterProfession[];
-    secondaries : characterProfession[];
+    secondaries: characterProfession[];
 }
 
 export interface characterPVPData {
@@ -409,7 +409,7 @@ interface characterSoulbindTrait {
     display_order: number;
 }
 
-interface characterSoulbindConduitSocket{
+interface characterSoulbindConduitSocket {
     conduit_socket: {
         type: {
             name: string;
@@ -632,7 +632,7 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
 }
 
 
-export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
+export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc {
     id: number,
     name: string;
     faction: string;
@@ -642,18 +642,16 @@ export interface characterProfileIndexData extends IIndexItem, IApiIndexDoc{
     active_spec: string;
     realm: string;
     guild: string;
-    $id: string;    
+    $id: string;
 }
 
 /**
  * Use a dbDataNoIndex as there's no index, but we're going to override search because we can only look for individual characters
  * in the API.
  */
-export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, characterProfileData, characterProfileIndexData>
-{
+export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData, characterProfileData, characterProfileIndexData> {
 
-    constructor(parent: dataStruct, recDB: RecDB)
-    {
+    constructor(parent: dataStruct, recDB: RecDB) {
         super(parent, recDB);
         this.icon = "group";
         this.type = "profile-characters";
@@ -677,22 +675,22 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
      */
     override getAPISearch(api: apiClientService, searchParams: APISearchParams, params: object): Promise<apiSearchResponse<characterProfileData> | undefined> {
         var realm: string = Slugify(searchParams.find('realm')?.values[0]!);
-        var character: string= Slugify(searchParams.find('character')?.values[0]!);
-        return new Promise((resolve, reject)=>{
+        var character: string = Slugify(searchParams.find('character')?.values[0]!);
+        return new Promise((resolve, reject) => {
             if (realm && character) {
-            api.getCharacterProfileSummary(realm, character).then((result)=>{
-                if (result) {
-                    (result as characterProfileData).$id = Slugify(result.name)+'@'+result.realm.slug;
-                }
-                resolve(this.fakeSearchResponse(result as characterProfileData));
-            }); } else {
+                api.getCharacterProfileSummary(realm, character).then((result) => {
+                    if (result) {
+                        (result as characterProfileData).$id = Slugify(result.name) + '@' + result.realm.slug;
+                    }
+                    resolve(this.fakeSearchResponse(result as characterProfileData));
+                });
+            } else {
                 resolve(this.fakeSearchResponse(undefined));
             }
         });
     }
 
-    fakeSearchResponse(result: characterProfileData|undefined): apiSearchResponse<characterProfileData>
-    {
+    fakeSearchResponse(result: characterProfileData | undefined): apiSearchResponse<characterProfileData> {
         return {
             page: 1,
             pageSize: result ? 1 : 0,
@@ -701,102 +699,102 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
     }
 
     override getAPIExtra(apiClient: apiClientService, apiRec: characterProfileData): Promise<void> {
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             Promise.allSettled([
-                apiClient.getCharacterAchievementsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                apiClient.getCharacterAchievementsSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$achievements = data;
                 }),
-                apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                apiClient.getCharacterAchievementsStatistics(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$achievementStatistics = data;
-                }),                
-                apiClient.getCharacterAppearanceSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterAppearanceSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$appearanceData = data;
                 }),
-                apiClient.getCharacterHeirlooms(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                apiClient.getCharacterHeirlooms(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$heirlooms = data;
-                }),  
-                apiClient.getCharacterMounts(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterMounts(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mountData = data;
-                }),  
-                apiClient.getCharacterPets(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterPets(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$petData = data;
-                }),  
-                apiClient.getCharacterToys(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterToys(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$toyData = data;
-                }),      
-                apiClient.getCharacterTransmogs(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterTransmogs(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$transmogData = data;
-                }),            
-                apiClient.getCharacterDungeons(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterDungeons(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$dungeonData = data;
-                }),              
-                apiClient.getCharacterRaids(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterRaids(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$raidData = data;
-                }),     
-                apiClient.getCharacterEquipmentSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterEquipmentSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$equipment = data;
-                }),       
-                apiClient.getCharacterHunterPetsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterHunterPetsSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$hunterPets = data;
                 }),
-                apiClient.getCharacterMediaSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                apiClient.getCharacterMediaSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mediaData = data;
-                }),     
-                apiClient.getCharacterMythicKeystoneProfileIndex(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data: any) => {
+                }),
+                apiClient.getCharacterMythicKeystoneProfileIndex(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data: any) => {
                     apiRec.$mythicKeystoneData = data;
                     //get each season
                     apiRec.$mythicKeystoneSeasons = new Array();
-                    apiRec.$mythicKeystoneData.seasons.forEach((season)=>{
-                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then ((data: characterMythicKeystoneSeasonData | undefined) => {
+                    apiRec.$mythicKeystoneData.seasons.forEach((season) => {
+                        apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then((data: characterMythicKeystoneSeasonData | undefined) => {
                             if (data) {
                                 data.$id - data.season.id;
                                 apiRec.$mythicKeystoneSeasons.push(data);
                             }
                         })
                     })
-                }), 
-                apiClient.getCharacterProfessionSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterProfessionSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$professions = data!;
-                }), 
-                apiClient.getCharacterPvPSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterPvPSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$pvpData = data!;
-                    apiRec.$pvpData.brackets.forEach((bracket)=>{
+                    apiRec.$pvpData.brackets.forEach((bracket) => {
                         //extract the bracket name from bracket.href
                         //e.g from "https://us.api.blizzard.com/profile/wow/character/wyrmrest-accord/gregmex/pvp-bracket/3v3?namespace=profile-us"
                         const regex = /\/([\w\d]*)\?/;
                         const matches = regex.exec(bracket.href);
                         const bracketName = matches![1];  //e.g "3v3"
-                        apiClient.getCharacterPvPBracketStatistics(apiRec.realm.slug,Slugify(apiRec.name_search), bracketName)?.then((data)=>{
+                        apiClient.getCharacterPvPBracketStatistics(apiRec.realm.slug, Slugify(apiRec.name_search), bracketName)?.then((data) => {
                             apiRec.$pvpBrackets.push(data!);
-                        });                   
+                        });
                     })
-                }),   
-                apiClient.getCharacterQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterQuests(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$quests = data!;
-                }),        
-                apiClient.getCharacterCompletedQuests(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterCompletedQuests(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$questsCompleted = data!;
-                }),                             
-                apiClient.getCharacterReputationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterReputationsSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$reputation = data!;
-                }), 
-                apiClient.getCharacterSoulbinds(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterSoulbinds(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$soulbinds = data!;
                 }),
-                apiClient.getCharacterSpecializationsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                apiClient.getCharacterSpecializationsSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$specializations = data!;
-                }),                 
-                apiClient.getCharacterStatisticsSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterStatisticsSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$statistics = data!;
-                }),                 
-                apiClient.getCharacterTitlesSummary(apiRec.realm.slug,Slugify(apiRec.name_search))?.then((data) => {
+                }),
+                apiClient.getCharacterTitlesSummary(apiRec.realm.slug, Slugify(apiRec.name_search))?.then((data) => {
                     apiRec.$titles = data!;
                 })
-            ]).then(()=>{
+            ]).then(() => {
                 resolve();
             })
         });
-    }    
+    }
 
     /**
      * Retrieve character by "id" (realm/name)
@@ -807,13 +805,13 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
     override getAPIRec(api: apiClientService, id: string): Promise<characterProfileData | undefined> {
         var realm: string;
         var character: string;
-        [character,realm] = id.split('@');
+        [character, realm] = id.split('@');
         return (api.getCharacterProfileSummary(realm, character) as Promise<characterProfileData>);
     }
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
         return {
-            $id: Slugify(item.name)+'@'+item.realm.slug,
+            $id: Slugify(item.name) + '@' + item.realm.slug,
             id: item.id,
             name: item.name,
             faction: item.faction.type,
@@ -826,5 +824,5 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             lastUpdate: Date.now()
         }
     }
-    
+
 }

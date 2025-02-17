@@ -69,14 +69,13 @@ export interface linksStruct {
 }
 
 
-export interface moneyStruct
-{
-  value: number;
-  units: {
-    gold: number;
-    silver: number;
-    copper: number;
-  }
+export interface moneyStruct {
+    value: number;
+    units: {
+        gold: number;
+        silver: number;
+        copper: number;
+    }
 }
 
 export interface realmStruct {

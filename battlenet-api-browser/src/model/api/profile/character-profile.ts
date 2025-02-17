@@ -39,7 +39,7 @@ export interface APICharacterProfileSummary {
     mythic_keystone_profile: hrefStruct;
     equipment: hrefStruct;
     appearance: hrefStruct;
-    collections: hrefStruct;    
+    collections: hrefStruct;
     reputations: hrefStruct;
     quests: hrefStruct;
     achievements_statistics: hrefStruct;
