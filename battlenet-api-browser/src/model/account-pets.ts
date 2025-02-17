@@ -1,8 +1,8 @@
-import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem, keyStruct, mediaStruct, refStruct } from './datastructs';
+import { IApiDataDoc, IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAccountPet, APIAccountPetsCollectionSummary } from './api/profile/account-profile';
+import { APIAccountPet, APIAccountPetsCollectionSummary } from 'battlenet-api-types';
 
 
 export interface accountPets extends APIAccountPetsCollectionSummary, IApiIndexDoc {

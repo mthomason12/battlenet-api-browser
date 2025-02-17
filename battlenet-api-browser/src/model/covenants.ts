@@ -2,7 +2,7 @@ import { dataStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datast
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APICovenant, APICovenantIndex, APISoulbindIndex } from './api/gamedata/covenants';
+import { APICovenant, APICovenantIndex, APISoulbindIndex } from 'battlenet-api-types';
 
 //#region Covenants
 
@@ -58,7 +58,7 @@ interface soulbindIndexData extends APISoulbindIndex, IApiIndexDoc {
 
 
 export class soulbindsDataDoc extends dbData<soulbindIndexData, soulbindData> {
-  
+
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, recDB);
     this.icon = "people";

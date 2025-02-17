@@ -2,26 +2,15 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
-import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
 import {
     APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary,
-    APICharacterTransmogCollectionSummary
-} from "./api/profile/character-collections";
-import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character-encounters";
-import { APICharacterEquipmentSummary } from "./api/profile/character-equipment";
-import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
-import { APICharacterMediaSummary } from "./api/profile/character-media";
-import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from "./api/profile/character-mythic-keystone-profile";
-import { APICharacterProfessionsSummary } from "./api/profile/character-profession";
-import { APICharacterProfileSummary } from "./api/profile/character-profile";
-import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from "./api/profile/character-pvp";
-import { APICharacterCompletedQuests, APICharacterQuests } from "./api/profile/character-quests";
-import { APICharacterReputationsSummary } from "./api/profile/character-reputations";
-import { APICharacterSoulbinds } from "./api/profile/character-soulbinds";
-import { APICharacterSpecializationsSummary } from "./api/profile/character-specializations";
-import { APICharacterStatisticsSummary } from "./api/profile/character-statistics";
-import { APICharacterTitles } from "./api/profile/character-titles";
+    APICharacterTransmogCollectionSummary, APICharacterDungeons, APICharacterRaids, APICharacterEquipmentSummary, APICharacterAppearanceSummary,
+    APICharacterAchievementsStatistics, APICharacterAchievementsSummary, APICharacterHunterPetsSummary, APICharacterMediaSummary,
+    APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails, APICharacterProfessionsSummary,
+    APICharacterProfileSummary, APICharacterPvPBracketStatistics, APICharacterPvPSummary, APICharacterCompletedQuests, APICharacterQuests,
+    APICharacterReputationsSummary, APICharacterSoulbinds, APICharacterSpecializationsSummary, APICharacterStatisticsSummary,
+    APICharacterTitles
+} from "battlenet-api-types";
 import { dataStruct, apiSearchResponse, IApiDataDoc, IIndexItem, IApiIndexDoc } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 

@@ -2,7 +2,7 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from './api/gamedata/reputation';
+import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from 'battlenet-api-types';
 
 export interface ReputationFactionData extends APIReputationFaction, IApiDataDoc {
   _links?: linksStruct;

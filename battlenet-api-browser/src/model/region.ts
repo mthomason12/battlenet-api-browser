@@ -2,7 +2,7 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIRegion, APIRegionsIndex } from './api/gamedata/region';
+import { APIRegion, APIRegionsIndex } from 'battlenet-api-types';
 
 export interface regionData extends APIRegion, IApiDataDoc {
     id: number;

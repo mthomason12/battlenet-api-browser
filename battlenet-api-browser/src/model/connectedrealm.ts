@@ -2,7 +2,7 @@ import { dataStruct, hrefStruct, IApiIndexDoc, IApiDataDoc, IIndexItem } from '.
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIConnectedRealmsIndex, APIConnectedRealm } from './api/gamedata/connected-realm';
+import { APIConnectedRealmsIndex, APIConnectedRealm } from 'battlenet-api-types';
 
 
 export interface connectedRealmData extends APIConnectedRealm, IApiDataDoc {

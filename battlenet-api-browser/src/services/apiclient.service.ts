@@ -8,38 +8,26 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { APISearchParams } from './apisearch';
-import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/gamedata/achievements';
-import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/gamedata/connected-realm';
-import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/gamedata/item';
-import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/gamedata/creature';
-import { APIAuctions, APICommodities } from '../model/api/gamedata/auction-house';
-import { APIJournalEncounter, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/gamedata/journal';
-import { APIMediaSearch } from '../model/api/gamedata/media-search';
-import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/gamedata/mount';
-import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia } from '../model/api/gamedata/pet';
-import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/gamedata/realm';
-import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
-import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from '../model/api/gamedata/quest';
-import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from '../model/api/gamedata/reputation';
-import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/api/profile/character-profile';
-import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
-import { APICharacterAppearanceSummary } from '../model/api/profile/character-appearance';
-import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from '../model/api/profile/character-collections';
-import { APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids } from '../model/api/profile/character-encounters';
-import { APICharacterEquipmentSummary } from '../model/api/profile/character-equipment';
-import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hunter-pets';
-import { APICharacterMediaSummary } from '../model/api/profile/character-media';
-import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeasonDetails } from '../model/api/profile/character-mythic-keystone-profile';
-import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/profile/account-profile';
-import { APICharacterProfessionsSummary } from '../model/api/profile/character-profession';
-import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from '../model/api/profile/character-pvp';
-import { APICharacterCompletedQuests, APICharacterQuests } from '../model/api/profile/character-quests';
-import { APICharacterReputationsSummary } from '../model/api/profile/character-reputations';
-import { APICharacterSoulbinds } from '../model/api/profile/character-soulbinds';
-import { APICharacterSpecializationsSummary } from '../model/api/profile/character-specializations';
-import { APICharacterStatisticsSummary } from '../model/api/profile/character-statistics';
-import { APICharacterTitles } from '../model/api/profile/character-titles';
-import { APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster } from '../model/api/profile/guild';
+import {
+  APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex,
+  APIConnectedRealm, APIConnectedRealmsIndex, APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem,
+  APIItemSet, APIItemSetsIndex, APIItemSubclass, APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily,
+  APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex, APIAuctions, APICommodities, APIJournalEncounter,
+  APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance,
+  APIJournalInstanceMedia, APIJournalInstancesIndex, APIMediaSearch, APIMount, APIMountIndex, APIMountSearch, APIPet, APIPetAbilitiesIndex,
+  APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia, APIRealm, APIRealmSearch, APIRealmsIndex, APIRegion, APIRegionsIndex, APIQuest,
+  APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex, APIReputationFaction, 
+  APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex,  APICharacterProfileStatus, APICharacterProfileSummary, 
+  APICharacterAchievementsStatistics, APICharacterAchievementsSummary,  APICharacterAppearanceSummary, APICharacterHeirloomsCollectionSummary, 
+  APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, 
+  APICharacterTransmogCollectionSummary,  APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids,
+  APICharacterEquipmentSummary, APICharacterHunterPetsSummary, APICharacterMediaSummary, APICharacterMythicKeystoneProfileIndex,
+  APICharacterMythicKeystoneSeasonDetails, APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary,
+  APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary,
+  APIProtectedCharacterProfileSummary, APICharacterProfessionsSummary, APICharacterPvPBracketStatistics, APICharacterPvPSummary,
+  APICharacterCompletedQuests, APICharacterQuests, APICharacterReputationsSummary, APICharacterSoulbinds, APICharacterSpecializationsSummary,
+  APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster 
+} from 'battlenet-api-types';
 
 interface APIQuery {
   apiEndpoint: string;

@@ -1,9 +1,8 @@
-import { dataStruct, linksStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
+import { dataStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APICreatureFamiliesIndex, APICreatureFamily, APICreatureType, APICreatureTypesIndex } from './api/gamedata/creature';
-import { refStruct } from './api/shared';
+import { APICreatureFamiliesIndex, APICreatureFamily, APICreatureType, APICreatureTypesIndex } from 'battlenet-api-types';
 
 //#region Creature Family
 

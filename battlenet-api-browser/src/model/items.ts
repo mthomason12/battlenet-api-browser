@@ -1,8 +1,8 @@
 import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { APIItem, APIItemSearchItem } from "./api/gamedata/item";
-import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, keyStruct, regionedNameStruct } from "./datastructs";
+import { APIItem, APIItemSearchItem } from "battlenet-api-types";
+import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
 export interface itemData extends APIItem, IApiDataDoc

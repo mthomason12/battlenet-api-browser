@@ -1,8 +1,11 @@
 import { apiClientService } from "../services/apiclient.service";
-import { IApiDataDoc, IApiIndexDoc, dataStruct, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
+import { IApiDataDoc, IApiIndexDoc, dataStruct, linksStruct, refStruct } from "./datastructs";
 import { dbData } from './dbdatastructs';
 import { RecDB } from "../lib/recdb";
-import { APIJournalEncounter, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstancesIndex } from "./api/gamedata/journal";
+import {
+  APIJournalEncounter, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance,
+  APIJournalInstancesIndex
+} from "battlenet-api-types";
 
 //region Journal Expansions 
 

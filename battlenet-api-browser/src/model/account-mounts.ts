@@ -2,17 +2,15 @@ import { IApiIndexDoc, dataStruct, IIndexItem } from './datastructs';
 import { dbDataIndexOnly } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAccountMount, APIAccountMountsCollectionSummary } from './api/profile/account-profile';
+import { APIAccountMount, APIAccountMountsCollectionSummary } from 'battlenet-api-types';
 
 
 export interface accountMounts extends APIAccountMountsCollectionSummary, IApiIndexDoc {
 }
 
-export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts>
-{
+export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts> {
 
-    constructor(parent: dataStruct, recDB: RecDB)
-    {
+    constructor(parent: dataStruct, recDB: RecDB) {
         super(parent, recDB);
         this.icon = "bedroom_baby";
         this.needsAuth = true;
@@ -20,16 +18,14 @@ export class accountMountsDataDoc extends dbDataIndexOnly<accountMounts>
         this.itemsName = "mounts";
         this.title = "Mounts";
         this.hideKey = true;
-        this.private = true;        
+        this.private = true;
     }
 
-    override getAPIIndex = function(apiClient: apiClientService): Promise<accountMounts>
-    {
+    override getAPIIndex = function (apiClient: apiClientService): Promise<accountMounts> {
         return apiClient.getAccountMountsCollectionsSummary() as Promise<accountMounts>;
     }
 
-    override getIndexItemName(item: IIndexItem): string
-    {
+    override getIndexItemName(item: IIndexItem): string {
         const itm = (item as APIAccountMount);
         return `${itm.mount.id}: ${itm.mount.name}`;
     }

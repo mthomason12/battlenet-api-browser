@@ -2,7 +2,7 @@ import { dataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIMount, APIMountIndex } from './api/gamedata/mount';
+import { APIMount, APIMountIndex } from 'battlenet-api-types';
 
 
 export interface mountData extends APIMount, IApiDataDoc {

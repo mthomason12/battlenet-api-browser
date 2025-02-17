@@ -1,8 +1,8 @@
-import { dataStruct, keyStruct, linksStruct, IApiIndexDoc, IApiDataDoc, refStruct, mediaStruct, mediaDataStruct } from './datastructs';
+import { dataStruct, IApiIndexDoc, IApiDataDoc, mediaDataStruct } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetIndex } from './api/gamedata/pet';
+import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetIndex } from 'battlenet-api-types';
 
 
 export interface petData extends APIPet, IApiDataDoc {

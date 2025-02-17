@@ -2,7 +2,7 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster } from "./api/profile/guild";
+import { APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster } from "battlenet-api-types";
 import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
