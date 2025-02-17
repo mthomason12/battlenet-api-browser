@@ -40,7 +40,7 @@ export interface APICharacterRaids {
 /**
  * Part of both @see APICharacterDungeons and @see APICharacterRaids
  */
-interface characterInstanceExpansionItem {
+export interface characterInstanceExpansionItem {
     expansion: refStruct;
     instances: {
         instance: refStruct;
