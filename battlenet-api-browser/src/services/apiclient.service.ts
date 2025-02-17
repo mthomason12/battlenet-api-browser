@@ -8,7 +8,6 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { APISearchParams } from './apisearch';
-import { guildRosterData } from '../model/profile-guild';
 import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/gamedata/achievements';
 import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/gamedata/connected-realm';
 import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/gamedata/item';
@@ -40,7 +39,7 @@ import { APICharacterSoulbinds } from '../model/api/profile/character-soulbinds'
 import { APICharacterSpecializationsSummary } from '../model/api/profile/character-specializations';
 import { APICharacterStatisticsSummary } from '../model/api/profile/character-statistics';
 import { APICharacterTitles } from '../model/api/profile/character-titles';
-import { APIGuild, APIGuildAchievements, APIGuildActivity } from '../model/api/profile/guild';
+import { APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster } from '../model/api/profile/guild';
 
 interface APIQuery {
   apiEndpoint: string;
