@@ -10,6 +10,9 @@ console.log("file: "+rootFile);
 const absRoot = path.resolve(rootFile);
 console.log("absFile: "+absRoot);
 
+//quit if this is a squirrel startup event
+if (require('electron-squirrel-startup')) app.quit();
+
 /**
  * createWindow function to create our main window
  */

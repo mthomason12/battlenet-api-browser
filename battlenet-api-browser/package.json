@@ -22,14 +22,13 @@
     "github-make-release-ubuntu-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-linux && ls -R out ",
     "github-make-release-windows-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-web && npm run build-zip-windows && ls -R out",
     "github-make-release-macos-latest": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-macOS && ls -R out ",
-    "github-make-release-macos-13": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-macOSi && ls -R out ",    
+    "github-make-release-macos-13": "npm ci && ng build && electron-forge make && ls -R out && npm run build-zip-macOSi && ls -R out ",
     "build-zip": "npm run build-zip-web",
     "build-zip-web": "mkdirp out/make/zip/web && npm-build-zip --source=dist/battlenet-api-browser --destination=out/make/zip/web --name=web",
     "build-zip-windows": "mkdirp out/make/zip/windows && npm-build-zip --source=out/battlenet-api-browser-win32-x64 --destination=out/make/zip/windows --name=win-x64",
     "build-zip-linux": "mkdirp out/make/zip/linux && npm-build-zip --source=out/battlenet-api-browser-linux-x64 --destination=out/make/zip/linux --name=linux-x64",
     "build-zip-macOS": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-arm64 --destination=out/make/zip/darwin --name=darwin-m2",
-    "build-zip-macOSi": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-x64 --destination=out/make/zip/darwin --name=darwin-x64"    
- 
+    "build-zip-macOSi": "mkdirp out/make/zip/darwin && npm-build-zip --source=out/battlenet-api-browser-darwin-x64 --destination=out/make/zip/darwin --name=darwin-x64"
   },
   "private": true,
   "dependencies": {
@@ -50,7 +49,6 @@
     "blizzapi": "^2.6.5",
     "dexie": "^4.0.11",
     "dexie-export-import": "^4.1.4",
-    "electron-squirrel-startup": "^1.0.1",
     "file-saver": "^2.0.5",
     "idb": "^8.0.1",
     "json-ignore": "^0.4.0",
@@ -81,6 +79,7 @@
     "@types/lodash": "^4.17.14",
     "@types/node": "^22.13.2",
     "electron": "^33.3.1",
+    "electron-squirrel-startup": "^1.0.1",
     "gulp": "^5.0.0",
     "gulp-exec": "^5.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
