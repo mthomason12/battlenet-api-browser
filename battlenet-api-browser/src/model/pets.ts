@@ -11,7 +11,6 @@ export interface petData extends APIPet, IApiDataDoc {
   $mediaData: mediaDataStruct;
 }
 
-
 export interface petsIndex extends APIPetIndex, IApiIndexDoc {
 }
 
