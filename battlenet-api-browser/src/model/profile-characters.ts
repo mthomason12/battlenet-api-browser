@@ -6,136 +6,13 @@ import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } f
 import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
 import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from "./api/profile/character-collections";
 import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character-encounters";
+import { APICharacterEquipmentSummary } from "./api/profile/character-equipment";
+import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
-
-interface characterEquippedItemSocket {
-    socket_type: {
-        name: string;
-        type: string;
-    }
-    item: refStruct;
-    display_string: string;
-    media: mediaStruct;
-}
-
-interface characterEquippedItemStat {
-    type: {
-        name: string;
-        type: string;
-    }
-    value: number;
-    display: {
-        display_string: string;
-        color: rgbaColorStruct;
-    }
-}
-
-interface characterEquippedItem {
-    item: refStruct;
-    sockets: characterEquippedItemSocket[];
-    slot: {
-        name: string;
-        type: string;
-    }
-    quantity: number;
-    context: number;
-    bonus_list: number[];
-    quality: {
-        name: string;
-        type: string;
-    }
-    name: string;
-    modified_appearance_id: number;
-    media: mediaStruct;
-    item_class: refStruct;
-    item_subclass: refStruct;
-    inventory_type: {
-        name: string;
-        type: string;
-    }
-    binding: {
-        name: string;
-        type: string;
-    }
-    armor: {
-        value: number;
-        display: {
-            display_string: string;
-            color: rgbaColorStruct;
-        }
-    }
-    stats: characterEquippedItemStat[];
-    sell_price?: {
-        value: number;
-        display_strings: {
-            header: string;
-            gold: string; //yes, these ARE strings here
-            silver: string;
-            copper: string;
-        }
-    }
-    requirements?: {
-        level?: {
-            value: number,
-            display_string: string
-        }
-        playable_classes?: {
-            links: hrefStruct;
-            display_string: string;
-        }
-    }
-    set?: {
-        item_set: refStruct;
-        items: {
-            item: refStruct;
-            is_equipped?: boolean;
-        }[];
-        effects: {
-            display_string: string;
-            required_count: number;
-            is_active: boolean;
-        }[];
-    }
-    level: {
-        value: number;
-        display_string: string;
-    }
-    transmog: {
-        item: refStruct;
-        display_string: string;
-        item_modified_appearance_id: number;
-    }
-    durability: {
-        value: number;
-        display_string: string;
-    }
-}
-
-export interface characterEquipmentData {
-    _links: linksStruct;
-    character: characterRef;
-    equipped_items: characterEquippedItem[];
-}
-
-interface characterHunterPetItem {
-    id: number;
-    name: string;
-    level: number;
-    creature: refStruct;
-    slot: number;
-    creature_display: idkeyStruct;
-
-}
-
-export interface characterHunterPetsData {
-    _links: linksStruct;
-    character: characterRef;
-    hunter_pets: characterHunterPetItem[];
-}
 
 export interface characterMediaData {
     _links: linksStruct;
@@ -483,9 +360,9 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     $dungeonData: APICharacterDungeons;
     $raidData: APICharacterRaids;
     //equipment
-    $equipment: characterEquipmentData;
+    $equipment: APICharacterEquipmentSummary;
     //hunter pets
-    $hunterPets: characterHunterPetsData;
+    $hunterPets: APICharacterHunterPetsSummary;
     //media
     $mediaData: characterMediaData;
     //mythic keystones

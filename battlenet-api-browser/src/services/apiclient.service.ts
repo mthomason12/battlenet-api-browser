@@ -12,7 +12,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterEquipmentData, characterHunterPetsData, characterMediaData,
+  characterMediaData,
   characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterProfessionData,
   characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
   characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
@@ -37,6 +37,8 @@ import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } f
 import { APICharacterAppearanceSummary } from '../model/api/profile/character-appearance';
 import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from '../model/api/profile/character-collections';
 import { APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids } from '../model/api/profile/character-encounters';
+import { APICharacterEquipmentSummary } from '../model/api/profile/character-equipment';
+import { APICharacterHunterPetsSummary } from '../model/api/profile/character-hunter-pets';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1031,7 +1033,7 @@ export class apiClientService {
 
   //region Character Equipment API
 
-  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<characterEquipmentData | undefined> {
+  getCharacterEquipmentSummary(realmSlug: string, characterName: string): Promise<APICharacterEquipmentSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/equipment`);
   }
 
@@ -1039,7 +1041,7 @@ export class apiClientService {
 
   //region Character Hunter Pets API
 
-  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<characterHunterPetsData | undefined> {
+  getCharacterHunterPetsSummary(realmSlug: string, characterName: string): Promise<APICharacterHunterPetsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/hunter-pets`);
   }
 
