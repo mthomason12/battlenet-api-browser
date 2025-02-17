@@ -12,11 +12,10 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterDungeonData,
   characterEquipmentData, characterHunterPetsData, characterMediaData,
   characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterProfessionData,
   characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
-  characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
+  characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
@@ -37,6 +36,7 @@ import { APICharacterProfileStatus, APICharacterProfileSummary } from '../model/
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from '../model/api/profile/character-achievements';
 import { APICharacterAppearanceSummary } from '../model/api/profile/character-appearance';
 import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from '../model/api/profile/character-collections';
+import { APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids } from '../model/api/profile/character-encounters';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1015,15 +1015,15 @@ export class apiClientService {
 
   //region Character Encounters API
 
-  getCharacterEncountersSummary(realmSlug: string, characterName: string): Promise<any> {
+  getCharacterEncountersSummary(realmSlug: string, characterName: string): Promise<APICharacterEncountersSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters`);
   }
 
-  getCharacterDungeons(realmSlug: string, characterName: string): Promise<characterDungeonData | undefined> {
+  getCharacterDungeons(realmSlug: string, characterName: string): Promise<APICharacterDungeons | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/dungeons`);
   }
 
-  getCharacterRaids(realmSlug: string, characterName: string): Promise<characterRaidData | undefined> {
+  getCharacterRaids(realmSlug: string, characterName: string): Promise<APICharacterRaids | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/encounters/raids`);
   }
 

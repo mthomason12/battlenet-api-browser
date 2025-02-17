@@ -5,52 +5,12 @@ import { APISearchParams } from "../services/apisearch";
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
 import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
 import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from "./api/profile/character-collections";
+import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character-encounters";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, factionStruct, refStruct, hrefStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef, idNameStruct, idkeyStruct, mediaStruct, rgbaColorStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
-interface characterDungeonEncounterItem {
-    encounter: refStruct;
-    completed_count: number;
-    last_kill_timestamp: number;
-}
-
-interface characterDungeonModeItem {
-    difficulty: {
-        type: string;
-        name: string;
-    }
-    status: {
-        type: string;
-        name: string;
-    }
-    progress: {
-        completed_count: number;
-        total_count: number;
-        encounters: characterDungeonEncounterItem[];
-    }
-}
-
-interface characterDungeonInstanceItem {
-    instance: refStruct;
-    modes: characterDungeonModeItem[];
-}
-
-interface characterDungeonExpansionItem {
-    expansion: refStruct;
-    instances: characterDungeonInstanceItem[];
-}
-
-export interface characterDungeonData {
-    _links: linksStruct;
-    expansions: characterDungeonExpansionItem[];
-}
-
-export interface characterRaidData {
-    _links: linksStruct;
-    expansions: characterDungeonExpansionItem[];
-}
 
 interface characterEquippedItemSocket {
     socket_type: {
@@ -520,8 +480,8 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     $toyData: APICharacterToysCollectionSummary;
     $transmogData: APICharacterTransmogCollectionSummary;
     //encounters
-    $dungeonData: characterDungeonData;
-    $raidData: characterRaidData;
+    $dungeonData: APICharacterDungeons;
+    $raidData: APICharacterRaids;
     //equipment
     $equipment: characterEquipmentData;
     //hunter pets
