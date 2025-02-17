@@ -83,7 +83,7 @@ interface journalEncounterMode {
 
 /**
  * Journal Encounter Search
- * /data/wow/search/journal-encounter/
+ * /data/wow/search/journal-encounter
  * 
  */
 export interface APIJournalEncounterSearch extends APISearch {
