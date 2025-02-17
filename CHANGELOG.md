@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+##### Internals
+
+- Extracted more API interfaces to separate official and application interfaces.
+
 #### v0.3.31-dev
 
 - Windows Setup.exe now uses electron-squirrel-startup to start properly
