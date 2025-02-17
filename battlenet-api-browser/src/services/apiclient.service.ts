@@ -8,7 +8,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { APISearchParams } from './apisearch';
-import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
+import { guildRosterData } from '../model/profile-guild';
 import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/gamedata/achievements';
 import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/gamedata/connected-realm';
 import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/gamedata/item';
@@ -40,6 +40,7 @@ import { APICharacterSoulbinds } from '../model/api/profile/character-soulbinds'
 import { APICharacterSpecializationsSummary } from '../model/api/profile/character-specializations';
 import { APICharacterStatisticsSummary } from '../model/api/profile/character-statistics';
 import { APICharacterTitles } from '../model/api/profile/character-titles';
+import { APIGuild, APIGuildAchievements, APIGuildActivity } from '../model/api/profile/guild';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1158,19 +1159,19 @@ export class apiClientService {
 
   //region Guilds
 
-  getGuild(realmSlug: string, guildName: string): Promise<guildProfileData | undefined> {
+  getGuild(realmSlug: string, guildName: string): Promise<APIGuild | undefined> {
     return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}`);
   }
 
-  getGuildActivity(realmSlug: string, guildName: string): Promise<guildActivityData | undefined> {
+  getGuildActivity(realmSlug: string, guildName: string): Promise<APIGuildActivity | undefined> {
     return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/activity`);
   }
 
-  getGuildAchievements(realmSlug: string, guildName: string): Promise<guildAchievementData | undefined> {
+  getGuildAchievements(realmSlug: string, guildName: string): Promise<APIGuildAchievements | undefined> {
     return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/achievements`);
   }
 
-  getGuildRoster(realmSlug: string, guildName: string): Promise<guildRosterData | undefined> {
+  getGuildRoster(realmSlug: string, guildName: string): Promise<APIGuildRoster | undefined> {
     return this.queryPubProfile(`/data/wow/guild/${realmSlug}/${guildName}/roster`);
   }
 

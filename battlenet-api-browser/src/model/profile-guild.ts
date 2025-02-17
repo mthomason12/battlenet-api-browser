@@ -2,145 +2,18 @@ import { RecDB } from "../lib/recdb";
 import { Slugify } from "../lib/utils";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { apiSearchResponse, characterRef, dataStruct, factionStruct, hrefStruct, IApiDataDoc, IApiIndexDoc, idkeyStruct, IIndexItem, keyStruct, linksStruct, mediaStruct, realmStruct, refStruct, rgbaColorStruct } from "./datastructs";
+import { APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster } from "./api/profile/guild";
+import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 
-interface guildRosterMemberStruct {
-    character: {
-        key: keyStruct;
-        name: string;
-        id: number;
-        realm: realmStruct;
-        level: number;
-        playable_class: idkeyStruct;
-        playable_race: idkeyStruct;
-    }
-    rank: number;
-}
-
-export interface guildRosterData {
-    _links: linksStruct;
-    guild: {
-        key: keyStruct;
-        id: number;
-        name: string;
-        faction: factionStruct;
-        realm: realmStruct;
-    }
-    members: guildRosterMemberStruct[];
-}
-
-interface guildAchievementCriteriaStruct {
-    id: number;
-    amount?: number;
-    is_completed: boolean;
-    child_criteria?: guildAchievementCriteriaStruct[]
-}
-
-interface guildAchievement {
-    id: number;
-    achievement: refStruct;
-    criteria?: guildAchievementCriteriaStruct;
-    completed_timestamp: number;
-}
-
-export interface guildAchievementData {
-    _links: linksStruct;
-    guild: {
-        key: keyStruct;
-        id: number;
-        name: string;
-        faction: factionStruct;
-        realm: realmStruct;
-    }
-    total_quantity: number;
-    total_points: number;
-    achievements: guildAchievement []
-}
-
-interface guildActivity {
-    activity: {
-        type: string;
-    }
-    timestamp: number;
-}
-
-interface guildEncounterActivity extends guildActivity{
-    encounter_completed: {
-        encounter: refStruct;
-        mode: {
-            type: string;
-            name: string;
-        }
-    }
-}
-
-interface guildCharacterAchievementActivity extends guildActivity {
-    character_achievement: {
-        character: characterRef;
-        achievement: refStruct;
-    }
-}
-
-export interface guildActivityData {
-    _links: linksStruct;
-    guild: {
-        key: keyStruct;
-        id: number;
-        name: string;
-        faction: factionStruct;
-        realm: realmStruct;
-    }
-    activities: guildEncounterActivity | guildCharacterAchievementActivity []
-}
-
-
-export interface guildCrestStruct {
-    emblem: {
-        id: number;
-        media: mediaStruct;
-        color: {
-            id: number;
-            rgba: rgbaColorStruct;
-        }
-    };
-    border: {
-        id: number;
-        media: mediaStruct;
-        color: {
-            id: number;
-            rgba: rgbaColorStruct;
-        }
-    };
-    background: {
-        color: {
-            id: number,
-            rgba: rgbaColorStruct;
-        }
-    };
-}
-
-
-export interface guildProfileData extends IApiDataDoc {
-    _links: linksStruct;
+export interface guildProfileData extends APIGuild, IApiDataDoc {
     id: number;
     name: string;
-    faction: factionStruct;
-    achievement_points: number;
-    member_count: number;
-    realm: realmStruct;
-    crest: guildCrestStruct;
-    roster: hrefStruct;
-    achievements: hrefStruct;
-    created_timestamp: number;
-    activity: hrefStruct;
-    name_search: string;
     //extra data we're appending to the API record
     $id: string;
-    $activityData?: guildActivityData;
-    $achievementData?: guildAchievementData;
-    $rosterData?: guildRosterData;
-
+    $activityData?: APIGuildActivity;
+    $achievementData?: APIGuildAchievements;
+    $rosterData?: APIGuildRoster;
 }
 
 export interface guildProfileIndexData extends IIndexItem, IApiIndexDoc {
@@ -190,9 +63,11 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
             if (realm && guild) {
             api.getGuild(realm, guild).then((result)=>{
                 if (result) {
-                    result.$id = Slugify(result.name)+'@'+result.realm.slug;
+                    const res = result as guildProfileData;
+                    res.$id = Slugify(res.name)+'@'+res.realm.slug;
+                    resolve(this.fakeSearchResponse(res));
                 }
-                resolve(this.fakeSearchResponse(result));
+                resolve(this.fakeSearchResponse(undefined));
             }); } else {
                 resolve(this.fakeSearchResponse(undefined));
             }
@@ -236,7 +111,7 @@ export class profileGuildDataDoc extends dbDataNoIndex<guildProfileData, guildPr
         var realm: string;
         var guild: string;
         [guild,realm] = id.split('@');
-        return api.getGuild(realm, guild);
+        return (api.getGuild(realm, guild) as Promise<guildProfileData>);
     }
 
     override makeIndexItem(item: guildProfileData): guildProfileIndexData {
