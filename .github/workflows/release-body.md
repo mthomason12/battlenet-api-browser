@@ -20,6 +20,6 @@ The following versions should all be present, as long as there isn't an error wi
 
 ##### Mac OSX
 
-- battlenet-api-browser-(version).darwin-m2.zip - Mac OSX M2 zipfile no-installer
+- battlenet-api-browser-(version).darwin-m2.zip - Mac OSX Apple Silicon zipfile no-installer
 - battlenet-api-browser-(version).darwin-x64.zip - Mac OSX Intel zipfile no-installer
 
