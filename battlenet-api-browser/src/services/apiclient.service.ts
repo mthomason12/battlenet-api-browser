@@ -8,7 +8,6 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterQuestCompletedData, characterQuestData, 
   characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
@@ -38,6 +37,7 @@ import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeaso
 import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary, APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary, APIProtectedCharacterProfileSummary } from '../model/api/profile/account-profile';
 import { APICharacterProfessionsSummary } from '../model/api/profile/character-profession';
 import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from '../model/api/profile/character-pvp';
+import { APICharacterCompletedQuests, APICharacterQuests } from '../model/api/profile/character-quests';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1100,11 +1100,11 @@ export class apiClientService {
 
   //region Character Quests API
 
-  getCharacterQuests(realmSlug: string, characterName: string): Promise<characterQuestData | undefined> {
+  getCharacterQuests(realmSlug: string, characterName: string): Promise<APICharacterQuests | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests`);
   }
 
-  getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<characterQuestCompletedData | undefined> {
+  getCharacterCompletedQuests(realmSlug: string, characterName: string): Promise<APICharacterCompletedQuests | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/quests/completed`);
   }
 

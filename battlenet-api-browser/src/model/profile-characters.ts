@@ -4,7 +4,10 @@ import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
 import { APICharacterAchievementsStatistics, APICharacterAchievementsSummary } from "./api/profile/character-achievements";
 import { APICharacterAppearanceSummary } from "./api/profile/character-appearance";
-import { APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, APICharacterTransmogCollectionSummary } from "./api/profile/character-collections";
+import {
+    APICharacterHeirloomsCollectionSummary, APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary,
+    APICharacterTransmogCollectionSummary
+} from "./api/profile/character-collections";
 import { APICharacterDungeons, APICharacterRaids } from "./api/profile/character-encounters";
 import { APICharacterEquipmentSummary } from "./api/profile/character-equipment";
 import { APICharacterHunterPetsSummary } from "./api/profile/character-hunter-pets";
@@ -13,6 +16,7 @@ import { APICharacterMythicKeystoneProfileIndex, APICharacterMythicKeystoneSeaso
 import { APICharacterProfessionsSummary } from "./api/profile/character-profession";
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from "./api/profile/character-pvp";
+import { APICharacterCompletedQuests, APICharacterQuests } from "./api/profile/character-quests";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, refStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
@@ -22,19 +26,6 @@ export interface characterMythicKeystoneSeasonData extends APICharacterMythicKey
     $id: number;
 }
 
-
-
-export interface characterQuestData {
-    _links: linksStruct;
-    character: characterRef;
-    in_progress: refStruct[];
-}
-
-export interface characterQuestCompletedData {
-    _links: linksStruct;
-    character: characterRef;
-    quests: refStruct[];
-}
 
 export interface characterReputationData {
     _links: linksStruct;
@@ -271,8 +262,8 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     $pvpData: APICharacterPvPSummary;
     $pvpBrackets: APICharacterPvPBracketStatistics[];
     //quests
-    $quests: characterQuestData;
-    $questsCompleted: characterQuestCompletedData;
+    $quests: APICharacterQuests;
+    $questsCompleted: APICharacterCompletedQuests;
     //reputations
     $reputation: characterReputationData;
     //soulbinds
