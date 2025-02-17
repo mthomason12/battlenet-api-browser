@@ -12,10 +12,11 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterAchievementStatisticsData, characterAchievementSummaryData, characterAppearanceSummaryData, characterDungeonData,
-  characterEquipmentData, characterHeirloomData, characterHunterPetsData, characterMediaData, characterMountData,
-  characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterPetData, characterProfessionData,
-  characterProfileData, characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData, characterToyData, characterTransmogData
+  characterDungeonData,
+  characterEquipmentData, characterHunterPetsData, characterMediaData,
+  characterMythicKeystoneSeasonData, characterMythicKeystoneSummaryData, characterProfessionData,
+  characterPVPBracketData, characterPVPData, characterQuestCompletedData, characterQuestData, 
+  characterRaidData, characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
