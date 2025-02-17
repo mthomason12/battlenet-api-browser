@@ -1,6 +1,6 @@
 # Battle&#46;NET API Browser
 
-![Automated Build Status](https://github.com/mthomason12/battlenet-api-browser/actions/workflows/node.js.yml/badge.svg)
+[![Automated Build Status](https://github.com/mthomason12/battlenet-api-browser/actions/workflows/node.js.yml/badge.svg 'automated build status')](https://github.com/mthomason12/battlenet-api-browser/releases)
 
 [SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
