@@ -2,7 +2,9 @@
 
 #### Current-Dev (awaiting release number)
 
-- Windows Electron Setup.exe now uses electron-squirrel-startup to start properly
+#### v0.3.31-dev
+
+- Windows Setup.exe now uses electron-squirrel-startup to start properly
 
 #### v0.3.29-dev
 
