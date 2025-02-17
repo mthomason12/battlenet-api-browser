@@ -2,21 +2,15 @@ import { dataStruct, linksStruct, hrefStruct, refStruct, IApiIndexDoc, IApiDataD
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
+import { APIRegion, APIRegionsIndex } from './api/region';
 
-export interface regionData extends IApiDataDoc {
-    _links?: linksStruct;
+export interface regionData extends APIRegion, IApiDataDoc {
     id: number;
     name: string;
-    tag?: string;
-    patch_string?: string;
 }
 
-interface regionIndexItem extends IIndexItem, hrefStruct
-{ }
 
-export interface regionIndex extends IApiIndexDoc {
-  _links: linksStruct;
-  regions: regionIndexItem[];
+export interface regionIndex extends APIRegionsIndex, IApiIndexDoc {
 }
 
 export class regionsDataDoc extends dbData<regionIndex, regionData> 
@@ -38,12 +32,13 @@ export class regionsDataDoc extends dbData<regionIndex, regionData>
   }
 
 
-  override mutateIndexItem(item: regionIndexItem): IIndexItem {
+  override mutateIndexItem(item: IIndexItem): IIndexItem {
+    const itm = item as hrefStruct;
     //This index doesn't provide an ID field, so we need to extract ID from the href url
     const regex = /(?:.*)region\/(\d*)/;
-    var matches = regex.exec(item.href!);
+    var matches = regex.exec(itm.href!);
     item.id = Number.parseInt(matches![1]);
-    return super.mutateIndexItem(item);
+    return super.mutateIndexItem(itm as IIndexItem);
   }
 
   override getAPIIndex = function(apiClient: apiClientService): Promise<regionIndex> {

@@ -1,50 +1,16 @@
-import { dataStruct, keyStruct, linksStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
+import { dataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
+import { APIRealm, APIRealmsIndex } from './api/realm';
 
-interface realmType
-{
-  type: string;
-  name: string;
+export interface realmIndex extends APIRealmsIndex, IApiIndexDoc {
 }
 
-interface realmRegion
-{
-  key: keyStruct;
-  name: string;
+export interface realmData extends APIRealm, IApiDataDoc{
   id: number;
-}
-
-export interface realmData extends IApiDataDoc
-{
-  _links: linksStruct;
-  id: number;
-  region: realmRegion;
-  connected_realm: keyStruct;
   name: string;
-  category: string;
-  locale: string;
-  timezone: string;
-  type: realmType;
-  is_tournament: boolean;
-  slug: string;
 }
-
-interface realmIndexEntry
-{
-  key: keyStruct;
-  name: string;
-  id: number;
-  slug: string;
-}
-
-export interface realmIndex extends IApiIndexDoc
-{
-  _links: linksStruct;
-  realms: realmIndexEntry[];
-}
-
 
 export class realmsDataDoc extends dbData<realmIndex, realmData>
 {

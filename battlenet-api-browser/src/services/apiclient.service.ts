@@ -36,6 +36,8 @@ import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSear
 import { APIMediaSearch } from '../model/api/media-search';
 import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/mount';
 import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia } from '../model/api/pet';
+import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/realm';
+import { APIRegion, APIRegionsIndex } from '../model/api/region';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -786,15 +788,15 @@ export class apiClientService {
 
   //region Realm API
 
-  getRealmIndex(): Promise<realmIndex | undefined> {
+  getRealmIndex(): Promise<APIRealmsIndex | undefined> {
     return this.queryDynamic(`/data/wow/realm/index`);
   }
 
-  getRealm(slug: string): Promise<realmData | undefined> {
+  getRealm(slug: string): Promise<APIRealm | undefined> {
     return this.queryDynamic(`/data/wow/realm/${slug}`);
   }
 
-  getRealmSearch(params: string): Promise<any> {
+  getRealmSearch(params: string): Promise<APIRealmSearch | undefined> {
     return this.queryDynamic(`/data/wow/search/realm?params=${params}`);
   }
 
@@ -802,11 +804,11 @@ export class apiClientService {
 
   //region Region API
 
-  getRegionIndex(): Promise<regionIndex | undefined> {
+  getRegionIndex(): Promise<APIRegionsIndex | undefined> {
     return this.queryDynamic(`/data/wow/region/index`);
   }
 
-  getRegion(id: number): Promise<regionData | undefined> {
+  getRegion(id: number): Promise<APIRegion | undefined> {
     return this.queryDynamic(`/data/wow/region/${id}`);
   }
 
