@@ -2,7 +2,7 @@ import { dataStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datast
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APICovenant, APICovenantIndex, APISoulbindIndex } from './api/covenants';
+import { APICovenant, APICovenantIndex, APISoulbindIndex } from './api/gamedata/covenants';
 
 //#region Covenants
 

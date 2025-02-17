@@ -2,7 +2,7 @@ import { dataStruct, linksStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } f
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APICreatureFamiliesIndex, APICreatureFamily, APICreatureType, APICreatureTypesIndex } from './api/creature';
+import { APICreatureFamiliesIndex, APICreatureFamily, APICreatureType, APICreatureTypesIndex } from './api/gamedata/creature';
 import { refStruct } from './api/shared';
 
 //#region Creature Family

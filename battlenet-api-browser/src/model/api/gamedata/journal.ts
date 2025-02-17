@@ -2,7 +2,7 @@
  * Journal API Return Types
  */
 
-import { APIMediaStruct, APISearch, APISearchResult, idNameStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct } from "./shared";
+import { APIMediaStruct, APISearch, APISearchResult, idNameStruct, linksStruct, mediaStruct, refStruct, regionedNameStruct } from "../shared";
 
 //region Journal Expansions
 

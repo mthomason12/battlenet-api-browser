@@ -2,7 +2,7 @@
  * Region API Return Types
  */
 
-import { hrefStruct, linksStruct } from "./shared";
+import { hrefStruct, linksStruct } from "../shared";
 
 
 /**

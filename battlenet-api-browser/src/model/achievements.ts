@@ -2,7 +2,7 @@ import { dataStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datast
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIAchievement, APIAchievementsIndex } from './api/achievements';
+import { APIAchievement, APIAchievementsIndex } from './api/gamedata/achievements';
 
 export interface achievementData extends APIAchievement, IApiDataDoc
 {

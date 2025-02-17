@@ -2,7 +2,7 @@ import { dataStruct, IApiIndexDoc, IApiDataDoc } from './datastructs';
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIRealm, APIRealmsIndex } from './api/realm';
+import { APIRealm, APIRealmsIndex } from './api/gamedata/realm';
 
 export interface realmIndex extends APIRealmsIndex, IApiIndexDoc {
 }

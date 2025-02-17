@@ -1,4 +1,4 @@
-import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from "./api/quest";
+import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from "./api/gamedata/quest";
 
 export interface QuestData extends APIQuest {
 }

@@ -2,7 +2,7 @@
  * Media Search API Return Types
  */
 
-import { APISearch, APISearchResult, assetStruct, mediaStruct } from "./shared";
+import { APISearch, APISearchResult, assetStruct, mediaStruct } from "../shared";
 
 /**
  * Media Search

@@ -2,7 +2,7 @@
  * Covenants API Return Types
  */
 
-import { hrefStruct, idNameStruct, linksStruct, mediaStruct, refStruct, spellTooltip } from "./shared";
+import { hrefStruct, idNameStruct, linksStruct, mediaStruct, refStruct, spellTooltip } from "../shared";
 
 //region Covenants
 

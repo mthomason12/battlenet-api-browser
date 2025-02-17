@@ -2,7 +2,7 @@
  * Realm API Return Types
  */
 
-import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "./shared";
+import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "../shared";
 
 /**
  * Realms Index

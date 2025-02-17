@@ -2,7 +2,7 @@
  * Creature API Return Types
  */
 
-import { APISearch, APISearchResult, assetStruct, idkeyStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct } from "./shared";
+import { APISearch, APISearchResult, assetStruct, idkeyStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct } from "../shared";
 
 //region Creature
 

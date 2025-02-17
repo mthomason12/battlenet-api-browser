@@ -1,4 +1,4 @@
-import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "./shared";
+import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "../shared";
 
 /**
  * Achievement API Return Types

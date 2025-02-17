@@ -1,7 +1,7 @@
 import {
     characterRef, factionStruct, genderStruct, hrefStruct, linksStruct, mediaStruct, positionStruct,
     realmStruct, refStruct
-} from "./shared";
+} from "../shared";
 
 /**
  * Account Profile API Return Types

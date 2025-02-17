@@ -1,4 +1,4 @@
-import { hrefStruct, linksStruct } from "./shared";
+import { hrefStruct, linksStruct } from "../shared";
 
 /**
  * Auction House API Return Types

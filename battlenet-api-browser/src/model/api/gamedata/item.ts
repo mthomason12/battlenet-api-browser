@@ -2,7 +2,7 @@
  * Item API Return Types
  */
 
-import { APISearch, APISearchResult, hrefStruct, itemStatStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "./shared"
+import { APISearch, APISearchResult, hrefStruct, itemStatStruct, linksStruct, APIMediaStruct, mediaStruct, refStruct, regionedNameStruct, weaponStruct } from "../shared"
 
 /**
  * Item

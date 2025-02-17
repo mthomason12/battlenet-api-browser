@@ -2,7 +2,7 @@
  * Mount API Return Types
  */
 
-import { APISearch, APISearchResult, factionStruct, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "./shared";
+import { APISearch, APISearchResult, factionStruct, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "../shared";
 
 
 /**

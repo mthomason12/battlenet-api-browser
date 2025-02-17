@@ -27,17 +27,17 @@ import {
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
-import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/achievements';
-import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/connected-realm';
-import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/item';
-import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/creature';
-import { APIAuctions, APICommodities } from '../model/api/auction-house';
-import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/journal';
-import { APIMediaSearch } from '../model/api/media-search';
-import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/mount';
-import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia } from '../model/api/pet';
-import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/realm';
-import { APIRegion, APIRegionsIndex } from '../model/api/region';
+import { APIAchievement, APIAchievementCategoriesIndex, APIAchievementCategory, APIAchievementMedia, APIAchievementsIndex } from '../model/api/gamedata/achievements';
+import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/gamedata/connected-realm';
+import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/gamedata/item';
+import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/gamedata/creature';
+import { APIAuctions, APICommodities } from '../model/api/gamedata/auction-house';
+import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/gamedata/journal';
+import { APIMediaSearch } from '../model/api/gamedata/media-search';
+import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/gamedata/mount';
+import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia } from '../model/api/gamedata/pet';
+import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/gamedata/realm';
+import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
 
 interface APIQuery {
   apiEndpoint: string;

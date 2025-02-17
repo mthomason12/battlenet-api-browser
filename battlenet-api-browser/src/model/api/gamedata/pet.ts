@@ -2,7 +2,7 @@
  * Pet API Return Types
  */
 
-import { APIMediaStruct, linksStruct, mediaStruct, refStruct } from "./shared";
+import { APIMediaStruct, linksStruct, mediaStruct, refStruct } from "../shared";
 
 //region Pets
 

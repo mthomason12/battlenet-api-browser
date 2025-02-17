@@ -2,7 +2,7 @@
  * Quest API Return Types
  */
 
-import { factionStruct, hrefStruct, linksStruct, moneyStruct, refStruct } from "./shared";
+import { factionStruct, hrefStruct, linksStruct, moneyStruct, refStruct } from "../shared";
 
 //region Quests
 

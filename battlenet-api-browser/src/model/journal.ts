@@ -2,7 +2,7 @@ import { apiClientService } from "../services/apiclient.service";
 import { IApiDataDoc, IApiIndexDoc, dataStruct, idNameStruct, linksStruct, mediaStruct, refStruct } from "./datastructs";
 import { dbData } from './dbdatastructs';
 import { RecDB } from "../lib/recdb";
-import { APIJournalEncounter, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstancesIndex } from "./api/journal";
+import { APIJournalEncounter, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstancesIndex } from "./api/gamedata/journal";
 
 //region Journal Expansions 
 

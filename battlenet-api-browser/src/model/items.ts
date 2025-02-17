@@ -1,7 +1,7 @@
 import { RecDB } from "../lib/recdb";
 import { apiClientService } from "../services/apiclient.service";
 import { APISearchParams } from "../services/apisearch";
-import { APIItem, APIItemSearchItem } from "./api/item";
+import { APIItem, APIItemSearchItem } from "./api/gamedata/item";
 import { apiSearchResponse, dataStruct, IApiDataDoc, IApiIndexDoc, IIndexItem, keyStruct, regionedNameStruct } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
 

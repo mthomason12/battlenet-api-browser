@@ -2,7 +2,7 @@ import { dataStruct, keyStruct, linksStruct, IApiIndexDoc, IApiDataDoc, refStruc
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetIndex } from './api/pet';
+import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetIndex } from './api/gamedata/pet';
 
 
 export interface petData extends APIPet, IApiDataDoc {
