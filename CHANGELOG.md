@@ -2,6 +2,8 @@
 
 #### Current-Dev (awaiting release number)
 
+- Windows Electron Setup.exe now uses electron-squirrel-startup to start properly
+
 #### v0.3.29-dev
 
 - Fix Electron path bug.
