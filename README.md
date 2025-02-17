@@ -1,5 +1,7 @@
 # Battle&#46;NET API Browser
 
+![Automated Build Status](https://github.com/mthomason12/battlenet-api-browser/actions/workflows/node.js.yml/badge.svg)
+
 [SPA](https://en.wikipedia.org/wiki/Single-page_application) client for the [Battle.net API](https://develop.battle.net/), written in [Angular](https://angular.dev).
 
 This is a work in progress, many parts of the API are not implemented yet and only have a placeholder folder icon.  
