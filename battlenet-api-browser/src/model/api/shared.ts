@@ -3,15 +3,62 @@
  */
 
 
+export interface characterRef {
+    key: hrefStruct;
+    id: number;
+    name: string;
+    realm: realmStruct;
+}
+
+export interface factionStruct {
+    type: string;
+    name: string;
+}
+
+export interface genderStruct {
+    type: string;
+    name: string;
+}
+
+export interface hrefStruct {
+    href: string;
+}
+
+export interface idkeyStruct {
+    id: number;
+    key: hrefStruct;
+}
+
+export interface idNameStruct {
+    id: number;
+    name: string;
+}
+
+/**
+ * At the top of practically every record.  Usually just contains self
+ */
 export interface linksStruct {
     self: hrefStruct;
     user?: hrefStruct;
     profile?: hrefStruct;
 }
 
-export interface idNameStruct {
+
+export interface moneyStruct
+{
+  value: number;
+  units: {
+    gold: number;
+    silver: number;
+    copper: number;
+  }
+}
+
+export interface realmStruct {
     id: number;
     name: string;
+    key: hrefStruct;
+    slug: string;
 }
 
 /**
@@ -23,38 +70,6 @@ export interface refStruct {
     key: hrefStruct;
 }
 
-export interface idkeyStruct {
-    id: number;
-    key: hrefStruct;
-}
-
-export interface genderStruct {
-    type: string;
-    name: string;
-}
-
-export interface factionStruct {
-    type: string;
-    name: string;
-}
-
-export interface realmStruct {
-    id: number;
-    name: string;
-    key: hrefStruct;
-    slug: string;
-}
-
-export interface hrefStruct {
-    href: string;
-}
-
-export interface characterRef {
-    key: hrefStruct;
-    id: number;
-    name: string;
-    realm: realmStruct;
-}
 
 export interface positionStruct {
     zone: idNameStruct;

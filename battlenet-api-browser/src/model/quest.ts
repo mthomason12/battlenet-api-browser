@@ -1,76 +1,22 @@
-import { factionStruct, linksStruct, moneyStruct, refStruct } from "./datastructs";
+import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from "./api/quest";
 
-interface QuestRewardReputation {
-    reward: refStruct;
-    value: number;
+export interface QuestData extends APIQuest {
 }
 
-interface QuestRewardItem {
-    item?: refStruct;
-    requirements?: {
-        playable_specializations: refStruct[]; 
-    }
+export interface QuestCategoryData extends APIQuestCategory{
 }
 
-interface QuestRewardItems {
-    choice_of?: QuestRewardItem[]
+export interface QuestCategoryIndex extends APIQuestCategoriesIndex {
 }
 
-interface QuestRewards {
-    experience?: number;
-    items?: QuestRewardItems;
-    reputations?: QuestRewardReputation[];
-    money?: moneyStruct;
+export interface QuestAreaData extends APIQuestArea {
 }
 
-interface QuestRequirements {
-    min_character_level?: number;
-    max_charactr_level?: number;
-    faction?: factionStruct;
+export interface QuestAreaIndex extends APIQuestAreasIndex {
 }
 
-export interface QuestData {
-    _links?: linksStruct;
-    id?: number;
-    title?: string;
-    area?: refStruct;
-    description?: string;
-    requirements?: QuestRequirements;
-    rewards?: QuestRewards;
+export interface QuestTypeData extends APIQuestType {
 }
 
-export interface QuestCategoryData {
-    _links?: linksStruct;
-    id?: number;
-    category?: string;
-    quests: refStruct[];
-}
-
-export interface QuestCategoryIndex {
-    _links?: linksStruct;
-    categories: refStruct[];
-}
-
-export interface QuestAreaData {
-    _links?: linksStruct;
-    id?: number;
-    area?: string;
-    quests: refStruct[];
-}
-
-export interface QuestAreaIndex {
-    _links?: linksStruct;
-    areas: refStruct[];
-}
-
-export interface QuestTypeData {
-    _links?: linksStruct;
-    id?: number;
-    type?: string;
-    quests: refStruct[];
-}
-
-export interface QuestTypeIndex {
-    _links?: linksStruct;
-    types: refStruct[];
+export interface QuestTypeIndex extends APIQuestTypesIndex{
 }
