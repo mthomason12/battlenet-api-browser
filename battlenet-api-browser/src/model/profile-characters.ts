@@ -17,6 +17,9 @@ import { APICharacterProfessionsSummary } from "./api/profile/character-professi
 import { APICharacterProfileSummary } from "./api/profile/character-profile";
 import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from "./api/profile/character-pvp";
 import { APICharacterCompletedQuests, APICharacterQuests } from "./api/profile/character-quests";
+import { APICharacterReputationsSummary } from "./api/profile/character-reputations";
+import { APICharacterSoulbinds } from "./api/profile/character-soulbinds";
+import { APICharacterSpecializationsSummary } from "./api/profile/character-specializations";
 import { spellTooltip } from "./api/shared";
 import { dataStruct, apiSearchResponse, linksStruct, refStruct, IApiDataDoc, IIndexItem, IApiIndexDoc, characterRef } from "./datastructs";
 import { dbDataNoIndex } from "./dbdatastructs";
@@ -27,92 +30,6 @@ export interface characterMythicKeystoneSeasonData extends APICharacterMythicKey
 }
 
 
-export interface characterReputationData {
-    _links: linksStruct;
-    character: characterRef;
-    reputations: {
-        faction: refStruct;
-        standing: {
-            raw: number;
-            value: number;
-            max: number;
-            tier?: number;
-            name: string;
-            renown_level?: number;
-        }
-        paragon?: {
-            raw: number;
-            value: number;
-            max: number;
-        }
-    }[]
-}
-
-interface characterSoulbindTrait {
-    trait: refStruct;
-    tier: number;
-    display_order: number;
-}
-
-interface characterSoulbindConduitSocket {
-    conduit_socket: {
-        type: {
-            name: string;
-            type: string;
-        }
-        socket: {
-            conduit: refStruct;
-        }
-        rank: number;
-    }
-    tier: number;
-    display_order: number;
-}
-
-export interface characterSoulbindData {
-    _links: linksStruct;
-    character: characterRef;
-    chosen_covenant: refStruct;
-    renown_level: number;
-    soulbinds: {
-        soulbind: refStruct;
-        traits: (characterSoulbindTrait | characterSoulbindConduitSocket)[]
-    }[]
-}
-
-interface characterSpecializationPVPTalent {
-    selected: {
-        talent: refStruct;
-        spell_tooltip: spellTooltip;
-    }
-    slot_number: number;
-}
-
-interface characterSpecializationLoadout {
-    is_active: boolean;
-    talent_loadout_code: string;
-    selected_class_talents: {
-        id: number;
-        rank: number;
-        tooltip?: {
-            talent: refStruct;
-            spell_tooltip: spellTooltip;
-        }
-    }
-}
-
-export interface characterSpecializationData {
-    _links: linksStruct;
-    specializations: {
-        specialization: refStruct;
-        glyphs?: refStruct[];
-        pvp_talent_slots?: characterSpecializationPVPTalent[];
-        loadouts: characterSpecializationLoadout[];
-    }[]
-    active_specialization: refStruct;
-    character: characterRef;
-    active_hero_talent_tree: refStruct;
-}
 
 export interface characterStatisticsData {
     _links: linksStruct;
@@ -265,11 +182,11 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     $quests: APICharacterQuests;
     $questsCompleted: APICharacterCompletedQuests;
     //reputations
-    $reputation: characterReputationData;
+    $reputation: APICharacterReputationsSummary;
     //soulbinds
-    $soulbinds: characterSoulbindData;
+    $soulbinds: APICharacterSoulbinds;
     //specializations
-    $specializations: characterSpecializationData;
+    $specializations: APICharacterSpecializationsSummary;
     //statistics
     $statistics: characterStatisticsData;
     //titles

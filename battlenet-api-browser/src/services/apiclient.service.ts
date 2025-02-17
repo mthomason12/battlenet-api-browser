@@ -8,7 +8,7 @@ import { UserdataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {
-  characterReputationData, characterSoulbindData, characterSpecializationData, characterStatisticsData, characterTitleData
+  characterStatisticsData, characterTitleData
 } from '../model/profile-characters';
 import { APISearchParams } from './apisearch';
 import { guildAchievementData, guildActivityData, guildProfileData, guildRosterData } from '../model/profile-guild';
@@ -38,6 +38,9 @@ import { APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAc
 import { APICharacterProfessionsSummary } from '../model/api/profile/character-profession';
 import { APICharacterPvPBracketStatistics, APICharacterPvPSummary } from '../model/api/profile/character-pvp';
 import { APICharacterCompletedQuests, APICharacterQuests } from '../model/api/profile/character-quests';
+import { APICharacterReputationsSummary } from '../model/api/profile/character-reputations';
+import { APICharacterSoulbinds } from '../model/api/profile/character-soulbinds';
+import { APICharacterSpecializationsSummary } from '../model/api/profile/character-specializations';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -1112,7 +1115,7 @@ export class apiClientService {
 
   //region Character Reputation API
 
-  getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<characterReputationData | undefined> {
+  getCharacterReputationsSummary(realmSlug: string, characterName: string): Promise<APICharacterReputationsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/reputations`);
   }
 
@@ -1121,7 +1124,7 @@ export class apiClientService {
 
   //region Character Soulbinds API
 
-  getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<characterSoulbindData | undefined> {
+  getCharacterSoulbinds(realmSlug: string, characterName: string): Promise<APICharacterSoulbinds | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/soulbinds`);
   }
 
@@ -1131,7 +1134,7 @@ export class apiClientService {
 
   //region Character Specializations API
 
-  getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<characterSpecializationData | undefined> {
+  getCharacterSpecializationsSummary(realmSlug: string, characterName: string): Promise<APICharacterSpecializationsSummary | undefined> {
     return this.queryPubProfile(`/profile/wow/character/${realmSlug}/${characterName}/specializations`);
   }
 
