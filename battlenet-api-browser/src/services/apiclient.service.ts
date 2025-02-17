@@ -1,14 +1,6 @@
-import { achievementData, achievementsIndex } from '../model/achievements';
-import { QuestAreaData, QuestAreaIndex, QuestCategoryData, QuestCategoryIndex, QuestData, QuestTypeData, QuestTypeIndex } from '../model/quest';
-import { realmData, realmIndex } from '../model/realm';
-import { mountData, mountsIndex } from '../model/mounts';
 import { apiSearchResponse, mediaDataStruct } from '../model/datastructs';
-import { journalExpansionData, journalExpansionsIndex } from '../model/journal';
 import { accountHeirlooms } from '../model/account-heirlooms';
 import { accountProfileIndex } from '../model/account-characters';
-import { petAbilityData, petAbilityIndex, petData, petsIndex } from '../model/pets';
-import { regionData, regionIndex } from '../model/region';
-import { ReputationFactionData, ReputationFactionIndex, ReputationTierData, ReputationTierIndex } from '../model/reputation';
 import { accountPets } from '../model/account-pets';
 import { accountMounts } from '../model/account-mounts';
 import { EventEmitter, inject, Injectable } from '@angular/core';
@@ -32,12 +24,14 @@ import { APIConnectedRealm, APIConnectedRealmsIndex } from '../model/api/gamedat
 import { APIItem, APIItemClass, APIItemClassesIndex, APIItemMedia, APIItemSearchItem, APIItemSet, APIItemSetsIndex, APIItemSubclass } from '../model/api/gamedata/item';
 import { APICreature, APICreatureDisplayMedia, APICreatureFamiliesIndex, APICreatureFamily, APICreatureFamilyMedia, APICreatureType, APICreatureTypesIndex } from '../model/api/gamedata/creature';
 import { APIAuctions, APICommodities } from '../model/api/gamedata/auction-house';
-import { APIJournalEncounter, APIJournalEncounterSearch, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/gamedata/journal';
+import { APIJournalEncounter, APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance, APIJournalInstanceMedia, APIJournalInstancesIndex } from '../model/api/gamedata/journal';
 import { APIMediaSearch } from '../model/api/gamedata/media-search';
 import { APIMount, APIMountIndex, APIMountSearch } from '../model/api/gamedata/mount';
 import { APIPet, APIPetAbilitiesIndex, APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia } from '../model/api/gamedata/pet';
 import { APIRealm, APIRealmSearch, APIRealmsIndex } from '../model/api/gamedata/realm';
 import { APIRegion, APIRegionsIndex } from '../model/api/gamedata/region';
+import { APIQuest, APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex } from '../model/api/gamedata/quest';
+import { APIReputationFaction, APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex } from '../model/api/gamedata/reputation';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -210,11 +204,11 @@ export class apiClientService {
   //#region Achievements API
 
   getAchievementIndex(): Promise<APIAchievementsIndex | undefined> {
-    return this.queryStatic<achievementsIndex>('/data/wow/achievement/index');
+    return this.queryStatic('/data/wow/achievement/index');
   }
 
   getAchievement(id: number): Promise<APIAchievement | undefined> {
-    return this.queryStatic<achievementData>(`/data/wow/achievement/${id}`);
+    return this.queryStatic(`/data/wow/achievement/${id}`);
   }
 
   getAchievementMedia(id: number): Promise<APIAchievementMedia | undefined> {
@@ -756,31 +750,31 @@ export class apiClientService {
     return this.queryStatic(`/data/wow/quest/index`);
   }
 
-  getQuest(id: number): Promise<QuestData | undefined> {
+  getQuest(id: number): Promise<APIQuest | undefined> {
     return this.queryStatic(`/data/wow/quest/${id}`);
   }
 
-  getQuestCategoryIndex(): Promise<QuestCategoryIndex | undefined> {
+  getQuestCategoryIndex(): Promise<APIQuestCategoriesIndex | undefined> {
     return this.queryStatic(`/data/wow/quest/category/index`);
   }
 
-  getQuestCategory(id: number): Promise<QuestCategoryData | undefined> {
+  getQuestCategory(id: number): Promise<APIQuestCategory | undefined> {
     return this.queryStatic(`/data/wow/quest/category/${id}`);
   }
 
-  getQuestAreaIndex(): Promise<QuestAreaIndex | undefined> {
+  getQuestAreaIndex(): Promise<APIQuestAreasIndex | undefined> {
     return this.queryStatic(`/data/wow/quest/area/index`);
   }
 
-  getQuestArea(id: number): Promise<QuestAreaData | undefined> {
+  getQuestArea(id: number): Promise<APIQuestArea | undefined> {
     return this.queryStatic(`/data/wow/quest/area/${id}`);
   }
 
-  getQuestTypeIndex(): Promise<QuestTypeIndex | undefined> {
+  getQuestTypeIndex(): Promise<APIQuestTypesIndex | undefined> {
     return this.queryStatic(`/data/wow/quest/type/index`);
   }
 
-  getQuestType(id: number): Promise<QuestTypeData | undefined> {
+  getQuestType(id: number): Promise<APIQuestType | undefined> {
     return this.queryStatic(`/data/wow/quest/type/${id}`);
   }
 
@@ -816,19 +810,19 @@ export class apiClientService {
 
   //region Reputation API
 
-  getReputationFactionIndex(): Promise<ReputationFactionIndex | undefined> {
+  getReputationFactionIndex(): Promise<APIReputationFactionIndex | undefined> {
     return this.queryStatic(`/data/wow/reputation-faction/index`);
   }
 
-  getReputationFaction(id: number): Promise<ReputationFactionData | undefined> {
+  getReputationFaction(id: number): Promise<APIReputationFaction | undefined> {
     return this.queryStatic(`/data/wow/reputation-faction/${id}`);
   }
 
-  getReputationTiersIndex(): Promise<ReputationTierIndex | undefined> {
+  getReputationTiersIndex(): Promise<APIReputationTierIndex | undefined> {
     return this.queryStatic(`/data/wow/reputation-tiers/index`);
   }
 
-  getReputationTier(id: number): Promise<ReputationTierData | undefined> {
+  getReputationTier(id: number): Promise<APIReputationTier | undefined> {
     return this.queryStatic(`/data/wow/reputation-tiers/${id}`);
   }
 
