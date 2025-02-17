@@ -1,5 +1,6 @@
 /**
- *  Character Achievements API
+ * Character Achievements API
+ * @module
  */
 
 import { linksStruct, refStruct, characterRef, hrefStruct } from "../shared";

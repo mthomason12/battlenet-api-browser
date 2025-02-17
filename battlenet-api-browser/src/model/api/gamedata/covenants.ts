@@ -1,5 +1,6 @@
 /**
  * Covenants API Return Types
+ * @module
  */
 
 import { hrefStruct, idNameStruct, linksStruct, mediaStruct, refStruct, spellTooltip } from "../shared";
@@ -8,6 +9,7 @@ import { hrefStruct, idNameStruct, linksStruct, mediaStruct, refStruct, spellToo
 
 /**
  * Covenants Index
+ * 
  * /data/wow/covenants/index
  * 
  */
@@ -24,6 +26,7 @@ export interface APICovenantItem {
 
 /**
  * Covenant
+ * 
  * /data/wow/covenants/{covenantID}
  * 
  */
@@ -57,6 +60,7 @@ export interface covenantClassAbility
 
 /**
  * Soulbind Index
+ * 
  * /data/wow/soulbind/index
  * 
  */
@@ -67,6 +71,7 @@ export interface APISoulbindIndex {
 
 /**
  * Soulbind
+ * 
  * /data/wow/soulbind/{soulbindID}
  * 
  */

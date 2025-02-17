@@ -2,11 +2,13 @@ import { linksStruct, APIMediaStruct, mediaStruct, refStruct } from "../shared";
 
 /**
  * Achievement API Return Types
+ * @module
  */
 
 
 /**
  * Achievements Index
+ * 
  * /data/wow/achievement/index
  */
 export interface APIAchievementsIndex {
@@ -18,6 +20,7 @@ export interface APIAchievementsIndex {
 
 /**
  * Achievement
+ * 
  * /data/wow/achievement/{achievementId}
  */
 export interface APIAchievement {
@@ -58,6 +61,7 @@ export interface achievementChildCriteria {
 
 /**
  * Achievement Media
+ * 
  * /data/wow/media/achievement/{achievementId}
  */
 export interface APIAchievementMedia extends APIMediaStruct {
@@ -67,6 +71,7 @@ export interface APIAchievementMedia extends APIMediaStruct {
 
 /**
  * Achievement Categories Index
+ * 
  * /data/wow/media/achievement-category/index
  */
 export interface APIAchievementCategoriesIndex {
@@ -77,6 +82,7 @@ export interface APIAchievementCategoriesIndex {
 
 /**
  * Achievement Category
+ * 
  * /data/wow/media/achievement-category/{achievementCategoryId}
  */
 export interface APIAchievementCategory {

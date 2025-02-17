@@ -1,5 +1,6 @@
 /**
- *  Character Hunter Pets API
+ * Character Hunter Pets API
+ * @module 
  */
 
 import { linksStruct, characterRef, refStruct, idkeyStruct } from "../shared";

@@ -1,5 +1,6 @@
 /**
- *  Character Equipment API
+ * Character Equipment API
+ * @module
  */
 
 import { linksStruct, characterRef, hrefStruct, mediaStruct, refStruct, rgbaColorStruct } from "../shared";

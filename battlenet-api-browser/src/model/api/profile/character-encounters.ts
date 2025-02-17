@@ -1,5 +1,6 @@
 /**
- *  Character Encounters API
+ * Character Encounters API
+ * @module
  */
 
 import { characterRef, hrefStruct, linksStruct, refStruct } from "../shared";

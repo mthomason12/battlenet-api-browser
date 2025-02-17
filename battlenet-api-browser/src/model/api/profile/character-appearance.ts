@@ -1,5 +1,6 @@
 /**
- *  Character Appearance API
+ * Character Appearance API
+ * @module
  */
 
 import { linksStruct, characterRef, refStruct, genderStruct, factionStruct, guildCrestStruct, idNameStruct } from "../shared";

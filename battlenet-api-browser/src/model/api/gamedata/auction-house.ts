@@ -1,14 +1,17 @@
-import { hrefStruct, linksStruct } from "../shared";
-
 /**
  * Auction House API Return Types
+ * @module
  */
+
+import { hrefStruct, linksStruct } from "../shared";
+
 
 
 //region Auctions
 
 /**
  * Auctions
+ * 
  * /data/wow/connected-realm/{connectedRealmId}/auctions
  * 
  */
@@ -41,6 +44,7 @@ export interface APIAuctionsItem {
 
 /**
  * Commodities
+ * 
  * /data/wow/auctions/commodities
  * 
  * This currently appears to be broken, returning a truncated result

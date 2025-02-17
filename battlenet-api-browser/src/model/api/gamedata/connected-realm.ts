@@ -1,5 +1,6 @@
 /**
  * Connected Realm API Return Types
+ * @module
  */
 
 import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regionedNameStruct } from "../shared";
@@ -7,6 +8,7 @@ import { APISearch, APISearchResult, hrefStruct, linksStruct, refStruct, regione
 
 /**
  * Connected Realms Index
+ * 
  * /data/wow/connected-realm/index
  * 
  */
@@ -18,6 +20,7 @@ export interface APIConnectedRealmsIndex {
 
 /**
  * Connected Realm
+ * 
  * /data/wow/connected-realm/{connectedRealmId}
  */
 export interface APIConnectedRealm {
@@ -58,6 +61,7 @@ export interface APIConnectedRealmItem {
 
 /**
  * Connected Realm Search
+ * 
  * /data/wow/search/connected-realm
  */
 export interface APIConnectedRealmSearch extends APISearch {

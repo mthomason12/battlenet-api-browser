@@ -1,5 +1,6 @@
 /**
- *  Character Profile API
+ * Character Profile API
+ * @module
  */
 
 import { factionStruct, genderStruct, hrefStruct, linksStruct, realmStruct, refStruct } from "../shared";

@@ -1,11 +1,13 @@
+
+/**
+ * Account Profile API Return Types
+ * @module
+ */
+
 import {
     characterRef, factionStruct, genderStruct, hrefStruct, linksStruct, mediaStruct, positionStruct,
     realmStruct, refStruct
 } from "../shared";
-
-/**
- * Account Profile API Return Types
- */
 
 //region Account Profile Summary
 

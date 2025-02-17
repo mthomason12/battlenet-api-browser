@@ -1,5 +1,6 @@
 /**
- *  Character Collections API
+ * Character Collections API
+ * @module
  */
 
 import { characterRef, hrefStruct, idkeyStruct, linksStruct, refStruct } from "../shared";
