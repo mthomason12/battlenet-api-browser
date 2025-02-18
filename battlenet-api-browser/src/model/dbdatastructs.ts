@@ -1,4 +1,3 @@
-import { last } from 'lodash';
 import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
@@ -133,6 +132,13 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
       .map((value, index, array) => { return this.mutateIndexItem(value); });
     index = index.sort((a, b) => { return this.indexCompare(a, b); });
     return index;
+  }
+
+  getIndexItem(idx: IApiIndexDoc, id: recID)
+  {
+    this.getIndexItems(idx).find((rec)=>{
+      return (rec as any)[this.key] = id;
+    })
   }
 
 
