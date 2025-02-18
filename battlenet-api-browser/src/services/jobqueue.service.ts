@@ -16,7 +16,13 @@ class jobQueueJob
 
   async exec() : Promise<void>
   {
-    return this.task();
+    var retval = this.task();
+    if (retval instanceof Promise) {
+      return retval;
+    } else {
+      //make up a resolved promise if there isn't one
+      return new Promise((resolve)=>{resolve()})
+    }
   }
 }
 
