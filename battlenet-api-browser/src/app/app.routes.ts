@@ -13,6 +13,7 @@ import { CharacterTableComponent } from '../browse/list-detail-host/character-ta
 import { JournalExpansionComponent } from '../browse/journal-expansion/journal-expansion.component';
 import { CharacterMasterSearchComponent } from '../browse/list-detail-host/character-master-search/character-master-search.component';
 import { GuildMasterSearchComponent } from '../browse/list-detail-host/guild-master-search/guild-master-search.component';
+import { GuildComponent } from '../browse/guild/guild.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -112,7 +113,7 @@ export const routes: Routes = [
             },      
             { path: 'guilds', redirectTo: 'guilds/', pathMatch: 'full'},
             { path: 'guilds/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowprofile","profile-guilds"], listComponent: GuildMasterSearchComponent} 
+                data:{list: ["wowprofile","profile-guilds"], listComponent: GuildMasterSearchComponent, detailComponent: GuildComponent} 
             },                        
             { path: '**', children: [] }
         ]},       

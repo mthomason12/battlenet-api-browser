@@ -1,0 +1,37 @@
+<mat-tab-group>
+    <mat-tab label="Overview">
+        <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
+    </mat-tab>
+    <mat-tab label="Roster">
+        <!---Table---->
+        <mat-table [dataSource]="rosterData" matSort>
+            <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="level">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Level </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.level}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="class">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Class </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.class}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="race">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Race </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.race}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="faction">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Faction </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.faction}} </mat-cell>
+            </ng-container>  
+            <ng-container matColumnDef="server">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Server </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.server}} </mat-cell>
+            </ng-container>        
+            <mat-header-row *matHeaderRowDef="rosterColumns; sticky:true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: rosterColumns;"></mat-row>    
+        </mat-table>
+    </mat-tab>
+</mat-tab-group>
+
