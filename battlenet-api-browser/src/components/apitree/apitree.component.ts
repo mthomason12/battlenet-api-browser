@@ -55,7 +55,6 @@ export class ApitreeComponent implements OnInit, OnDestroy{
    * @param node 
    */
   expandUpwards(node: dataStruct) {
-    console.log("Looking for "+node.getName());
     var anc = this.getAncestors(this.dataSource, node);
     anc?.forEach((nod)=>{
       this.tree()?.expand(nod);
