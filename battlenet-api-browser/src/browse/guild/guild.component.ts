@@ -82,35 +82,14 @@ class guildRosterEntry {
       this.race = res?.name!;    
     });    
     const charkey = Slugify(rec.character.name) + '@' + rec.character.realm.slug;
-
-    //either request or queue request for character, depending on whether they currently exist
-    //in the database or not
-    lookups.has('profile-characters', charkey ).then ((result)=>{
-      this.maybeQueue (queue, result, ()=>{
-        lookups.lookup<characterProfileData>('profile-characters', charkey ).then((res)=>{
-          this.faction = res?.faction.name!;
-        }); 
-      });
-    })
-
+    lookups.lookup<characterProfileData>('profile-characters', charkey ).then((res)=>{
+      this.faction = res?.faction.name!;
+    }); 
     lookups.lookup<realmData>('realms', rec.character.realm.id).then((res)=>{
       this.realm = res?.name!;
     }); 
   }
 
-  /**
-   * Either executes function f immediately, or queues it for later, depending on 
-   * the value of maybe.
-   * @param queue 
-   * @param maybe 
-   * @param f 
-   */
-  maybeQueue(queue: JobQueueService, maybe: boolean, f: Function) {
-    if (maybe) {
-      queue.add(f);
-    } else {
-      f();
-    }
-  }
+
 
 }
