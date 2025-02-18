@@ -63,7 +63,6 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
           this.putDBIndex(res);
           resolve(res);
         }
-
         else
           reject("API Error");
       });
@@ -254,6 +253,19 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
         resolve(data?.data as T1);
       });
     });
+  }
+
+  /**
+   * Check if a record ID exists in the database
+   * This does NOT check to see if it can be retrieved using the API, only if there is
+   * a local copy in the database.
+   */
+  hasDBRec(id: recID): Promise<boolean> {
+    return new Promise((resolve)=>{
+      this.getDBRec(id).then((rec)=>{
+        resolve(rec !== undefined);
+      });
+    })
   }
 
   /**

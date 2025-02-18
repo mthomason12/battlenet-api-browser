@@ -158,6 +158,7 @@ export class apiClientService {
   //region Base Queries
 
   query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined> {
+    //todo - ALWAYS queue these in the job queue service to prevent spamming the API server
     return new Promise((resolve, reject) => {
       //check the cache first
       var cacheKey = { apiEndpoint: apiEndpoint, params: params };

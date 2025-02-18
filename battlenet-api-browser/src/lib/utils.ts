@@ -60,3 +60,5 @@ export function Slugify(str: string): string {
 export function isElectron(): boolean {
   return (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) 
 }
+
+export const loadingSymbol = "\u2026";

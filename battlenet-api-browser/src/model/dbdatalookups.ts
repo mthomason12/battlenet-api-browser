@@ -1,4 +1,5 @@
 import { apiClientService } from "../services/apiclient.service";
+import { JobQueueService } from "../services/jobqueue.service";
 import { topDataStruct } from "./datastructs";
 import { dbData } from "./dbdatastructs";
 
@@ -12,7 +13,7 @@ export class dbDataLookups {
     api: apiClientService;
     ready: Promise<any>;
 
-    constructor(api: apiClientService,  tables:dbDataLookupTable[]) {
+    constructor(api: apiClientService, tables:dbDataLookupTable[]) {
       this.api = api;
       const loadPromises: Promise<any>[] = Array();
       tables.forEach((tableToLoad)=>{
@@ -39,15 +40,34 @@ export class dbDataLookups {
       return this.tables.get(name);
     }
 
+    /**
+     * Check if the given table already has the specified key value physically in its database
+     * A false value does not mean the record does not exist, just that it hasn't been stored,
+     * and should still be requested using @see {@link dbDataLookups.lookup}
+     * 
+     * This can be useful in knowing whether to request the lookup immediately or 
+     * add it to a request queue.
+     * @param table 
+     * @param value 
+     */
+    has(table: string, value: number | string): Promise<boolean> {
+        const tab = this.getTable(table);
+        if (tab)
+        {
+            return tab.hasDBRec(value)
+        }
+        return new Promise((resolve)=>{ resolve(false)} );
+    }
+
     lookup<T>(table: string, value: number | string): Promise<T | undefined> {
       return new Promise((resolve)=>{
         this.ready.then(()=>{
-          const tab = this.getTable(table);
-          if (tab)
-          {
-            const item = this.getTable(table)?.getRec(this.api, value) as T;
-            resolve(item );
-          }
+            const tab = this.getTable(table);
+            if (tab)
+                {
+                  const item = this.getTable(table)?.getRec(this.api, value) as T;
+                  resolve(item );
+                }
           else 
             resolve(undefined);
         });

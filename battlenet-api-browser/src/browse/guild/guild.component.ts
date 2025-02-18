@@ -11,6 +11,9 @@ import { playableClassData } from '../../model/playable-class';
 import { playableRaceData} from '../../model/playable-race';
 import { dbDataLookups } from '../../model/dbdatalookups';
 import { realmData } from '../../model/realm';
+import { JobQueueService } from '../../services/jobqueue.service';
+import { loadingSymbol, Slugify } from '../../lib/utils';
+import { characterProfileData } from '../../model/profile-characters';
 
 @Component({
   selector: 'app-guild',
@@ -27,11 +30,13 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
 
   userData = inject(UserdataService);
   api = inject(apiClientService);
+  queue = inject(JobQueueService);
   apiData = this.userData.data.apiData;
 
   lookups: dbDataLookups = new dbDataLookups(this.api, [
     {source: this.apiData.wowpublic, name: 'playable-class'},
     {source: this.apiData.wowpublic, name: 'playable-race'},
+    {source: this.apiData.wowprofile, name: 'profile-characters'},
     {source: this.apiData.wowpublic, name: 'realms'}    
   ]);
 
@@ -48,7 +53,7 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
       { key: 'Member Count', value: this.data?.member_count! },
     ]
     this.rosterData = this.data?.$rosterData?.members!.map((rec) => {
-      return new guildRosterEntry(rec, this.lookups);
+      return new guildRosterEntry(rec, this.lookups, this.queue);
     }) as guildRosterEntry[];
   }
 
@@ -62,19 +67,50 @@ class guildRosterEntry {
   faction: string;
   realm: string = "";
 
-  constructor(rec: guildRosterMemberStruct, lookups: dbDataLookups) {
+
+  constructor(rec: guildRosterMemberStruct, lookups: dbDataLookups, queue: JobQueueService) {
     this.name = rec.character.name;
     this.level = rec.character.level;
+    this.class = loadingSymbol;
+    this.race = loadingSymbol;
+    this.faction = loadingSymbol; 
+
     lookups.lookup<playableClassData>('playable-class', rec.character.playable_class.id).then((res)=>{
       this.class = res?.name!;
     });
     lookups.lookup<playableRaceData>('playable-race', rec.character.playable_race.id).then((res)=>{
-      this.race = res?.name!;
+      this.race = res?.name!;    
     });    
-    this.faction = "";
+    const charkey = Slugify(rec.character.name) + '@' + rec.character.realm.slug;
+
+    //either request or queue request for character, depending on whether they currently exist
+    //in the database or not
+    lookups.has('profile-characters', charkey ).then ((result)=>{
+      this.maybeQueue (queue, result, ()=>{
+        lookups.lookup<characterProfileData>('profile-characters', charkey ).then((res)=>{
+          this.faction = res?.faction.name!;
+        }); 
+      });
+    })
+
     lookups.lookup<realmData>('realms', rec.character.realm.id).then((res)=>{
       this.realm = res?.name!;
     }); 
+  }
+
+  /**
+   * Either executes function f immediately, or queues it for later, depending on 
+   * the value of maybe.
+   * @param queue 
+   * @param maybe 
+   * @param f 
+   */
+  maybeQueue(queue: JobQueueService, maybe: boolean, f: Function) {
+    if (maybe) {
+      queue.add(f);
+    } else {
+      f();
+    }
   }
 
 }
