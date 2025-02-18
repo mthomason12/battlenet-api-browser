@@ -5,7 +5,7 @@ import { RecDB } from '../lib/recdb';
 import { APIPlayableRace, APIPlayableRacesIndex } from 'battlenet-api-types';
 
 
-interface playableRaceData extends APIPlayableRace, IApiDataDoc {
+export interface playableRaceData extends APIPlayableRace, IApiDataDoc {
     id: number;
     name: string;
 }

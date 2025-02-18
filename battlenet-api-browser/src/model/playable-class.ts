@@ -5,7 +5,7 @@ import { RecDB } from '../lib/recdb';
 import { APIPlayableClass, APIPlayableClassesIndex, APIPlayableClassMedia, APIPvPTalentSlots } from 'battlenet-api-types';
 
 
-interface playableClassData extends APIPlayableClass, IApiDataDoc {
+export interface playableClassData extends APIPlayableClass, IApiDataDoc {
   id: number;
   name: string;
   $media: APIPlayableClassMedia;

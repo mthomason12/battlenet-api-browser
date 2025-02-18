@@ -25,9 +25,9 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Faction </mat-header-cell>
             <mat-cell *matCellDef="let character"> {{character.faction}} </mat-cell>
             </ng-container>  
-            <ng-container matColumnDef="server">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Server </mat-header-cell>
-            <mat-cell *matCellDef="let character"> {{character.server}} </mat-cell>
+            <ng-container matColumnDef="realm">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Realm </mat-header-cell>
+            <mat-cell *matCellDef="let character"> {{character.realm}} </mat-cell>
             </ng-container>        
             <mat-header-row *matHeaderRowDef="rosterColumns; sticky:true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: rosterColumns;"></mat-row>    
