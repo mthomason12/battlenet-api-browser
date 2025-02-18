@@ -109,7 +109,7 @@ export class BlizzardAPIConnection extends APIConnection {
 
     override completeAuthentication(authcode: string, router: Router)
     {
-        const storedURL = sessionStorage.getItem('page_before_login') as string;
+        const storedURL = sessionStorage.getItem('page_before_login') as string ?? '';
         sessionStorage.removeItem('page_before_login');  
         this.userManager.signinCallback().finally(() => { 
           this.userManager.getUser().then( (user)=>{
