@@ -39,14 +39,15 @@
                     </div>
                 </ng-template>
             </mat-tab>
-        }
+        } @else {
         <mat-tab [label]="masterList?.getRecName(this.detailItem!)+' (Data)'">
             <ng-template matTabContent>
                 <div class="tab-content">
                     <app-generic-detail [data]="detailItem" [master]="masterList!"></app-generic-detail>
                 </div>
             </ng-template>
-        </mat-tab>          
+        </mat-tab>     
+        }     
         @for (page of data!.detailPages; track $index)
         {
             <mat-tab [label]="page.title">
