@@ -2,6 +2,15 @@
 
 #### Current-Dev (awaiting release number)
 
+##### New Features
+
+- Added Playable Class, Playable Race, Playable Specialization data
+- Added a custom Guild view
+
+##### Internals
+
+- Added basic in-memory caching of IndexedDB records
+
 #### v0.4.0-dev
 
 ##### Internals
