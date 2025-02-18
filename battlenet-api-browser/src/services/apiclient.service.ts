@@ -37,6 +37,7 @@ import {
   APIPlayableSpecialization,
   APIPlayableSpecializationMedia
 } from 'battlenet-api-types';
+import { JobQueueService } from './jobqueue.service';
 
 interface APIQuery {
   apiEndpoint: string;
@@ -64,6 +65,8 @@ export class apiClientService {
 
   protected httpClient: HttpClient;
 
+  protected queue: JobQueueService;
+
   //a simple weakmap cache to avoid repeat queries being sent
   queryCache: WeakMap<APIQuery, object> = new WeakMap();
 
@@ -71,6 +74,7 @@ export class apiClientService {
     this.data = inject(UserdataService);
     this.router = inject(Router);
     this.httpClient = inject(HttpClient);
+    this.queue = inject(JobQueueService);
 
     //add the default connection
     this.connections.set('_default', new BlizzardAPIConnection(this.data.data.settings.getConnectionSettings("_default"), this.httpClient));
@@ -158,7 +162,6 @@ export class apiClientService {
   //region Base Queries
 
   query<T = any>(apiEndpoint: string, params: string): Promise<T | undefined> {
-    //todo - ALWAYS queue these in the job queue service to prevent spamming the API server
     return new Promise((resolve, reject) => {
       //check the cache first
       var cacheKey = { apiEndpoint: apiEndpoint, params: params };
@@ -171,12 +174,15 @@ export class apiClientService {
         if (params != "") {
           extraparams = "&" + params;
         }
-        this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {}).then((value) => {
-          this.queryCache.set(cacheKey, value);
-          resolve(value as T);
-        }, (reason) => {
-          reject(undefined);
-        }).catch(() => reject());
+        //queue the API call
+        this.queue.add(()=>{
+          return this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {}).then((value) => {
+            this.queryCache.set(cacheKey, value);
+            resolve(value as T);
+          }, (reason) => {
+            reject(undefined);
+          }).catch(() => reject());
+        })
       }
     });
   }
