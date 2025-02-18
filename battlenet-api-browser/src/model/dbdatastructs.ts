@@ -1,11 +1,16 @@
 import { RecDB, recID } from '../lib/recdb';
 import { apiClientService } from '../services/apiclient.service';
 import { JobQueueService } from '../services/jobqueue.service';
-import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem, dbDataIndex, apiSearchResponse } from './datastructs';
+import { dataDoc, dataStruct, IApiDataDoc, INamedItem, IApiIndexDoc, IIndexItem, dbDataIndex, apiSearchResponse, keyStruct } from './datastructs';
 import { APISearchParams } from '../services/apisearch';
 
 //#endregion
 //region dbData
+
+interface dbDataRecID {
+  id: recID;
+}
+
 /**
  * dataDoc with an index and child data objects stored in recDB
  *
@@ -21,7 +26,6 @@ import { APISearchParams } from '../services/apisearch';
  * icon
  * itemsName (used both as the "items" array property in the index and in the path )
  */
-
 export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> extends dataDoc implements IMasterDetail {
   type: string = "items";
   /** the property of T1 that is an array of index items */
@@ -37,11 +41,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   protected isSearchable = false;
   protected indexRebuildable = false;
   indexCache?: WeakRef<T1>; //cached copy of the index doc
+  recCache: WeakMap<dbDataRecID, T2> = new WeakMap();
   //if crossLink is true, clicking an index item takes us to another record type rather than to this type's detail form
   crossLink: boolean = false;
   recKeys: recID[] = new Array();
-  //_index: WeakRef<T1>;
-  //_items: WeakMap<{id: recID},T2>;
 
   constructor(parent: dataStruct, recDB: RecDB) {
     super(parent, 0, "");
@@ -218,7 +221,6 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
           //get from API and store in DB
           resolve(this.reloadItem(api, id));
         }
-
         else {
           //use the result from the DB
           resolve(result);
@@ -261,7 +263,17 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
    */
   getDBRec(id: recID): Promise<T2 | undefined> {
     return new Promise<T2 | undefined>((resolve) => {
+      //check the cache first
+      const cacheRec: T2 | undefined = this.recCache.get({id: id});
+      if (cacheRec) {
+        resolve (cacheRec);
+      }
+      //if not in the cache, pull from database
       this.recDB.get(this.type, id)?.then((data) => {
+        if (data) {
+          //add record to the cache if it exists
+          this.recCache.set({id: id}, data?.data as T2);
+        }
         resolve(data?.data as T2);
       });
     });
@@ -302,6 +314,8 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     //add key to our list of valid keys
     if (!this.recKeys.includes(id))
       this.recKeys.push(id);
+    //add record to the cache
+    this.recCache.set({id: id}, rec);
     return this.recDB.add(this.type, id, rec as object);
   }
 
