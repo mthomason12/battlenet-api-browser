@@ -40,7 +40,7 @@ export class JobQueueService {
   _running: boolean = false;
   _executing: boolean = false;
   _timer?: any = undefined;
-  _maxConcurrent: number = 4;
+  _maxConcurrent: number = 6;
   _concurrentCount: number = 0;
 
   constructor() { 
