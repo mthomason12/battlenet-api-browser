@@ -1,7 +1,6 @@
 import { apiClientService } from "../services/apiclient.service";
 import { topDataStruct } from "./datastructs";
 import { dbData } from "./dbdatastructs";
-import { apiDataStruct } from "./userdata";
 
 interface dbDataLookupTable {
     source: topDataStruct;
@@ -13,7 +12,7 @@ export class dbDataLookups {
     api: apiClientService;
     ready: Promise<any>;
 
-    constructor(apiData: apiDataStruct, api: apiClientService,  tables:dbDataLookupTable[]) {
+    constructor(api: apiClientService,  tables:dbDataLookupTable[]) {
       this.api = api;
       const loadPromises: Promise<any>[] = Array();
       tables.forEach((tableToLoad)=>{

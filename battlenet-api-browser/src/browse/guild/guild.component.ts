@@ -29,7 +29,7 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
   api = inject(apiClientService);
   apiData = this.userData.data.apiData;
 
-  lookups: dbDataLookups = new dbDataLookups(this.apiData, this.api, [
+  lookups: dbDataLookups = new dbDataLookups(this.api, [
     {source: this.apiData.wowpublic, name: 'playable-class'},
     {source: this.apiData.wowpublic, name: 'playable-race'},
     {source: this.apiData.wowpublic, name: 'realms'}    
@@ -74,6 +74,7 @@ class guildRosterEntry {
     this.faction = "";
     lookups.lookup<realmData>('realms', rec.character.realm.id).then((res)=>{
       this.realm = res?.name!;
-    });       
+    }); 
   }
+
 }
