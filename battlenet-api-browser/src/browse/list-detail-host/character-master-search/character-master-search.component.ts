@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserdataService } from '../../../services/userdata.service';
 import { APISearchParams } from '../../../services/apisearch';
 import { characterProfileData } from '../../../model/profile-characters';
+import { realmData, realmsDataDoc } from '../../../model/realm';
 
 @Component({
   selector: 'app-character-master-search',
@@ -49,7 +50,7 @@ export class CharacterMasterSearchComponent extends AbstractMasterComponent<IMas
 
   ngOnInit(): void {
       //fill realms list
-      var realmData = this.userData.data.apiData.wowpublic.realmData;
+      const realmData = this.userData.data.apiData.wowpublic.getData('realms') as realmsDataDoc;
       realmData.getIndex(this.api).then((realmIndex)=>{
         this.realms = realmIndex?.realms.map((item)=>{
           return {

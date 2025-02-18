@@ -11,26 +11,12 @@ import { petAbilitiesDataDoc, petsDataDoc } from './pets';
 import { regionsDataDoc } from './region';
 import { reputationFactionDataDoc, reputationTierDataDoc } from './reputation';
 import { itemsDataDoc } from './items';
+import { playableRaceDataDoc } from './playable-race';
+import { playableSpecDataDoc } from './playable-specialization';
+import { playableClassDataDoc } from './playable-class';
 
 export class publicDataStruct extends topDataStruct
 {
-  achievementData: achievementsDataDoc;
-  covenantData: covenantsDataDoc;
-  soulbindsData: soulbindsDataDoc;
-  creatureFamiliesData: creatureFamiliesDataDoc;
-  creatureTypesData: creatureTypesDataDoc;
-  mountData: mountsDataDoc;
-  itemData: itemsDataDoc;
-  pets: petsDataDoc;
-  petAbilities: petAbilitiesDataDoc;
-  realmData: realmsDataDoc;
-  regionData: regionsDataDoc;
-  reputationFactions: reputationFactionDataDoc;
-  reputationTiers: reputationTierDataDoc;
-  connectedRealmData: connectedRealmsDataDoc;
-  journalExpansionData: journalExpansionsDataDoc;
-  journalEncounterData: journalEncountersDataDoc;
-  journalInstanceData: journalInstancesDataDoc;
 
   constructor(parent: dataStruct, recDB: RecDB)
   {
@@ -38,41 +24,45 @@ export class publicDataStruct extends topDataStruct
     this.icon = "folder";
  
     this.addFolder("Achievements",[
-      this.achievementData = this.Register(achievementsDataDoc)
+      this.Register(achievementsDataDoc)
     ]);
 
     this.addFolder("Covenants", [
-      this.covenantData = this.Register(covenantsDataDoc),
-      this.soulbindsData = this.Register(soulbindsDataDoc)
+      this.Register(covenantsDataDoc),
+      this.Register(soulbindsDataDoc)
     ]);
 
     this.addFolder("Creatures",[
-      this.creatureFamiliesData = this.Register(creatureFamiliesDataDoc),
-      this.creatureTypesData = this.Register(creatureTypesDataDoc)
+      this.Register(creatureFamiliesDataDoc),
+      this.Register(creatureTypesDataDoc)
     ] );
 
     this.addFolder("Items", [
-      this.itemData = this.Register(itemsDataDoc)
+      this.Register(itemsDataDoc)
     ]);
 
     this.addFolder("Journal",[
-      this.journalExpansionData = this.Register(journalExpansionsDataDoc),
-      this.journalEncounterData = this.Register(journalEncountersDataDoc),
-      this.journalInstanceData = this.Register(journalInstancesDataDoc)
+      this.Register(journalExpansionsDataDoc),
+      this.Register(journalEncountersDataDoc),
+      this.Register(journalInstancesDataDoc)
     ]);
 
     this.addFolder("Mythic Keystones");
 
     this.addFolder("Mounts",[
-      this.mountData = this.Register(mountsDataDoc)
+      this.Register(mountsDataDoc)
     ]);
 
     this.addFolder("Pets",[
-      this.pets = this.Register(petsDataDoc),
-      this.petAbilities = this.Register(petAbilitiesDataDoc)
+      this.Register(petsDataDoc),
+      this.Register(petAbilitiesDataDoc)
     ]);
 
-    this.addFolder("Playables");
+    this.addFolder("Playables",[
+      this.Register(playableRaceDataDoc),
+      this.Register(playableClassDataDoc),
+      this.Register(playableSpecDataDoc),
+    ]);
 
     this.addFolder("Professions");
 
@@ -81,17 +71,17 @@ export class publicDataStruct extends topDataStruct
     this.addFolder("Quests");
 
     this.addFolder("Realms",[
-      this.realmData = this.Register(realmsDataDoc),
-      this.connectedRealmData = this.Register(connectedRealmsDataDoc)
+      this.Register(realmsDataDoc),
+      this.Register(connectedRealmsDataDoc)
     ]);
 
     this.addFolder("Regions",[
-      this.regionData = this.Register(regionsDataDoc)
+      this.Register(regionsDataDoc)
     ])
 
     this.addFolder("Reputations",[
-      this.reputationFactions = this.Register(reputationFactionDataDoc),
-      this.reputationTiers = this.Register(reputationTierDataDoc)
+      this.Register(reputationFactionDataDoc),
+      this.Register(reputationTierDataDoc)
     ]);
 
     this.addFolder("Spells");

@@ -26,7 +26,16 @@ import {
   APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary,
   APIProtectedCharacterProfileSummary, APICharacterProfessionsSummary, APICharacterPvPBracketStatistics, APICharacterPvPSummary,
   APICharacterCompletedQuests, APICharacterQuests, APICharacterReputationsSummary, APICharacterSoulbinds, APICharacterSpecializationsSummary,
-  APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster 
+  APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster, 
+  APIPvPTalentSlots,
+  APIPlayableClassMedia,
+  APIPlayableClass,
+  APIPlayableClassesIndex,
+  APIPlayableRacesIndex,
+  APIPlayableRace,
+  APIPlayableSpecializationsIndex,
+  APIPlayableSpecialization,
+  APIPlayableSpecializationMedia
 } from 'battlenet-api-types';
 
 interface APIQuery {
@@ -608,19 +617,19 @@ export class apiClientService {
 
   //region Playable Class API
 
-  getPlayableClassIndex(): Promise<any | undefined> {
+  getPlayableClassIndex(): Promise<APIPlayableClassesIndex | undefined> {
     return this.queryStatic(`/data/wow/playable-class/index`);
   }
 
-  getPlayableClass(id: number): Promise<any | undefined> {
+  getPlayableClass(id: number): Promise<APIPlayableClass | undefined> {
     return this.queryStatic(`/data/wow/playable-class/${id}`);
   }
 
-  getPlayableClassMedia(id: number): Promise<any | undefined> {
+  getPlayableClassMedia(id: number): Promise<APIPlayableClassMedia | undefined> {
     return this.queryStatic(`/data/wow/media/playable-class/${id}`);
   }
 
-  getPlayableClassPVPTalentSlots(id: number): Promise<any | undefined> {
+  getPlayableClassPVPTalentSlots(id: number): Promise<APIPvPTalentSlots | undefined> {
     return this.queryStatic(`/data/wow/playable-class/${id}/pvp-talent-slots`);
   }
 
@@ -628,11 +637,11 @@ export class apiClientService {
 
   //region Playable Race API
 
-  getPlayableRaceIndex(): Promise<any | undefined> {
+  getPlayableRaceIndex(): Promise<APIPlayableRacesIndex | undefined> {
     return this.queryStatic(`/data/wow/playable-race/index`);
   }
 
-  getPlayableRace(id: number): Promise<any | undefined> {
+  getPlayableRace(id: number): Promise<APIPlayableRace | undefined> {
     return this.queryStatic(`/data/wow/playable-race/${id}`);
   }
 
@@ -640,15 +649,15 @@ export class apiClientService {
 
   //region Playable Specialization API
 
-  getPlayableSpecializationIndex(): Promise<any | undefined> {
+  getPlayableSpecializationIndex(): Promise<APIPlayableSpecializationsIndex | undefined> {
     return this.queryStatic(`/data/wow/playable-specialization/index`);
   }
 
-  getPlayableSpecialization(id: number): Promise<any | undefined> {
+  getPlayableSpecialization(id: number): Promise<APIPlayableSpecialization | undefined> {
     return this.queryStatic(`/data/wow/playable-specialization/${id}`);
   }
 
-  getPlayableSpecializationMedia(id: number): Promise<any | undefined> {
+  getPlayableSpecializationMedia(id: number): Promise<APIPlayableSpecializationMedia | undefined> {
     return this.queryStatic(`/data/wow/media/playable-specialization/${id}`);
   }
 

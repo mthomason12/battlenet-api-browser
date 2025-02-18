@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserdataService } from '../../../services/userdata.service';
 import { APISearchParams } from '../../../services/apisearch';
 import { guildProfileData } from '../../../model/profile-guild';
+import { realmsDataDoc } from '../../../model/realm';
 
 @Component({
   selector: 'app-guild-master-search',
@@ -49,7 +50,7 @@ export class GuildMasterSearchComponent extends AbstractMasterComponent<IMasterD
 
   ngOnInit(): void {
       //fill realms list
-      var realmData = this.userData.data.apiData.wowpublic.realmData;
+      var realmData = this.userData.data.apiData.wowpublic.getData('realms') as realmsDataDoc;
       realmData.getIndex(this.api).then((realmIndex)=>{
         this.realms = realmIndex?.realms.map((item)=>{
           return {
