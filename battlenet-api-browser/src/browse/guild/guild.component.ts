@@ -29,6 +29,8 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData>{
       {key: 'ID', value: this.data?.id!},
       {key: 'Faction', value: this.data?.faction.name!},
       {key: 'Realm', value: this.data?.realm.name!},
+      {key: 'Achievement Points', value: this.data?.achievement_points!},
+      {key: 'Member Count', value: this.data?.member_count!},
     ]
     this.rosterData = this.data?.$rosterData?.members!.map((rec)=>{
       return new guildRosterEntry(rec, this.userData.data.apiData);
