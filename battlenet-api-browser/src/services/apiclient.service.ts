@@ -169,6 +169,7 @@ export class apiClientService {
         }
         //queue the API call
         this.queue.add(() => {
+          //todo - cache 404s
           return this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {})!
         }, `apiCall/${apiEndpoint}/@/${extraparams}`, (value: object) => {
           this.queryCache.set(cacheKey, value);
