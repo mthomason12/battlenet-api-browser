@@ -1,22 +1,38 @@
 import { Injectable } from '@angular/core';
 
+
 /**
  * An individual job for JobQueueService
  */
-class jobQueueJob
+class jobQueueJob<T = any>
 {
-  task: Function; //a task function needs to return a promise
+  task: ()=>Promise<T>; //a task function needs to return a promise
   svc?: JobQueueService;
+  signature: string;
+  callbacks: ((v: T)=>void)[] = new Array();
 
-  constructor(svc: JobQueueService, f: Function)
+  constructor(svc: JobQueueService, f: ()=>Promise<T>, signature: string = "", callback?: (v: T)=>void )
   {
     this.svc = svc;
     this.task = f;
+    this.signature = signature;
+    if (callback) {
+      this.callbacks.push(callback);
+    }
+  }
+
+  addCallback(callback: (v: T)=>void) {
+    this.callbacks.push(callback);
   }
 
   async exec() : Promise<void>
   {
-    var retval = this.task();
+    var retval = this.task().then((ret)=>{ 
+      this.callbacks.forEach((cb)=>{
+        cb(ret);
+      });
+    });
+    //check if we got a Promise back
     if (retval instanceof Promise) {
       return retval;
     } else {
@@ -24,6 +40,7 @@ class jobQueueJob
       return new Promise((resolve)=>{resolve()})
     }
   }
+
 }
 
 
@@ -47,9 +64,16 @@ export class JobQueueService {
     this.start();
   }
 
-  add(f: Function)
+  add<T = any>(f: ()=>Promise<T>, signature: string = "", callback?: (v: T)=>void)
   {
-    this.jobs.push(new jobQueueJob(this, f));
+    //look for existing job with the same signature. If found, add the callback to that instead of creating a new job
+    const existingJob = this.jobs.find((job)=>{ return (signature === job.signature) && (signature !== "") });
+    if (existingJob) {
+      if (callback)
+        existingJob.addCallback(callback);
+    } else {
+      this.jobs.push(new jobQueueJob(this, f, signature, callback));
+    }
   }
 
   start()

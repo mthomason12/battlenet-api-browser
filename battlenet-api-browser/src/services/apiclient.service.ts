@@ -16,26 +16,19 @@ import {
   APIJournalEncounterSearchItem, APIJournalEncountersIndex, APIJournalExpansion, APIJournalExpansionsIndex, APIJournalInstance,
   APIJournalInstanceMedia, APIJournalInstancesIndex, APIMediaSearch, APIMount, APIMountIndex, APIMountSearch, APIPet, APIPetAbilitiesIndex,
   APIPetAbility, APIPetAbilityMedia, APIPetIndex, APIPetMedia, APIRealm, APIRealmSearch, APIRealmsIndex, APIRegion, APIRegionsIndex, APIQuest,
-  APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex, APIReputationFaction, 
-  APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex,  APICharacterProfileStatus, APICharacterProfileSummary, 
-  APICharacterAchievementsStatistics, APICharacterAchievementsSummary,  APICharacterAppearanceSummary, APICharacterHeirloomsCollectionSummary, 
-  APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary, 
-  APICharacterTransmogCollectionSummary,  APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids,
+  APIQuestArea, APIQuestAreasIndex, APIQuestCategoriesIndex, APIQuestCategory, APIQuestType, APIQuestTypesIndex, APIReputationFaction,
+  APIReputationFactionIndex, APIReputationTier, APIReputationTierIndex, APICharacterProfileStatus, APICharacterProfileSummary,
+  APICharacterAchievementsStatistics, APICharacterAchievementsSummary, APICharacterAppearanceSummary, APICharacterHeirloomsCollectionSummary,
+  APICharacterMountsCollectionSummary, APICharacterPetsCollectionSummary, APICharacterToysCollectionSummary,
+  APICharacterTransmogCollectionSummary, APICharacterDungeons, APICharacterEncountersSummary, APICharacterRaids,
   APICharacterEquipmentSummary, APICharacterHunterPetsSummary, APICharacterMediaSummary, APICharacterMythicKeystoneProfileIndex,
   APICharacterMythicKeystoneSeasonDetails, APIAccountCollectionsIndex, APIAccountHeirloomsCollectionSummary, APIAccountMountsCollectionSummary,
   APIAccountPetsCollectionSummary, APIAccountProfileSummary, APIAccountToysCollectionSummary, APIAccountTransmogCollectionSummary,
   APIProtectedCharacterProfileSummary, APICharacterProfessionsSummary, APICharacterPvPBracketStatistics, APICharacterPvPSummary,
   APICharacterCompletedQuests, APICharacterQuests, APICharacterReputationsSummary, APICharacterSoulbinds, APICharacterSpecializationsSummary,
-  APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster, 
-  APIPvPTalentSlots,
-  APIPlayableClassMedia,
-  APIPlayableClass,
-  APIPlayableClassesIndex,
-  APIPlayableRacesIndex,
-  APIPlayableRace,
-  APIPlayableSpecializationsIndex,
-  APIPlayableSpecialization,
-  APIPlayableSpecializationMedia
+  APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster,
+  APIPvPTalentSlots, APIPlayableClassMedia, APIPlayableClass, APIPlayableClassesIndex, APIPlayableRacesIndex,
+  APIPlayableRace, APIPlayableSpecializationsIndex, APIPlayableSpecialization, APIPlayableSpecializationMedia
 } from 'battlenet-api-types';
 import { JobQueueService } from './jobqueue.service';
 
@@ -175,14 +168,12 @@ export class apiClientService {
           extraparams = "&" + params;
         }
         //queue the API call
-        this.queue.add(()=>{
-          return this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {}).then((value) => {
-            this.queryCache.set(cacheKey, value);
-            resolve(value as T);
-          }, (reason) => {
-            reject(undefined);
-          }).catch(() => reject());
-        })
+        this.queue.add(() => {
+          return this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {})!
+        }, `apiCall/${apiEndpoint}/@/${extraparams}`, (value: object) => {
+          this.queryCache.set(cacheKey, value);
+          resolve(value as T);
+        });
       }
     });
   }
