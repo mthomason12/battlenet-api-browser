@@ -167,14 +167,16 @@ export class apiClientService {
         if (params != "") {
           extraparams = "&" + params;
         }
-        //queue the API call
-        this.queue.add(() => {
+        //queue the API call with a signature string to prevent duplicates
+        const queuecall = () => {
           //todo - cache 404s
           return this.apiConnection?.apiCall(apiEndpoint + extraparams, "", {})!
-        }, `apiCall/${apiEndpoint}/@/${extraparams}`, (value: object) => {
+        };
+        const callback = (value: object) => {
           this.queryCache.set(cacheKey, value);
           resolve(value as T);
-        });
+        };
+        this.queue.add(queuecall, `apiCall/${apiEndpoint}/@/${extraparams}`, callback);
       }
     });
   }
