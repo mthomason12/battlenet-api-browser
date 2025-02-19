@@ -74,6 +74,7 @@ class guildRosterEntry {
     this.class = loadingSymbol;
     this.race = loadingSymbol;
     this.faction = loadingSymbol; 
+    this.realm = loadingSymbol;     
 
     lookups.lookup<playableClassData>('playable-class', rec.character.playable_class.id).then((res)=>{
       this.class = res?.name!;
