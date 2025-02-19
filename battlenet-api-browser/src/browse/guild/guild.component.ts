@@ -1,17 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { guildProfileData } from '../../model/profile-guild';
 import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
 import { MatTableModule } from '@angular/material/table';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
 import { guildRosterMemberStruct } from 'battlenet-api-types';
-import { UserdataService } from '../../services/userdata.service';
-import { apiClientService } from '../../services/apiclient.service';
 import { playableClassData } from '../../model/playable-class';
 import { playableRaceData} from '../../model/playable-race';
 import { dbDataLookups } from '../../model/dbdatalookups';
 import { realmData } from '../../model/realm';
-import { JobQueueService } from '../../services/jobqueue.service';
 import { loadingSymbol, Slugify } from '../../lib/utils';
 import { characterProfileData } from '../../model/profile-characters';
 
@@ -28,17 +25,15 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
   rosterColumns: string[] = ['name', 'level', 'class', 'race', 'faction', 'realm'];
   rosterData: guildRosterEntry[] = [];
 
-  userData = inject(UserdataService);
-  api = inject(apiClientService);
-  queue = inject(JobQueueService);
-  apiData = this.userData.data.apiData;
-
-  lookups: dbDataLookups = new dbDataLookups(this.api, [
-    {source: this.apiData.wowpublic, name: 'playable-class'},
-    {source: this.apiData.wowpublic, name: 'playable-race'},
-    {source: this.apiData.wowprofile, name: 'profile-characters'},
-    {source: this.apiData.wowpublic, name: 'realms'}    
-  ]);
+  constructor() {
+    super();
+    this.lookups.add([  
+      {source: this.apiData.wowpublic, name: 'playable-class'},
+      {source: this.apiData.wowpublic, name: 'playable-race'},
+      {source: this.apiData.wowprofile, name: 'profile-characters'},
+      {source: this.apiData.wowpublic, name: 'realms'}    
+    ]);
+  }
 
   override ngOnInit(): void {
   }
@@ -53,7 +48,7 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
       { key: 'Member Count', value: this.data?.member_count! },
     ]
     this.rosterData = this.data?.$rosterData?.members!.map((rec) => {
-      return new guildRosterEntry(rec, this.lookups, this.queue);
+      return new guildRosterEntry(rec, this.lookups);
     }) as guildRosterEntry[];
   }
 
@@ -68,7 +63,7 @@ class guildRosterEntry {
   realm: string = "";
 
 
-  constructor(rec: guildRosterMemberStruct, lookups: dbDataLookups, queue: JobQueueService) {
+  constructor(rec: guildRosterMemberStruct, lookups: dbDataLookups) {
     this.name = rec.character.name;
     this.level = rec.character.level;
     this.class = loadingSymbol;

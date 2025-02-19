@@ -1,6 +1,9 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { IApiDataDoc } from '../../../model/datastructs';
 import { IMasterDetail } from '../../../model/dbdatastructs';
+import { apiClientService } from '../../../services/apiclient.service';
+import { UserdataService } from '../../../services/userdata.service';
+import { dbDataLookups } from '../../../model/dbdatalookups';
 
 @Component({
   selector: 'app-abstract-detail',
@@ -10,8 +13,11 @@ import { IMasterDetail } from '../../../model/dbdatastructs';
 })
 export abstract class AbstractDetailComponent<T extends IApiDataDoc> implements OnInit
 {
-
   ref = inject(ChangeDetectorRef);
+  protected api = inject(apiClientService);
+  protected userData = inject(UserdataService);
+  protected apiData = this.userData.data.apiData;
+  protected lookups: dbDataLookups = new dbDataLookups(this.api);
 
   private _rec?: T;
   private _master?: IMasterDetail;  
