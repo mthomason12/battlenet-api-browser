@@ -519,7 +519,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
   override reload(api: apiClientService): Promise<dbDataIndex<T3>> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
-  
+
 
   override clear(): Promise<void> {
       return super.clear();
@@ -611,8 +611,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
         });
         //save the index
         this.putDBIndex(idx).then (()=>{
-          //clear the index cache
-          this.indexCache = new WeakRef(idx);
+          //no need to clear the cached index, putDBIndex does that for us
           resolve();
         })  
       })
