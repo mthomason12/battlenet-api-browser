@@ -2,6 +2,8 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.4.1-dev
+
 ##### New Features
 
 - Added Playable Class, Playable Race, Playable Specialization data
