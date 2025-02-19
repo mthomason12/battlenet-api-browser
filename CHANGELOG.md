@@ -10,6 +10,7 @@
 ##### Internals
 
 - Added basic in-memory caching of IndexedDB records
+- Background job queue now merges duplicate jobs
 
 #### v0.4.0-dev
 

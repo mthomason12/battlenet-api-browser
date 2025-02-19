@@ -17,6 +17,8 @@ export abstract class AbstractDetailComponent<T extends IApiDataDoc> implements 
   protected api = inject(apiClientService);
   protected userData = inject(UserdataService);
   protected apiData = this.userData.data.apiData;
+
+  //lookups component for making lookups in other data
   protected lookups: dbDataLookups = new dbDataLookups(this.api);
 
   private _rec?: T;
