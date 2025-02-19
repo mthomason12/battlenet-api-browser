@@ -2,7 +2,7 @@ import { dataStruct, mediaDataStruct, IApiIndexDoc, IApiDataDoc } from './datast
 import { dbData } from './dbdatastructs';
 import { apiClientService } from '../services/apiclient.service';
 import { RecDB } from '../lib/recdb';
-import { APICovenant, APICovenantIndex, APISoulbindIndex } from 'battlenet-api-types';
+import { APICovenant, APICovenantIndex, APISoulbind, APISoulbindIndex } from 'battlenet-api-types';
 
 //#region Covenants
 
@@ -50,7 +50,9 @@ export class covenantsDataDoc extends dbData<covenantIndexData, covenantData> {
 //#region Soulbinds
 
 
-export interface soulbindData extends APISoulbindIndex, IApiDataDoc {
+export interface soulbindData extends APISoulbind, IApiDataDoc {
+  id: number;
+  name: string;
 }
 
 interface soulbindIndexData extends APISoulbindIndex, IApiIndexDoc {
