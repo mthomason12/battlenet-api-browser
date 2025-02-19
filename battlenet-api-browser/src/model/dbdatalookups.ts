@@ -11,14 +11,19 @@ export class dbDataLookups {
     tables: Map<string, dbData<any,any>> = new Map();
     api: apiClientService;
     ready: Promise<any>;
+    loadPromises: Promise<any>[] = Array();
 
-    constructor(api: apiClientService, tables:dbDataLookupTable[]) {
+    constructor(api: apiClientService) {
       this.api = api;
-      const loadPromises: Promise<any>[] = Array();
+      //initialize with a promise of the empty list
+      this.ready = Promise.allSettled(this.loadPromises);
+    }
+
+    add(tables: dbDataLookupTable[]){
       tables.forEach((tableToLoad)=>{
-        loadPromises.push(this.loadTable(tableToLoad.source, tableToLoad.name));
+        this.loadPromises.push(this.loadTable(tableToLoad.source, tableToLoad.name));
       })
-      this.ready = Promise.allSettled(loadPromises);
+      this.ready = Promise.allSettled(this.loadPromises);
     }
 
     loadTable(source: topDataStruct, name: string): Promise<void> {
