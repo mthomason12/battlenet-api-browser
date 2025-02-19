@@ -76,11 +76,11 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
           res.lastUpdate = new Date().getTime();
           //get anything extra that's needed
           this.getAPIExtra(api, res).then(() => {
-            this.putDBRec(key, res);
-            resolve(res!);
+            this.putDBRec(key, res).then(()=>{
+              resolve(res!);
+            })
           });
         }
-
         else
           reject("API Error");
       });
@@ -250,7 +250,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   getDBIndex(): Promise<T1 | undefined> {
     return new Promise<T1 | undefined>((resolve) => {
       this.recDB.get('index', this.type)?.then((data) => {
-        resolve(data?.data as T1);
+        if (data)
+          resolve(data?.data as T1);
+        else
+          resolve(undefined);
       });
     });
   }
@@ -461,7 +464,7 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
  *
  * T1 is the "index" record returned from searching
  * T2 is the full data record, this could be the same as T1 if there's *only* a search function
- * T3 is a reduced index record we construct from T1
+ * T3 is a reduced index record we construct from T2
  */
 export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataDoc, T3 extends IIndexItem> extends dbData<dbDataIndex<T3>, T2> {
 
@@ -473,6 +476,7 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     this.itemsName = "items";
     this.isSearchable = true;
     this.isReloadable = false;
+    this.indexRebuildable = true;
   }
 
 
@@ -528,41 +532,72 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     return results;
   }
 
+
+
   /**
    * Add items to the index
    * @param items 
    */
   override addIndexItems(api: apiClientService, items: T1[]): Promise<void> {
     return new Promise((resolve)=>{
+      //first fetch T2 records from each T1
+      //array for storing promises
+      var jobs: Array<Promise<any>> = new Array();
+      var recs: Array<T2> = new Array();
+
+      this.getDBIndex().then((idx)=>{
+        //add the new items to the a record list
+        items.forEach((item)=>{
+          //prevent duplicates
+          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]})) {
+            var job = new Promise<void>(async(resolve, reject)=>{
+              jobs.push(job);
+              this.getRec(api, (item as any)[this.key]).then((rec)=>{
+                if (rec) {
+                  recs.push(rec);
+                }
+                resolve();
+              })
+            })
+          }
+        });
+        //Insert the results at the end.  This should be a mostly atomic operation compared to adding each as we get it.
+        //It also means we can reuse the addIndexItemsDirectly code rather than rewriting it here.
+        Promise.allSettled(jobs).then(()=>{
+          this.addIndexItemsDirectly(recs).then(()=>{
+            resolve();
+          })
+        })
+      })
+    });
+  }
+
+  /**
+   * As addIndexItems but from already-downloaded T2s
+   * @param items 
+   */
+  addIndexItemsDirectly(items: T2[]): Promise<void> {
+    return new Promise(resolve=>{
       //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
       this.getDBIndex().then((idx)=>{
-        //array for storing promises
-        var jobs: Array<Promise<any>> = [];
-        //add the new items to the index
+        //add items to the index 
         items.forEach((item)=>{
           //prevent duplicates
           if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]}))
           {
-            var job = new Promise<void>(async(resolve, reject)=>{
-                var rec = await this.getRec(api, (item as any)[this.key])
-                if (rec)
-                idx.items.push(this.makeIndexItem(rec));
-                resolve();
-            })
-            jobs.push(job);
+            idx.items.push(this.makeIndexItem(item));
           }
         });
         //save the index
-        Promise.allSettled(jobs).then(()=>{
-          this.putDBIndex(idx).then(()=>{
-            resolve();
-          });
+        this.putDBIndex(idx).then(()=>{
+          resolve();
         })
       });
     });
+
   }
 
-  /** Override in descendants to return a new index record T3 from a T1 */
+  /** Override in descendants to return a new index record T3 from a T2 */
   abstract makeIndexItem(item: T2): T3;
 
   /**
