@@ -13,7 +13,9 @@ interface dbDataRecID {
 
 
 /**
- * dataDoc with an index and child data objects stored in recDB
+ * dataDoc with an index and child data objects stored in recDB.
+ * Note - in the context of a dataDoc, a "table" refers to all records of a given type, despite
+ * the fact all records of all types are stored in a single physical IndexedDB table.
  *
  * @template T1 - index type
  * @template T2 - detail type
