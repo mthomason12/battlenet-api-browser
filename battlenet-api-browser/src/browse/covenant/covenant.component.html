@@ -1,7 +1,6 @@
 <mat-tab-group>
     <mat-tab label="Overview">
-        <p>Name: {{data?.name}}</p>
-        <p>Description: {{data?.description}}</p>
+        <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
     </mat-tab>
     <mat-tab label="Signature Ability">  
         <p>{{data?.signature_ability?.spell_tooltip?.spell?.name}}</p>

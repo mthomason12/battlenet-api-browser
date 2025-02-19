@@ -1,5 +1,4 @@
-<p>ID: {{data?.id}}</p>
-<p>Name: {{data?.name}}</p>
+<app-key-value-table [dataSource]="overviewData"></app-key-value-table>
 <p>Instances:</p>
 <mat-list role="list">
     @for (item of data?.dungeons; track item.id) {
