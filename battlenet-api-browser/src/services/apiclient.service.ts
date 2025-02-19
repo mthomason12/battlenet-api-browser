@@ -28,7 +28,11 @@ import {
   APICharacterCompletedQuests, APICharacterQuests, APICharacterReputationsSummary, APICharacterSoulbinds, APICharacterSpecializationsSummary,
   APICharacterStatisticsSummary, APICharacterTitles, APIGuild, APIGuildAchievements, APIGuildActivity, APIGuildRoster,
   APIPvPTalentSlots, APIPlayableClassMedia, APIPlayableClass, APIPlayableClassesIndex, APIPlayableRacesIndex,
-  APIPlayableRace, APIPlayableSpecializationsIndex, APIPlayableSpecialization, APIPlayableSpecializationMedia
+  APIPlayableRace, APIPlayableSpecializationsIndex, APIPlayableSpecialization, APIPlayableSpecializationMedia,
+  APICovenantIndex,
+  APICovenant,
+  APISoulbindIndex,
+  APISoulbind
 } from 'battlenet-api-types';
 import { JobQueueService } from './jobqueue.service';
 
@@ -273,11 +277,11 @@ export class apiClientService {
 
   //#region Covenant API
 
-  getCovenantIndex(): Promise<any | undefined> {
+  getCovenantIndex(): Promise<APICovenantIndex | undefined> {
     return this.queryStatic('/data/wow/covenant/index');
   }
 
-  getCovenant(id: number): Promise<any | undefined> {
+  getCovenant(id: number): Promise<APICovenant | undefined> {
     return this.queryStatic(`/data/wow/covenant/${id}`);
   }
 
@@ -285,11 +289,11 @@ export class apiClientService {
     return this.queryStatic(`/data/wow/media/covenant/${id}`);
   }
 
-  getSoulbindIndex(): Promise<any | undefined> {
+  getSoulbindIndex(): Promise<APISoulbindIndex | undefined> {
     return this.queryStatic('/data/wow/covenant/soulbind/index');
   }
 
-  getSoulbind(id: number): Promise<any | undefined> {
+  getSoulbind(id: number): Promise<APISoulbind | undefined> {
     return this.queryStatic(`/data/wow/covenant/soulbind/${id}`);
   }
 
