@@ -34,8 +34,26 @@
         </mat-table>
     </mat-tab>
     <mat-tab label="Activity">
+        <!--ul>
+            @for(act of activityData; track act.timestamp) {
+                @if (act.activity.type == "ENCOUNTER") {
+                    <li>{{act.encounter_completed.encounter.name}} completed on {{act.encounter_completed.encounter.mode.name}}</li>
+                } @else if (act.activity.type == "CHARACTER_ACHIEVEMENT") {
+                    <li>{{act.character_achievement.character.name}} completed {{act.character_achievement.achievement.name}}</li>
+                }
+            }
+        </ul-->
     </mat-tab>
     <mat-tab label="Achievements">
+        <ul>
+            @for(ach of achievementData; track ach.id){
+                @if(ach.criteria!.is_completed) {
+                    <li>{{ach.achievement.name}} completed on {{ach.completed_timestamp | date: 'yyyy-MM-dd HH:mm'}} </li>
+                } @else {
+                    <li>{{ach.achievement.name}} incomplete </li>
+                }
+            }
+        </ul>
     </mat-tab>
 </mat-tab-group>
 
