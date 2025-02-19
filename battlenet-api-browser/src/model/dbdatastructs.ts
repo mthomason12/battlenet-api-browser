@@ -303,6 +303,8 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     return this.recDB.clear(this.type).then(()=>{
       //clear the index cache
       this.indexCache = undefined;
+      //clear the record cache
+      this.recCache = new WeakMap();
     })
   }
 
