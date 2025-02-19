@@ -519,9 +519,9 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
   override reload(api: apiClientService): Promise<dbDataIndex<T3>> {
     throw new Error("dbDataIndexOnly unsupported function");
   }
+  
 
   override clear(): Promise<void> {
-
       return super.clear();
   }
 
@@ -540,11 +540,16 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     })
   }
 
+  /**
+   * Called after search results are retrieved, and before passing them back, allowing
+   * descendant classes a chance to modify them by overriding this function.
+   * @param results 
+   * @returns 
+   */
+
   postProcessSearchResults(results: T1[]): T1[] {
     return results;
   }
-
-
 
   /**
    * Add items to the index
