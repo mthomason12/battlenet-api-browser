@@ -11,6 +11,7 @@ interface dbDataRecID {
   id: recID;
 }
 
+
 /**
  * dataDoc with an index and child data objects stored in recDB
  *
@@ -244,16 +245,19 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   }
 
   /**
-   * Get index directly from the database
+   * Get index directly from the database, bypassing the cache
    * @returns
    */
   getDBIndex(): Promise<T1 | undefined> {
     return new Promise<T1 | undefined>((resolve) => {
       this.recDB.get('index', this.type)?.then((data) => {
-        if (data)
+        if (data) {
+          //copy to the cache
+          this.indexCache = new WeakRef(data?.data as T1);
           resolve(data?.data as T1);
-        else
+        } else {
           resolve(undefined);
+        }
       });
     });
   }
@@ -296,7 +300,10 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
 
   clear(): Promise<void>
   {
-    return this.recDB.clear(this.type);
+    return this.recDB.clear(this.type).then(()=>{
+      //clear the index cache
+      this.indexCache = undefined;
+    })
   }
 
   /**
@@ -513,6 +520,11 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
+  override clear(): Promise<void> {
+
+      return super.clear();
+  }
+
   /**
    * Perform a search using the provided API call
    * @param api 
@@ -545,20 +557,21 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
       var jobs: Array<Promise<any>> = new Array();
       var recs: Array<T2> = new Array();
 
+      //pull directly from the database, bypassing the cache
       this.getDBIndex().then((idx)=>{
         //add the new items to the a record list
         items.forEach((item)=>{
           //prevent duplicates
           if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]})) {
             var job = new Promise<void>(async(resolve, reject)=>{
-              jobs.push(job);
               this.getRec(api, (item as any)[this.key]).then((rec)=>{
                 if (rec) {
                   recs.push(rec);
                 }
                 resolve();
               })
-            })
+            });
+            jobs.push(job);            
           }
         });
         //Insert the results at the end.  This should be a mostly atomic operation compared to adding each as we get it.
@@ -577,7 +590,9 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
    * @param items 
    */
   addIndexItemsDirectly(items: T2[]): Promise<void> {
-    return new Promise(resolve=>{
+    return new Promise((resolve)=> {
+      //everything inside here really needs to be an atomic operation to prevent overlapping calls,
+
       //we don't need to bother with getIndex or getAPIIndex, just go straight to the DB
       this.getDBIndex().then((idx)=>{
         //add items to the index 
@@ -589,10 +604,12 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
           }
         });
         //save the index
-        this.putDBIndex(idx).then(()=>{
+        this.putDBIndex(idx).then (()=>{
+          //clear the index cache
+          this.indexCache = new WeakRef(idx);
           resolve();
-        })
-      });
+        })  
+      })
     });
 
   }
