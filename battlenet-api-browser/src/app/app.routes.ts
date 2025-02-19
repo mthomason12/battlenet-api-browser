@@ -84,16 +84,16 @@ export const routes: Routes = [
             { path: 'pet-abilities/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","pet-abilities"]} 
             },   
-            { path: 'playable-class', redirectTo: 'playable-class/', pathMatch: 'full'}, 
-            { path: 'playable-class/:id', component: ListDetailHostComponent, 
+            { path: 'classes', redirectTo: 'classes/', pathMatch: 'full'}, 
+            { path: 'classes/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","playable-class"]} 
             },    
-            { path: 'playable-race', redirectTo: 'playable-race/', pathMatch: 'full'}, 
-            { path: 'playable-race/:id', component: ListDetailHostComponent, 
+            { path: 'races', redirectTo: 'races/', pathMatch: 'full'}, 
+            { path: 'races/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","playable-race"]} 
             },    
-            { path: 'playable-spec', redirectTo: 'playable-spec/', pathMatch: 'full'}, 
-            { path: 'playable-spec/:id', component: ListDetailHostComponent, 
+            { path: 'character-specializations', redirectTo: 'character-specializations/', pathMatch: 'full'}, 
+            { path: 'character-specializations/:id', component: ListDetailHostComponent, 
                 data:{list: ["wowpublic","playable-spec"]} 
             },                                                                                  
             { path: 'realms', redirectTo: 'realms/', pathMatch: 'full'},   
