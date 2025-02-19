@@ -240,7 +240,16 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
         var realm: string;
         var character: string;
         [character, realm] = id.split('@');
-        return (api.getCharacterProfileSummary(realm, character) as Promise<characterProfileData>);
+        const req = api.getCharacterProfileSummary(realm, character) as Promise<characterProfileData>;
+        //automatically add any requested characters to the index
+        req.then((item)=>{
+            this.addIndexItemsDirectly([item]);
+        });
+        return req;
+    }
+
+    override getIndexItemName(item: characterProfileIndexData): string {
+        return item.name+ ' @ ' + item.realm;
     }
 
     override makeIndexItem(item: characterProfileData): characterProfileIndexData {
