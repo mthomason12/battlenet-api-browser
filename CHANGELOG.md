@@ -2,6 +2,11 @@
 
 #### Current-Dev (awaiting release number)
 
+##### Bug Fixes
+
+- Duplicate characters are no longer added to character profiles.
+- Characters and Guilds are now added to their respective lists immediately rather than on the next data refresh
+
 #### v0.4.1-dev
 
 ##### New Features

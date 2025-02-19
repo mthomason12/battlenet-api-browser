@@ -598,9 +598,10 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
         //add items to the index 
         items.forEach((item)=>{
           //prevent duplicates
-          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]}))
+          const newitem = this.makeIndexItem(item)
+          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (newitem as any)[this.key]}))
           {
-            idx.items.push(this.makeIndexItem(item));
+            idx.items.push(newitem);
           }
         });
         //save the index
