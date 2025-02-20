@@ -39,12 +39,6 @@ Or if you want to work on the live codebase:
 
 ## Usage
 
-The vast majority of data is left as-is from the Battle.net API.  
-
-However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;) 
-
-Where these additional fields are added to the API result, these are prefixed with $
-
 ### Battle&#46;net Client Registration
 
 You will need to provide your own Battle&#46;net API Key and secret. 
@@ -55,6 +49,16 @@ When registering your client, you'll need to provide a redirect URL.  If running
 Check "I do not have a service URL for this client"
 
 One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
+
+### Data
+
+This application makes extensive use of IndexedDB.  
+
+The vast majority of data is left as-is from the Battle.net API.  
+
+However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;) 
+
+Where these additional fields are added to the API result, these are prefixed with $
 
 ## Known Issues
 
