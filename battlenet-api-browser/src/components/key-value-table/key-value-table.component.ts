@@ -3,7 +3,7 @@ import { MatTableModule } from '@angular/material/table';
 
 export interface IKeyValueTableData {
     key: string;
-    value: string | number;
+    value: string | number | boolean;
 }
 
 @Component({

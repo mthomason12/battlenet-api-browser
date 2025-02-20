@@ -1,7 +1,4 @@
-<p>ID: {{data?.id}}</p>
-<p>Has Queue: {{data?.has_queue}}</p>
-<p>Status: {{data?.status?.name}}</p>
-<p>Population: {{data?.population?.name}}</p>
+<app-key-value-table [dataSource]="overviewData"></app-key-value-table>
 <p>Realms:</p>
 <mat-list role="list">
     @for (item of data?.realms; track item.id) {
