@@ -1,3 +1,7 @@
+/**
+ * battlenet-api-browser on Electron
+ */
+
 const { app, BrowserWindow, protocol } = require('electron/main')
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,6 +26,11 @@ const createWindow = () => {
     width: 800,
     height: 600
   })
+
+  //load menu
+  const { buildMenu } = require('./src/electron/menu');
+  buildMenu(win);
+
 
   /**
    * Catch load failures (e.g. Electron's refresh, which doesn't include index.html on the end)  
