@@ -66,7 +66,6 @@ Currently everything is hard-coded to the US region.
 ## Roadmap
 
 - Finish adding viewers for each data type
-- Add a custom browse component for every type of data
 - Query builder for search APIs
 - JSON import (allowing backup/restore with JSON files)
 - "Search everything" 
