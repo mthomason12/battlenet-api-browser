@@ -123,4 +123,4 @@ function buildMenu(winref)
     Menu.setApplicationMenu(menu)
 }
 
-module.exports = { win, buildMenu };
+module.exports = { buildMenu };
