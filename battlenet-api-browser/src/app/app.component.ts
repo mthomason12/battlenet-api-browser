@@ -63,7 +63,11 @@ export class AppComponent implements OnDestroy, OnInit {
 
     //allow opening the about dialog with a console command
     //cons.addFunctionToConsoleInterface('about', ()=>{ this.about() });
-    cons.addToConsoleInterface({about: ()=>{ this.about() }});
+    cons.addToConsoleInterface({
+      about: ()=>{ this.about() } ,
+      settings: ()=>{ this.settings() } ,  
+      export: ()=>{ this.export() }           
+    });
   }
 
   ngOnDestroy(): void {
@@ -136,6 +140,8 @@ export class AppComponent implements OnDestroy, OnInit {
 
   settings()
   {
+    if (!this.hideSettings)
+    {
       var tempSettings: settingsStruct = _.cloneDeep(this.data.data.settings);
 
       const dialogRef = this.dialog.open(SettingsDialog, {
@@ -153,13 +159,7 @@ export class AppComponent implements OnDestroy, OnInit {
         }
         this.checkStatus();
       });      
-  }
-
-  save()
-  {
-    this.data.save().then(()=>{
-      this._snackBar.open("Data saved", "", {duration:3000});
-    });
+    }
   }
 
   checkStatus()

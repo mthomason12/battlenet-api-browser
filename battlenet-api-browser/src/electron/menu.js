@@ -31,7 +31,25 @@ const template = [
   {
     label: 'File',
     submenu: [
-      isMac ? { role: 'close' } : { role: 'quit' }
+        {
+            label: 'Data...',
+            submenu: [
+                {
+                    label: 'Export...',
+                    click: async () => {
+                        win.webContents.executeJavaScript('bna.export();')
+                    }
+                }
+            ]
+        },
+        {
+            label: 'Settings...',
+            click: async () => {
+                win.webContents.executeJavaScript('bna.settings();')
+            }
+        },
+        { type: 'separator' },
+        isMac ? { role: 'close' } : { role: 'quit' }
     ]
   },
   // { role: 'editMenu' }
@@ -101,17 +119,12 @@ const template = [
   {
     role: 'help',
     submenu: [
-      {
-        /*label: 'Learn More',
-        click: async () => {
-          const { shell } = require('electron')
-          await shell.openExternal('https://electronjs.org')
-        }*/
-          label: 'About...',
-          click: async () => {
+        {
+            label: 'About...',
+            click: async () => {
             win.webContents.executeJavaScript('bna.about();');
+            }
           }
-      }
     ]
   }
 ]
