@@ -14,6 +14,7 @@ import { RealmComponent } from '../browse/detail/realm/realm.component';
 import { SoulbindComponent } from '../browse/detail/soulbind/soulbind.component';
 import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
 import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
+import { CharacterComponent } from '../browse/detail/character/character.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},
@@ -121,7 +122,7 @@ export const routes: Routes = [
         { path: 'profile', children: [
             { path: 'characters', redirectTo: 'characters/', pathMatch: 'full'},
             { path: 'characters/:id', component: ListDetailHostComponent, 
-                data:{list: ["wowprofile","profile-characters"], listComponent: CharacterMasterSearchComponent} 
+                data:{list: ["wowprofile","profile-characters"], listComponent: CharacterMasterSearchComponent, detailComponent: CharacterComponent} 
             },      
             { path: 'guilds', redirectTo: 'guilds/', pathMatch: 'full'},
             { path: 'guilds/:id', component: ListDetailHostComponent, 
