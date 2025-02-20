@@ -25,11 +25,7 @@
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu button" type="button">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="save()" [disabled]="!data.loaded" aria-label="Save option" type="button">
-        <mat-icon>save</mat-icon>
-        <span>Save</span>
-      </button>     
+    <mat-menu #menu="matMenu">  
       @if (!hideSettings) 
       {
         <button mat-menu-item (click)="settings()" aria-label="Settings option" type="button">
