@@ -452,7 +452,11 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
   }
 
   override getDBRecs(): Promise<any[]> {
-    throw new Error("dbDataIndexOnly unsupported function");
+    //throw new Error("dbDataIndexOnly unsupported function");
+    //implementation purely for export purposes - just output an empty array
+    return new Promise((resolve)=>{
+      resolve([]);
+    });
   }
 
   override getDBRecKeys(): Promise<recID[]> {
