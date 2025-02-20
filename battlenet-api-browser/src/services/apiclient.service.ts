@@ -32,7 +32,21 @@ import {
   APICovenantIndex,
   APICovenant,
   APISoulbindIndex,
-  APISoulbind
+  APISoulbind,
+  APIGuildCrestComponentsIndex,
+  APIGuildCrestBorderMedia,
+  APIGuildCrestEmblemMedia,
+  APIHeirloomIndex,
+  APIHeirloom,
+  APIProfessionsIndex,
+  APIPowerTypesIndex,
+  APIPowerType,
+  APIProfession,
+  APIProfessionMedia,
+  APIProfessionSkillTier,
+  APIRecipe,
+  APIRecipeMedia,
+  APIQuestIndex
 } from 'battlenet-api-types';
 import { JobQueueService } from './jobqueue.service';
 
@@ -341,15 +355,15 @@ export class apiClientService {
 
   //#region Guild Crest API
 
-  getGuildCrestComponentsIndex(): Promise<any | undefined> {
+  getGuildCrestComponentsIndex(): Promise<APIGuildCrestComponentsIndex | undefined> {
     return this.queryStatic(`/data/wow/guild-crest/index`);
   }
 
-  getGuildCrestBorderMedia(id: number): Promise<mediaDataStruct | undefined> {
+  getGuildCrestBorderMedia(id: number): Promise<APIGuildCrestBorderMedia | undefined> {
     return this.queryStatic(`/data/wow/media/guild-crest/border/${id}`);
   }
 
-  getGuildCrestEmblemMedia(id: number): Promise<mediaDataStruct | undefined> {
+  getGuildCrestEmblemMedia(id: number): Promise<APIGuildCrestEmblemMedia | undefined> {
     return this.queryStatic(`/data/wow/media/guild-crest/emblem/${id}`);
   }
 
@@ -357,11 +371,11 @@ export class apiClientService {
 
   //#region Heirloom API
 
-  getHeirloomIndex(): Promise<any | undefined> {
+  getHeirloomIndex(): Promise<APIHeirloomIndex | undefined> {
     return this.queryStatic(`/data/wow/heirloom/index`);
   }
 
-  getHeirloom(id: number): Promise<any | undefined> {
+  getHeirloom(id: number): Promise<APIHeirloom | undefined> {
     return this.queryStatic(`/data/wow/heirloom/${id}`);
   }
 
@@ -670,11 +684,11 @@ export class apiClientService {
 
   //region Power Type API
 
-  getPowerTypesIndex(): Promise<any | undefined> {
+  getPowerTypesIndex(): Promise<APIPowerTypesIndex | undefined> {
     return this.queryStatic(`/data/wow/power-type/index`);
   }
 
-  getPowerType(id: number): Promise<any | undefined> {
+  getPowerType(id: number): Promise<APIPowerType | undefined> {
     return this.queryStatic(`/data/wow/power-type/${id}`);
   }
 
@@ -682,27 +696,27 @@ export class apiClientService {
 
   //region Profession API
 
-  getProfessionIndex(): Promise<any | undefined> {
+  getProfessionIndex(): Promise<APIProfessionsIndex | undefined> {
     return this.queryStatic(`/data/wow/profession/index`);
   }
 
-  getProfession(id: number): Promise<any | undefined> {
+  getProfession(id: number): Promise<APIProfession | undefined> {
     return this.queryStatic(`/data/wow/profession/${id}`);
   }
 
-  getProfessionMedia(id: number): Promise<any | undefined> {
+  getProfessionMedia(id: number): Promise<APIProfessionMedia | undefined> {
     return this.queryStatic(`/data/wow/media/profession/${id}`);
   }
 
-  getProfessionSkillTier(id: number, skilltierID: number): Promise<any | undefined> {
+  getProfessionSkillTier(id: number, skilltierID: number): Promise<APIProfessionSkillTier | undefined> {
     return this.queryStatic(`/data/wow/profession/${id}/skill-tier/${skilltierID}`);
   }
 
-  getRecipe(id: number): Promise<any | undefined> {
+  getRecipe(id: number): Promise<APIRecipe | undefined> {
     return this.queryStatic(`/data/wow/recipe/${id}`);
   }
 
-  getRecipeMedia(id: number): Promise<any | undefined> {
+  getRecipeMedia(id: number): Promise<APIRecipeMedia | undefined> {
     return this.queryStatic(`/data/wow/media/recipe/${id}`);
   }
 
@@ -756,7 +770,7 @@ export class apiClientService {
    * An "index of indexes" - returns links to the quest category, quest area, and quest type indexes
    * @returns 
    */
-  getQuestIndex(): Promise<any> {
+  getQuestIndex(): Promise<APIQuestIndex | undefined> {
     return this.queryStatic(`/data/wow/quest/index`);
   }
 
