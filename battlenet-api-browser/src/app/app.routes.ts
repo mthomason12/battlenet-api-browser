@@ -1,19 +1,19 @@
 import { Routes } from '@angular/router';
 import { AuthCallbackComponent } from '..//components/auth-callback/auth-callback.component';
 import { BrowseComponent } from '../browse/browse.component';
-import { AchievementComponent } from '../browse/achievement/achievement.component';
-import { CovenantComponent } from '../browse/covenant/covenant.component';
-import { CreatureFamilyComponent } from '../browse/creature-family/creature-family.component';
-import { CreatureTypeComponent } from '../browse/creature-type/creature-type.component';
-import { SoulbindComponent } from '../browse/soulbind/soulbind.component';
-import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
-import { RealmComponent } from '../browse/realm/realm.component';
-import { ConnectedRealmComponent } from '../browse/connected-realm/connected-realm.component';
-import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
-import { JournalExpansionComponent } from '../browse/journal-expansion/journal-expansion.component';
 import { CharacterMasterSearchComponent } from '../browse/list-detail-host/character-master-search/character-master-search.component';
 import { GuildMasterSearchComponent } from '../browse/list-detail-host/guild-master-search/guild-master-search.component';
-import { GuildComponent } from '../browse/guild/guild.component';
+import { GuildComponent } from '../browse/detail/guild/guild.component';
+import { AchievementComponent } from '../browse/detail/achievement/achievement.component';
+import { ConnectedRealmComponent } from '../browse/detail/connected-realm/connected-realm.component';
+import { CovenantComponent } from '../browse/detail/covenant/covenant.component';
+import { CreatureFamilyComponent } from '../browse/detail/creature-family/creature-family.component';
+import { CreatureTypeComponent } from '../browse/detail/creature-type/creature-type.component';
+import { JournalExpansionComponent } from '../browse/detail/journal-expansion/journal-expansion.component';
+import { RealmComponent } from '../browse/detail/realm/realm.component';
+import { SoulbindComponent } from '../browse/detail/soulbind/soulbind.component';
+import { CharacterTableComponent } from '../browse/list-detail-host/character-table/character-table.component';
+import { ListDetailHostComponent } from '../browse/list-detail-host/list-detail-host.component';
 
 export const routes: Routes = [
     { path: 'auth-callback', component: AuthCallbackComponent},

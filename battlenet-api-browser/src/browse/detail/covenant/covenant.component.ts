@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { covenantData } from '../../model/covenants';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
-import { MediaTableComponent } from '../../components/media-table/media-table.component';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterLink } from '@angular/router';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { MediaTableComponent } from '../../../components/media-table/media-table.component';
+import { covenantData } from '../../../model/covenants';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+
 
 @Component({
   selector: 'app-covenant',

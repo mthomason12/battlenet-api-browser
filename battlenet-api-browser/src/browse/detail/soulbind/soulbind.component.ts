@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { soulbindData } from '../../model/covenants';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { soulbindData } from '../../../model/covenants';
+
 
 @Component({
   selector: 'app-soulbind',

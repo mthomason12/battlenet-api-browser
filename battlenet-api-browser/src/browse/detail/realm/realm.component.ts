@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { realmData } from '../../model/realm';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { realmData } from '../../../model/realm';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+
 
 @Component({
   selector: 'app-realm',

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { creatureTypeData } from '../../model/creature';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { creatureTypeData } from '../../../model/creature';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+
 
 @Component({
   selector: 'app-creature-type',

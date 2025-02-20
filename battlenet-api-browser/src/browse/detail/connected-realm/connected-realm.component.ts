@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { connectedRealmData } from '../../model/connectedrealm';
+import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { connectedRealmData } from '../../../model/connectedrealm';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+
 
 @Component({
   selector: 'app-connected-realm',

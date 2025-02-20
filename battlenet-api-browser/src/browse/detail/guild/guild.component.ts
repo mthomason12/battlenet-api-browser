@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { guildProfileData } from '../../model/profile-guild';
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
+import { guildProfileData } from '../../../model/profile-guild';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { MatTableModule } from '@angular/material/table';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { guildAchievement, guildActivity, guildCharacterAchievementActivity, guildEncounterActivity, guildRosterMemberStruct } from 'battlenet-api-types';
-import { playableClassData } from '../../model/playable-class';
-import { playableRaceData} from '../../model/playable-race';
-import { dbDataLookups } from '../../model/dbdatalookups';
-import { realmData } from '../../model/realm';
-import { loadingSymbol, Slugify } from '../../lib/utils';
-import { characterProfileData } from '../../model/profile-characters';
+import { playableClassData } from '../../../model/playable-class';
+import { playableRaceData} from '../../../model/playable-race';
+import { dbDataLookups } from '../../../model/dbdatalookups';
+import { realmData } from '../../../model/realm';
+import { loadingSymbol, Slugify } from '../../../lib/utils';
+import { characterProfileData } from '../../../model/profile-characters';
 import { CommonModule } from '@angular/common';
 
 @Component({

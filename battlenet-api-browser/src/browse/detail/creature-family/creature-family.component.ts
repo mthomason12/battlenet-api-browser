@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { creatureFamilyData } from '../../model/creature';
-import { MediaTableComponent } from "../../components/media-table/media-table.component";
-import { AbstractDetailComponent } from '../list-detail-host/abstract-detail/abstract-detail.component';
-import { IKeyValueTableData, KeyValueTableComponent } from '../../components/key-value-table/key-value-table.component';
+import { KeyValueTableComponent, IKeyValueTableData } from '../../../components/key-value-table/key-value-table.component';
+import { MediaTableComponent } from '../../../components/media-table/media-table.component';
+import { creatureFamilyData } from '../../../model/creature';
+import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
+
 
 @Component({
   selector: 'app-creature-family',
