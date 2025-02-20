@@ -39,12 +39,6 @@ Or if you want to work on the live codebase:
 
 ## Usage
 
-The vast majority of data is left as-is from the Battle.net API.  
-
-However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;) 
-
-Where these additional fields are added to the API result, these are prefixed with $
-
 ### Battle&#46;net Client Registration
 
 You will need to provide your own Battle&#46;net API Key and secret. 
@@ -56,6 +50,16 @@ Check "I do not have a service URL for this client"
 
 One item on the [roadmap](#roadmap) is to provide a public API proxy for use by this app.
 
+### Data
+
+This application makes extensive use of IndexedDB.  
+
+The vast majority of data is left as-is from the Battle.net API.  
+
+However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;) 
+
+Where these additional fields are added to the API result, these are prefixed with $
+
 ## Known Issues
 
 There is currently very little in the way of error checking and handling.  
@@ -66,7 +70,6 @@ Currently everything is hard-coded to the US region.
 ## Roadmap
 
 - Finish adding viewers for each data type
-- Add a custom browse component for every type of data
 - Query builder for search APIs
 - JSON import (allowing backup/restore with JSON files)
 - "Search everything" 

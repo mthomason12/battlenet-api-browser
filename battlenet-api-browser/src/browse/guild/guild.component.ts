@@ -57,6 +57,28 @@ export class GuildComponent extends AbstractDetailComponent<guildProfileData> {
     this.activityData = this.data?.$activityData?.activities!;
   }
 
+  getActivityType (item: guildEncounterActivity | guildCharacterAchievementActivity): string {
+    switch (item.activity.type) {
+      case "ENCOUNTER":
+        return "Encounter";
+      case "CHARACTER_ACHIEVEMENT":
+        return "Character Achievement";
+    }
+    return "Unknown";
+  }
+
+  getActivityText (item: guildEncounterActivity | guildCharacterAchievementActivity): string {
+    switch (item.activity.type) {
+      case "ENCOUNTER":
+        const encounter = item as guildEncounterActivity;
+        return `Defeated ${encounter.encounter_completed.encounter.name} on ${encounter.encounter_completed.mode.name}`;
+      case "CHARACTER_ACHIEVEMENT":
+        const achievement = item as guildCharacterAchievementActivity;
+        return `${achievement.character_achievement.character.name} earned ${achievement.character_achievement.achievement.name}`;
+    }
+    return "Unknown";
+  }
+
 }
 
 class guildRosterEntry {

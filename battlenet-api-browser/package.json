@@ -1,6 +1,6 @@
 {
   "name": "battlenet-api-browser",
-  "version": "0.4.1-dev",
+  "version": "0.4.2-dev",
   "author": "Matt Thomason <matt@warpedcore.net>",
   "description": "Browser for Battle.net API",
   "license": "MIT",
@@ -54,7 +54,7 @@
     "@badcafe/jsonizer": "^9.0.3",
     "@oauth-everything/passport-battlenet": "^1.0.1",
     "angular-oauth2-oidc": "^19.0.0",
-    "battlenet-api-types": "^1.0.6",
+    "battlenet-api-types": "^1.0.9",
     "blizzapi": "^2.6.5",
     "dexie": "^4.0.11",
     "dexie-export-import": "^4.1.4",

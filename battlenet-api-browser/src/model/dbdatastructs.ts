@@ -13,7 +13,9 @@ interface dbDataRecID {
 
 
 /**
- * dataDoc with an index and child data objects stored in recDB
+ * dataDoc with an index and child data objects stored in recDB.
+ * Note - in the context of a dataDoc, a "table" refers to all records of a given type, despite
+ * the fact all records of all types are stored in a single physical IndexedDB table.
  *
  * @template T1 - index type
  * @template T2 - detail type
@@ -303,6 +305,8 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
     return this.recDB.clear(this.type).then(()=>{
       //clear the index cache
       this.indexCache = undefined;
+      //clear the record cache
+      this.recCache = new WeakMap();
     })
   }
 
@@ -406,16 +410,13 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   export(): Promise<object> {
     return new Promise((resolve) => {
       var ob: any = {};
-      var promises = [];
-      promises.push(this.getDBIndex().then((idx) => {
+      this.getDBIndex().then((idx) => {
         ob.index = idx;
-      }));
-      promises.push(this.getDBRecs().then((recs) => {
-        ob.items = recs;
-      }));
-      Promise.allSettled(promises).then(() => {
-        console.log("Exporting" + this.getName());
-        resolve(ob);
+        this.getDBRecs().then((recs) => {
+          ob.items = recs;
+          console.log("Exporting" + this.getName());
+          resolve(ob);
+        })
       });
     });
   }
@@ -448,7 +449,11 @@ export abstract class dbDataIndexOnly<T extends IApiIndexDoc> extends dbData<T, 
   }
 
   override getDBRecs(): Promise<any[]> {
-    throw new Error("dbDataIndexOnly unsupported function");
+    //throw new Error("dbDataIndexOnly unsupported function");
+    //implementation purely for export purposes - just output an empty array
+    return new Promise((resolve)=>{
+      resolve([]);
+    });
   }
 
   override getDBRecKeys(): Promise<recID[]> {
@@ -520,8 +525,8 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     throw new Error("dbDataIndexOnly unsupported function");
   }
 
-  override clear(): Promise<void> {
 
+  override clear(): Promise<void> {
       return super.clear();
   }
 
@@ -540,11 +545,16 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
     })
   }
 
+  /**
+   * Called after search results are retrieved, and before passing them back, allowing
+   * descendant classes a chance to modify them by overriding this function.
+   * @param results 
+   * @returns 
+   */
+
   postProcessSearchResults(results: T1[]): T1[] {
     return results;
   }
-
-
 
   /**
    * Add items to the index
@@ -598,15 +608,15 @@ export abstract class dbDataNoIndex<T1 extends IApiDataDoc, T2 extends IApiDataD
         //add items to the index 
         items.forEach((item)=>{
           //prevent duplicates
-          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (item as any)[this.key]}))
+          const newitem = this.makeIndexItem(item)
+          if (!idx.items.find((value)=>{ return (value as any)[this.key] == (newitem as any)[this.key]}))
           {
-            idx.items.push(this.makeIndexItem(item));
+            idx.items.push(newitem);
           }
         });
         //save the index
         this.putDBIndex(idx).then (()=>{
-          //clear the index cache
-          this.indexCache = new WeakRef(idx);
+          //no need to clear the cached index, putDBIndex does that for us
           resolve();
         })  
       })

@@ -20,6 +20,7 @@ import { appKeyStruct, settingsStruct } from '../model/userdata';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from '../settings/settings.component';
 import _ from 'lodash';
+import { ConsoleService } from '../services/console.service';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,7 @@ export class AppComponent implements OnDestroy, OnInit {
   private connectSubscription?: Subscription;
   private loadedSubscription?: Subscription;
 
-  constructor(private apiCli: apiClientService, protected data: UserdataService, private router: Router)
+  constructor(private apiCli: apiClientService, protected data: UserdataService, private router: Router, private cons: ConsoleService)
   {
     this.apiClient = apiCli;
     this.apiClient.provideSettings(data.data.settings.api);
@@ -59,6 +60,14 @@ export class AppComponent implements OnDestroy, OnInit {
     this.isMobile.set(this._mobileQuery.matches);
     this._mobileQueryListener = () => this.isMobile.set(this._mobileQuery.matches);
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+
+    //allow opening the about dialog with a console command
+    //cons.addFunctionToConsoleInterface('about', ()=>{ this.about() });
+    cons.addToConsoleInterface({
+      about: ()=>{ this.about() } ,
+      settings: ()=>{ this.settings() } ,  
+      export: ()=>{ this.export() }           
+    });
   }
 
   ngOnDestroy(): void {
@@ -88,6 +97,16 @@ export class AppComponent implements OnDestroy, OnInit {
       console.log("Authenticating from the root");
       this.apiCli.completeAuthentication(params.get('code')!, this.router);
     }
+  }
+
+  /**
+   * Open the "About" dialog box
+   */
+  about()
+  {
+    const dialogRef = this.dialog.open(AboutDialog, {
+      width: "90%",
+    }); 
   }
 
   connect()
@@ -121,6 +140,8 @@ export class AppComponent implements OnDestroy, OnInit {
 
   settings()
   {
+    if (!this.hideSettings)
+    {
       var tempSettings: settingsStruct = _.cloneDeep(this.data.data.settings);
 
       const dialogRef = this.dialog.open(SettingsDialog, {
@@ -138,13 +159,7 @@ export class AppComponent implements OnDestroy, OnInit {
         }
         this.checkStatus();
       });      
-  }
-
-  save()
-  {
-    this.data.save().then(()=>{
-      this._snackBar.open("Data saved", "", {duration:3000});
-    });
+    }
   }
 
   checkStatus()
@@ -185,4 +200,17 @@ export class SettingsDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+@Component({
+  selector: 'about-dialog',
+  templateUrl: 'about-dialog.html',
+  imports: [
+    MatButtonModule, MatDialogContent, MatDialogActions, 
+    MatDialogClose, MatDialogTitle, CommonModule
+  ]
+})
+export class AboutDialog {
+
+  readonly dialogRef = inject(MatDialogRef<SettingsDialog>);
 }

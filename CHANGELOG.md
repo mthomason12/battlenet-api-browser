@@ -2,6 +2,16 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.4.2-dev
+
+- Electron version integrates menu items "Settings", "Export", and "About"
+
+##### Bug Fixes
+
+- Main menu "Export" works again
+- Duplicate characters are no longer added to character profiles.
+- Characters and Guilds are now added to their respective lists immediately rather than on the next data refresh
+
 #### v0.4.1-dev
 
 ##### New Features
