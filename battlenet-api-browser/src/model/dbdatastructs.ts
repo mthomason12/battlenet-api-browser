@@ -410,16 +410,13 @@ export abstract class dbData<T1 extends IApiIndexDoc, T2 extends IApiDataDoc> ex
   export(): Promise<object> {
     return new Promise((resolve) => {
       var ob: any = {};
-      var promises = [];
-      promises.push(this.getDBIndex().then((idx) => {
+      this.getDBIndex().then((idx) => {
         ob.index = idx;
-      }));
-      promises.push(this.getDBRecs().then((recs) => {
-        ob.items = recs;
-      }));
-      Promise.allSettled(promises).then(() => {
-        console.log("Exporting" + this.getName());
-        resolve(ob);
+        this.getDBRecs().then((recs) => {
+          ob.items = recs;
+          console.log("Exporting" + this.getName());
+          resolve(ob);
+        })
       });
     });
   }
