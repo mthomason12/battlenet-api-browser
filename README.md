@@ -20,7 +20,7 @@ View the [changelog](CHANGELOG.md) for details on new releases
 
 Tested on Chrome (132.0.6834.110), Firefox (113.0.3), and Edge (132.0.2957.127) running from a local webserver.
 
-Precomplied releases can be found at https://github.com/mthomason12/battlenet-api-browser/releases
+Precompiled releases can be found at https://github.com/mthomason12/battlenet-api-browser/releases
 
 Builds are triggered by going to the **battlenet-api-browser** directory and running:
 
@@ -35,7 +35,6 @@ Builds are triggered by going to the **battlenet-api-browser** directory and run
 Or if you want to work on the live codebase:
 
 ```ng serve``` to serve the Angular application, rebuilding live on file edits.
-
 
 ## Usage
 
