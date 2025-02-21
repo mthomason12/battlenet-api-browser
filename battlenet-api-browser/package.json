@@ -55,7 +55,7 @@
     "@badcafe/jsonizer": "^9.0.3",
     "@oauth-everything/passport-battlenet": "^1.0.1",
     "angular-oauth2-oidc": "^19.0.0",
-    "battlenet-api-types": "^1.1.0",
+    "battlenet-api-types": "^1.1.1",
     "blizzapi": "^2.6.5",
     "dexie": "^4.0.11",
     "dexie-export-import": "^4.1.4",
