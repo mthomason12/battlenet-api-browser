@@ -1,12 +1,13 @@
 
 
 <mat-card appearance="outlined" class="outerCard">
-  <mat-card-header>
-    <mat-card-title>
-      {{name}}
-    </mat-card-title>
-  </mat-card-header>
-
+  @if (name) {
+    <mat-card-header>
+      <mat-card-title>
+        {{name}}
+      </mat-card-title>
+    </mat-card-header>    
+  }
   <mat-card-content>
     <mat-card appearance="outlined" class="innerCard">
       <mat-card-content>

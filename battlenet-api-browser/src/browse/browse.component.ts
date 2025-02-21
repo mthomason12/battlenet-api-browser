@@ -81,7 +81,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
     {
       //we're looking at the detail
       if (this.dataObjectIsLive()) {
-        this.name = (this.dataObject as IMasterDetail).getRecName(this.displayData);
+        this.name = undefined;
         this.reloadable = (this.dataObject as IMasterDetail).canReloadItems();
       } else {
         this.reloadable = false;
