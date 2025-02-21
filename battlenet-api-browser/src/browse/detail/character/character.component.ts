@@ -3,16 +3,20 @@ import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { characterAchievement } from 'battlenet-api-types';
+import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-character',
-  imports: [ MatTabsModule, KeyValueTableComponent ],
+  imports: [ MatTabsModule, MatTableModule, CommonModule, KeyValueTableComponent ],
   templateUrl: './character.component.html',
   styleUrl: './character.component.scss'
 })
 export class CharacterComponent extends AbstractDetailComponent<characterProfileData> {
 
   overviewData: IKeyValueTableData[] = [];
+  achievementData: characterAchievement[] = [];
 
   override dataSet() {
     this.overviewData = [
@@ -33,7 +37,8 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
         name: "Other Titles", onClick: ()=>{}
       }},     
       { key: 'Achievement Points', value: this.data?.achievement_points! },
-    ]
+    ];
+    this.achievementData = this.data?.$achievements?.achievements!;
   }
 
 }
