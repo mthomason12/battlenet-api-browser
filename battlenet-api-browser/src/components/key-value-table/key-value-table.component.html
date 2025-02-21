@@ -5,16 +5,15 @@
     </ng-container>
     <!-- Value Column -->
     <ng-container matColumnDef="value">
-        <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-    </ng-container>
-    <!-- Button Column -->
-    <ng-container matColumnDef="button">
-        <td mat-cell *matCellDef="let element"> 
-            @if (element.button)
-            {
-                <button mat-button>{{element.button.name}}</button> 
-            }
+        <td mat-cell *matCellDef="let element">
+            <div class="cellContent">
+                <span class="cellText">{{element.value}}</span>
+                @if (element.button)
+                {
+                    <span class="spacer"></span><button mat-button>{{element.button.name}}</button> 
+                }
+            </div>
         </td>
-    </ng-container>    
-    <tr mat-row *matRowDef="let row; columns: ['key','value', 'button'];"></tr>  
+    </ng-container>   
+    <tr mat-row *matRowDef="let row; columns: ['key','value'];"></tr>  
 </table>

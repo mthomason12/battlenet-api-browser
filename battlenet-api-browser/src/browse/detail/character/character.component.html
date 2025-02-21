@@ -5,6 +5,7 @@
     <mat-tab label="Character Stats">
     </mat-tab>              
     <mat-tab label="Achievements">
+        <ng-template matTabContent>
         <mat-tab-group>
             <mat-tab label="Achievements">
                 <ng-template matTabContent>
@@ -16,11 +17,7 @@
                         <ng-container matColumnDef="completed">
                             <th mat-header-cell *matHeaderCellDef> Completed </th>
                             <td mat-cell *matCellDef="let item"> 
-                                @if(item.criteria!.is_completed) {
-                                    {{item.completed_timestamp | date: 'yyyy-MM-dd HH:mm'}}
-                                } @else {
-                                    incomplete
-                                }
+                                    {{item.completed_timestamp ? (item.completed_timestamp | date: 'yyyy-MM-dd HH:mm') : ''}}
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
@@ -29,8 +26,29 @@
                 </ng-template>
             </mat-tab> 
             <mat-tab label="Statistics">
+                <ng-template matTabContent>
+                    @for (cat of statisticsData; track cat.id) {
+                        <ng-container
+                            [ngTemplateOutlet]="statisticsExpander"
+                            [ngTemplateOutletContext]="{data: cat}"
+                        />}
+                </ng-template>
+                <ng-template #statisticsExpander let-cat="data">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> {{cat.name}} </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        @for (subcat of cat.sub_categories; track subcat.id) {
+                            <ng-container
+                            [ngTemplateOutlet]="statisticsExpander"
+                            [ngTemplateOutletContext]="{data: subcat}"
+                        />}
+                        <app-key-value-table [dataSource]="getStatistics(cat)"></app-key-value-table>
+                    </mat-expansion-panel>
+                </ng-template>
             </mat-tab> 
         </mat-tab-group>
+        </ng-template>
     </mat-tab>
     <mat-tab label="Appearances">
     </mat-tab>
