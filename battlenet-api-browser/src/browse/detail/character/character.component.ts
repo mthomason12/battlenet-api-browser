@@ -20,6 +20,18 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'ID', value: this.data?.id! },
       { key: 'Faction', value: this.data?.faction.name! },
       { key: 'Realm', value: this.data?.realm.name! },
+      { key: 'Class', value: this.data?.character_class.name! },      
+      { key: 'Active Spec', value: this.data?.active_spec.name!, button: {
+        name: "Other Specs", onClick: ()=>{}
+      }},
+      ...(this.data?.$hunterPets?.hunter_pets.length! > 0) ? [
+        { key: 'Hunter Pets', value: this.data?.$hunterPets.hunter_pets.length! , button: {
+          name: "Hunter Pets", onClick: ()=>{}
+        }}] : [],      
+      { key: 'Equipped Item Level', value: this.data?.equipped_item_level! },                          
+      { key: 'Active Title', value: this.data?.active_title.name! , button: {
+        name: "Other Titles", onClick: ()=>{}
+      }},     
       { key: 'Achievement Points', value: this.data?.achievement_points! },
     ]
   }
