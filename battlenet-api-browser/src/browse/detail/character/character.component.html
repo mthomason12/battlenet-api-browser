@@ -1,12 +1,18 @@
 <mat-tab-group>
     <mat-tab label="Overview">
         <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
+        <app-key-value-table [dataSource]="collectionSummary"></app-key-value-table>
     </mat-tab>
-    <mat-tab label="Character Stats">
+    <mat-tab label="Stats">
         <ng-template matTabContent>
             <app-key-value-table [dataSource]="statsData"></app-key-value-table> 
         </ng-template>        
-    </mat-tab>              
+    </mat-tab>                 
+    <mat-tab label="Professions">
+        <ng-template matTabContent>
+            <app-key-value-table [dataSource]="professionSummary"></app-key-value-table>
+        </ng-template>        
+    </mat-tab>
     <mat-tab label="Achievements">
         <ng-template matTabContent>
             <table mat-table class="achievements" [dataSource]="achievementData" class="mat-elevation-z8">
@@ -56,25 +62,14 @@
     </mat-tab> 
     <mat-tab label="Appearances">
     </mat-tab>
-    <mat-tab label="Collections">
-        <!--- Use an app-page-selector here --->
-    </mat-tab> 
     <mat-tab label="Dungeons">
     </mat-tab>            
     <mat-tab label="Raids">
     </mat-tab>                
-    <mat-tab label="Equipment">
-    </mat-tab>    
     <mat-tab label="Mythic Keystones">
-    </mat-tab>        
-    <mat-tab label="Professions">
-    </mat-tab>       
+    </mat-tab>              
     <mat-tab label="PvP">
     </mat-tab>      
     <mat-tab label="Quests">
-    </mat-tab>   
-    <mat-tab label="Reputation">
-    </mat-tab>   
-    <mat-tab label="Soulbinds">
-    </mat-tab>                                                
+    </mat-tab>                                                   
 </mat-tab-group>
