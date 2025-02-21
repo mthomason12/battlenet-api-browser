@@ -18,6 +18,7 @@ import { PageSelectorComponent } from '../../../components/page-selector/page-se
 export class CharacterComponent extends AbstractDetailComponent<characterProfileData> {
 
   overviewData: IKeyValueTableData[] = [];
+  statsData: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
 
@@ -41,6 +42,16 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       }},     
       { key: 'Achievement Points', value: this.data?.achievement_points! },
     ];
+    this.statsData = [
+      { key: 'Strength (base)', value: this.data?.$statistics.strength.base!},
+      { key: 'Strength (effective)', value: this.data?.$statistics.strength.effective!},       
+      { key: 'Agility (base)', value: this.data?.$statistics.agility.base!},
+      { key: 'Agility (effective)', value: this.data?.$statistics.agility.effective!},
+      { key: 'Intellect (base)', value: this.data?.$statistics.intellect.base!},
+      { key: 'Intellect (effective)', value: this.data?.$statistics.intellect.effective!},
+      { key: 'Stamina (base)', value: this.data?.$statistics.stamina.base!},
+      { key: 'Stamina (effective)', value: this.data?.$statistics.stamina.effective!},
+    ]
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
   }

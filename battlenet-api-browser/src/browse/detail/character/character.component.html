@@ -3,6 +3,9 @@
         <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
     </mat-tab>
     <mat-tab label="Character Stats">
+        <ng-template matTabContent>
+            <app-key-value-table [dataSource]="statsData"></app-key-value-table> 
+        </ng-template>        
     </mat-tab>              
     <mat-tab label="Achievements">
         <ng-template matTabContent>
