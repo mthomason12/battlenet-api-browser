@@ -27,10 +27,12 @@
             <div class="innerHost">
                 <app-page-selector [pages]="statisticsData" selector="name">
                     <ng-template let-item>
+                        <div class="selectorPage">
                         <ng-container
                         [ngTemplateOutlet]="statisticsExpander"
                         [ngTemplateOutletContext]="{data: item}"
                         />
+                        </div>
                     </ng-template>
                     <ng-template #statisticsExpander let-item="data">
                         <app-key-value-table [dataSource]="getStatistics(item)"></app-key-value-table>
