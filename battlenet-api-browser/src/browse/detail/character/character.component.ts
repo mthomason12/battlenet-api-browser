@@ -7,10 +7,11 @@ import { characterAchievement, characterAchievementStatisticsCategory } from 'ba
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PageSelectorComponent } from '../../../components/page-selector/page-selector.component';
 
 @Component({
   selector: 'app-character',
-  imports: [ MatTabsModule, MatTableModule, CommonModule, KeyValueTableComponent, MatExpansionModule],
+  imports: [ MatTabsModule, MatTableModule, CommonModule, KeyValueTableComponent, MatExpansionModule, PageSelectorComponent],
   templateUrl: './character.component.html',
   styleUrl: './character.component.scss'
 })

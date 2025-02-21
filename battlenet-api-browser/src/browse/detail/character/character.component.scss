@@ -1,6 +1,19 @@
 @use "../../list-detail-host/detail-host.scss";
 
-table {
-    width: auto;
-    min-width: auto;
+
+.tabGroupHost {
+    display:flex;
+    height:100%;
 }
+
+app-page-selector {
+    flex:1;
+    height:100%;
+    overflow:hidden;
+}
+
+.innerHost {
+    display:flex;
+    height:100%;
+}
+

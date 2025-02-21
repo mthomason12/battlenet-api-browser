@@ -6,74 +6,58 @@
     </mat-tab>              
     <mat-tab label="Achievements">
         <ng-template matTabContent>
-        <mat-tab-group>
-            <mat-tab label="Achievements">
-                <ng-template matTabContent>
-                    <table mat-table class="achievements" [dataSource]="achievementData" class="mat-elevation-z8">
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef> Achievement </th>
-                            <td mat-cell *matCellDef="let item"> {{item.achievement.name}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="completed">
-                            <th mat-header-cell *matHeaderCellDef> Completed </th>
-                            <td mat-cell *matCellDef="let item"> 
-                                    {{item.completed_timestamp ? (item.completed_timestamp | date: 'yyyy-MM-dd HH:mm') : ''}}
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: ['name','completed'];"></tr>
-                    </table>
-                </ng-template>
-            </mat-tab> 
-            <mat-tab label="Statistics">
-                <ng-template matTabContent>
-                    @for (cat of statisticsData; track cat.id) {
-                        <ng-container
-                            [ngTemplateOutlet]="statisticsExpander"
-                            [ngTemplateOutletContext]="{data: cat}"
-                        />}
-                </ng-template>
-                <ng-template #statisticsExpander let-cat="data">
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title> {{cat.name}} </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        @for (subcat of cat.sub_categories; track subcat.id) {
-                            <ng-container
-                            [ngTemplateOutlet]="statisticsExpander"
-                            [ngTemplateOutletContext]="{data: subcat}"
-                        />}
-                        <app-key-value-table [dataSource]="getStatistics(cat)"></app-key-value-table>
-                    </mat-expansion-panel>
-                </ng-template>
-            </mat-tab> 
-        </mat-tab-group>
+            <table mat-table class="achievements" [dataSource]="achievementData" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Achievement </th>
+                    <td mat-cell *matCellDef="let item"> {{item.achievement.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="completed">
+                    <th mat-header-cell *matHeaderCellDef> Completed </th>
+                    <td mat-cell *matCellDef="let item"> 
+                            {{item.completed_timestamp ? (item.completed_timestamp | date: 'yyyy-MM-dd HH:mm') : ''}}
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['name','completed'];"></tr>
+            </table>
         </ng-template>
-    </mat-tab>
+    </mat-tab> 
+    <mat-tab label="Statistics">
+        <ng-template matTabContent>
+            <div class="innerHost">
+                <app-page-selector [pages]="statisticsData" selector="name">
+                    <ng-template let-item>
+                        <ng-container
+                        [ngTemplateOutlet]="statisticsExpander"
+                        [ngTemplateOutletContext]="{data: item}"
+                        />
+                    </ng-template>
+                    <ng-template #statisticsExpander let-item="data">
+                        <app-key-value-table [dataSource]="getStatistics(item)"></app-key-value-table>
+                        @for (subcat of item.sub_categories; track subcat.id) {
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> {{subcat.name}} </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ng-container
+                                [ngTemplateOutlet]="statisticsExpander"
+                                [ngTemplateOutletContext]="{data: subcat}"
+                            />
+                        </mat-expansion-panel>}
+                    </ng-template>
+                </app-page-selector>
+            </div>
+        </ng-template>
+    </mat-tab> 
     <mat-tab label="Appearances">
     </mat-tab>
     <mat-tab label="Collections">
-        <mat-tab-group>
-            <mat-tab label="Heirlooms">
-            </mat-tab> 
-            <mat-tab label="Mounts">
-            </mat-tab> 
-            <mat-tab label="Pets">
-            </mat-tab> 
-            <mat-tab label="Toys">
-            </mat-tab> 
-            <mat-tab label="Transmogs">
-            </mat-tab>                                                  
-        </mat-tab-group>
+        <!--- Use an app-page-selector here --->
     </mat-tab> 
-    <mat-tab label="Encounters">
-        <mat-tab-group>
-            <mat-tab label="Dungeons">
-            </mat-tab> 
-            <mat-tab label="Raids">
-            </mat-tab>                                               
-        </mat-tab-group>
+    <mat-tab label="Dungeons">
     </mat-tab>            
+    <mat-tab label="Raids">
+    </mat-tab>                
     <mat-tab label="Equipment">
     </mat-tab>    
     <mat-tab label="Mythic Keystones">
