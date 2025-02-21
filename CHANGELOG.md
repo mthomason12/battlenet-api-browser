@@ -2,6 +2,10 @@
 
 #### Current-Dev (awaiting release number)
 
+#### New Features
+
+- Characters now include Achievements and Statistics
+
 #### v0.4.2-dev
 
 - Electron version integrates menu items "Settings", "Export", and "About"
