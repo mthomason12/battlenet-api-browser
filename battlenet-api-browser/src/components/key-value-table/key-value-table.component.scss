@@ -1,14 +1,17 @@
+table {
+    width: auto;
+    min-width: auto;
+}
+
 td.mat-column-key {
     font-weight: bold;
+    width: auto;
 }
 
 td.mat-column-value {
-    width: 80%;
+    width: auto;
 }
 
-td.mat-column-button {
-    min-width: 150px;
-}
 
 td.cdk-column-value {
     div.cellContent {
