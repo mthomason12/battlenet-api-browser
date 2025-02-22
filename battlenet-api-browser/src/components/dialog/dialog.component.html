@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content [ngClass]="data.noScroll ? 'noScroll' : ''">
+    <ng-container [ngTemplateOutlet]="data.content"></ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close] cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
