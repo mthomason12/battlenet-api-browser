@@ -36,16 +36,16 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
     this.overviewData = [
       { key: 'Name', value: this.data?.name! },
       { key: 'ID', value: this.data?.id! },
-      { key: 'Faction', value: this.data?.faction.name! },
+      { key: 'Faction', value: this.data?.faction?.name! },
       { key: 'Realm', value: this.data?.realm.name! },
-      { key: 'Guild', value: this.data?.guild.name!},
+      { key: 'Guild', value: this.data?.guild?.name!},
       { key: 'Class', value: this.data?.character_class.name! },      
       { key: 'Level', value: this.data?.level! },
-      { key: 'Active Spec', value: this.data?.active_spec.name!, button: {
+      { key: 'Active Spec', value: this.data?.active_spec?.name!, button: {
         name: "Specs", onClick: ()=>{}
       }},
       ...(this.data?.$hunterPets?.hunter_pets.length! > 0) ? [
-        { key: 'Hunter Pets', value: this.data?.$hunterPets.hunter_pets.length! , button: {
+        { key: 'Hunter Pets', value: this.data?.$hunterPets?.hunter_pets.length! , button: {
           name: "Hunter Pets", onClick: ()=>{}
       }}] : [],  
     ];
@@ -54,7 +54,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Equipped Item Level', value: this.data?.equipped_item_level!, button: {
         name: "Equipment", onClick: ()=>{}
       }},                          
-      { key: 'Active Title', value: this.data?.active_title.name! , button: {
+      { key: 'Active Title', value: this.data?.active_title?.name! , button: {
         name: "Other Titles", onClick: ()=>{}
       }},     
       { key: 'Achievement Points', value: this.data?.achievement_points!, button: {
@@ -63,7 +63,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Statistics', value: "", button: {
         name: "Statistics", onClick: ()=>{this.dlg.open({title: "Statistics", content: this.statisticsDialog(), noScroll: true})}
       }},
-      { key: 'Quests Completed', value: this.data?.$questsCompleted.quests.length!, button: {
+      { key: 'Quests Completed', value: this.data?.$questsCompleted?.quests.length!, button: {
         name: "Quests", onClick: ()=>{}
       }}];
     this.shadowlandsSummary = [
@@ -88,35 +88,40 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Toys:', value: this.data?.$toyData?.toys?.length!, button: {
         name: "Toys", onClick: ()=>{}
       }},
-      { key: 'Transmog Sets:', value: this.data?.$transmogData.appearance_sets?.length!, button: {
+      { key: 'Transmog Sets:', value: this.data?.$transmogData?.appearance_sets?.length!, button: {
         name: "Transmog Sets", onClick: ()=>{}
       }},
       { key: 'Transmog Pieces:', value: this.transmogPieceCount(), button: {
         name: "Transmog Pieces", onClick: ()=>{}
       }},
     ]
-    this.professionSummary = [
-      ...this.data?.$professions.primaries.map((item)=>{ return { key: item.profession.name!, value: this.profSkillTotal(item), button: {
-        name: item.profession.name!, onClick: ()=>{}
-      }}; })! as IKeyValueTableData[],
-      ...this.data?.$professions.secondaries.map((item)=>{ return { key: item.profession.name!, value: this.profSkillTotal(item), button: {
-        name: item.profession.name!, onClick: ()=>{}
-      }}; })! as IKeyValueTableData[],
-    ];
+    if (this.data?.$professions?.primaries) {
+      this.professionSummary.push(
+        ...this.data?.$professions?.primaries?.map((item)=>{ return { key: item.profession?.name!, value: this.profSkillTotal(item), button: {
+          name: item.profession.name!, onClick: ()=>{}
+        }}; })! as IKeyValueTableData[]);
+    }
+    if (this.data?.$professions?.secondaries) {
+      this.professionSummary.push(
+        ...this.data?.$professions?.secondaries?.map((item)=>{ return { key: item.profession?.name!, value: this.profSkillTotal(item), button: {
+          name: item.profession.name!, onClick: ()=>{}
+        }}; })! as IKeyValueTableData[],
+      );
+    }
     this.statsSummary = [
-      { key: 'Health', value: this.data?.$statistics.health!},
-      { key: 'Power', value: this.data?.$statistics.power!},
-      { key: 'Power Type', value: this.data?.$statistics.power_type.name!},
-      { key: 'Strength (base)', value: this.data?.$statistics.strength.base!},
-      { key: 'Strength (effective)', value: this.data?.$statistics.strength.effective!},       
-      { key: 'Agility (base)', value: this.data?.$statistics.agility.base!},
-      { key: 'Agility (effective)', value: this.data?.$statistics.agility.effective!},
-      { key: 'Intellect (base)', value: this.data?.$statistics.intellect.base!},
-      { key: 'Intellect (effective)', value: this.data?.$statistics.intellect.effective!},
-      { key: 'Stamina (base)', value: this.data?.$statistics.stamina.base!},
-      { key: 'Stamina (effective)', value: this.data?.$statistics.stamina.effective!},
-      { key: 'Speed', value: this.data?.$statistics.speed.rating!},
-      { key: 'Speed Bonus', value: this.data?.$statistics.speed.rating_bonus!},
+      { key: 'Health', value: this.data?.$statistics?.health!},
+      { key: 'Power', value: this.data?.$statistics?.power!},
+      { key: 'Power Type', value: this.data?.$statistics?.power_type.name!},
+      { key: 'Strength (base)', value: this.data?.$statistics?.strength.base!},
+      { key: 'Strength (effective)', value: this.data?.$statistics?.strength.effective!},       
+      { key: 'Agility (base)', value: this.data?.$statistics?.agility.base!},
+      { key: 'Agility (effective)', value: this.data?.$statistics?.agility.effective!},
+      { key: 'Intellect (base)', value: this.data?.$statistics?.intellect.base!},
+      { key: 'Intellect (effective)', value: this.data?.$statistics?.intellect.effective!},
+      { key: 'Stamina (base)', value: this.data?.$statistics?.stamina.base!},
+      { key: 'Stamina (effective)', value: this.data?.$statistics?.stamina.effective!},
+      { key: 'Speed', value: this.data?.$statistics?.speed.rating!},
+      { key: 'Speed Bonus', value: this.data?.$statistics?.speed.rating_bonus!},
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
@@ -130,7 +135,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   }
 
   transmogPieceCount(): number {
-    var count = this.data?.$transmogData.slots.map((item)=>{ return item.appearances.length }).reduce((acc, current)=>{return acc+current});
+    var count = this.data?.$transmogData?.slots?.map((item)=>{ return item.appearances?.length }).reduce((acc, current)=>{return acc!+current!});
     return count ? count : 0;
   }
 

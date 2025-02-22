@@ -106,7 +106,7 @@ class guildRosterEntry {
     });    
     const charkey = Slugify(rec.character.name) + '@' + rec.character.realm.slug;
     lookups.lookup<characterProfileData>('profile-characters', charkey ).then((res)=>{
-      this.faction = res?.faction.name!;
+      this.faction = res?.faction?.name!;
     }); 
     lookups.lookup<realmData>('realms', rec.character.realm.id).then((res)=>{
       this.realm = res?.name!;
