@@ -26,11 +26,15 @@ app-key-value-table {
     margin: 4px;
     vertical-align: top;
     overflow:hidden;
+    width:100%;
+    max-width:400pt;
 }
 
 div.columnize {
     columns:auto;
-    column-width:220pt;
+    column-width:300pt;
+    overflow:hidden;
+    width:100%;
     app-key-value-table {
         break-inside: avoid;
     }
