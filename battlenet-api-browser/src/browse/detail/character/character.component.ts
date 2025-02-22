@@ -62,6 +62,9 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       }},
       { key: 'Statistics', value: "", button: {
         name: "Statistics", onClick: ()=>{this.dlg.open({title: "Statistics", content: this.statisticsDialog(), noScroll: true})}
+      }},
+      { key: 'Quests Completed', value: this.data?.$questsCompleted.quests.length!, button: {
+        name: "Quests", onClick: ()=>{}
       }}];
     this.shadowlandsSummary = [
       ...(this.data?.covenant_progress?.chosen_covenant) ? [
