@@ -24,45 +24,45 @@ export interface characterProfileData extends APICharacterProfileSummary, IApiDa
     name: string;
     //additional data we've added to the API
     $id: string;
-    $achievements: APICharacterAchievementsSummary;
-    $achievementStatistics: APICharacterAchievementsStatistics;
-    $appearanceData: APICharacterAppearanceSummary;
+    $achievements?: APICharacterAchievementsSummary;
+    $achievementStatistics?: APICharacterAchievementsStatistics;
+    $appearanceData?: APICharacterAppearanceSummary;
     //collections    
-    $heirlooms: APICharacterHeirloomsCollectionSummary;
-    $mountData: APICharacterMountsCollectionSummary;
-    $petData: APICharacterPetsCollectionSummary;
-    $toyData: APICharacterToysCollectionSummary;
-    $transmogData: APICharacterTransmogCollectionSummary;
+    $heirlooms?: APICharacterHeirloomsCollectionSummary;
+    $mountData?: APICharacterMountsCollectionSummary;
+    $petData?: APICharacterPetsCollectionSummary;
+    $toyData?: APICharacterToysCollectionSummary;
+    $transmogData?: APICharacterTransmogCollectionSummary;
     //encounters
-    $dungeonData: APICharacterDungeons;
-    $raidData: APICharacterRaids;
+    $dungeonData?: APICharacterDungeons;
+    $raidData?: APICharacterRaids;
     //equipment
-    $equipment: APICharacterEquipmentSummary;
+    $equipment?: APICharacterEquipmentSummary;
     //hunter pets
-    $hunterPets: APICharacterHunterPetsSummary;
+    $hunterPets?: APICharacterHunterPetsSummary;
     //media
-    $mediaData: APICharacterMediaSummary;
+    $mediaData?: APICharacterMediaSummary;
     //mythic keystones
-    $mythicKeystoneData: APICharacterMythicKeystoneProfileIndex;
-    $mythicKeystoneSeasons: characterMythicKeystoneSeasonData[];
+    $mythicKeystoneData?: APICharacterMythicKeystoneProfileIndex;
+    $mythicKeystoneSeasons?: characterMythicKeystoneSeasonData[];
     //professions
-    $professions: APICharacterProfessionsSummary;
+    $professions?: APICharacterProfessionsSummary;
     //pvp
-    $pvpData: APICharacterPvPSummary;
-    $pvpBrackets: APICharacterPvPBracketStatistics[];
+    $pvpData?: APICharacterPvPSummary;
+    $pvpBrackets?: APICharacterPvPBracketStatistics[];
     //quests
-    $quests: APICharacterQuests;
+    $quests?: APICharacterQuests;
     $questsCompleted: APICharacterCompletedQuests;
     //reputations
-    $reputation: APICharacterReputationsSummary;
+    $reputation?: APICharacterReputationsSummary;
     //soulbinds
-    $soulbinds: APICharacterSoulbinds;
+    $soulbinds?: APICharacterSoulbinds;
     //specializations
-    $specializations: APICharacterSpecializationsSummary;
+    $specializations?: APICharacterSpecializationsSummary;
     //statistics
-    $statistics: APICharacterStatisticsSummary;
+    $statistics?: APICharacterStatisticsSummary;
     //titles
-    $titles: APICharacterTitles;
+    $titles?: APICharacterTitles;
 }
 
 
@@ -178,11 +178,11 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                     apiRec.$mythicKeystoneData = data;
                     //get each season
                     apiRec.$mythicKeystoneSeasons = new Array();
-                    apiRec.$mythicKeystoneData.seasons.forEach((season) => {
+                    apiRec.$mythicKeystoneData?.seasons?.forEach((season) => {
                         apiClient.getCharacterMythicKeystoneSeasonDetails(apiRec.realm.slug, Slugify(apiRec.name_search), season.id).then((data: characterMythicKeystoneSeasonData | undefined) => {
                             if (data) {
                                 data.$id - data.season.id;
-                                apiRec.$mythicKeystoneSeasons.push(data);
+                                apiRec.$mythicKeystoneSeasons?.push(data);
                             }
                         })
                     })
@@ -199,7 +199,7 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
                         const matches = regex.exec(bracket.href);
                         const bracketName = matches![1];  //e.g "3v3"
                         apiClient.getCharacterPvPBracketStatistics(apiRec.realm.slug, Slugify(apiRec.name_search), bracketName)?.then((data) => {
-                            apiRec.$pvpBrackets.push(data!);
+                            apiRec.$pvpBrackets?.push(data!);
                         });
                     })
                 }),
@@ -257,13 +257,13 @@ export class profileCharactersDataDoc extends dbDataNoIndex<characterProfileData
             $id: Slugify(item.name) + '@' + item.realm.slug,
             id: item.id,
             name: item.name,
-            faction: item.faction.type,
+            faction: item.faction?.type!,
             race: item.race.name,
             character_class: item.character_class.name,
             level: item.level,
-            active_spec: item.active_spec.name,
+            active_spec: item.active_spec?.name!,
             realm: item.realm.name,
-            guild: item.guild.name,
+            guild: item.guild?.name!,
             lastUpdate: Date.now()
         }
     }
