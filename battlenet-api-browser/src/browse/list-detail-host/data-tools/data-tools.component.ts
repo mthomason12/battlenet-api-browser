@@ -101,7 +101,19 @@ export class DataToolsComponent {
 
   doExport(ob: object) {
     var fname = "battlenet-api-data-"+this.name()+".json";
-    var blob = new Blob([JSON.stringify(ob, jsonIgnoreReplacer, 2)], {type: "text/json;charset=utf-8"});
+    var str = "";
+    if (Array.isArray(ob))
+    {
+      str += "["
+      str += ob.map((item)=>{ return JSON.stringify(item, jsonIgnoreReplacer, 2) }).join(",");
+      str += "]";
+    }
+    else
+    {
+      str = JSON.stringify(ob, jsonIgnoreReplacer, 2);
+    }
+    
+    var blob = new Blob([str], {type: "text/json;charset=utf-8"});
     FileSaver.saveAs(blob, fname, { autoBom: true });
     this._snackBar.open("Data exported as "+fname, "", {duration:3000});
   }
