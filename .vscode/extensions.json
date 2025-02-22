@@ -1,6 +1,8 @@
 {
     "recommendations": [
         "pkief.material-icon-theme",
-        "timohuennebeck.minimalist-to-do-manager"
+        "timohuennebeck.minimalist-to-do-manager",
+        "tberman.json-schema-validator",
+        "marcoq.vscode-typescript-to-json-schema"
     ]
 }
