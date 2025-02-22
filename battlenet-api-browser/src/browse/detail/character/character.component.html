@@ -1,18 +1,22 @@
 <mat-tab-group>
     <mat-tab label="Overview">
-        <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
-        <app-key-value-table [dataSource]="collectionSummary"></app-key-value-table>
+        <div class="columnize">
+            <app-key-value-table [dataSource]="overviewData"></app-key-value-table>
+            <app-key-value-table [dataSource]="pointsSummary"></app-key-value-table>
+            <app-key-value-table [dataSource]="collectionSummary"></app-key-value-table>
+            <app-key-value-table [dataSource]="shadowlandsSummary"></app-key-value-table>
+        </div>
     </mat-tab>
     <mat-tab label="Stats">
         <ng-template matTabContent>
-            <app-key-value-table [dataSource]="statsData"></app-key-value-table> 
+            <app-key-value-table [dataSource]="statsSummary"></app-key-value-table> 
         </ng-template>        
-    </mat-tab>                 
+    </mat-tab>           
     <mat-tab label="Professions">
         <ng-template matTabContent>
             <app-key-value-table [dataSource]="professionSummary"></app-key-value-table>
         </ng-template>        
-    </mat-tab>
+    </mat-tab>       
     <mat-tab label="Achievements">
         <ng-template matTabContent>
             <table mat-table class="achievements" [dataSource]="achievementData" class="mat-elevation-z8">
