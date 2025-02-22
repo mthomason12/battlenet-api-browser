@@ -6,6 +6,11 @@
 
 - Characters now include Achievements and Statistics
 
+##### Bug Fixes
+
+- Missing character data (e.g. not having chosen any professions) is caught and handled instead of causing errors.
+- Export of large amounts of data is more efficient and less likely to run out of memory
+
 #### v0.4.2-dev
 
 - Electron version integrates menu items "Settings", "Export", and "About"
