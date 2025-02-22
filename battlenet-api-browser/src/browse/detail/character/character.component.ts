@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, TemplateRef, viewChild, ViewChild } from '@angular/core';
 import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PageSelectorComponent } from '../../../components/page-selector/page-selector.component';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-character',
@@ -17,6 +18,8 @@ import { PageSelectorComponent } from '../../../components/page-selector/page-se
 })
 export class CharacterComponent extends AbstractDetailComponent<characterProfileData> {
 
+  dlg = inject(DialogService);
+
   overviewData: IKeyValueTableData[] = [];
   pointsSummary: IKeyValueTableData[] = [];
   shadowlandsSummary: IKeyValueTableData[] = [];
@@ -25,6 +28,9 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   statsSummary: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
+
+  achievementsDialog = viewChild.required<TemplateRef<any>>('achievementsDialog');
+  statisticsDialog = viewChild.required<TemplateRef<any>>('statisticsDialog');
 
   override dataSet() {
     this.overviewData = [
@@ -52,7 +58,10 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
         name: "Other Titles", onClick: ()=>{}
       }},     
       { key: 'Achievement Points', value: this.data?.achievement_points!, button: {
-        name: "Achievements", onClick: ()=>{}
+        name: "Achievements", onClick: ()=>{this.dlg.open({title: "Achievements", content: this.achievementsDialog()})}
+      }},
+      { key: 'Statistics', value: "", button: {
+        name: "Statistics", onClick: ()=>{this.dlg.open({title: "Statistics", content: this.statisticsDialog(), noScroll: true})}
       }}];
     this.shadowlandsSummary = [
       ...(this.data?.covenant_progress?.chosen_covenant) ? [
