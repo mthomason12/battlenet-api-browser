@@ -42,7 +42,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Class', value: this.data?.character_class.name! },      
       { key: 'Level', value: this.data?.level! },
       { key: 'Active Spec', value: this.data?.active_spec.name!, button: {
-        name: "Other Specs", onClick: ()=>{}
+        name: "Specs", onClick: ()=>{}
       }},
       ...(this.data?.$hunterPets?.hunter_pets.length! > 0) ? [
         { key: 'Hunter Pets', value: this.data?.$hunterPets.hunter_pets.length! , button: {
