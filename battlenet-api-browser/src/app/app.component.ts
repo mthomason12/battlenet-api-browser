@@ -212,5 +212,5 @@ export class SettingsDialog {
 })
 export class AboutDialog {
 
-  readonly dialogRef = inject(MatDialogRef<SettingsDialog>);
+  readonly dialogRef = inject(MatDialogRef<AboutDialog>);
 }
