@@ -10,7 +10,7 @@
                 <span class="cellText">{{element.value}}</span>
                 @if (element.button)
                 {
-                    <span class="spacer"></span><button mat-button>{{element.button.name}}</button> 
+                    <span class="spacer"></span><button mat-button (click)="element.button.onClick()">{{element.button.name}}</button> 
                 }
             </div>
         </td>
