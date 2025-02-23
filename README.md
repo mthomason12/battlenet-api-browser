@@ -55,21 +55,16 @@ This application makes extensive use of IndexedDB.
 
 The vast majority of data is left as-is from the Battle.net API.  
 
-However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;) 
+However, some things are tweaked for usability, and some are combined. For example, exporting "achievements" as JSON will give you an object with both "items" and "details" arrays, with "items" containing the data from getAchievementIndex and "details" containing the individual items from getAchievement.  get....Media calls are automatically run after the applicable query, with the results being appended to a mediaData property on the original item.  The focus is on making it easier for end users, not on matching the API layout 1:1 - if you want that, you can just call the API directly yourself ;)
 
 Where these additional fields are added to the API result, these are prefixed with $
 
 ## Known Issues
 
-There is currently very little in the way of error checking and handling.  
+There is currently very little in the way of error checking and handling. 
+
 Any problem with an API call tends to just fail silently other than an error message in the browser console.  The Electron build is only checked intermittently and may be broken at any time.
 
 Currently everything is hard-coded to the US region.
 
-## Roadmap
-
-- Finish adding viewers for each data type
-- Query builder for search APIs
-- JSON import (allowing backup/restore with JSON files)
-- "Search everything" 
-- Connect to a public API server without needing an API key
+Many functions lack progress indicators
