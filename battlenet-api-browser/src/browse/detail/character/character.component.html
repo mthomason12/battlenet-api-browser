@@ -74,7 +74,7 @@
 </ng-template>
 
 <ng-template #petsDialog>
-    <table mat-table class="pets" [dataSource]="" class="mat-elevation-z8">
+    <table mat-table class="pets" [dataSource]="petsData" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let item"> {{item.name}} </td>
@@ -97,7 +97,7 @@
 </ng-template>
 
 <ng-template #mountsDialog>
-    <table mat-table class="mounts" [dataSource]="" class="mat-elevation-z8">
+    <table mat-table class="mounts" [dataSource]="mountsData" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let item"> {{item.name}} </td>
