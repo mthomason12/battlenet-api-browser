@@ -91,30 +91,18 @@
             <th mat-header-cell *matHeaderCellDef> Quality </th>
             <td mat-cell *matCellDef="let item"> {{item.quality.name}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name','completed'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['name', 'species', 'level', 'quality']; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'species', 'level', 'quality'];"></tr>
     </table>
 </ng-template>
 
 <ng-template #mountsDialog>
     <table mat-table class="mounts" [dataSource]="mountsData" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+        <ng-container matColumnDef="mount">
+            <th mat-header-cell *matHeaderCellDef> Mount </th>
+            <td mat-cell *matCellDef="let item"> {{item.mount.name}} </td>
         </ng-container>
-        <ng-container matColumnDef="species">
-            <th mat-header-cell *matHeaderCellDef> Species </th>
-            <td mat-cell *matCellDef="let item"> {{item.species.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="level">
-            <th mat-header-cell *matHeaderCellDef> Level </th>
-            <td mat-cell *matCellDef="let item"> {{item.level}} </td>
-        </ng-container>
-        <ng-container matColumnDef="quality">
-            <th mat-header-cell *matHeaderCellDef> Quality </th>
-            <td mat-cell *matCellDef="let item"> {{item.quality.name}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name','completed'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['mount']; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['mount'];"></tr>
     </table>
 </ng-template>

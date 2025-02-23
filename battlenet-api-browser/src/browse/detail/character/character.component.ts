@@ -85,10 +85,10 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
         name: "Heirlooms", onClick: ()=>{}
       }},
       { key: 'Mounts:', value: this.data?.$mountData?.mounts?.length! , button: {
-        name: "Mounts", onClick: ()=>{this.dlg.open({title: "Mounts", content: this.mountsDialog(), noScroll: true})}
+        name: "Mounts", onClick: ()=>{this.dlg.open({title: "Mounts", content: this.mountsDialog()})}
       }},
       { key: 'Pets:', value: this.data?.$petData?.pets?.length!, button: {
-        name: "Pets", onClick: ()=>{this.dlg.open({title: "Pets", content: this.petsDialog(), noScroll: true})}
+        name: "Pets", onClick: ()=>{this.dlg.open({title: "Pets", content: this.petsDialog()})}
       }},
       { key: 'Toys:', value: this.data?.$toyData?.toys?.length!, button: {
         name: "Toys", onClick: ()=>{}
@@ -169,6 +169,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
     this.petsData = this.data?.$petData?.pets!;
+    this.mountsData = this.data?.$mountData?.mounts!;
   }
 
   getStatistics(cat: characterAchievementStatisticsCategory): IKeyValueTableData[] {
