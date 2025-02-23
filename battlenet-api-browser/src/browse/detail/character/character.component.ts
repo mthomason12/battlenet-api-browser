@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
@@ -161,7 +161,6 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Block Rating', value: this.data?.$statistics?.block.rating!},
       { key: 'Block Bonus', value: this.data?.$statistics?.block.rating_bonus!},
       { key: 'Block Value', value: this.data?.$statistics?.block.value!},
-
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
