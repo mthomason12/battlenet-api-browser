@@ -2,9 +2,11 @@
 
 #### Current-Dev (awaiting release number)
 
+#### v0.4.3-dev
+
 #### New Features
 
-- Characters now include Achievements and Statistics
+- Characters now include Achievements, Statistics, Titles, Specs, Appearances, Mounts, and Pets
 
 ##### Bug Fixes
 
