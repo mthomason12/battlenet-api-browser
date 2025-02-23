@@ -26,6 +26,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   professionSummary: IKeyValueTableData[] = [];
   collectionSummary: IKeyValueTableData[] = [];
   statsSummary: IKeyValueTableData[] = [];
+  stats2Summary: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
 
@@ -122,6 +123,36 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Stamina (effective)', value: this.data?.$statistics?.stamina.effective!},
       { key: 'Speed', value: this.data?.$statistics?.speed.rating!},
       { key: 'Speed Bonus', value: this.data?.$statistics?.speed.rating_bonus!},
+    ]
+    this.stats2Summary = [
+      { key: 'Attack Power', value: this.data?.$statistics?.attack_power!},
+      { key: 'Melee Crit Rating', value: this.data?.$statistics?.melee_crit.rating!},
+      { key: 'Melee Crit Bonus', value: this.data?.$statistics?.melee_crit.rating_bonus!},
+      { key: 'Melee Crit Value', value: this.data?.$statistics?.melee_crit.value!},
+      { key: 'Melee Haste Rating', value: this.data?.$statistics?.melee_haste.rating!},
+      { key: 'Melee Haste Bonus', value: this.data?.$statistics?.melee_haste.rating_bonus!},
+      { key: 'Melee Haste Value', value: this.data?.$statistics?.melee_haste.value!},
+      { key: 'Spell Power', value: this.data?.$statistics?.spell_power!},
+      { key: 'Spell Penetration', value: this.data?.$statistics?.spell_penetration!},
+      { key: 'Spell Crit Rating', value: this.data?.$statistics?.spell_crit.rating!},
+      { key: 'Spell Crit Bonus', value: this.data?.$statistics?.spell_crit.rating_bonus!},
+      { key: 'Spell Crit Value', value: this.data?.$statistics?.spell_crit.value!},
+      { key: 'Spell Haste Rating', value: this.data?.$statistics?.spell_haste.rating!},
+      { key: 'Spell Haste Bonus', value: this.data?.$statistics?.spell_haste.rating_bonus!},
+      { key: 'Spell Haste Value', value: this.data?.$statistics?.spell_haste.value!},
+      { key: 'Ranged Crit Rating', value: this.data?.$statistics?.ranged_crit.rating!},
+      { key: 'Ranged Crit Bonus', value: this.data?.$statistics?.ranged_crit.rating_bonus!},
+      { key: 'Ranged Crit Value', value: this.data?.$statistics?.ranged_crit.value!},
+      { key: 'Ranged Haste Rating', value: this.data?.$statistics?.ranged_haste.rating!},
+      { key: 'Ranged Haste Bonus', value: this.data?.$statistics?.ranged_haste.rating_bonus!},
+      { key: 'Ranged Haste Value', value: this.data?.$statistics?.ranged_haste.value!},
+      { key: 'Mastery Rating', value: this.data?.$statistics?.mastery.rating!},
+      { key: 'Mastery Bonus', value: this.data?.$statistics?.mastery.rating_bonus!},
+      { key: 'Mastery Value', value: this.data?.$statistics?.mastery.value!},
+      { key: 'Versatility', value: this.data?.$statistics?.versatility!},
+      { key: 'Avoidance Rating', value: this.data?.$statistics?.avoidance.rating!},
+      { key: 'Avoidance Bonus', value: this.data?.$statistics?.avoidance.rating_bonus!},
+
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
