@@ -72,3 +72,26 @@
         </ng-template>
     </app-page-selector>
 </ng-template>
+
+<ng-template #petsDialog>
+    <table mat-table class="pets" [dataSource]="" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="species">
+            <th mat-header-cell *matHeaderCellDef> Species </th>
+            <td mat-cell *matCellDef="let item"> {{item.species.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let item"> {{item.level}} </td>
+        </ng-container>
+        <ng-container matColumnDef="quality">
+            <th mat-header-cell *matHeaderCellDef> Quality </th>
+            <td mat-cell *matCellDef="let item"> {{item.quality.name}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['name', 'completed']; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name','completed'];"></tr>
+    </table>
+</ng-template>

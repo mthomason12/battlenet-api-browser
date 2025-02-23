@@ -3,7 +3,7 @@ import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { characterAchievement, characterAchievementStatisticsCategory, characterProfession } from 'battlenet-api-types';
+import { characterAchievement, characterAchievementStatisticsCategory, characterPetsCollectionPet, characterProfession } from 'battlenet-api-types';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -29,9 +29,11 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   stats2Summary: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
+  petsData: characterPetsCollectionPet[] = [];
 
   achievementsDialog = viewChild.required<TemplateRef<any>>('achievementsDialog');
   statisticsDialog = viewChild.required<TemplateRef<any>>('statisticsDialog');
+  petsDialog = viewChild.required<TemplateRef<any>>('petsDialog');
 
   override dataSet() {
     this.overviewData = [
@@ -84,7 +86,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
         name: "Mounts", onClick: ()=>{}
       }},
       { key: 'Pets:', value: this.data?.$petData?.pets?.length!, button: {
-        name: "Pets", onClick: ()=>{}
+        name: "Pets", onClick: ()=>{this.dlg.open({title: "Statistics", content: this.petsDialog(), noScroll: true})}
       }},
       { key: 'Toys:', value: this.data?.$toyData?.toys?.length!, button: {
         name: "Toys", onClick: ()=>{}
@@ -164,6 +166,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
+    this.petsData = this.data?.$petData?.pets!;
   }
 
   getStatistics(cat: characterAchievementStatisticsCategory): IKeyValueTableData[] {
