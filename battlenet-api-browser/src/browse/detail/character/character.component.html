@@ -20,7 +20,13 @@
             <app-key-value-table [dataSource]="professionSummary"></app-key-value-table>
         </ng-template>        
     </mat-tab>        
-    <mat-tab label="Appearances">
+    <mat-tab label="Appearance">
+        <ng-template matTabContent>
+            <div class="columnize">
+                <app-key-value-table [dataSource]="appearanceItemData"></app-key-value-table>
+                <app-key-value-table [dataSource]="appearanceCustomizationData"></app-key-value-table>
+            </div>            
+        </ng-template> 
     </mat-tab>
     <mat-tab label="PvE">
         <!--- Dungeons, Raids, Mythic Keystones ---->
@@ -80,11 +86,11 @@
     </table>
 </ng-template>
 
-<ng-template #specsDialog>
+<ng-template #specDialog>
     <table mat-table class="specs" [dataSource]="specData" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+            <th mat-header-cell *matHeaderCellDef> Spec </th>
+            <td mat-cell *matCellDef="let item"> {{item.specialization.name}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="['name']; sticky:true"></tr>
         <tr mat-row *matRowDef="let row; columns: ['name'];"></tr>

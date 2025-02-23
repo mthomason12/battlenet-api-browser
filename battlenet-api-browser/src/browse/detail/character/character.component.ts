@@ -3,7 +3,7 @@ import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { characterAchievement, characterAchievementStatisticsCategory, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession, characterSpecialization, refStruct } from 'battlenet-api-types';
+import { APICharacterAppearanceSummary, characterAchievement, characterAchievementStatisticsCategory, characterAppearanceItem, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession, characterSpecialization, refStruct } from 'battlenet-api-types';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -28,6 +28,8 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   statsSummary: IKeyValueTableData[] = [];
   stats2Summary: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
+  appearanceItemData: IKeyValueTableData[] = [];
+  appearanceCustomizationData: IKeyValueTableData[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
   specData: characterSpecialization[] = [];
   petsData: characterPetsCollectionPet[] = [];
@@ -171,7 +173,8 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Block Value', value: this.data?.$statistics?.block.value!},
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
-    this.mountsData = this.data?.$mountData?.mounts!;    
+    this.appearanceItemData = this.data?.$appearanceData!.items.map((item)=>{ return { key: item.slot.name, value: item.id } })!;
+    this.appearanceCustomizationData = this.data?.$appearanceData!.customizations.map((item)=>{ return { key: item.option.name, value: item.choice.id+(item.choice.name ? ' : '+item.choice.name! : '') } })!;    this.mountsData = this.data?.$mountData?.mounts!;    
     this.petsData = this.data?.$petData?.pets!;
     this.specData = this.data?.$specializations?.specializations!;
     this.statisticsData = this.data?.$achievementStatistics?.categories!;    
