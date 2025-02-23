@@ -3,7 +3,7 @@ import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { characterAchievement, characterAchievementStatisticsCategory, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession } from 'battlenet-api-types';
+import { characterAchievement, characterAchievementStatisticsCategory, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession, refStruct } from 'battlenet-api-types';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -31,11 +31,13 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   statisticsData: characterAchievementStatisticsCategory[] = [];
   petsData: characterPetsCollectionPet[] = [];
   mountsData: characterMountsCollectionMount[] = [];
+  titleData: refStruct[] = [];
 
   achievementsDialog = viewChild.required<TemplateRef<any>>('achievementsDialog');
   statisticsDialog = viewChild.required<TemplateRef<any>>('statisticsDialog');
   petsDialog = viewChild.required<TemplateRef<any>>('petsDialog');
   mountsDialog = viewChild.required<TemplateRef<any>>('mountsDialog');
+  titlesDialog = viewChild.required<TemplateRef<any>>('titlesDialog');
 
   override dataSet() {
     this.overviewData = [
@@ -60,7 +62,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
         name: "Equipment", onClick: ()=>{}
       }},                          
       { key: 'Active Title', value: this.data?.active_title?.name! , button: {
-        name: "Other Titles", onClick: ()=>{}
+        name: "Other Titles", onClick: ()=>{this.dlg.open({title: "Titles", content: this.titlesDialog()})}
       }},     
       { key: 'Achievement Points', value: this.data?.achievement_points!, button: {
         name: "Achievements", onClick: ()=>{this.dlg.open({title: "Achievements", content: this.achievementsDialog()})}
@@ -170,6 +172,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
     this.statisticsData = this.data?.$achievementStatistics?.categories!;
     this.petsData = this.data?.$petData?.pets!;
     this.mountsData = this.data?.$mountData?.mounts!;
+    this.titleData = this.data?.$titles?.titles!;
   }
 
   getStatistics(cat: characterAchievementStatisticsCategory): IKeyValueTableData[] {
