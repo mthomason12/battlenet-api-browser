@@ -3,7 +3,7 @@ import { characterProfileData } from '../../../model/profile-characters';
 import { AbstractDetailComponent } from '../../list-detail-host/abstract-detail/abstract-detail.component';
 import { IKeyValueTableData, KeyValueTableComponent } from '../../../components/key-value-table/key-value-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { characterAchievement, characterAchievementStatisticsCategory, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession, refStruct } from 'battlenet-api-types';
+import { characterAchievement, characterAchievementStatisticsCategory, characterMountsCollectionMount, characterPetsCollectionPet, characterProfession, characterSpecialization, refStruct } from 'battlenet-api-types';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -29,11 +29,13 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
   stats2Summary: IKeyValueTableData[] = [];
   achievementData: characterAchievement[] = [];
   statisticsData: characterAchievementStatisticsCategory[] = [];
+  specData: characterSpecialization[] = [];
   petsData: characterPetsCollectionPet[] = [];
   mountsData: characterMountsCollectionMount[] = [];
   titleData: refStruct[] = [];
 
   achievementsDialog = viewChild.required<TemplateRef<any>>('achievementsDialog');
+  specDialog = viewChild.required<TemplateRef<any>>('specDialog');  
   statisticsDialog = viewChild.required<TemplateRef<any>>('statisticsDialog');
   petsDialog = viewChild.required<TemplateRef<any>>('petsDialog');
   mountsDialog = viewChild.required<TemplateRef<any>>('mountsDialog');
@@ -49,7 +51,7 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Class', value: this.data?.character_class.name! },      
       { key: 'Level', value: this.data?.level! },
       { key: 'Active Spec', value: this.data?.active_spec?.name!, button: {
-        name: "Specs", onClick: ()=>{}
+        name: "Specs", onClick: ()=>{this.dlg.open({title: "Specs", content: this.specDialog()})}
       }},
       ...(this.data?.$hunterPets?.hunter_pets.length! > 0) ? [
         { key: 'Hunter Pets', value: this.data?.$hunterPets?.hunter_pets.length! , button: {
@@ -169,9 +171,10 @@ export class CharacterComponent extends AbstractDetailComponent<characterProfile
       { key: 'Block Value', value: this.data?.$statistics?.block.value!},
     ]
     this.achievementData = this.data?.$achievements?.achievements!;
-    this.statisticsData = this.data?.$achievementStatistics?.categories!;
+    this.mountsData = this.data?.$mountData?.mounts!;    
     this.petsData = this.data?.$petData?.pets!;
-    this.mountsData = this.data?.$mountData?.mounts!;
+    this.specData = this.data?.$specializations?.specializations!;
+    this.statisticsData = this.data?.$achievementStatistics?.categories!;    
     this.titleData = this.data?.$titles?.titles!;
   }
 
